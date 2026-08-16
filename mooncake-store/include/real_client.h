@@ -180,85 +180,54 @@ class PrefetchThrottle {
         return out;
     }
 
-    void markInFlight(const std::string &key) {
+    struct Snapshot {
+        int64_t trigger_ms{-1};
+        int64_t completed_ms{-1};
+        State state{State::kFailed};
+        bool promote_attempted{false};
+    };
+
+    // Single-lock read of all per-key fields. A missing key matches the old
+    // defaults: state=kFailed, trigger_ms=-1, completed_ms=-1.
+    Snapshot snapshot(const std::string &key) const {
         std::lock_guard<std::mutex> lock(mutex_);
         auto it = entries_.find(key);
         if (it == entries_.end()) {
-            return;
+            return {};
         }
-        it->second.state = State::kInFlight;
-        it->second.promote_attempted = true;
+        Snapshot snap;
+        snap.trigger_ms = it->second.trigger_ms;
+        snap.completed_ms = it->second.state == State::kCompleted
+                                ? it->second.completed_ms
+                                : -1;
+        snap.state = it->second.state;
+        snap.promote_attempted = it->second.promote_attempted;
+        return snap;
     }
 
-    void markCompleted(const std::string &key) {
+    // Unified state transition. kCompleted inserts a terminal entry when the
+    // key is unknown. Other states no-op on a missing key. kInFlight sets
+    // promote_attempted; kAlreadyResident clears it.
+    void mark(const std::string &key, State state) {
         const int64_t now = NowMs();
         std::lock_guard<std::mutex> lock(mutex_);
         auto it = entries_.find(key);
         if (it == entries_.end()) {
-            entries_[key] = Entry{.trigger_ms = now,
-                                  .completed_ms = now,
-                                  .state = State::kCompleted};
+            if (state == State::kCompleted) {
+                entries_[key] = Entry{.trigger_ms = now,
+                                      .completed_ms = now,
+                                      .state = State::kCompleted};
+            }
             return;
         }
-        it->second.state = State::kCompleted;
-        it->second.completed_ms = now;
-    }
-
-    void markFailed(const std::string &key) {
-        std::lock_guard<std::mutex> lock(mutex_);
-        auto it = entries_.find(key);
-        if (it == entries_.end()) {
-            return;
+        it->second.state = state;
+        if (state == State::kInFlight) {
+            it->second.promote_attempted = true;
+        } else if (state == State::kCompleted) {
+            it->second.completed_ms = now;
+        } else if (state == State::kAlreadyResident) {
+            it->second.promote_attempted = false;
         }
-        it->second.state = State::kFailed;
-    }
-
-    // Async prefetch decided the key is not SSD-only (e.g. MEMORY already
-    // present). Clears in-flight semantics without treating as promotion done.
-    void markAlreadyResident(const std::string &key) {
-        std::lock_guard<std::mutex> lock(mutex_);
-        auto it = entries_.find(key);
-        if (it == entries_.end()) {
-            return;
-        }
-        it->second.state = State::kAlreadyResident;
-        it->second.promote_attempted = false;
-    }
-
-    bool promoteAttempted(const std::string &key) const {
-        std::lock_guard<std::mutex> lock(mutex_);
-        auto it = entries_.find(key);
-        if (it == entries_.end()) {
-            return false;
-        }
-        return it->second.promote_attempted;
-    }
-
-    int64_t triggeredAt(const std::string &key) const {
-        std::lock_guard<std::mutex> lock(mutex_);
-        auto it = entries_.find(key);
-        if (it == entries_.end()) {
-            return -1;
-        }
-        return it->second.trigger_ms;
-    }
-
-    int64_t completedAt(const std::string &key) const {
-        std::lock_guard<std::mutex> lock(mutex_);
-        auto it = entries_.find(key);
-        if (it == entries_.end() || it->second.state != State::kCompleted) {
-            return -1;
-        }
-        return it->second.completed_ms;
-    }
-
-    State stateOf(const std::string &key) const {
-        std::lock_guard<std::mutex> lock(mutex_);
-        auto it = entries_.find(key);
-        if (it == entries_.end()) {
-            return State::kFailed;
-        }
-        return it->second.state;
     }
 
     // Poll until promotion completes or the budget expires. Returns true only
@@ -286,7 +255,7 @@ class PrefetchThrottle {
             }
             std::this_thread::sleep_for(std::chrono::milliseconds(step_ms));
         }
-        return stateOf(key) == State::kCompleted;
+        return snapshot(key).state == State::kCompleted;
     }
 
    private:
@@ -298,35 +267,6 @@ class PrefetchThrottle {
     std::unordered_map<std::string, Entry> entries_;
 };
 
-// Replica tier selected for get() after optional prefetch wait ([GET-SRC]
-// source=).
-enum class PrefetchReplicaSource : uint8_t {
-    kDram,
-    kSsd,
-    kDisk,
-    kUnknown,
-};
-
-// Get-side prefetch observation outcome ([PREFETCH-OUTCOME] outcome=).
-enum class PrefetchOutcome : uint8_t {
-    kDramResident,
-    kPrefetchEvictedAfterExist,
-    kPrefetchFailed,
-    kPrefetchHit,
-    kPrefetchDramWasResident,
-    kPrefetchPromotedUntracked,
-    kPrefetchMissRace,
-};
-
-PrefetchReplicaSource PrefetchReplicaSourceFromDescriptor(
-    const Replica::Descriptor &replica);
-const char *PrefetchReplicaSourceToString(PrefetchReplicaSource source);
-
-PrefetchOutcome ClassifyPrefetchOutcome(
-    int64_t prefetch_trigger_ms, int64_t prefetch_done_ms, int64_t get_ms,
-    PrefetchReplicaSource source, PrefetchThrottle::State prefetch_state,
-    bool prefetch_wait_attempted, bool promote_attempted);
-const char *PrefetchOutcomeToString(PrefetchOutcome outcome);
 
 class RealClient : public PyClient {
    public:

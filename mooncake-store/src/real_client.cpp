@@ -2280,16 +2280,8 @@ tl::expected<bool, ErrorCode> RealClient::isExist_internal(
 }
 
 int RealClient::isExist(const std::string &key, const ExistOptions &options) {
-    auto result = isExist_internal(key);
-
-    if (result.has_value()) {
-        if (options.prefetch_to_memory && *result && file_storage_) {
-            triggerSsdPrefetch({key});
-        }
-        return *result ? 1 : 0;  // 1 if exists, 0 if not
-    } else {
-        return toInt(result.error());
-    }
+    auto results = batchIsExist({key}, options);
+    return results.empty() ? -1 : results[0];
 }
 
 std::vector<int> RealClient::batchIsExist(const std::vector<std::string> &keys,
@@ -2374,6 +2366,47 @@ std::optional<SsdPrefetchRoute> ClassifySsdPrefetchRoute(
     return route;
 }
 
+FileStorage::PrefetchKeyCallback MakeOnKeyDone(
+    const std::shared_ptr<PrefetchThrottle> &throttle) {
+    if (!throttle) {
+        return nullptr;
+    }
+    return [throttle](const std::string &key, bool success) {
+        throttle->mark(key, success ? PrefetchThrottle::State::kCompleted
+                                    : PrefetchThrottle::State::kFailed);
+    };
+}
+
+void ReservePrefetchKeys(const std::shared_ptr<PrefetchThrottle> &throttle,
+                         const std::vector<std::string> &keys,
+                         const std::vector<int64_t> &sizes,
+                         std::vector<std::string> &out_keys,
+                         std::vector<int64_t> &out_sizes) {
+    out_keys.clear();
+    out_sizes.clear();
+    if (!throttle) {
+        out_keys = keys;
+        out_sizes.assign(keys.size(), 0);
+        for (size_t i = 0; i < keys.size() && i < sizes.size(); ++i) {
+            out_sizes[i] = sizes[i];
+        }
+        return;
+    }
+    const auto reserved = throttle->reserve(keys);
+    std::unordered_set<std::string> reserved_set(reserved.begin(),
+                                                 reserved.end());
+    out_keys.reserve(reserved.size());
+    out_sizes.reserve(reserved.size());
+    for (size_t i = 0; i < keys.size(); ++i) {
+        if (reserved_set.find(keys[i]) == reserved_set.end()) {
+            continue;
+        }
+        out_keys.push_back(keys[i]);
+        out_sizes.push_back(i < sizes.size() ? sizes[i]
+                                             : static_cast<int64_t>(0));
+    }
+}
+
 void RunLocalPrefetchRegisterAndPromote(
     const std::shared_ptr<Client> &client, FileStorage *file_storage,
     const std::shared_ptr<PrefetchThrottle> &throttle,
@@ -2401,7 +2434,8 @@ void RunLocalPrefetchRegisterAndPromote(
         prefetch_keys.push_back(local_keys[i]);
         prefetch_sizes.push_back(local_sizes[i]);
         if (throttle) {
-            throttle->markInFlight(local_keys[i]);
+            throttle->mark(local_keys[i],
+                           PrefetchThrottle::State::kInFlight);
         }
         VLOG(1) << "SSD prefetch: registered task for key=" << local_keys[i]
                 << ", size=" << local_sizes[i];
@@ -2444,91 +2478,6 @@ std::optional<QueryResult> TryRefreshBestMemoryReplica(
 
 }  // namespace
 
-PrefetchReplicaSource PrefetchReplicaSourceFromDescriptor(
-    const Replica::Descriptor &replica) {
-    if (replica.is_memory_replica()) {
-        return PrefetchReplicaSource::kDram;
-    }
-    if (replica.is_local_disk_replica()) {
-        return PrefetchReplicaSource::kSsd;
-    }
-    if (replica.is_disk_replica()) {
-        return PrefetchReplicaSource::kDisk;
-    }
-    return PrefetchReplicaSource::kUnknown;
-}
-
-const char *PrefetchReplicaSourceToString(PrefetchReplicaSource source) {
-    switch (source) {
-        case PrefetchReplicaSource::kDram:
-            return "DRAM";
-        case PrefetchReplicaSource::kSsd:
-            return "SSD";
-        case PrefetchReplicaSource::kDisk:
-            return "DISK";
-        case PrefetchReplicaSource::kUnknown:
-            return "UNKNOWN";
-    }
-    return "UNKNOWN";
-}
-
-PrefetchOutcome ClassifyPrefetchOutcome(
-    int64_t prefetch_trigger_ms, int64_t prefetch_done_ms, int64_t get_ms,
-    PrefetchReplicaSource source, PrefetchThrottle::State prefetch_state,
-    bool prefetch_wait_attempted, bool promote_attempted) {
-    const bool from_dram = source == PrefetchReplicaSource::kDram;
-    const bool prefetch_involved =
-        prefetch_trigger_ms >= 0 || prefetch_wait_attempted;
-    if (!prefetch_involved) {
-        if (from_dram) {
-            return PrefetchOutcome::kDramResident;
-        }
-        // Key was DRAM-resident at exist-time (or never triggered); evicted
-        // before get(), so get falls back to SSD.
-        return PrefetchOutcome::kPrefetchEvictedAfterExist;
-    }
-    if (prefetch_trigger_ms >= 0 &&
-        prefetch_state == PrefetchThrottle::State::kFailed) {
-        return PrefetchOutcome::kPrefetchFailed;
-    }
-    if (from_dram) {
-        if (prefetch_done_ms >= 0 && prefetch_done_ms <= get_ms) {
-            return PrefetchOutcome::kPrefetchHit;
-        }
-        if (!promote_attempted) {
-            return PrefetchOutcome::kPrefetchDramWasResident;
-        }
-        return PrefetchOutcome::kPrefetchPromotedUntracked;
-    }
-    // This rank triggered prefetch or attempted promote, but get still reads
-    // SSD (promotion lost the race or timed out).
-    if (prefetch_trigger_ms >= 0 || promote_attempted) {
-        return PrefetchOutcome::kPrefetchMissRace;
-    }
-    // No trigger/promote on this rank; get reads SSD (may have been DRAM at
-    // exist-time on another rank, or master wait timed out on TP1~7).
-    return PrefetchOutcome::kPrefetchEvictedAfterExist;
-}
-
-const char *PrefetchOutcomeToString(PrefetchOutcome outcome) {
-    switch (outcome) {
-        case PrefetchOutcome::kDramResident:
-            return "dram_resident";
-        case PrefetchOutcome::kPrefetchEvictedAfterExist:
-            return "prefetch_evicted_after_exist";
-        case PrefetchOutcome::kPrefetchFailed:
-            return "prefetch_failed";
-        case PrefetchOutcome::kPrefetchHit:
-            return "prefetch_hit";
-        case PrefetchOutcome::kPrefetchDramWasResident:
-            return "prefetch_dram_was_resident";
-        case PrefetchOutcome::kPrefetchPromotedUntracked:
-            return "prefetch_promoted_untracked";
-        case PrefetchOutcome::kPrefetchMissRace:
-            return "prefetch_miss_race";
-    }
-    return "prefetch_evicted_after_exist";
-}
 
 void RealClient::initPrefetchRuntime() {
     // Bounded worker pool for SSD prefetch promotion jobs. Fixed size,
@@ -2588,16 +2537,7 @@ void RealClient::triggerSsdPrefetch(const std::vector<std::string> &keys) {
     auto file_storage = file_storage_;
     auto client_requester = client_requester_;
     const std::string local_rpc_addr_copy = local_rpc_addr;
-    FileStorage::PrefetchKeyCallback on_key_done;
-    if (throttle) {
-        on_key_done = [throttle](const std::string &key, bool success) {
-            if (success) {
-                throttle->markCompleted(key);
-            } else {
-                throttle->markFailed(key);
-            }
-        };
-    }
+    auto on_key_done = MakeOnKeyDone(throttle);
     submitPrefetchJob([client, file_storage, client_requester, throttle,
                        local_rpc_addr_copy, on_key_done,
                        keys_copy = std::move(keys_copy)]() {
@@ -2658,24 +2598,8 @@ void RealClient::triggerSsdPrefetch(const std::vector<std::string> &keys) {
 
             std::vector<std::string> promote_local_keys;
             std::vector<int64_t> promote_local_sizes;
-            if (throttle) {
-                auto reserved = throttle->reserve(chunk_local_keys);
-                std::unordered_set<std::string> reserved_set(reserved.begin(),
-                                                             reserved.end());
-                promote_local_keys.reserve(reserved.size());
-                promote_local_sizes.reserve(reserved.size());
-                for (size_t i = 0; i < chunk_local_keys.size(); ++i) {
-                    if (reserved_set.find(chunk_local_keys[i]) ==
-                        reserved_set.end()) {
-                        continue;
-                    }
-                    promote_local_keys.push_back(chunk_local_keys[i]);
-                    promote_local_sizes.push_back(chunk_local_sizes[i]);
-                }
-            } else {
-                promote_local_keys = std::move(chunk_local_keys);
-                promote_local_sizes = std::move(chunk_local_sizes);
-            }
+            ReservePrefetchKeys(throttle, chunk_local_keys, chunk_local_sizes,
+                                promote_local_keys, promote_local_sizes);
 
             RunLocalPrefetchRegisterAndPromote(
                 client, file_storage.get(), throttle, on_key_done,
@@ -2704,44 +2628,16 @@ void RealClient::runLocalPrefetch(const std::vector<std::string> &keys,
         return;
     }
 
-    std::unordered_set<std::string> allowed(keys.begin(), keys.end());
-    if (throttle) {
-        auto reserved = throttle->reserve(keys);
-        allowed.clear();
-        allowed.insert(reserved.begin(), reserved.end());
-        if (allowed.empty()) {
-            return;
-        }
-    }
-
     std::vector<std::string> keys_copy;
     std::vector<int64_t> sizes_copy;
-    keys_copy.reserve(keys.size());
-    sizes_copy.reserve(keys.size());
-    for (size_t i = 0; i < keys.size(); ++i) {
-        if (allowed.find(keys[i]) == allowed.end()) {
-            continue;
-        }
-        keys_copy.push_back(keys[i]);
-        sizes_copy.push_back(i < sizes.size() ? sizes[i]
-                                              : static_cast<int64_t>(0));
-    }
+    ReservePrefetchKeys(throttle, keys, sizes, keys_copy, sizes_copy);
     if (keys_copy.empty()) {
         return;
     }
 
     auto client = client_;
     auto file_storage = file_storage_;
-    FileStorage::PrefetchKeyCallback on_key_done;
-    if (throttle) {
-        on_key_done = [throttle](const std::string &key, bool success) {
-            if (success) {
-                throttle->markCompleted(key);
-            } else {
-                throttle->markFailed(key);
-            }
-        };
-    }
+    auto on_key_done = MakeOnKeyDone(throttle);
     submitPrefetchJob([client, file_storage, throttle, on_key_done,
                        keys_copy = std::move(keys_copy),
                        sizes_copy = std::move(sizes_copy)]() {
@@ -6649,35 +6545,24 @@ RealClient::batch_get_into_multi_buffers_internal(
         // the configured budget expires (default 10 ms, 1 ms poll interval).
         // Local throttle covers TP0; master Query covers TP1~7 where exist
         // triggered prefetch in another process.
-        int64_t prefetch_trigger_ms =
-            prefetch_throttle_ ? prefetch_throttle_->triggeredAt(key) : -1;
-        int64_t prefetch_done_ms =
-            prefetch_throttle_ ? prefetch_throttle_->completedAt(key) : -1;
-        PrefetchThrottle::State prefetch_state =
-            prefetch_throttle_ ? prefetch_throttle_->stateOf(key)
-                               : PrefetchThrottle::State::kTriggered;
-        bool prefetch_wait_attempted = false;
+        const PrefetchThrottle::Snapshot snap =
+            prefetch_throttle_ ? prefetch_throttle_->snapshot(key)
+                               : PrefetchThrottle::Snapshot{};
         const char *prefetch_wait_mode = "none";
         std::optional<QueryResult> refreshed_qr;
         if (best_replica->is_local_disk_replica() && ssd_get_wait_ms_ > 0) {
-            prefetch_wait_attempted = true;
             constexpr int64_t kPollMs = 5;
-            if (prefetch_trigger_ms >= 0 && prefetch_throttle_) {
+            if (snap.trigger_ms >= 0 && prefetch_throttle_) {
                 prefetch_wait_mode = "local";
-                if (prefetch_state != PrefetchThrottle::State::kCompleted) {
+                if (snap.state != PrefetchThrottle::State::kCompleted) {
                     prefetch_throttle_->waitForCompletion(key, ssd_get_wait_ms_,
                                                           kPollMs);
                 }
-                prefetch_done_ms = prefetch_throttle_->completedAt(key);
-                prefetch_state = prefetch_throttle_->stateOf(key);
                 if (auto qr = TryRefreshBestMemoryReplica(client_.get(), key,
                                                           local_endpoints)) {
                     refreshed_qr.emplace(std::move(*qr));
                     best_replica = SelectBestReplica(refreshed_qr->replicas,
                                                      local_endpoints);
-                    if (prefetch_done_ms < 0) {
-                        prefetch_done_ms = PrefetchThrottle::NowMs();
-                    }
                 }
             } else {
                 prefetch_wait_mode = "master";
@@ -6689,7 +6574,6 @@ RealClient::batch_get_into_multi_buffers_internal(
                         refreshed_qr.emplace(std::move(*qr));
                         best_replica = SelectBestReplica(refreshed_qr->replicas,
                                                          local_endpoints);
-                        prefetch_done_ms = PrefetchThrottle::NowMs();
                         break;
                     }
                     std::this_thread::sleep_for(
@@ -6700,26 +6584,13 @@ RealClient::batch_get_into_multi_buffers_internal(
 
         const auto replica = *best_replica;
         uint64_t total_size = calculate_total_size(replica);
-        const int64_t get_ms = PrefetchThrottle::NowMs();
-        const PrefetchReplicaSource source =
-            PrefetchReplicaSourceFromDescriptor(replica);
-        const bool promote_attempted =
-            prefetch_throttle_ ? prefetch_throttle_->promoteAttempted(key)
-                               : false;
-        const PrefetchOutcome outcome = ClassifyPrefetchOutcome(
-            prefetch_trigger_ms, prefetch_done_ms, get_ms, source,
-            prefetch_state, prefetch_wait_attempted, promote_attempted);
-        VLOG(1) << "[GET-SRC] key=" << key
-                << " source=" << PrefetchReplicaSourceToString(source)
-                << " size=" << total_size
-                << " prefetch_trigger_ms=" << prefetch_trigger_ms
-                << " prefetch_done_ms=" << prefetch_done_ms
-                << " get_ms=" << get_ms
-                << " prefetch_wait_mode=" << prefetch_wait_mode
-                << " prefetch_promote_attempted="
-                << (promote_attempted ? "1" : "0") << " path=multi_buffers"
-                << " [PREFETCH-OUTCOME] outcome="
-                << PrefetchOutcomeToString(outcome);
+        const char *src = replica.is_memory_replica()         ? "DRAM"
+                          : replica.is_local_disk_replica()   ? "SSD"
+                          : replica.is_disk_replica()         ? "DISK"
+                                                              : "?";
+        VLOG(1) << "[GET-SRC] key=" << key << " src=" << src
+                << " wait=" << prefetch_wait_mode
+                << " mem=" << (replica.is_memory_replica() ? 1 : 0);
         const auto &sizes = all_sizes[i];
         uint64_t dst_total_size = 0;
         for (auto &size : sizes) {
