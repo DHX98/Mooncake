@@ -332,6 +332,11 @@ struct RpcNameTraits<&WrappedMasterService::BatchEvictDiskReplica> {
     static constexpr const char* value = "BatchEvictDiskReplica";
 };
 
+template <>
+struct RpcNameTraits<&WrappedMasterService::PollRemoveAll> {
+    static constexpr const char* value = "PollRemoveAll";
+};
+
 template <auto ServiceMethod, typename ReturnType, typename... Args>
 tl::expected<ReturnType, ErrorCode> MasterClient::invoke_rpc(Args&&... args) {
     auto pool = client_accessor_.GetClientPool();
@@ -356,6 +361,10 @@ tl::expected<ReturnType, ErrorCode> MasterClient::invoke_rpc(Args&&... args) {
             }
             auto result = co_await std::move(ret.value());
             if (!result) {
+                if (result.error().code == coro_rpc::errc::timed_out) {
+                    LOG(ERROR) << "RPC call timed out: " << result.error().msg;
+                    co_return tl::make_unexpected(ErrorCode::RPC_TIMEOUT);
+                }
                 LOG(ERROR) << "RPC call failed: " << result.error().msg;
                 co_return tl::make_unexpected(ErrorCode::RPC_FAIL);
             }
@@ -398,12 +407,15 @@ std::vector<tl::expected<ResultType, ErrorCode>> MasterClient::invoke_batch_rpc(
             }
             auto result = co_await std::move(ret.value());
             if (!result) {
+                const ErrorCode err_code =
+                    (result.error().code == coro_rpc::errc::timed_out)
+                        ? ErrorCode::RPC_TIMEOUT
+                        : ErrorCode::RPC_FAIL;
                 LOG(ERROR) << "Batch RPC call failed: " << result.error().msg;
                 std::vector<tl::expected<ResultType, ErrorCode>> error_results;
                 error_results.reserve(input_size);
                 for (size_t i = 0; i < input_size; ++i) {
-                    error_results.emplace_back(
-                        tl::make_unexpected(ErrorCode::RPC_FAIL));
+                    error_results.emplace_back(tl::make_unexpected(err_code));
                 }
                 co_return error_results;
             }
@@ -427,13 +439,9 @@ ErrorCode MasterClient::Connect(const std::string& master_addr) {
 
     MutexLocker lock(&connect_mutex_);
     if (client_addr_param_ != master_addr) {
-        // WARNING: The existing client pool cannot be erased. So if there are a
-        // lot of different addresses, there will be resource leak problems.
-        auto client_pool = client_pools_->at(master_addr);
-        client_accessor_.SetClientPool(client_pool);
+        client_accessor_.GetOrCreateClientPool(master_addr);
         client_addr_param_ = master_addr;
     }
-    auto pool = client_accessor_.GetClientPool();
     // The client pool does not have native connection check method, so we need
     // to use custom ServiceReady API.
     auto result =
@@ -460,8 +468,8 @@ tl::expected<bool, ErrorCode> MasterClient::ExistKey(
     ScopedVLogTimer timer(1, "MasterClient::ExistKey");
     timer.LogRequest("object_key=", object_key);
 
-    auto result = invoke_rpc<&WrappedMasterService::ExistKey, bool>(object_key,
-                                                                    tenant_id_);
+    auto result = invoke_rpc<&WrappedMasterService::ExistKey, bool>(
+        object_key, tenant_id_.value());
     timer.LogResponseExpected(result);
     return result;
 }
@@ -472,7 +480,7 @@ std::vector<tl::expected<bool, ErrorCode>> MasterClient::BatchExistKey(
     timer.LogRequest("keys_count=", object_keys.size());
 
     auto result = invoke_batch_rpc<&WrappedMasterService::BatchExistKey, bool>(
-        object_keys.size(), object_keys, tenant_id_);
+        object_keys.size(), object_keys, tenant_id_.value());
     timer.LogResponse("result=", result.size(), " keys");
     return result;
 }
@@ -523,7 +531,7 @@ MasterClient::GetReplicaListByRegex(const std::string& str) {
     auto result = invoke_rpc<
         &WrappedMasterService::GetReplicaListByRegex,
         std::unordered_map<std::string, std::vector<Replica::Descriptor>>>(
-        str, tenant_id_);
+        str, tenant_id_.value());
 
     timer.LogResponseExpected(result);
     return result;
@@ -531,7 +539,7 @@ MasterClient::GetReplicaListByRegex(const std::string& str) {
 
 tl::expected<GetReplicaListResponse, ErrorCode> MasterClient::GetReplicaList(
     const std::string& object_key) {
-    return GetReplicaList(object_key, tenant_id_);
+    return GetReplicaList(object_key, tenant_id_.value());
 }
 
 tl::expected<GetReplicaListResponse, ErrorCode> MasterClient::GetReplicaList(
@@ -551,7 +559,8 @@ MasterClient::GetReplicaListForPrefetch(const std::string& object_key) {
     timer.LogRequest("object_key=", object_key);
 
     auto result = invoke_rpc<&WrappedMasterService::GetReplicaListForPrefetch,
-                             GetReplicaListResponse>(object_key);
+                             GetReplicaListResponse>(object_key,
+                                                     tenant_id_.value());
     timer.LogResponseExpected(result);
     return result;
 }
@@ -564,7 +573,8 @@ MasterClient::BatchGetReplicaListForPrefetch(
 
     auto result =
         invoke_batch_rpc<&WrappedMasterService::BatchGetReplicaListForPrefetch,
-                         GetReplicaListResponse>(object_keys.size(), object_keys);
+                         GetReplicaListResponse>(object_keys.size(), object_keys,
+                                                 tenant_id_.value());
     timer.LogResponse("result=", result.size(), " operations");
     return result;
 }
@@ -574,14 +584,14 @@ tl::expected<void, ErrorCode> MasterClient::RegisterPrefetchTask(
     ScopedVLogTimer timer(1, "MasterClient::RegisterPrefetchTask");
     timer.LogRequest("client_id=", client_id, ", key=", key);
     auto result = invoke_rpc<&WrappedMasterService::RegisterPrefetchTask, void>(
-        client_id, key);
+        client_id, key, tenant_id_.value());
     timer.LogResponseExpected(result);
     return result;
 }
 
 std::vector<tl::expected<GetReplicaListResponse, ErrorCode>>
 MasterClient::BatchGetReplicaList(const std::vector<std::string>& object_keys) {
-    return BatchGetReplicaList(object_keys, tenant_id_);
+    return BatchGetReplicaList(object_keys, tenant_id_.value());
 }
 
 std::vector<tl::expected<GetReplicaListResponse, ErrorCode>>
@@ -612,7 +622,7 @@ MasterClient::PutStart(const std::string& key,
 
     auto result = invoke_rpc<&WrappedMasterService::PutStart,
                              std::vector<Replica::Descriptor>>(
-        client_id_, key, total_slice_length, config, tenant_id_);
+        client_id_, key, total_slice_length, config, tenant_id_.value());
     timer.LogResponseExpected(result);
     return result;
 }
@@ -637,29 +647,31 @@ MasterClient::BatchPutStart(
 
     auto result = invoke_batch_rpc<&WrappedMasterService::BatchPutStart,
                                    std::vector<Replica::Descriptor>>(
-        keys.size(), client_id_, keys, total_slice_lengths, config, tenant_id_);
+        keys.size(), client_id_, keys, total_slice_lengths, config,
+        tenant_id_.value());
     timer.LogResponse("result=", result.size(), " operations");
     return result;
 }
 
-tl::expected<void, ErrorCode> MasterClient::PutEnd(const std::string& key,
-                                                   ReplicaType replica_type) {
+tl::expected<void, ErrorCode> MasterClient::PutEnd(
+    const ObjectMeta& object_meta, ReplicaType replica_type) {
     ScopedVLogTimer timer(1, "MasterClient::PutEnd");
-    timer.LogRequest("key=", key);
+    timer.LogRequest("key=", object_meta.key);
 
     auto result = invoke_rpc<&WrappedMasterService::PutEnd, void>(
-        client_id_, key, replica_type, tenant_id_);
+        client_id_, object_meta, replica_type, tenant_id_.value());
     timer.LogResponseExpected(result);
     return result;
 }
 
 std::vector<tl::expected<void, ErrorCode>> MasterClient::BatchPutEnd(
-    const std::vector<std::string>& keys, ReplicaType replica_type) {
+    const std::vector<ObjectMeta>& object_metas, ReplicaType replica_type) {
     ScopedVLogTimer timer(1, "MasterClient::BatchPutEnd");
-    timer.LogRequest("keys_count=", keys.size());
+    timer.LogRequest("keys_count=", object_metas.size());
 
     auto result = invoke_batch_rpc<&WrappedMasterService::BatchPutEnd, void>(
-        keys.size(), client_id_, keys, replica_type, tenant_id_);
+        object_metas.size(), client_id_, object_metas, replica_type,
+        tenant_id_.value());
     timer.LogResponse("result=", result.size(), " operations");
     return result;
 }
@@ -670,7 +682,7 @@ tl::expected<void, ErrorCode> MasterClient::PutRevoke(
     timer.LogRequest("key=", key);
 
     auto result = invoke_rpc<&WrappedMasterService::PutRevoke, void>(
-        client_id_, key, replica_type, tenant_id_);
+        client_id_, key, replica_type, tenant_id_.value());
     timer.LogResponseExpected(result);
     return result;
 }
@@ -681,7 +693,7 @@ std::vector<tl::expected<void, ErrorCode>> MasterClient::BatchPutRevoke(
     timer.LogRequest("keys_count=", keys.size());
 
     auto result = invoke_batch_rpc<&WrappedMasterService::BatchPutRevoke, void>(
-        keys.size(), client_id_, keys, replica_type, tenant_id_);
+        keys.size(), client_id_, keys, replica_type, tenant_id_.value());
     timer.LogResponse("result=", result.size(), " operations");
     return result;
 }
@@ -700,7 +712,7 @@ MasterClient::UpsertStart(const std::string& key,
 
     auto result = invoke_rpc<&WrappedMasterService::UpsertStart,
                              std::vector<Replica::Descriptor>>(
-        client_id_, key, total_slice_length, config, tenant_id_);
+        client_id_, key, total_slice_length, config, tenant_id_.value());
     timer.LogResponseExpected(result);
     return result;
 }
@@ -725,29 +737,30 @@ MasterClient::BatchUpsertStart(
 
     auto result = invoke_batch_rpc<&WrappedMasterService::BatchUpsertStart,
                                    std::vector<Replica::Descriptor>>(
-        keys.size(), client_id_, keys, total_slice_lengths, config, tenant_id_);
+        keys.size(), client_id_, keys, total_slice_lengths, config,
+        tenant_id_.value());
     timer.LogResponse("result=", result.size(), " operations");
     return result;
 }
 
 tl::expected<void, ErrorCode> MasterClient::UpsertEnd(
-    const std::string& key, ReplicaType replica_type) {
+    const ObjectMeta& object_meta, ReplicaType replica_type) {
     ScopedVLogTimer timer(1, "MasterClient::UpsertEnd");
-    timer.LogRequest("key=", key);
+    timer.LogRequest("key=", object_meta.key);
 
     auto result = invoke_rpc<&WrappedMasterService::UpsertEnd, void>(
-        client_id_, key, replica_type, tenant_id_);
+        client_id_, object_meta, replica_type, tenant_id_.value());
     timer.LogResponseExpected(result);
     return result;
 }
 
 std::vector<tl::expected<void, ErrorCode>> MasterClient::BatchUpsertEnd(
-    const std::vector<std::string>& keys) {
+    const std::vector<ObjectMeta>& object_metas) {
     ScopedVLogTimer timer(1, "MasterClient::BatchUpsertEnd");
-    timer.LogRequest("keys_count=", keys.size());
+    timer.LogRequest("keys_count=", object_metas.size());
 
     auto result = invoke_batch_rpc<&WrappedMasterService::BatchUpsertEnd, void>(
-        keys.size(), client_id_, keys, tenant_id_);
+        object_metas.size(), client_id_, object_metas, tenant_id_.value());
     timer.LogResponse("result=", result.size(), " operations");
     return result;
 }
@@ -758,7 +771,7 @@ tl::expected<void, ErrorCode> MasterClient::UpsertRevoke(
     timer.LogRequest("key=", key);
 
     auto result = invoke_rpc<&WrappedMasterService::UpsertRevoke, void>(
-        client_id_, key, replica_type, tenant_id_);
+        client_id_, key, replica_type, tenant_id_.value());
     timer.LogResponseExpected(result);
     return result;
 }
@@ -770,7 +783,7 @@ std::vector<tl::expected<void, ErrorCode>> MasterClient::BatchUpsertRevoke(
 
     auto result =
         invoke_batch_rpc<&WrappedMasterService::BatchUpsertRevoke, void>(
-            keys.size(), client_id_, keys, tenant_id_);
+            keys.size(), client_id_, keys, tenant_id_.value());
     timer.LogResponse("result=", result.size(), " operations");
     return result;
 }
@@ -780,8 +793,8 @@ tl::expected<void, ErrorCode> MasterClient::Remove(const std::string& key,
     ScopedVLogTimer timer(1, "MasterClient::Remove");
     timer.LogRequest("key=", key, ", force=", force);
 
-    auto result =
-        invoke_rpc<&WrappedMasterService::Remove, void>(key, force, tenant_id_);
+    auto result = invoke_rpc<&WrappedMasterService::Remove, void>(
+        key, force, tenant_id_.value());
     timer.LogResponseExpected(result);
     return result;
 }
@@ -792,7 +805,7 @@ tl::expected<long, ErrorCode> MasterClient::RemoveByRegex(
     timer.LogRequest("key=", str, ", force=", force);
 
     auto result = invoke_rpc<&WrappedMasterService::RemoveByRegex, long>(
-        str, force, tenant_id_);
+        str, force, tenant_id_.value());
     timer.LogResponseExpected(result);
     return result;
 }
@@ -801,8 +814,8 @@ tl::expected<long, ErrorCode> MasterClient::RemoveAll(bool force) {
     ScopedVLogTimer timer(1, "MasterClient::RemoveAll");
     timer.LogRequest("action=remove_all_objects, force=", force);
 
-    auto result =
-        invoke_rpc<&WrappedMasterService::RemoveAll, long>(force, tenant_id_);
+    auto result = invoke_rpc<&WrappedMasterService::RemoveAll, long>(
+        force, tenant_id_.value());
     timer.LogResponseExpected(result);
     return result;
 }
@@ -813,7 +826,7 @@ std::vector<tl::expected<void, ErrorCode>> MasterClient::BatchRemove(
     timer.LogRequest("keys_count=", keys.size(), ", force=", force);
 
     auto result = invoke_batch_rpc<&WrappedMasterService::BatchRemove, void>(
-        keys.size(), keys, force, tenant_id_);
+        keys.size(), keys, force, tenant_id_.value());
     timer.LogResponse("result=", result.size(), " operations");
     return result;
 }
@@ -982,7 +995,7 @@ tl::expected<void, ErrorCode> MasterClient::MountLocalDiskSegment(
 
 tl::expected<UUID, ErrorCode> MasterClient::CreateCopyTask(
     const std::string& key, const std::vector<std::string>& targets) {
-    return CreateCopyTask(key, tenant_id_, targets);
+    return CreateCopyTask(key, tenant_id_.value(), targets);
 }
 
 tl::expected<UUID, ErrorCode> MasterClient::CreateCopyTask(
@@ -1001,7 +1014,7 @@ tl::expected<UUID, ErrorCode> MasterClient::CreateCopyTask(
 tl::expected<UUID, ErrorCode> MasterClient::CreateMoveTask(
     const std::string& key, const std::string& source,
     const std::string& target) {
-    return CreateMoveTask(key, tenant_id_, source, target);
+    return CreateMoveTask(key, tenant_id_.value(), source, target);
 }
 
 tl::expected<UUID, ErrorCode> MasterClient::CreateMoveTask(
@@ -1030,6 +1043,17 @@ MasterClient::OffloadObjectHeartbeat(const UUID& client_id,
     return result;
 }
 
+tl::expected<bool, ErrorCode> MasterClient::PollRemoveAll() {
+    ScopedVLogTimer timer(1, "MasterClient::PollRemoveAll");
+    timer.LogRequest("client_id=", client_id_);
+
+    auto result =
+        invoke_rpc<&WrappedMasterService::PollRemoveAll, bool>(client_id_);
+    timer.LogResponse("should_remove_all=",
+                      result.has_value() ? result.value() : false);
+    return result;
+}
+
 tl::expected<void, ErrorCode> MasterClient::ReportSsdCapacity(
     const UUID& client_id, int64_t ssd_total_capacity_bytes) {
     ScopedVLogTimer timer(1, "MasterClient::ReportSsdCapacity");
@@ -1045,8 +1069,8 @@ tl::expected<void, ErrorCode> MasterClient::NotifyOffloadSuccess(
     std::vector<OffloadTaskItem> tasks;
     tasks.reserve(keys.size());
     for (const auto& key : keys) {
-        tasks.push_back(
-            OffloadTaskItem{.tenant_id = tenant_id_, .key = key, .size = 0});
+        tasks.push_back(OffloadTaskItem{
+            .tenant_id = tenant_id_.value(), .key = key, .size = 0});
     }
     return NotifyOffloadSuccess(client_id, tasks, metadatas);
 }
@@ -1076,7 +1100,7 @@ tl::expected<PromotionAllocStartResponse, ErrorCode>
 MasterClient::PromotionAllocStart(
     const UUID& client_id, const std::string& key, uint64_t size,
     const std::vector<std::string>& preferred_segments) {
-    return PromotionAllocStart(client_id, key, tenant_id_, size,
+    return PromotionAllocStart(client_id, key, tenant_id_.value(), size,
                                preferred_segments);
 }
 
@@ -1097,7 +1121,7 @@ MasterClient::PromotionAllocStart(
 
 tl::expected<void, ErrorCode> MasterClient::NotifyPromotionSuccess(
     const UUID& client_id, const std::string& key) {
-    return NotifyPromotionSuccess(client_id, key, tenant_id_);
+    return NotifyPromotionSuccess(client_id, key, tenant_id_.value());
 }
 
 tl::expected<void, ErrorCode> MasterClient::NotifyPromotionSuccess(
@@ -1115,7 +1139,7 @@ tl::expected<void, ErrorCode> MasterClient::NotifyPromotionSuccess(
 
 tl::expected<void, ErrorCode> MasterClient::NotifyPromotionFailure(
     const UUID& client_id, const std::string& key) {
-    return NotifyPromotionFailure(client_id, key, tenant_id_);
+    return NotifyPromotionFailure(client_id, key, tenant_id_.value());
 }
 
 tl::expected<void, ErrorCode> MasterClient::NotifyPromotionFailure(
@@ -1134,7 +1158,7 @@ tl::expected<void, ErrorCode> MasterClient::NotifyPromotionFailure(
 tl::expected<CopyStartResponse, ErrorCode> MasterClient::CopyStart(
     const std::string& key, const std::string& src_segment,
     const std::vector<std::string>& tgt_segments) {
-    return CopyStart(key, tenant_id_, src_segment, tgt_segments);
+    return CopyStart(key, tenant_id_.value(), src_segment, tgt_segments);
 }
 
 tl::expected<CopyStartResponse, ErrorCode> MasterClient::CopyStart(
@@ -1166,7 +1190,7 @@ tl::expected<QueryTaskResponse, ErrorCode> MasterClient::QueryTask(
 }
 
 tl::expected<void, ErrorCode> MasterClient::CopyEnd(const std::string& key) {
-    return CopyEnd(key, tenant_id_);
+    return CopyEnd(key, tenant_id_.value());
 }
 
 tl::expected<void, ErrorCode> MasterClient::CopyEnd(
@@ -1192,7 +1216,7 @@ tl::expected<std::vector<TaskAssignment>, ErrorCode> MasterClient::FetchTasks(
 }
 
 tl::expected<void, ErrorCode> MasterClient::CopyRevoke(const std::string& key) {
-    return CopyRevoke(key, tenant_id_);
+    return CopyRevoke(key, tenant_id_.value());
 }
 
 tl::expected<void, ErrorCode> MasterClient::CopyRevoke(
@@ -1209,7 +1233,7 @@ tl::expected<void, ErrorCode> MasterClient::CopyRevoke(
 tl::expected<MoveStartResponse, ErrorCode> MasterClient::MoveStart(
     const std::string& key, const std::string& src_segment,
     const std::string& tgt_segment) {
-    return MoveStart(key, tenant_id_, src_segment, tgt_segment);
+    return MoveStart(key, tenant_id_.value(), src_segment, tgt_segment);
 }
 
 tl::expected<MoveStartResponse, ErrorCode> MasterClient::MoveStart(
@@ -1228,7 +1252,7 @@ tl::expected<MoveStartResponse, ErrorCode> MasterClient::MoveStart(
 }
 
 tl::expected<void, ErrorCode> MasterClient::MoveEnd(const std::string& key) {
-    return MoveEnd(key, tenant_id_);
+    return MoveEnd(key, tenant_id_.value());
 }
 
 tl::expected<void, ErrorCode> MasterClient::MoveEnd(
@@ -1243,7 +1267,7 @@ tl::expected<void, ErrorCode> MasterClient::MoveEnd(
 }
 
 tl::expected<void, ErrorCode> MasterClient::MoveRevoke(const std::string& key) {
-    return MoveRevoke(key, tenant_id_);
+    return MoveRevoke(key, tenant_id_.value());
 }
 
 tl::expected<void, ErrorCode> MasterClient::MoveRevoke(
@@ -1269,7 +1293,7 @@ tl::expected<void, ErrorCode> MasterClient::MarkTaskToComplete(
 
 tl::expected<void, ErrorCode> MasterClient::EvictDiskReplica(
     const std::string& key, ReplicaType replica_type) {
-    return EvictDiskReplica(key, tenant_id_, replica_type);
+    return EvictDiskReplica(key, tenant_id_.value(), replica_type);
 }
 
 tl::expected<void, ErrorCode> MasterClient::EvictDiskReplica(
@@ -1287,7 +1311,7 @@ tl::expected<void, ErrorCode> MasterClient::EvictDiskReplica(
 
 std::vector<tl::expected<void, ErrorCode>> MasterClient::BatchEvictDiskReplica(
     const std::vector<std::string>& keys, ReplicaType replica_type) {
-    return BatchEvictDiskReplica(keys, tenant_id_, replica_type);
+    return BatchEvictDiskReplica(keys, tenant_id_.value(), replica_type);
 }
 
 std::vector<tl::expected<void, ErrorCode>> MasterClient::BatchEvictDiskReplica(

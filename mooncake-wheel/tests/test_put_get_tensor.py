@@ -3,8 +3,12 @@ import struct
 import unittest
 import os
 import time
-import threading
-import random
+
+try:
+    import torch as _torch
+except Exception:
+    _torch = None
+
 from mooncake.store import MooncakeDistributedStore
 
 # The lease time of the kv object, should be set equal to
@@ -12,6 +16,9 @@ from mooncake.store import MooncakeDistributedStore
 DEFAULT_DEFAULT_KV_LEASE_TTL = 5000 # 5000 milliseconds
 # Use environment variable if set, otherwise use default
 default_kv_lease_ttl = int(os.getenv("DEFAULT_KV_LEASE_TTL", DEFAULT_DEFAULT_KV_LEASE_TTL))
+
+def cuda_available():
+    return _torch is not None and _torch.cuda.is_available()
 
 # Define a test class for serialization
 class TestClass:
@@ -118,6 +125,86 @@ class TestDistributedObjectStore(unittest.TestCase):
         self.store.remove(key_int)
         self.store.remove(key_bool)
         self.store.remove(key_rand)
+
+    def test_batch_tensor_default_config(self):
+        import torch
+
+        prefix = f"test_batch_tensor_default_{os.getpid()}"
+        keys = [f"{prefix}_{i}" for i in range(2)]
+        tensors = [
+            torch.arange(16, dtype=torch.float32).reshape(4, 4),
+            torch.arange(24, dtype=torch.int64).reshape(2, 3, 4),
+        ]
+        self.assertEqual(self.store.batch_put_tensor(keys, tensors), [0, 0])
+        for key, tensor in zip(keys, tensors):
+            self.assertTrue(torch.equal(self.store.get_tensor(key), tensor))
+            self.store.remove(key)
+
+        upsert_keys = [f"{prefix}_upsert_{i}" for i in range(2)]
+        upsert_tensors = [
+            torch.arange(8, dtype=torch.float32),
+            torch.arange(12, dtype=torch.int32),
+        ]
+        self.assertEqual(
+            self.store.batch_upsert_tensor(upsert_keys, upsert_tensors), [0, 0]
+        )
+        for key, tensor in zip(upsert_keys, upsert_tensors):
+            self.assertTrue(torch.equal(self.store.get_tensor(key), tensor))
+            self.store.remove(key)
+
+    @unittest.skipUnless(cuda_available(), "CUDA is not available")
+    def test_cuda_local_copy_paths(self):
+        """Test CUDA source writes and CUDA destination reads."""
+        import torch
+
+        prefix = f"test_cuda_local_copy_{os.getpid()}"
+        put_key = f"{prefix}_put"
+        upsert_key = f"{prefix}_upsert"
+        raw_key = f"{prefix}_raw"
+
+        tensor = torch.arange(16, dtype=torch.float32, device="cuda")
+        torch.cuda.synchronize()
+        self.assertEqual(self.store.put_tensor(put_key, tensor), 0)
+        self.assertEqual(self.store.upsert_tensor(upsert_key, tensor), 0)
+        self.assertTrue(torch.equal(self.store.get_tensor(put_key), tensor.cpu()))
+        self.assertTrue(torch.equal(self.store.get_tensor(upsert_key), tensor.cpu()))
+
+        batch_put_keys = [f"{prefix}_batch_put_{i}" for i in range(2)]
+        batch_upsert_keys = [f"{prefix}_batch_upsert_{i}" for i in range(2)]
+        batch_tensors = [
+            torch.arange(16, dtype=torch.float32, device="cuda").reshape(4, 4),
+            torch.arange(24, dtype=torch.int64, device="cuda").reshape(2, 3, 4),
+        ]
+        torch.cuda.synchronize()
+        self.assertEqual(
+            self.store.batch_put_tensor(batch_put_keys, batch_tensors), [0, 0]
+        )
+        self.assertEqual(
+            self.store.batch_upsert_tensor(batch_upsert_keys, batch_tensors),
+            [0, 0],
+        )
+        for key, expected_tensor in zip(batch_put_keys, batch_tensors):
+            self.assertTrue(
+                torch.equal(self.store.get_tensor(key), expected_tensor.cpu())
+            )
+        for key, expected_tensor in zip(batch_upsert_keys, batch_tensors):
+            self.assertTrue(
+                torch.equal(self.store.get_tensor(key), expected_tensor.cpu())
+            )
+
+        raw = bytes(range(32))
+        self.assertEqual(self.store.put(raw_key, raw), 0)
+
+        dst = torch.empty(len(raw), dtype=torch.uint8, device="cuda")
+        self.assertEqual(self.store.get_into(raw_key, dst.data_ptr(), len(raw)), len(raw))
+        expected = torch.tensor(list(raw), dtype=torch.uint8, device="cuda")
+        self.assertTrue(torch.equal(dst, expected))
+
+        self.store.remove(put_key)
+        self.store.remove(upsert_key)
+        for key in batch_put_keys + batch_upsert_keys:
+            self.store.remove(key)
+        self.store.remove(raw_key)
 
     def test_put_get_tensor_with_metadata(self):
         """Test storing and retrieving PyTorch tensors with metadata using put_tensor_with_metadata/get_tensor_with_metadata."""
@@ -233,6 +320,197 @@ class TestDistributedObjectStore(unittest.TestCase):
 
         for rank in range(tp_size):
             self.store.remove(f"{key}_tp_{rank}")
+
+
+from mooncake.structured_object_store import (
+    MISSING,
+    _choose_leaf_codec,
+    _escape_key,
+    infer_structure,
+)
+
+
+class TestCodecInference(unittest.TestCase):
+
+    def test_tensor(self):
+        import torch
+        d = _choose_leaf_codec([torch.tensor([1, 2]), torch.tensor([3])])
+        self.assertTrue(d.accepted)
+        self.assertEqual(d.codec, "ragged_tensor")
+
+    def test_tensor_mixed_dtype(self):
+        import torch
+        d = _choose_leaf_codec([torch.tensor([1], dtype=torch.float32), torch.tensor([1], dtype=torch.int64)])
+        self.assertFalse(d.accepted)
+        self.assertEqual(d.codec, "ragged_tensor")
+
+    def test_tensor_mixed_ndim(self):
+        import torch
+        d = _choose_leaf_codec([torch.tensor([1]), torch.tensor([[1, 2]])])
+        self.assertTrue(d.accepted)
+        self.assertEqual(d.codec, "ragged_tensor")
+
+    def test_numeric_sequence(self):
+        d = _choose_leaf_codec([[1, 2, 3], [4, 5]])
+        self.assertTrue(d.accepted)
+        self.assertEqual(d.codec, "typed_ragged")
+
+    def test_bytes(self):
+        d = _choose_leaf_codec([b"hello", b"world"])
+        self.assertTrue(d.accepted)
+        self.assertEqual(d.codec, "bytes_ragged")
+
+    def test_text(self):
+        d = _choose_leaf_codec(["hello", "world"])
+        self.assertTrue(d.accepted)
+        self.assertEqual(d.codec, "utf8_ragged")
+
+    def test_json(self):
+        d = _choose_leaf_codec([{"a": 1}, {"b": 2}])
+        self.assertTrue(d.accepted)
+        self.assertEqual(d.codec, "msgpack_ragged")
+
+    def test_json_rejects_late_non_serializable(self):
+        values = [{"ok": i} for i in range(200)] + [object()]
+        d = _choose_leaf_codec(values)
+        self.assertFalse(d.accepted)
+
+    def test_scalar(self):
+        d = _choose_leaf_codec([1, 2.0, 3])
+        self.assertTrue(d.accepted)
+        self.assertEqual(d.codec, "ndarray")
+
+    def test_fallback(self):
+        d = _choose_leaf_codec([object(), object()])
+        self.assertFalse(d.accepted)
+        self.assertEqual(d.codec, "msgpack_ragged")
+
+    def test_with_nulls(self):
+        d = _choose_leaf_codec(["hello", None, "world"])
+        self.assertTrue(d.accepted)
+        self.assertEqual(d.codec, "utf8_ragged")
+
+    def test_empty_values(self):
+        d = _choose_leaf_codec([])
+        self.assertFalse(d.accepted)
+
+    def test_all_none(self):
+        d = _choose_leaf_codec([None, None, None])
+        self.assertFalse(d.accepted)
+
+    def test_infer_flat(self):
+        leaves, nodes = [], []
+        infer_structure("root", ["a", "b", "c"], leaves, nodes)
+        self.assertEqual(len(leaves), 1)
+        self.assertEqual(len(nodes), 0)
+        self.assertEqual(leaves[0].decision.codec, "utf8_ragged")
+
+    def test_infer_dict(self):
+        leaves, nodes = [], []
+        infer_structure("root", [{"x": 1, "y": "a"}, {"x": 2, "y": "b"}], leaves, nodes)
+        self.assertEqual(len(nodes), 1)
+        self.assertEqual(nodes[0].node_type, "dict")
+        self.assertEqual(sorted(nodes[0].children), ["x", "y"])
+        self.assertEqual(sorted(leaf.path for leaf in leaves), ["root.x", "root.y"])
+
+    def test_infer_dict_with_none_rows(self):
+        leaves, nodes = [], []
+        infer_structure("r", [{"x": 1}, None, {"x": 3}], leaves, nodes)
+        self.assertEqual(len(nodes), 1)
+        self.assertEqual(len(leaves), 1)
+        self.assertEqual(leaves[0].path, "r.x")
+
+    def test_infer_nested(self):
+        leaves, nodes = [], []
+        infer_structure("r", [{"a": {"b": 1}}, {"a": {"b": 2}}], leaves, nodes)
+        self.assertEqual(len(nodes), 2)
+        self.assertEqual(leaves[0].path, "r.a.b")
+        self.assertEqual(leaves[0].decision.codec, "ndarray")
+
+    def test_infer_list(self):
+        leaves, nodes = [], []
+        infer_structure("r", [[{"k": 1}], [{"k": 2}]], leaves, nodes)
+        list_nodes = [n for n in nodes if n.node_type == "list"]
+        self.assertEqual(len(list_nodes), 1)
+        self.assertEqual(list_nodes[0].lengths, [1, 1])
+        dict_nodes = [n for n in nodes if n.node_type == "dict"]
+        self.assertEqual(len(dict_nodes), 1)
+        self.assertEqual(len(leaves), 1)
+        self.assertEqual(leaves[0].path, "r[0].k")
+
+    def test_infer_list_with_none_items(self):
+        leaves, nodes = [], []
+        infer_structure("r", [[{"k": 1}, None], [{"k": 2}, None]], leaves, nodes)
+        list_nodes = [n for n in nodes if n.node_type == "list"]
+        self.assertEqual(len(list_nodes), 1)
+
+    def test_dict_missing_key_vs_none_value(self):
+        leaves, nodes = [], []
+        infer_structure("r", [{"x": None}, {"y": 2}, None], leaves, nodes)
+        self.assertIsNotNone(nodes[0].row_mask)
+        self.assertEqual(nodes[0].row_mask, [True, True, False])
+        x_leaf = next(leaf for leaf in leaves if leaf.path == "r.x")
+        self.assertIsNone(x_leaf.values[0])
+        self.assertIsInstance(x_leaf.values[1], type(MISSING))
+        self.assertIsNone(x_leaf.values[2])
+
+    def test_infer_dict_of_tensors(self):
+        import torch
+
+        leaves, nodes = [], []
+        infer_structure(
+            "r",
+            [
+                {"tokens": torch.arange(2, dtype=torch.int64), "score": 1.0},
+                {"tokens": torch.arange(3, dtype=torch.int64), "score": 2.0},
+                {"tokens": torch.arange(1, dtype=torch.int64), "score": None},
+            ],
+            leaves,
+            nodes,
+        )
+        self.assertEqual(len(nodes), 1)
+        self.assertEqual(nodes[0].node_type, "dict")
+        by_path = {leaf.path: leaf for leaf in leaves}
+        self.assertEqual(by_path["r.tokens"].decision.codec, "ragged_tensor")
+        self.assertEqual(by_path["r.score"].decision.codec, "ndarray")
+
+    def test_infer_dict_of_tensors_missing_keys_and_null_rows(self):
+        import torch
+
+        leaves, nodes = [], []
+        rows = [
+            {"tokens": torch.arange(2, dtype=torch.float32), "label": None},
+            None,
+            {"label": 3},
+            {"tokens": None, "label": 4},
+        ]
+        infer_structure("r", rows, leaves, nodes)
+        self.assertEqual(nodes[0].row_mask, [True, False, True, True])
+        by_path = {leaf.path: leaf for leaf in leaves}
+        tokens = by_path["r.tokens"]
+        self.assertTrue(torch.equal(tokens.values[0], rows[0]["tokens"]))
+        self.assertIsNone(tokens.values[1])
+        self.assertIsInstance(tokens.values[2], type(MISSING))
+        self.assertIsNone(tokens.values[3])
+        self.assertEqual(tokens.decision.codec, "ragged_tensor")
+
+    def test_escape_key_in_path(self):
+        self.assertEqual(_escape_key("simple"), "simple")
+        self.assertEqual(_escape_key("a.b"), "a\\.b")
+        self.assertEqual(_escape_key("a[0]"), "a\\[0]")
+        self.assertEqual(_escape_key("a\\b"), "a\\\\b")
+
+    def test_dict_with_dot_key(self):
+        leaves, nodes = [], []
+        infer_structure("r", [{"a.b": 1}, {"a.b": 2}], leaves, nodes)
+        self.assertEqual(leaves[0].path, "r.a\\.b")
+
+    def test_depth_limit(self):
+        deep = 1
+        for _ in range(40):
+            deep = {"a": deep}
+        with self.assertRaises(ValueError):
+            infer_structure("r", [deep, deep], [], [])
 
 
 if __name__ == '__main__':

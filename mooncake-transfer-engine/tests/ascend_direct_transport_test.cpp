@@ -54,6 +54,9 @@ static int g_set_device_call_count = 0;
 static std::set<int> g_set_device_ids;
 static std::map<const void*, aclrtMemLocation> g_memory_locations;
 static std::mutex g_acl_mutex;
+// 0 = no size limit; otherwise aclrtMallocPhysical fails when size > threshold.
+static size_t g_malloc_physical_max_success = 0;
+static int g_malloc_physical_call_count = 0;
 
 namespace mock_acl {
 void reset() {
@@ -67,6 +70,18 @@ void reset() {
     g_set_device_call_count = 0;
     g_set_device_ids.clear();
     g_memory_locations.clear();
+    g_malloc_physical_max_success = 0;
+    g_malloc_physical_call_count = 0;
+}
+
+void set_malloc_physical_max_success(size_t max_success) {
+    std::lock_guard<std::mutex> lock(g_acl_mutex);
+    g_malloc_physical_max_success = max_success;
+}
+
+int malloc_physical_call_count() {
+    std::lock_guard<std::mutex> lock(g_acl_mutex);
+    return g_malloc_physical_call_count;
 }
 
 void set_device_count(int count) {
@@ -256,9 +271,14 @@ aclError aclrtGetPhyDevIdByLogicDevId(int32_t logic_dev_id,
 
 aclError aclrtMallocPhysical(aclrtDrvMemHandle* handle, size_t size,
                              aclrtPhysicalMemProp* prop, uint32_t flags) {
-    (void)size;
     (void)prop;
     (void)flags;
+    std::lock_guard<std::mutex> lock(g_acl_mutex);
+    ++g_malloc_physical_call_count;
+    if (g_malloc_physical_max_success > 0 &&
+        size > g_malloc_physical_max_success) {
+        return ACL_ERROR_FAILURE;
+    }
     *handle = reinterpret_cast<aclrtDrvMemHandle>(malloc(1));
     return *handle ? ACL_ERROR_NONE : ACL_ERROR_FAILURE;
 }
@@ -268,7 +288,11 @@ aclError aclrtReserveMemAddress(void** va, size_t size, size_t alignment,
     (void)alignment;
     (void)hint_addr;
     (void)page_type;
-    *va = malloc(size);
+    // Stub VA only — do not malloc(size) (best-effort tests use multi-GB
+    // sizes).
+    (void)size;
+    constexpr size_t kStubVaBytes = 64;
+    *va = malloc(kStubVaBytes);
     return *va ? ACL_ERROR_NONE : ACL_ERROR_FAILURE;
 }
 
@@ -331,6 +355,9 @@ static int g_transfer_async_count = 0;
 static int g_register_mem_count = 0;
 static int g_deregister_mem_count = 0;
 static std::string g_last_connect_target;
+static adxl::Status g_get_capability_result = adxl::SUCCESS;
+static int32_t g_get_capability_value = 0;
+static std::map<std::string, std::string> g_last_init_options;
 
 namespace adxl_mock {
 void reset() {
@@ -356,6 +383,15 @@ void reset() {
     g_register_mem_count = 0;
     g_deregister_mem_count = 0;
     g_last_connect_target.clear();
+    g_get_capability_result = adxl::SUCCESS;
+    g_get_capability_value = 0;
+    g_last_init_options.clear();
+}
+
+void set_capability_result(adxl::Status status, int32_t value) {
+    std::lock_guard<std::mutex> lock(g_mutex);
+    g_get_capability_result = status;
+    g_get_capability_value = value;
 }
 
 void set_connect_result(adxl::Status status) {
@@ -454,6 +490,11 @@ std::string get_last_connect_target() {
     std::lock_guard<std::mutex> lock(g_mutex);
     return g_last_connect_target;
 }
+
+std::map<std::string, std::string> get_last_init_options() {
+    std::lock_guard<std::mutex> lock(g_mutex);
+    return g_last_init_options;
+}
 }  // namespace adxl_mock
 
 }  // namespace
@@ -470,8 +511,12 @@ Status AdxlEngine::Initialize(
     const AscendString& name,
     const std::map<AscendString, AscendString>& options) {
     (void)name;
-    (void)options;
     g_was_initialize_called = true;
+    g_last_init_options.clear();
+    for (const auto& kv : options) {
+        g_last_init_options[std::string(kv.first.GetString())] =
+            std::string(kv.second.GetString());
+    }
     return g_initialize_result;
 }
 
@@ -585,6 +630,13 @@ Status AdxlEngine::DeregisterMem(MemHandle mem_handle) {
     g_deregistered_mem_handles.push_back(
         reinterpret_cast<uintptr_t>(mem_handle));
     return SUCCESS;
+}
+
+Status AdxlEngine::GetCapability(FeatureType feature_type, int32_t& value) {
+    (void)feature_type;
+    std::lock_guard<std::mutex> lock(g_mutex);
+    value = g_get_capability_value;
+    return g_get_capability_result;
 }
 
 }  // namespace adxl
@@ -1753,6 +1805,94 @@ TEST_F(AscendDirectTransportTest, RemoteTransfer_Async_TransferTimeout) {
                                   "(GetTransferStatus stays WAITING)";
 }
 
+TEST_F(AscendDirectTransportTest,
+       RemoteTransfer_Sync_FailureWithAutoConnect_SkipsDisconnect) {
+    setenv("ASCEND_AUTO_CONNECT", "1", 1);
+    adxl_mock::set_transfer_result(adxl::FAILED);
+
+    auto transport = createTransport();
+    ASSERT_NE(transport, nullptr);
+    ASSERT_EQ(transport->registerLocalMemory(test_buffer_src_, kRegisterMemSize,
+                                             "cpu:0", true, true),
+              0);
+    addRemoteSegment(transport->meta(),
+                     {1, "remote_server", "192.168.1.100", 30000});
+
+    initTestData(kTransferBufSize);
+    auto result = runRemoteTransfer(transport.get(), test_buffer_src_, 1,
+                                    0x10000, kTransferBufSize);
+    ASSERT_TRUE(result.finished);
+    EXPECT_TRUE(result.failed);
+    EXPECT_EQ(adxl_mock::get_disconnect_count(), 0);
+}
+
+TEST_F(AscendDirectTransportTest,
+       RemoteTransfer_Async_SubmitFailureWithAutoConnect_SkipsDisconnect) {
+    setenv("ASCEND_AUTO_CONNECT", "1", 1);
+    adxl_mock::set_transfer_async_result(adxl::FAILED);
+
+    auto transport = createTransport(true);
+    ASSERT_NE(transport, nullptr);
+    ASSERT_EQ(transport->registerLocalMemory(test_buffer_src_, kRegisterMemSize,
+                                             "cpu:0", true, true),
+              0);
+    addRemoteSegment(transport->meta(),
+                     {1, "remote_server", "192.168.1.100", 30000});
+
+    initTestData(kTransferBufSize);
+    auto result = runRemoteTransfer(transport.get(), test_buffer_src_, 1,
+                                    0x10000, kTransferBufSize);
+    ASSERT_TRUE(result.finished);
+    EXPECT_TRUE(result.failed);
+    EXPECT_EQ(adxl_mock::get_disconnect_count(), 0);
+}
+
+TEST_F(AscendDirectTransportTest,
+       RemoteTransfer_Async_GetStatusFailureWithAutoConnect_SkipsDisconnect) {
+    setenv("ASCEND_AUTO_CONNECT", "1", 1);
+    adxl_mock::set_transfer_async_result(adxl::SUCCESS);
+    adxl_mock::set_get_transfer_status_result(adxl::FAILED);
+
+    auto transport = createTransport(true);
+    ASSERT_NE(transport, nullptr);
+    ASSERT_EQ(transport->registerLocalMemory(test_buffer_src_, kRegisterMemSize,
+                                             "cpu:0", true, true),
+              0);
+    addRemoteSegment(transport->meta(),
+                     {1, "remote_server", "192.168.1.100", 30000});
+
+    initTestData(kTransferBufSize);
+    auto result = runRemoteTransfer(transport.get(), test_buffer_src_, 1,
+                                    0x10000, kTransferBufSize);
+    ASSERT_TRUE(result.finished);
+    EXPECT_TRUE(result.failed);
+    EXPECT_EQ(adxl_mock::get_disconnect_count(), 0);
+}
+
+TEST_F(AscendDirectTransportTest,
+       RemoteTransfer_Async_TimeoutWithAutoConnect_StillDisconnects) {
+    setenv("ASCEND_AUTO_CONNECT", "1", 1);
+    setenv("ASCEND_TRANSFER_TIMEOUT", "100", 1);
+    adxl_mock::set_transfer_async_result(adxl::SUCCESS);
+    adxl_mock::set_get_transfer_status_result(adxl::SUCCESS);
+    adxl_mock::set_transfer_status_enum(adxl::TransferStatus::WAITING);
+
+    auto transport = createTransport(true);
+    ASSERT_NE(transport, nullptr);
+    ASSERT_EQ(transport->registerLocalMemory(test_buffer_src_, kRegisterMemSize,
+                                             "cpu:0", true, true),
+              0);
+    addRemoteSegment(transport->meta(),
+                     {1, "remote_server", "192.168.1.100", 30000});
+
+    initTestData(kTransferBufSize);
+    auto result = runRemoteTransfer(transport.get(), test_buffer_src_, 1,
+                                    0x10000, kTransferBufSize);
+    ASSERT_TRUE(result.finished);
+    EXPECT_TRUE(result.failed);
+    EXPECT_EQ(adxl_mock::get_disconnect_count(), 1);
+}
+
 // -----------------------------------------------------------------------------
 // Standalone mode tests (non-dummy-real, non-fabric-mem)
 // -----------------------------------------------------------------------------
@@ -1840,7 +1980,10 @@ TEST_F(AscendDirectTransportTest, Standalone_SameHostOffset_WrapsAround) {
 
 TEST_F(AscendDirectTransportTest,
        Standalone_FabricMem_SameHostUsesFrontEndpoint) {
+    // Fabric mem is a Store-TE feature, so the TE must be store-init for the
+    // transport to capture use_fabric_mem_=true.
     globalConfig().ascend_agent_mode = false;
+    globalConfig().ascend_store_te_init = true;
     globalConfig().ascend_use_fabric_mem = true;
     unsetenv("HCCL_INTRA_ROCE_ENABLE");
     constexpr int kDeviceCount = 4;
@@ -1866,11 +2009,129 @@ TEST_F(AscendDirectTransportTest,
         << "Fabric-mem standalone should not apply same-host offset";
 
     globalConfig().ascend_use_fabric_mem = false;
+    globalConfig().ascend_store_te_init = false;
+}
+
+// A non-Store (e.g. P2P/HCCS) TE must NOT inherit a Store TE's fabric flag that
+// leaked into the process-global config: with ascend_use_fabric_mem=true but
+// ascend_store_te_init=false, the transport must capture use_fabric_mem_=false
+// and behave like a normal standalone TE (same-host offset +1), not the fabric
+// path (front endpoint).
+TEST_F(AscendDirectTransportTest,
+       Standalone_FabricFlagWithoutStoreTe_DoesNotInheritFabric) {
+    globalConfig().ascend_agent_mode = false;
+    globalConfig().ascend_store_te_init = false;
+    globalConfig().ascend_use_fabric_mem = true;
+    unsetenv("HCCL_INTRA_ROCE_ENABLE");
+    constexpr int kDeviceCount = 4;
+    mock_acl::set_device_count(kDeviceCount);
+    g_device_id = 1;
+    auto transport = createTransport();
+    ASSERT_NE(transport, nullptr);
+    ASSERT_EQ(transport->registerLocalMemory(test_buffer_src_, kRegisterMemSize,
+                                             "cpu:0", true, true),
+              0);
+
+    std::vector<std::string> endpoints = {"127.0.0.1:9000", "127.0.0.1:9100",
+                                          "127.0.0.1:9200", "127.0.0.1:9300"};
+    addMultiEndpointRemoteSegment(transport->meta(), 1, "p2p_no_fabric",
+                                  "127.0.0.1", endpoints);
+
+    initTestData(kTransferBufSize);
+    auto result = runRemoteTransfer(transport.get(), test_buffer_src_, 1,
+                                    0x10000, kTransferBufSize);
+    ASSERT_TRUE(result.finished);
+    EXPECT_FALSE(result.failed);
+    // phy_dev=1, same host, fabric NOT inherited -> offset +1 -> endpoints[2]
+    EXPECT_EQ(adxl_mock::get_last_connect_target(), "127.0.0.1:9200")
+        << "Non-Store TE must not inherit fabric; should apply same-host "
+           "offset";
+
+    globalConfig().ascend_use_fabric_mem = false;
 }
 
 // -----------------------------------------------------------------------------
 // Roce mode detection (HCCL_INTRA_ROCE_ENABLE / ASCEND_GLOBAL_RESOURCE_CONFIG)
 // -----------------------------------------------------------------------------
+
+TEST(FabricMemBestEffortAllocTest, PercentileLadderFindsFeasibleSize) {
+    mock_acl::reset();
+    constexpr size_t kGiB = 1024ULL * 1024 * 1024;
+    constexpr size_t kTargetGiB = 40;
+    constexpr size_t kMaxOkGiB = 35;
+    constexpr size_t kExpectGiB = 32;  // 80% of 40GiB after 100%/90% fail
+    constexpr size_t kTarget = kTargetGiB * kGiB;
+    mock_acl::set_malloc_physical_max_success(kMaxOkGiB * kGiB);
+
+    globalConfig().ascend_use_fabric_mem = true;
+    size_t actual = 0;
+    void* ptr = ascend_allocate_memory_best_effort(kTarget, "ascend", &actual);
+    ASSERT_NE(ptr, nullptr);
+    EXPECT_EQ(actual, kExpectGiB * kGiB);
+    EXPECT_GT(mock_acl::malloc_physical_call_count(), 1);
+
+    ascend_free_memory("ascend", ptr);
+    globalConfig().ascend_use_fabric_mem = false;
+    mock_acl::reset();
+}
+
+TEST(FabricMemBestEffortAllocTest, BelowFiftyPercentReturnsNull) {
+    mock_acl::reset();
+    constexpr size_t kGiB = 1024ULL * 1024 * 1024;
+    constexpr size_t kTargetGiB = 40;
+    constexpr size_t kMaxOkGiB = 15;  // below 50% of 40GiB (=20GiB)
+    mock_acl::set_malloc_physical_max_success(kMaxOkGiB * kGiB);
+
+    globalConfig().ascend_use_fabric_mem = true;
+    size_t actual = 0;
+    void* ptr = ascend_allocate_memory_best_effort(kTargetGiB * kGiB, "ascend",
+                                                   &actual);
+    EXPECT_EQ(ptr, nullptr);
+    EXPECT_EQ(actual, 0);
+
+    globalConfig().ascend_use_fabric_mem = false;
+    mock_acl::reset();
+}
+
+// 2.1 GiB target: 50% = 1.05 GiB. Align-down of lower percentiles yields 1 GiB
+// (< 50%), which must be rejected even if physical alloc of 1 GiB would
+// succeed.
+TEST(FabricMemBestEffortAllocTest, AlignDownBelowMinPercentIsRejected) {
+    mock_acl::reset();
+    constexpr size_t kGiB = 1024ULL * 1024 * 1024;
+    constexpr size_t kTarget = (2 * kGiB) + (kGiB / 10);  // 2.1 GiB
+    mock_acl::set_malloc_physical_max_success(kGiB);  // 1 GiB ok, 2 GiB fails
+
+    globalConfig().ascend_use_fabric_mem = true;
+    size_t actual = 0;
+    void* ptr = ascend_allocate_memory_best_effort(kTarget, "ascend", &actual);
+    EXPECT_EQ(ptr, nullptr);
+    EXPECT_EQ(actual, 0);
+
+    globalConfig().ascend_use_fabric_mem = false;
+    mock_acl::reset();
+}
+
+TEST(FabricMemBestEffortAllocTest, FullTargetFirstSuccess) {
+    mock_acl::reset();
+    constexpr size_t kGiB = 1024ULL * 1024 * 1024;
+    constexpr size_t kTargetGiB = 40;
+    constexpr size_t kTarget = kTargetGiB * kGiB;
+    // Physical alloc is tried up to 3 attribute tiers per size.
+    constexpr int kMaxPhysicalTiersPerSize = 3;
+    mock_acl::set_malloc_physical_max_success(0);  // unlimited
+
+    globalConfig().ascend_use_fabric_mem = true;
+    size_t actual = 0;
+    void* ptr = ascend_allocate_memory_best_effort(kTarget, "ascend", &actual);
+    ASSERT_NE(ptr, nullptr);
+    EXPECT_EQ(actual, kTarget);  // 100% first
+    EXPECT_LE(mock_acl::malloc_physical_call_count(), kMaxPhysicalTiersPerSize);
+
+    ascend_free_memory("ascend", ptr);
+    globalConfig().ascend_use_fabric_mem = false;
+    mock_acl::reset();
+}
 
 TEST(RoceModeDetectionTest, GlobalResourceConfig_StringRoceDesc) {
     EXPECT_TRUE(HasRoceProtocolDescInGlobalResourceConfig(
@@ -1913,6 +2174,205 @@ TEST(RoceModeDetectionTest, IsRoceModeEnabled_FromHcclEnv) {
     setenv("HCCL_INTRA_ROCE_ENABLE", "1", 1);
     EXPECT_TRUE(IsRoceModeEnabled());
     unsetenv("HCCL_INTRA_ROCE_ENABLE");
+}
+
+TEST(FabricMemConfigDetectionTest, GlobalResourceConfig_FlatFabricMemory) {
+    EXPECT_TRUE(HasFabricMemoryInGlobalResourceConfig(
+        R"({"fabric_memory.max_capacity":32})"));
+    EXPECT_TRUE(HasFabricMemoryInGlobalResourceConfig(
+        R"({"fabric_memory.start_address":"72","comm_resource_config.protocol_desc":"hccs:device"})"));
+}
+
+TEST(FabricMemConfigDetectionTest, GlobalResourceConfig_NestedFabricMemory) {
+    EXPECT_TRUE(HasFabricMemoryInGlobalResourceConfig(
+        R"({"fabric_memory":{"max_capacity":32,"start_address":40}})"));
+}
+
+TEST(FabricMemConfigDetectionTest, GlobalResourceConfig_NoFabricMemory) {
+    EXPECT_FALSE(HasFabricMemoryInGlobalResourceConfig(
+        R"({"comm_resource_config.protocol_desc":"hccs:device"})"));
+    EXPECT_FALSE(HasFabricMemoryInGlobalResourceConfig("{}"));
+    EXPECT_FALSE(HasFabricMemoryInGlobalResourceConfig(nullptr));
+}
+
+TEST(FabricMemConfigDetectionTest,
+     IsFabricMemEnabled_FromGlobalResourceConfig) {
+    globalConfig().ascend_store_te_init = false;
+    globalConfig().ascend_use_fabric_mem = false;
+    setenv("ASCEND_GLOBAL_RESOURCE_CONFIG",
+           R"({"fabric_memory.max_capacity":32})", 1);
+    EXPECT_TRUE(IsFabricMemEnabledFromGlobalResourceConfig());
+    unsetenv("ASCEND_GLOBAL_RESOURCE_CONFIG");
+}
+
+TEST_F(AscendDirectTransportTest,
+       Standalone_FabricMem_FromGlobalResourceConfig) {
+    // Normal/P2P TE enables fabric mem when ASCEND_GLOBAL_RESOURCE_CONFIG
+    // carries fabric_memory, without ASCEND_ENABLE_USE_FABRIC_MEM / store init.
+    globalConfig().ascend_agent_mode = false;
+    globalConfig().ascend_store_te_init = false;
+    globalConfig().ascend_use_fabric_mem = false;
+    unsetenv("HCCL_INTRA_ROCE_ENABLE");
+    setenv("ASCEND_GLOBAL_RESOURCE_CONFIG",
+           R"({"fabric_memory.max_capacity":32})", 1);
+    constexpr int kDeviceCount = 4;
+    mock_acl::set_device_count(kDeviceCount);
+    g_device_id = 1;
+    auto transport = createTransport();
+    ASSERT_NE(transport, nullptr);
+    ASSERT_EQ(transport->registerLocalMemory(test_buffer_src_, kRegisterMemSize,
+                                             "cpu:0", true, true),
+              0);
+
+    std::vector<std::string> endpoints = {"127.0.0.1:8000", "127.0.0.1:8100",
+                                          "127.0.0.1:8200", "127.0.0.1:8300"};
+    addMultiEndpointRemoteSegment(transport->meta(), 1, "fabric_via_grc",
+                                  "127.0.0.1", endpoints);
+
+    initTestData(kTransferBufSize);
+    auto result = runRemoteTransfer(transport.get(), test_buffer_src_, 1,
+                                    0x10000, kTransferBufSize);
+    ASSERT_TRUE(result.finished);
+    EXPECT_FALSE(result.failed);
+    EXPECT_EQ(adxl_mock::get_last_connect_target(), "127.0.0.1:8000")
+        << "Normal TE with fabric_memory in GLOBAL_RESOURCE_CONFIG should use "
+           "fabric path (front endpoint)";
+
+    unsetenv("ASCEND_GLOBAL_RESOURCE_CONFIG");
+}
+
+// -----------------------------------------------------------------------------
+// Store vs P2P protocol split via a single ASCEND_GLOBAL_RESOURCE_CONFIG:
+// top-level = default (P2P, e.g. HCCS), optional "store" sub-object overrides
+// it for a Store-init TE (e.g. RoCE). Resolution is gated on
+// ascend_store_te_init.
+// -----------------------------------------------------------------------------
+
+namespace {
+// Top-level default = HCCS (P2P), "store" override = RoCE (Store).
+constexpr const char* kDualProtocolConfig =
+    R"({"comm_resource_config":{"protocol_desc":"hccs:device"},)"
+    R"("store":{"comm_resource_config":{"protocol_desc":"roce:device"}}})";
+
+struct StoreTeInitScope {
+    explicit StoreTeInitScope(bool v) {
+        globalConfig().ascend_store_te_init = v;
+    }
+    ~StoreTeInitScope() { globalConfig().ascend_store_te_init = false; }
+};
+}  // namespace
+
+TEST(StoreResourceConfigSplitTest, NoStoreKey_PassthroughVerbatimBothRoles) {
+    const char* cfg =
+        R"({"comm_resource_config":{"protocol_desc":"hccs:device"}})";
+    {
+        StoreTeInitScope store(true);
+        EXPECT_EQ(ResolveAscendGlobalResourceConfig(cfg), std::string(cfg));
+    }
+    {
+        StoreTeInitScope store(false);
+        EXPECT_EQ(ResolveAscendGlobalResourceConfig(cfg), std::string(cfg));
+    }
+}
+
+TEST(StoreResourceConfigSplitTest, EmptyOrNull_ReturnsEmpty) {
+    StoreTeInitScope store(true);
+    EXPECT_TRUE(ResolveAscendGlobalResourceConfig(nullptr).empty());
+    EXPECT_TRUE(ResolveAscendGlobalResourceConfig("").empty());
+}
+
+TEST(StoreResourceConfigSplitTest, StoreRole_SelectsStoreSubtreeRoce) {
+    StoreTeInitScope store(true);
+    std::string resolved =
+        ResolveAscendGlobalResourceConfig(kDualProtocolConfig);
+    // Store TE gets the "store" subtree (RoCE), with the "store" key stripped.
+    EXPECT_TRUE(HasRoceProtocolDescInGlobalResourceConfig(resolved.c_str()));
+    EXPECT_EQ(resolved.find("hccs"), std::string::npos);
+    EXPECT_EQ(resolved.find("\"store\""), std::string::npos);
+}
+
+TEST(StoreResourceConfigSplitTest, DefaultRole_StripsStoreKeyHccs) {
+    StoreTeInitScope store(false);
+    std::string resolved =
+        ResolveAscendGlobalResourceConfig(kDualProtocolConfig);
+    // P2P/default TE gets the top-level (HCCS) with the "store" key removed.
+    EXPECT_FALSE(HasRoceProtocolDescInGlobalResourceConfig(resolved.c_str()));
+    EXPECT_NE(resolved.find("hccs"), std::string::npos);
+    EXPECT_EQ(resolved.find("roce"), std::string::npos);
+    EXPECT_EQ(resolved.find("\"store\""), std::string::npos);
+}
+
+TEST(StoreResourceConfigSplitTest,
+     StoreRoleMissingStoreKey_FallsBackToDefault) {
+    const char* cfg =
+        R"({"comm_resource_config":{"protocol_desc":"hccs:device"}})";
+    StoreTeInitScope store(true);
+    // No "store" key -> store TE falls back to the (verbatim) default config.
+    EXPECT_EQ(ResolveAscendGlobalResourceConfig(cfg), std::string(cfg));
+    EXPECT_FALSE(HasRoceProtocolDescInGlobalResourceConfig(
+        ResolveAscendGlobalResourceConfig(cfg).c_str()));
+}
+
+// The headline case: one env var, Store TE -> RoCE, P2P TE -> HCCS.
+TEST(StoreResourceConfigSplitTest, IsRoceModeEnabled_StoreRoceP2pHccs) {
+    unsetenv("HCCL_INTRA_ROCE_ENABLE");
+    setenv("ASCEND_GLOBAL_RESOURCE_CONFIG", kDualProtocolConfig, 1);
+    {
+        StoreTeInitScope store(true);
+        EXPECT_TRUE(IsRoceModeEnabled()) << "Store TE should resolve to RoCE";
+    }
+    {
+        StoreTeInitScope store(false);
+        EXPECT_FALSE(IsRoceModeEnabled()) << "P2P TE should resolve to HCCS";
+    }
+    unsetenv("ASCEND_GLOBAL_RESOURCE_CONFIG");
+}
+
+// -----------------------------------------------------------------------------
+// Client-Server mode: when capability is supported and user did not set
+// ASCEND_LOCAL_COMM_RES, Mooncake auto-injects LocalCommRes={"version":"1.3"}
+// so EngineFactory selects HixlEngine (HixlCS path).
+// -----------------------------------------------------------------------------
+
+class ClientServerModeTest : public AscendDirectTransportTest {
+   protected:
+    void SetUp() override {
+        AscendDirectTransportTest::SetUp();
+        unsetenv("ASCEND_LOCAL_COMM_RES");
+    }
+    void TearDown() override {
+        unsetenv("ASCEND_LOCAL_COMM_RES");
+        AscendDirectTransportTest::TearDown();
+    }
+};
+
+TEST_F(ClientServerModeTest, AutoInjectLocalCommResWhenSupported) {
+    adxl_mock::set_capability_result(adxl::SUCCESS, 1);
+    auto transport = createTransport();
+    ASSERT_NE(transport, nullptr);
+    const auto opts = adxl_mock::get_last_init_options();
+    auto it = opts.find("adxl.LocalCommRes");
+    ASSERT_NE(it, opts.end());
+    EXPECT_EQ(it->second, R"({"version":"1.3"})");
+}
+
+TEST_F(ClientServerModeTest, NoInjectWhenNotSupported) {
+    adxl_mock::set_capability_result(adxl::SUCCESS, 0);
+    auto transport = createTransport();
+    ASSERT_NE(transport, nullptr);
+    const auto opts = adxl_mock::get_last_init_options();
+    EXPECT_EQ(opts.find("adxl.LocalCommRes"), opts.end());
+}
+
+TEST_F(ClientServerModeTest, UserEnvOverridesAutoInject) {
+    adxl_mock::set_capability_result(adxl::SUCCESS, 1);
+    setenv("ASCEND_LOCAL_COMM_RES", R"({"version":"1.2"})", 1);
+    auto transport = createTransport();
+    ASSERT_NE(transport, nullptr);
+    const auto opts = adxl_mock::get_last_init_options();
+    auto it = opts.find("adxl.LocalCommRes");
+    ASSERT_NE(it, opts.end());
+    EXPECT_EQ(it->second, R"({"version":"1.2"})");
 }
 
 int main(int argc, char** argv) {

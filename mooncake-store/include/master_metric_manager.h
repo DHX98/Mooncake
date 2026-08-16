@@ -33,10 +33,17 @@ class MasterMetricManager {
 
     void inc_mem_cache_hit_nums(int64_t val = 1);
     void inc_file_cache_hit_nums(int64_t val = 1);
+    void inc_mem_cache_hit_bytes(int64_t val = 1);
+    void inc_file_cache_hit_bytes(int64_t val = 1);
+    int64_t get_mem_cache_hit_bytes();
+    int64_t get_file_cache_hit_bytes();
     void inc_mem_cache_nums(int64_t val = 1);
     void inc_file_cache_nums(int64_t val = 1);
+    int64_t get_mem_cache_nums();
+    int64_t get_file_cache_nums();
     void dec_mem_cache_nums(int64_t val = 1);
     void dec_file_cache_nums(int64_t val = 1);
+    void reset_cache_total_nums();
 
     void inc_valid_get_nums(int64_t val = 1);
     void inc_total_get_nums(int64_t val = 1);
@@ -74,10 +81,6 @@ class MasterMetricManager {
     CacheHitStatDict calculate_cache_stats();
 
     // Memory Storage Metrics
-    void inc_allocated_mem_size(int64_t val = 1);
-    void dec_allocated_mem_size(int64_t val = 1);
-    void inc_total_mem_capacity(int64_t val = 1);
-    void dec_total_mem_capacity(int64_t val = 1);
     int64_t get_allocated_mem_size();
     int64_t get_total_mem_capacity();
     double get_segment_mem_used_ratio(const std::string& segment);
@@ -85,17 +88,20 @@ class MasterMetricManager {
     void reset_segment_total_mem_capacity(const std::string& segment);
     int64_t get_segment_allocated_mem_size(const std::string& segment);
     int64_t get_segment_total_mem_capacity(const std::string& segment);
+    // Remove all per-segment metric labels for the given segment.
+    // Called when a segment is unmounted to prevent stale 0-value entries
+    // from persisting in Prometheus output (e.g. after snapshot restore
+    // followed by client expiry / reaper cleanup).
+    void remove_segment_metrics(const std::string& segment);
 
     // NoF segment Metrics
-    void inc_allocated_nof_size(int64_t val = 1);
-    void dec_allocated_nof_size(int64_t val = 1);
-    void inc_total_nof_capacity(int64_t val = 1);
-    void dec_total_nof_capacity(int64_t val = 1);
     int64_t get_allocated_nof_size();
     int64_t get_total_nof_capacity();
     double get_segment_nof_used_ratio(const std::string& segment);
     int64_t get_segment_allocated_nof_size(const std::string& segment);
     int64_t get_segment_total_nof_capacity(const std::string& segment);
+    // Remove all per-segment NoF metric labels for the given segment.
+    void remove_nof_segment_metrics(const std::string& segment);
 
     // File Storage Metrics
     void inc_allocated_file_size(int64_t val = 1);
@@ -133,6 +139,7 @@ class MasterMetricManager {
     void inc_put_start_requests(int64_t val = 1);
     void inc_put_start_failures(int64_t val = 1);
     void inc_put_start_alloc_failures(int64_t val = 1);
+    void inc_put_start_partial_allocations(int64_t val = 1);
     void inc_put_end_requests(int64_t val = 1);
     void inc_put_end_failures(int64_t val = 1);
     void inc_put_revoke_requests(int64_t val = 1);
@@ -196,6 +203,7 @@ class MasterMetricManager {
     int64_t get_put_start_requests();
     int64_t get_put_start_failures();
     int64_t get_put_start_alloc_failures();
+    int64_t get_put_start_partial_allocations();
     int64_t get_put_end_requests();
     int64_t get_put_end_failures();
     int64_t get_put_revoke_requests();
@@ -308,6 +316,19 @@ class MasterMetricManager {
     void inc_promotion_rejected_watermark(int64_t val = 1);
     void inc_promotion_rejected_cap(int64_t val = 1);
 
+    // Tenant quota metrics
+    void inc_tenant_quota_reject(const std::string& tenant_id,
+                                 const std::string& reason, int64_t val = 1);
+    void inc_tenant_evict_bytes(const std::string& tenant_id, int64_t bytes);
+
+    // Promotion retry candidate metrics
+    void inc_promotion_candidate_recorded(int64_t val = 1);
+    void inc_promotion_candidate_admitted(int64_t val = 1);
+    void inc_promotion_candidate_admission_rejected(int64_t val = 1);
+    void inc_promotion_candidate_expired_evaluated(int64_t val = 1);
+    void inc_promotion_candidate_expired_unevaluated(int64_t val = 1);
+    void inc_promotion_candidate_dropped_limit(int64_t val = 1);
+
     // Promotion-on-hit Metrics Getters
     int64_t get_promotion_in_flight();
     int64_t get_promotion_admitted();
@@ -319,6 +340,12 @@ class MasterMetricManager {
     int64_t get_promotion_rejected_frequency();
     int64_t get_promotion_rejected_watermark();
     int64_t get_promotion_rejected_cap();
+    int64_t get_promotion_candidate_recorded();
+    int64_t get_promotion_candidate_admitted();
+    int64_t get_promotion_candidate_admission_rejected();
+    int64_t get_promotion_candidate_expired_evaluated();
+    int64_t get_promotion_candidate_expired_unevaluated();
+    int64_t get_promotion_candidate_dropped_limit();
 
     // CopyStart, CopyEnd, CopyRevoke, MoveStart, MoveEnd, MoveRevoke Metrics
     void inc_copy_start_requests(int64_t val = 1);
@@ -406,6 +433,7 @@ class MasterMetricManager {
         int64_t put_starts = 0;
         int64_t put_start_fails = 0;
         int64_t put_start_alloc_fails = 0;
+        int64_t put_start_partial_allocs = 0;
         int64_t put_ends = 0;
         int64_t put_end_fails = 0;
         int64_t put_revoke_requests = 0;
@@ -542,6 +570,7 @@ class MasterMetricManager {
     ylt::metric::counter_t put_start_requests_;
     ylt::metric::counter_t put_start_failures_;
     ylt::metric::counter_t put_start_alloc_failures_;
+    ylt::metric::counter_t put_start_partial_allocations_;
     ylt::metric::counter_t put_end_requests_;
     ylt::metric::counter_t put_end_failures_;
     ylt::metric::counter_t put_revoke_requests_;
@@ -619,6 +648,8 @@ class MasterMetricManager {
     // end-to-end request/token-level cache hit ratio.
     ylt::metric::counter_t mem_cache_hit_nums_;
     ylt::metric::counter_t file_cache_hit_nums_;
+    ylt::metric::counter_t mem_cache_hit_bytes_;
+    ylt::metric::counter_t file_cache_hit_bytes_;
     ylt::metric::gauge_t mem_cache_nums_;
     ylt::metric::gauge_t file_cache_nums_;
 
@@ -668,6 +699,16 @@ class MasterMetricManager {
     ylt::metric::counter_t promotion_rejected_frequency_;
     ylt::metric::counter_t promotion_rejected_watermark_;
     ylt::metric::counter_t promotion_rejected_cap_;
+    // Promotion retry candidate metrics
+    ylt::metric::counter_t promotion_candidate_recorded_;
+    ylt::metric::counter_t promotion_candidate_admitted_;
+    ylt::metric::counter_t promotion_candidate_admission_rejected_;
+    ylt::metric::counter_t promotion_candidate_expired_evaluated_;
+    ylt::metric::counter_t promotion_candidate_expired_unevaluated_;
+    ylt::metric::counter_t promotion_candidate_dropped_limit_;
+
+    ylt::metric::dynamic_counter_2t tenant_quota_reject_total_;
+    ylt::metric::dynamic_counter_1t tenant_evict_bytes_total_;
 
     // Snapshot Metrics
     ylt::metric::histogram_t snapshot_duration_ms_;

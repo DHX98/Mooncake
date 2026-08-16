@@ -3,7 +3,7 @@
 #include <functional>
 
 #include "client_service.h"
-#include "client_buffer.hpp"
+#include "client_buffer.h"
 #include "storage_backend.h"
 #include "pinned_buffer_pool.h"
 
@@ -22,6 +22,8 @@ class FileStorage {
 
     tl::expected<void, ErrorCode> Init();
 
+    void RemoveAll();
+
     /**
      * @brief Result of BatchGet operation containing batch_id and buffer
      * pointers.
@@ -29,6 +31,14 @@ class FileStorage {
     struct BatchGetResult {
         uint64_t batch_id;
         std::vector<uint64_t> pointers;
+    };
+
+    struct LocalBatchResult {
+        std::vector<uint64_t> pointers;
+
+       private:
+        friend class FileStorage;
+        std::shared_ptr<void> owner;
     };
 
     /**
@@ -42,6 +52,14 @@ class FileStorage {
     tl::expected<BatchGetResult, ErrorCode> BatchGet(
         const std::vector<std::string>& keys,
         const std::vector<int64_t>& sizes);
+
+    tl::expected<LocalBatchResult, ErrorCode> BatchGetLocal(
+        const std::vector<std::string>& keys,
+        const std::vector<int64_t>& sizes);
+
+    [[nodiscard]] bool HasPinnedRestoreArena() const {
+        return pinned_restore_arena_allocator_ != nullptr;
+    }
 
     FileStorageConfig config_;
 
@@ -106,13 +124,35 @@ class FileStorage {
         const std::vector<OffloadTaskItem>& offloading_objects);
 
     /**
+     * @brief Classifies a BatchOffload error as affecting only the current
+     * bucket rather than the whole offload cycle.
+     *
+     * Such an error means the bucket's keys simply cannot be persisted this
+     * round; OffloadObjects reports them back to the master as failed (so their
+     * offloading tasks and source-replica refcounts are released) and continues
+     * with the remaining buckets, instead of aborting the entire cycle.
+     *
+     *   - INVALID_READ: source data for these keys could not be read/staged.
+     *   - OBJECT_ALREADY_EXISTS: the key(s) were already offloaded, or are
+     *     being offloaded concurrently. The bucket backend rejects the whole
+     *     bucket atomically by design (see BucketStorageBackend::BatchOffload
+     *     and its PrepareEviction duplicate guard). Treating this as fatal
+     *     aborted the cycle, leaked offloading tasks, and left master/SSD
+     *     metadata inconsistent, which surfaced as spurious INVALID_KEY on the
+     *     read path (issue #2827).
+     */
+    static bool IsPerBucketSoftOffloadError(ErrorCode error);
+
+    /**
      * @brief Performs a heartbeat operation for the FileStorage component.
      * 1. Sends object status (e.g., access frequency, size) to the master via
      * client.
      * 2. Receives feedback on which objects should be offloaded.
      * 3. Triggers asynchronous offloading of pending objects.
-     * 4. Pulls and processes any pending L2->L1 promotion tasks queued by the
-     *    master (mirror of step 1+2 in the reverse direction).
+     * 4. If offload work was returned, pulls and processes any pending L2->L1
+     *    promotion tasks queued by the master (mirror of step 1+2 in the
+     *    reverse direction).
+     * 5. Runs proactive local-disk watermark eviction.
      * @return tl::expected<void, ErrorCode> indicating operation status.
      */
     tl::expected<void, ErrorCode> Heartbeat();
@@ -131,6 +171,11 @@ class FileStorage {
 
     tl::expected<bool, ErrorCode> IsEnableOffloading();
 
+    tl::expected<void, ErrorCode> RunDiskWatermarkEviction();
+
+    tl::expected<void, ErrorCode> NotifyEvictedDiskReplicas(
+        const std::vector<std::string>& evicted_keys);
+
     tl::expected<void, ErrorCode> BatchLoad(
         std::unordered_map<std::string, Slice>& batch_object);
 
@@ -141,8 +186,12 @@ class FileStorage {
     tl::expected<void, ErrorCode> RegisterLocalMemory();
 
     tl::expected<std::shared_ptr<AllocatedBatch>, ErrorCode> AllocateBatch(
-        const std::vector<std::string>& keys,
-        const std::vector<int64_t>& sizes);
+        const std::vector<std::string>& keys, const std::vector<int64_t>& sizes,
+        ClientBufferAllocator& allocator);
+
+    tl::expected<std::shared_ptr<AllocatedBatch>, ErrorCode> LoadBatch(
+        const std::vector<std::string>& keys, const std::vector<int64_t>& sizes,
+        bool prefer_pinned);
 
     void ClientBufferGCThreadFunc();
 
@@ -156,8 +205,10 @@ class FileStorage {
     std::shared_ptr<Client> client_;
     SsdMetric* ssd_metric_{nullptr};
     std::string local_rpc_addr_;
-    // Pinned host memory pool for GPU D2H staging in OffloadObjects
+    // Pinned memory for GPU staging and SSD-to-GPU restores.
     std::unique_ptr<PinnedBufferPool> pinned_buffer_pool_;
+    PinnedBufferPool::Buffer pinned_restore_arena_;
+    std::shared_ptr<ClientBufferAllocator> pinned_restore_arena_allocator_;
     std::shared_ptr<StorageBackendInterface> storage_backend_;
     std::shared_ptr<ClientBufferAllocator> client_buffer_allocator_;
     mutable Mutex client_buffer_mutex_;

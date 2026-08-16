@@ -60,6 +60,8 @@ class Transport {
     struct TransferRequest {
         enum OpCode { READ, WRITE };
 
+        static constexpr uint64_t kNoTaskGroup = 0;
+
         OpCode opcode;
         void *source;
         SegmentID target_id;
@@ -68,6 +70,8 @@ class Transport {
         int advise_retry_cnt = 0;
         // Per-request transport pin, TENT only.
         int transport_hint = 0;
+        // Adjacent requests in the same group are one transport submission.
+        uint64_t task_group_id = kNoTaskGroup;
     };
 
     enum TransferStatusEnum {
@@ -83,6 +87,12 @@ class Transport {
     struct TransferStatus {
         TransferStatusEnum s;
         size_t transferred_bytes;
+    };
+
+    struct NicLoadStats {
+        std::string device_name;
+        uint64_t inflight_bytes{0};
+        double ewma_bandwidth_bps{0.0};
     };
 
     struct BatchDesc;
@@ -113,19 +123,33 @@ class Transport {
         TransferRequest::OpCode opcode;
         SegmentID target_id;
         std::string peer_nic_path;
+        std::string source_location;
         SliceStatus status;
         TransferTask *task;
-        std::vector<uint32_t> dest_rkeys;
+        // EFA/CXI's libfabric MR keys are 64-bit (fi_mr_key()); RDMA verbs keys
+        // are 32-bit. Use a scoped alias so the width is defined in one place.
+#if defined(USE_EFA) || defined(USE_CXI)
+        using mr_key_t = uint64_t;
+#else
+        using mr_key_t = uint32_t;
+#endif
+        std::vector<mr_key_t> dest_rkeys;
         bool from_cache;
+
+        // Optional resource cleanup invoked exactly once before the slice is
+        // deleted or returned to the thread-local cache. The callback must not
+        // delete the slice.
+        using CleanupCallback = void (*)(Slice *);
+        CleanupCallback cleanup_callback = nullptr;
 
         union {
             struct {
                 uint64_t dest_addr;
-                uint32_t source_lkey;
-                uint32_t dest_rkey;
+                mr_key_t source_lkey;
+                mr_key_t dest_rkey;
                 int lkey_index;
                 int rkey_index;
-                volatile int *qp_depth;
+                std::atomic<int> *qp_depth;
                 uint32_t retry_cnt;
                 uint32_t max_retry_cnt;
                 RdmaEndPoint *endpoint;  // Endpoint used for this transfer
@@ -144,6 +168,10 @@ class Transport {
                 void *cuda_stream;  // cudaStream_t, used by async NVLink
                                     // transport
             } local;
+            struct {
+                void *event;  // cudaEvent_t
+                int device_id;
+            } nccl;
             struct {
                 uint64_t dest_addr;
             } tcp;
@@ -273,6 +301,12 @@ class Transport {
         }
 
         void deallocate(Slice *slice) {
+            // Clear before invoking so a cached slice cannot carry a
+            // transport-specific cleanup callback into its next use.
+            auto cleanup = slice->cleanup_callback;
+            slice->cleanup_callback = nullptr;
+            if (cleanup) cleanup(slice);
+
             if (head_ - tail_ == kLazyDeleteSliceCapacity) {
                 delete slice;
                 return;
@@ -367,6 +401,11 @@ class Transport {
         const std::vector<TransferTask *> &task_list) {
         return Status::NotImplemented(
             "Transport::submitTransferTask is not implemented");
+    }
+
+    virtual Status submitTransferTaskGroup(
+        const std::vector<TransferTask *> &task_list) {
+        return submitTransferTask(task_list);
     }
 
     /// @brief Get the status of a submitted transfer. This function shall not

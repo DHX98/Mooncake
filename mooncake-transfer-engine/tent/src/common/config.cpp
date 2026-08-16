@@ -49,10 +49,58 @@ std::string Config::dump(int indent) const {
     return config_data_.dump(indent);
 }
 
+bool Config::dumpSubtree(const std::string& key_path, std::string* out) const {
+    if (!out || key_path.empty()) return false;
+    std::lock_guard<std::mutex> lock(mutex_);
+    const json* node = &config_data_;
+    std::string::size_type start = 0;
+    bool nested_found = true;
+    while (start < key_path.size()) {
+        auto pos = key_path.find(kDelimiter, start);
+        auto segment = key_path.substr(start, pos - start);
+        start = (pos == std::string::npos) ? key_path.size() : pos + 1;
+        if (segment.empty()) continue;
+        auto it = node->find(segment);
+        if (it == node->end()) {
+            nested_found = false;
+            break;
+        }
+        node = &(*it);
+    }
+    if (nested_found && !node->is_null()) {
+        *out = node->dump();
+        return true;
+    }
+    auto flat_it = config_data_.find(key_path);
+    if (flat_it != config_data_.end() && !flat_it->is_null()) {
+        *out = flat_it->dump();
+        return true;
+    }
+    return false;
+}
+
 static inline void setConfig(Config& config, const std::string& env_key,
                              const std::string& config_key) {
     const char* val = std::getenv(env_key.c_str());
     if (val) config.setFromString(config_key, std::string(val));
+}
+
+// Like setConfig, but parses the env value as a comma-separated list and
+// stores it as a string array. Empty/whitespace-only items are dropped so a
+// trailing comma or spaces around names are tolerated (e.g. "mlx5_0, mlx5_1").
+static inline void setArrayConfig(Config& config, const std::string& env_key,
+                                  const std::string& config_key) {
+    const char* val = std::getenv(env_key.c_str());
+    if (!val) return;
+    std::vector<std::string> items;
+    std::stringstream ss(val);
+    std::string item;
+    while (std::getline(ss, item, ',')) {
+        item.erase(0, item.find_first_not_of(" \t"));
+        item.erase(item.find_last_not_of(" \t") + 1);
+        if (!item.empty()) items.push_back(item);
+    }
+    if (!items.empty()) config.set(config_key, items);
 }
 
 Status ConfigHelper::loadFromEnv(Config& config) {
@@ -107,6 +155,7 @@ Status ConfigHelper::loadFromEnv(Config& config) {
     setConfig(config, "MC_PKEY_INDEX", "transports/rdma/endpoint/pkey_index");
     setConfig(config, "MC_MTU", "transports/rdma/endpoint/path_mtu");
     setConfig(config, "MC_IB_TC", "transports/rdma/endpoint/traffic_class");
+    setConfig(config, "MC_IB_SL", "transports/rdma/endpoint/service_level");
     setConfig(config, "MC_IB_PCI_RELAXED_ORDERING",
               "transports/rdma/pci_relaxed_ordering");
     setConfig(config, "MC_WORKERS_PER_CTX",
@@ -116,6 +165,20 @@ Status ConfigHelper::loadFromEnv(Config& config) {
               "transports/rdma/workers/max_retry_count");
     setConfig(config, "MC_DISABLE_GPU_DIRECT_RDMA",
               "transports/rdma/disable_gpu_direct_rdma");
+    setConfig(config, "MC_LOG_RDMA_SLICE_AFFINITY",
+              "transports/rdma/log_slice_affinity");
+    // Restrict which RDMA NICs the engine discovers/uses (comma-separated
+    // device names). MC_TE_FILTERS is an allow-list — same name and semantics
+    // as the legacy Transfer Engine's device whitelist, so a single env works
+    // across both engines. MC_TE_FILTERS_EXCLUDE is a deny-list (new; the
+    // legacy engine has no deny-list). Unset = discover all (default).
+    // Consumed by filterInfiniBandDevices() in the platform probes.
+    setArrayConfig(config, "MC_TE_FILTERS", "topology/rdma_whitelist");
+    setArrayConfig(config, "MC_TE_FILTERS_EXCLUDE", "topology/rdma_blacklist");
+    // Classic TE custom topology file path. Maps into TENT config so the same
+    // MC_CUSTOM_TOPO_JSON works under MC_USE_TENT. Inline
+    // topology/priority_matrix in MC_TENT_CONF still takes precedence.
+    setConfig(config, "MC_CUSTOM_TOPO_JSON", "topology/custom_json_path");
     return status;
 }
 
@@ -139,7 +202,14 @@ bool ConfigHelper::parseBool(const std::string& str, bool default_value) {
 
 int ConfigHelper::parseInt(const std::string& str, int default_value) {
     try {
-        return std::stoi(str);
+        size_t parsed = 0;
+        int value = std::stoi(str, &parsed);
+        if (parsed != str.size()) {
+            LOG(WARNING) << "Invalid integer value '" << str
+                         << "', using default: " << default_value;
+            return default_value;
+        }
+        return value;
     } catch (const std::exception& e) {
         LOG(WARNING) << "Failed to parse integer '" << str << "': " << e.what()
                      << ", using default: " << default_value;
@@ -150,7 +220,13 @@ int ConfigHelper::parseInt(const std::string& str, int default_value) {
 uint16_t ConfigHelper::parsePort(const std::string& str,
                                  uint16_t default_value) {
     try {
-        int port = std::stoi(str);
+        size_t parsed = 0;
+        int port = std::stoi(str, &parsed);
+        if (parsed != str.size()) {
+            LOG(WARNING) << "Invalid port value '" << str
+                         << "', using default: " << default_value;
+            return default_value;
+        }
         if (port > 0 && port <= 65535) {
             return static_cast<uint16_t>(port);
         } else {

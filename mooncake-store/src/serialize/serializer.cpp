@@ -1,8 +1,8 @@
 #include <iostream>
 #include <vector>
 
-#include "serialize/serializer.hpp"
-#include "offset_allocator/offset_allocator.hpp"
+#include "serialize/serializer.h"
+#include "offset_allocator/offset_allocator.h"
 #include "types.h"
 #include "master_service.h"
 #include "utils/zstd_util.h"
@@ -712,6 +712,24 @@ tl::expected<void, SerializationError> Serializer<Replica>::serialize(
             packer.pack(local_data->transport_endpoint);
             break;
         }
+        case ReplicaType::DFS: {
+            const auto *dfs_data = std::get_if<DfsReplicaData>(&replica.data_);
+            if (!dfs_data) {
+                return tl::unexpected(SerializationError(
+                    ErrorCode::DESERIALIZE_FAIL,
+                    "serialize_msgpack Replica missing DfsReplicaData"));
+            }
+            // Format: [file_path, offset, object_size, aligned_size, shard_idx]
+            packer.pack_array(5);
+            packer.pack(dfs_data->descriptor.file_path);
+            packer.pack(static_cast<uint64_t>(dfs_data->descriptor.offset));
+            packer.pack(
+                static_cast<uint64_t>(dfs_data->descriptor.object_size));
+            packer.pack(
+                static_cast<uint64_t>(dfs_data->descriptor.aligned_size));
+            packer.pack(static_cast<int32_t>(dfs_data->descriptor.shard_idx));
+            break;
+        }
         default:
             // Unsupported replica type
             packer.pack(static_cast<int8_t>(255));
@@ -812,6 +830,26 @@ auto Serializer<Replica>::deserialize(const msgpack::object &obj,
                 client_id, object_size, std::move(transport_endpoint), status);
             break;
         }
+        case static_cast<int8_t>(ReplicaType::DFS): {
+            const auto &payload = array_items[3];
+            if (payload.type != msgpack::type::ARRAY ||
+                payload.via.array.size != 5) {
+                return tl::unexpected(
+                    SerializationError(ErrorCode::DESERIALIZE_FAIL,
+                                       "deserialize_msgpack Replica DFS "
+                                       "payload is not valid array[5]"));
+            }
+            auto *payload_items = payload.via.array.ptr;
+            DistributedFSDescriptor descriptor;
+            descriptor.file_path = payload_items[0].as<std::string>();
+            descriptor.offset = payload_items[1].as<uint64_t>();
+            descriptor.object_size = payload_items[2].as<uint64_t>();
+            descriptor.aligned_size = payload_items[3].as<uint64_t>();
+            descriptor.shard_idx = payload_items[4].as<int32_t>();
+
+            replica = std::make_shared<Replica>(std::move(descriptor), status);
+            break;
+        }
         default:
             return tl::unexpected(SerializationError(
                 ErrorCode::DESERIALIZE_FAIL,
@@ -830,9 +868,10 @@ tl::expected<void, SerializationError> Serializer<MountedSegment>::serialize(
     const MountedSegment &mounted_segment, MsgpackPacker &packer) {
     // Use array structure for packing, more efficient
     // Format: [segment_id, segment_name, segment_base, segment_size,
-    // te_endpoint, status, has_buffer_allocator, buffer_allocator_data...]
+    // te_endpoint, status, has_buffer_allocator, buffer_allocator_data,
+    // host_id]
 
-    packer.pack_array(8);
+    packer.pack_array(9);
 
     // Serialize Segment info
     packer.pack(UuidToString(mounted_segment.segment.id));
@@ -855,12 +894,14 @@ tl::expected<void, SerializationError> Serializer<MountedSegment>::serialize(
             if (!result) {
                 return tl::unexpected(result.error());
             }
+            packer.pack(mounted_segment.segment.host_id);
             return {};
         }
     }
 
     packer.pack(false);  // Mark no valid buffer allocator exists
     packer.pack_nil();
+    packer.pack(mounted_segment.segment.host_id);
     return {};
 }
 
@@ -916,6 +957,9 @@ Serializer<MountedSegment>::deserialize(const msgpack::object &obj) {
             } else {
                 return tl::unexpected(allocatorResult.error());
             }
+        }
+        if (obj.via.array.size >= 9) {
+            mounted_segment.segment.host_id = array[8].as<std::string>();
         }
     } catch (const std::exception &e) {
         return tl::unexpected(SerializationError(
@@ -993,6 +1037,17 @@ auto Serializer<OffsetBufferAllocator>::deserialize(const msgpack::object &obj)
         // Set internal member variable values
         allocator->offset_allocator_ = offset_allocator_result.value();
         allocator->cur_size_ = cur_size;
+
+        // The snapshot restores cur_size_ directly from persisted data
+        // without going through the live allocate()/adoptImportedBuffer()
+        // paths, so no inc_allocated_mem_size() was paired with it. The
+        // allocator destructor still calls dec_allocated_mem_size(cur_size_)
+        // to undo its contribution to the global metric; without a matching
+        // inc the gauge would go negative and wrap to ~16M TB when formatted
+        // as uint64. Pair it here so the accounting stays symmetric and the
+        // gauge ends at 0 after this (often throwaway) allocator is destroyed.
+        MasterMetricManager::instance().inc_allocated_mem_size(
+            segment_name, static_cast<int64_t>(cur_size));
 
         return allocator;
     } catch (const std::exception &e) {

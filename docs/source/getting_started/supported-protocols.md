@@ -16,6 +16,8 @@ Mooncake Transfer Engine supports multiple communication protocols for data tran
 | **barex** | RDMA-capable NIC | Bare-metal RDMA extension | ⚠️ Advanced |
 | **cxl** | CXL-capable hardware | Memory pooling and sharing | ⚠️ Advanced |
 | **ascend** | Huawei Ascend NPU | Ascend NPU communication | ⚠️ Advanced |
+| **tpu** | Google TPU (PJRT) | TPU KV-cache transfer via host-DRAM staging | 🧪 Experimental (TENT) |
+| **mpcomm** | RDMA-capable NIC(s) | Multi-NIC memory pooling with NIC/QP load balancing | ⚠️ Advanced (TENT) |
 
 ## Commonly Used Protocols (Python API)
 
@@ -266,6 +268,68 @@ export MC_FORCE_MNNVL=true
 - [Heterogeneous Ascend](../design/transfer-engine/heterogeneous_ascend.md)
 - [Ascend Transport](../design/transfer-engine/ascend_transport.md)
 
+### TPU Transport (tpu) — Experimental
+
+**Description:** Google TPU support in the TENT runtime. Because TPU HBM is not
+directly addressable by the NIC, transfers touching TPU memory are staged
+through host DRAM: the HBM ↔ host-DRAM hop is performed by a PJRT device-copy
+adapter, and the host ↔ host hop is carried by an existing transport (RDMA/TCP).
+The two stages are chained automatically by the TENT staging pipeline
+(`ProxyManager`), so no separate networked TPU transport is required.
+
+**Status:** Experimental. The C++/TENT data path is gated behind `-DUSE_TPU=ON`
+(OFF by default). A serving-framework (JAX / PyTorch-XLA) integration layer is
+planned as a follow-up.
+
+**Use When:**
+- Disaggregated prefill/decode serving on TPU hosts
+- KV-cache transfer between TPU nodes over RDMA/TCP
+
+**Requirements:**
+- Built with `-DUSE_TPU=ON -DUSE_TENT=ON`
+- A PJRT device-copy adapter shared library exposing the `mc_tpu_pjrt_*` C ABI
+  (see `tpu_pjrt_abi.h`). The adapter is resolved at runtime via `dlopen`; its
+  path defaults to `libmooncake_tpu_pjrt.so` and can be overridden with the
+  `MC_TPU_PJRT_LIB` environment variable. No PJRT/TPU SDK is required at build
+  time.
+- An RDMA (or TCP) transport enabled for the host ↔ host hop.
+
+**Design notes:**
+- TPU memory is reported as a distinct memory type (`tpu:N` locations); the
+  staging policy routes the local HBM ↔ host copy to the TPU device-copy
+  transport and the cross-node hop to RDMA/TCP.
+- DMA-mapped (pinned) staging buffers for true async device DMA are a planned
+  performance follow-up.
+
+### MPComm Transport (mpcomm)
+
+**Description:** UCL-MPComm (Unified Communication Library - Memory Pool Communication) is an RDMA
+library for heterogeneous memory pooling, integrated as a TENT transport. It drives multiple RDMA
+NICs concurrently with two-level load balancing (across NICs, and across QPs within a NIC) and
+NUMA-aware worker placement, exposing one-sided put/get primitives. It is shortened to MPComm
+below.
+
+**Status:** TENT only. There is no MPComm backend on the legacy Transfer Engine transport path,
+so it cannot be selected through `MOONCAKE_PROTOCOL` or `transfer_engine_bench --protocol=`.
+
+**Use When:**
+- The host has several RDMA NICs and you want them saturated by a single transfer stream
+- Multi-NUMA hosts where NIC-to-NUMA affinity matters
+
+**Requirements:**
+- Built with `-DUSE_TENT=ON -DUSE_MPCOMM=ON -DMPCOMM_ROOT=<prefix>`
+- MPComm installed, providing `include/mpcomm.h` and `lib/libmpcomm.so`
+  (<https://github.com/Tencent/UCL-MPComm>)
+- `libmpcomm.so` reachable by the dynamic linker at run time
+
+**Enable:**
+```json
+{ "transports": { "mpcomm": { "enable": true } } }
+```
+
+See [MPComm Transport](../design/transfer-engine/mpcomm_transport.md) for the full guide,
+including selection via transport policy, tuning environment variables, and troubleshooting.
+
 ## Configuration Examples
 
 ### Configuration File (JSON)
@@ -363,8 +427,8 @@ If a protocol fails to initialize:
 
 ## See Also
 
-- [Quick Start Guide](quick-start.md) - Getting started with Mooncake
+- [Quick Start](quick-start.md) - Start with Mooncake integrations for serving frameworks
 - [Transfer Engine Design](../design/transfer-engine/index.md) - Detailed architecture
 - [Transfer Engine Benchmark](../design/transfer-engine/transfer-engine-bench-tuning.md) - Performance tuning
-- [Python API Reference](../python-api-reference/transfer-engine.md) - API documentation
+- [Python API Reference](../api-reference/python/transfer-engine.md) - API documentation
 - [Deployment Guide](../deployment/mooncake-store-deployment-guide.md) - Production deployment

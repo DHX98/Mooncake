@@ -8,7 +8,9 @@
 #include <ylt/coro_rpc/coro_rpc_client.hpp>
 
 #include "client_metric.h"
+#include "device/cuda_ipc_buffer_handle.h"
 #include "pyclient.h"
+#include "store_rpc_client_io_context.h"
 #include "shm_helper.h"
 #include <memory>
 
@@ -21,18 +23,22 @@ class DummyClient : public PyClient {
 
     int64_t unregister_shm();
 
-    int setup_real(
-        const std::string &local_hostname, const std::string &metadata_server,
-        size_t global_segment_size, size_t local_buffer_size,
-        const std::string &protocol, const std::string &rdma_devices,
-        const std::string &master_server_addr,
-        const std::shared_ptr<TransferEngine> &transfer_engine,
-        const std::string &ipc_socket_path, bool enable_ssd_offload = false,
-        const std::string &ssd_offload_path = "",
-        const std::string &tenant_id = "default",
-        int64_t ssd_prefetch_cooldown_sec = DEFAULT_SSD_PREFETCH_COOLDOWN_SEC,
-        int64_t ssd_prefetch_dedup_ttl_sec =
-            DEFAULT_SSD_PREFETCH_DEDUP_TTL_SEC) {
+    int setup_real(const std::string &local_hostname,
+                   const std::string &metadata_server,
+                   size_t global_segment_size, size_t local_buffer_size,
+                   const std::string &protocol, const std::string &rdma_devices,
+                   const std::string &master_server_addr,
+                   const std::shared_ptr<TransferEngine> &transfer_engine,
+                   const std::string &ipc_socket_path,
+                   bool enable_ssd_offload = false,
+                   const std::string &ssd_offload_path = "",
+                   const std::string &tenant_id = "default",
+                   int64_t ssd_prefetch_cooldown_sec =
+                       DEFAULT_SSD_PREFETCH_COOLDOWN_SEC,
+                   int64_t ssd_prefetch_dedup_ttl_sec =
+                       DEFAULT_SSD_PREFETCH_DEDUP_TTL_SEC,
+                   bool enable_client_http_server = false,
+                   int client_http_port = DEFAULT_CLIENT_HTTP_PORT) {
         // Dummy client does not support real setup
         return -1;
     };
@@ -73,6 +79,9 @@ class DummyClient : public PyClient {
                                         const std::vector<void *> &buffers,
                                         const std::vector<size_t> &sizes);
 
+    std::vector<int64_t> batch_get_into_cuda_ipc(
+        const std::vector<CudaIpcReadRequest> &requests);
+
     std::vector<int> batch_get_into_multi_buffers(
         const std::vector<std::string> &keys,
         const std::vector<std::vector<void *>> &all_buffers,
@@ -98,6 +107,19 @@ class DummyClient : public PyClient {
         const std::vector<std::vector<size_t>> &all_sizes,
         const ReplicateConfig &config = ReplicateConfig{});
 
+    std::vector<int> batch_put_from_cuda_ipc(
+        const std::vector<CudaIpcWriteRequest> &requests,
+        const ReplicateConfig &config = ReplicateConfig{});
+
+    std::vector<int> batch_upsert_from_cuda_ipc(
+        const std::vector<CudaIpcWriteRequest> &requests,
+        const ReplicateConfig &config = ReplicateConfig{});
+
+    std::vector<int> batch_upsert_from_multi_buffers(
+        const std::vector<std::string> &keys,
+        const std::vector<std::vector<void *>> &all_buffers,
+        const std::vector<std::vector<size_t>> &all_sizes,
+        const ReplicateConfig &config = ReplicateConfig{}) override;
     std::shared_ptr<BufferHandle> get_buffer(const std::string &key);
 
     std::vector<std::shared_ptr<BufferHandle>> batch_get_buffer(
@@ -180,6 +202,8 @@ class DummyClient : public PyClient {
 
     tl::expected<QueryTaskResponse, ErrorCode> query_task(const UUID &task_id);
 
+    std::optional<BufferHandle> allocate_client_buffer(size_t size) override;
+
    private:
     ErrorCode connect(const std::string &server_address);
 
@@ -239,38 +263,10 @@ class DummyClient : public PyClient {
         return to_py_ret(result);
     }
 
-    /**
-     * @brief Accessor for the coro_rpc_client pool. Since coro_rpc_client
-     * pool cannot reconnect to a different address, a new coro_rpc_client
-     * pool is created if the address is different from the current one.
-     */
-    class RpcClientAccessor {
-       public:
-        void SetClientPool(
-            std::shared_ptr<coro_io::client_pool<coro_rpc::coro_rpc_client>>
-                client_pool) {
-            std::lock_guard<std::shared_mutex> lock(client_mutex_);
-            client_pool_ = client_pool;
-        }
-
-        std::shared_ptr<coro_io::client_pool<coro_rpc::coro_rpc_client>>
-        GetClientPool() {
-            std::shared_lock<std::shared_mutex> lock(client_mutex_);
-            return client_pool_;
-        }
-
-       private:
-        mutable std::shared_mutex client_mutex_;
-        std::shared_ptr<coro_io::client_pool<coro_rpc::coro_rpc_client>>
-            client_pool_;
-    };
-    RpcClientAccessor client_accessor_;
+    RpcClientPool client_accessor_;
 
     // The client identification.
     const UUID client_id_;
-
-    std::shared_ptr<coro_io::client_pools<coro_rpc::coro_rpc_client>>
-        client_pools_;
 
     // Mutex to insure the Connect function is atomic.
     mutable Mutex connect_mutex_;
@@ -280,6 +276,7 @@ class DummyClient : public PyClient {
     // For shared memory management
     ShmHelper *shm_helper_ = nullptr;
     std::string ipc_socket_path_;
+    void *local_buffer_base_ = nullptr;
 
     // Hot cache shm mapping (obtained from real client via IPC)
     void *hot_cache_base_ = nullptr;

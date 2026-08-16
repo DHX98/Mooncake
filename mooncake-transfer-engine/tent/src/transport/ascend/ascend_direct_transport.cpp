@@ -160,9 +160,12 @@ Status AscendDirectTransport::initHixl(const std::shared_ptr<Config> &conf) {
     auto hixl_name = host_ip + ":" + std::to_string(port);
     local_hixl_name_ = hixl_name;
 
-    auto segment = metadata_->segmentManager().getLocal();
-    auto &detail = std::get<MemorySegmentDesc>(segment->detail);
-    detail.device_attrs["hixl_name"] = hixl_name;
+    CHECK_STATUS(metadata_->segmentManager().updateLocal(
+        [&](SegmentDesc &segment) -> Status {
+            auto &detail = std::get<MemorySegmentDesc>(segment.detail);
+            detail.device_attrs["hixl_name"] = hixl_name;
+            return Status::OK();
+        }));
 
     hixl_ = std::make_unique<hixl::Hixl>();
     if (!hixl_) return Status::InternalError("Create hixl failed.");
@@ -357,8 +360,13 @@ void AscendDirectTransport::startTransfer(
         LOG(ERROR) << "Failed to transfer to: " << remote_hixl
                    << ", status: " << hixl_ret
                    << ", errmsg: " << aclGetRecentErrMsg();
-        // disconnect to remote when transfer fail
-        disconnect(remote_hixl, 10);
+        // AutoConnect tears down failed routes inside HIXL. Calling
+        // Disconnect again is redundant; only discard our local bookkeeping.
+        if (auto_connect_) {
+            forgetConnectedSegment(remote_hixl);
+        } else {
+            disconnect(remote_hixl, 10);
+        }
         for (auto &task : tasks) {
             task->status_word = TransferStatusEnum::FAILED;
         }
@@ -380,9 +388,9 @@ Status AscendDirectTransport::getTransferStatus(SubBatchRef batch, int task_id,
         return Status::InvalidArgument("Invalid task id" LOC_MARK);
     }
     auto &task = hixl_batch->task_list[task_id];
-    status = TransferStatus{task.status_word, task.transferred_bytes};
     if (task.status_word == TransferStatusEnum::PENDING) {
         if (task.req_handle == nullptr) {
+            status = TransferStatus{task.status_word, task.transferred_bytes};
             return Status::OK();
         }
         std::lock_guard<std::mutex> lock(req_mutex_);
@@ -396,6 +404,7 @@ Status AscendDirectTransport::getTransferStatus(SubBatchRef batch, int task_id,
             if (--req_map_[task.req_handle].second == 0) {
                 req_map_.erase(task.req_handle);
             }
+            status = TransferStatus{task.status_word, task.transferred_bytes};
             return Status::OK();
         }
         uint64_t current_ts = getCurrentTimeInNano();
@@ -406,6 +415,7 @@ Status AscendDirectTransport::getTransferStatus(SubBatchRef batch, int task_id,
                 req_map_[task.req_handle] =
                     std::make_pair(task.status_word, task.batch_size - 1);
             }
+            status = TransferStatus{task.status_word, task.transferred_bytes};
             return Status::OK();
         }
         hixl::TransferStatus xfer_status;
@@ -415,6 +425,7 @@ Status AscendDirectTransport::getTransferStatus(SubBatchRef batch, int task_id,
             xfer_status = hixl::TransferStatus::FAILED;
         }
         if (xfer_status == hixl::TransferStatus::WAITING) {
+            status = TransferStatus{task.status_word, task.transferred_bytes};
             return Status::OK();
         }
         if (xfer_status == hixl::TransferStatus::COMPLETED) {
@@ -424,12 +435,23 @@ Status AscendDirectTransport::getTransferStatus(SubBatchRef batch, int task_id,
             LOG(ERROR) << "Get transfer status failed, ret: "
                        << hixlTransferStatusToString(xfer_status)
                        << ", errmsg: " << aclGetRecentErrMsg();
-            disconnect(task.remote_hixl, 10);
+            // HIXL DisconnectOnError has already handled AutoConnect failures.
+            // Explicit application timeouts still use disconnect() above.
+            if (auto_connect_) {
+                forgetConnectedSegment(task.remote_hixl);
+            } else {
+                disconnect(task.remote_hixl, 10);
+            }
             task.status_word = TransferStatusEnum::FAILED;
         }
-        req_map_[task.req_handle] =
-            std::make_pair(task.status_word, task.batch_size - 1);
+        if (task.batch_size > 1) {
+            req_map_[task.req_handle] =
+                std::make_pair(task.status_word, task.batch_size - 1);
+        }
     }
+    // Read status AFTER the poll so a just-observed completion/failure is
+    // reported on this call rather than one poll cycle late.
+    status = TransferStatus{task.status_word, task.transferred_bytes};
     return Status::OK();
 }
 
@@ -461,6 +483,12 @@ void AscendDirectTransport::disconnect(const std::string &remote_hixl,
                        << ", errmsg: " << aclGetRecentErrMsg();
         }
     }
+}
+
+void AscendDirectTransport::forgetConnectedSegment(
+    const std::string &remote_hixl) {
+    std::lock_guard<std::mutex> lock(connection_mutex_);
+    connected_segments_.erase(remote_hixl);
 }
 
 Status AscendDirectTransport::addMemoryBuffer(BufferDesc &desc,

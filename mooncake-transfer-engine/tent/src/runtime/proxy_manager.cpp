@@ -38,6 +38,8 @@ Status ProxyManager::deconstruct() {
         shards_[i].cv.notify_all();
         shards_[i].thread.join();
     }
+    // The workers are joined above, but Pin/Unpin arrive on the RPC thread.
+    std::unique_lock<std::shared_mutex> guard(stage_buffers_mutex_);
     for (auto entry : stage_buffers_) {
         impl_->unregisterLocalMemory(entry.second.chunks);
         impl_->freeLocalMemory(entry.second.chunks);
@@ -58,7 +60,13 @@ BatchID ProxyManager::submitCrossStage(const Request& request,
     inter_stage.target_id = request.target_id;
     inter_stage.target_offset = remote_stage_buffer;
     auto batch = impl_->allocateBatch(1);
-    impl_->submitTransfer(batch, {inter_stage});
+    auto status = impl_->submitStagingTransfer(batch, {inter_stage});
+    if (!status.ok()) {
+        LOG(WARNING) << "failed to submit cross-stage transfer: "
+                     << status.ToString();
+        if (batch) impl_->freeBatch(batch);
+        return 0;
+    }
     return batch;
 }
 
@@ -72,7 +80,13 @@ BatchID ProxyManager::submitLocalStage(const Request& request,
     local_stage.target_id = LOCAL_SEGMENT_ID;
     local_stage.target_offset = local_stage_buffer;
     auto batch = impl_->allocateBatch(1);
-    impl_->submitTransfer(batch, {local_stage});
+    auto status = impl_->submitStagingTransfer(batch, {local_stage});
+    if (!status.ok()) {
+        LOG(WARNING) << "failed to submit local-stage transfer: "
+                     << status.ToString();
+        if (batch) impl_->freeBatch(batch);
+        return 0;
+    }
     return batch;
 }
 
@@ -81,6 +95,7 @@ Status ProxyManager::waitLocalStage(const Request& request,
                                     uint64_t chunk_length, uint64_t offset) {
     auto batch =
         submitLocalStage(request, local_stage_buffer, chunk_length, offset);
+    if (!batch) return Status::TooManyRequests("submit local stage failed");
     return impl_->waitTransferCompletion(batch);
 }
 
@@ -119,13 +134,15 @@ Status ProxyManager::waitCrossStage(const Request& request,
                                     uint64_t chunk_length) {
     auto batch = submitCrossStage(request, local_stage_buffer,
                                   remote_stage_buffer, chunk_length);
+    if (!batch) return Status::TooManyRequests("submit cross stage failed");
     return impl_->waitTransferCompletion(batch);
 }
 
-Status ProxyManager::submit(TaskInfo* task,
+Status ProxyManager::submit(TaskInfo* task, BatchID batch,
                             const std::vector<std::string>& params) {
     StagingTask staging_task;
     staging_task.native = task;
+    staging_task.batch = batch;
     staging_task.params = params;
     task->staging_status = PENDING;
     static std::atomic<size_t> next_queue_index(0);
@@ -228,6 +245,7 @@ void ProxyManager::runner(size_t id) {
         auto staging_status = status.ok() ? COMPLETED : FAILED;
         __atomic_store(&task.native->staging_status, &staging_status,
                        __ATOMIC_RELEASE);
+        impl_->notifyBatchMaybeReady(task.batch);
     }
     cache.reset();
 }
@@ -303,9 +321,36 @@ Status ProxyManager::transferEventLoop(StagingTask& task,
     for (size_t i = 0; i < chunks.size(); ++i) event_queue.push(i);
     std::vector<std::future<Status>> remote_futures(chunks.size());
 
+    // The loop below can leave through the CHECK_STATUS on progressBatch or
+    // through the FAILED branch, which only drains the queue. Either way the
+    // chunks still in flight own a batch that nobody would free.
+    struct PendingBatches {
+        TransferEngineImpl* impl;
+        std::vector<Chunk>& chunks;
+        ~PendingBatches() {
+            for (auto& chunk : chunks) {
+                if (!chunk.batch) continue;
+                auto status = impl->freeBatch(chunk.batch);
+                if (!status.ok())
+                    LOG(WARNING)
+                        << "failed to free chunk batch: " << status.ToString();
+                chunk.batch = 0;
+            }
+        }
+    } pending_batches{impl_, chunks};
+
+    // An in-flight chunk goes straight back on the queue, so this loop spins
+    // with nothing to do -- and the INFLIGHT case takes progress_mutex_ every
+    // pass. Back off only after a whole sweep advanced no chunk, so a queue
+    // that is progressing still runs at full speed.
+    size_t sweep_remaining = event_queue.size();
+    bool swept_progress = false;
+    uint64_t idle_sweeps = 0;
+
     while (!event_queue.empty()) {
         auto id = event_queue.front();
         auto& chunk = chunks[id];
+        const auto state_before = chunk.state;
         event_queue.pop();
         switch (chunk.state) {
             case StageState::PRE: {
@@ -317,6 +362,11 @@ Status ProxyManager::transferEventLoop(StagingTask& task,
                     local_locked.insert(chunk.local_buf);
                     chunk.batch = submitLocalStage(request, chunk.local_buf,
                                                    chunk.length, chunk.offset);
+                    if (!chunk.batch) {
+                        chunk.state = StageState::FAILED;
+                        event_queue.push(id);
+                        break;
+                    }
                     chunk.prev_state = chunk.state;
                     chunk.state = StageState::INFLIGHT;
                     event_queue.push(id);
@@ -356,6 +406,11 @@ Status ProxyManager::transferEventLoop(StagingTask& task,
                 }
                 chunk.batch = submitCrossStage(request, chunk.local_buf,
                                                chunk.remote_buf, chunk.length);
+                if (!chunk.batch) {
+                    chunk.state = StageState::FAILED;
+                    event_queue.push(id);
+                    break;
+                }
                 chunk.prev_state = chunk.state;
                 chunk.state = StageState::INFLIGHT;
                 event_queue.push(id);
@@ -373,6 +428,11 @@ Status ProxyManager::transferEventLoop(StagingTask& task,
                 } else if (request.opcode == Request::READ && local_staging) {
                     chunk.batch = submitLocalStage(request, chunk.local_buf,
                                                    chunk.length, chunk.offset);
+                    if (!chunk.batch) {
+                        chunk.state = StageState::FAILED;
+                        event_queue.push(id);
+                        break;
+                    }
                     chunk.prev_state = chunk.state;
                     chunk.state = StageState::INFLIGHT;
                     event_queue.push(id);
@@ -462,6 +522,17 @@ Status ProxyManager::transferEventLoop(StagingTask& task,
                 break;
             }
         }
+
+        if (chunk.state != state_before) swept_progress = true;
+        if (sweep_remaining > 0) --sweep_remaining;
+        if (sweep_remaining == 0) {
+            if (swept_progress)
+                idle_sweeps = 0;
+            else
+                waitBeforeNextPoll(idle_sweeps++);
+            swept_progress = false;
+            sweep_remaining = event_queue.size();
+        }
     }
 
     return Status::OK();
@@ -530,6 +601,10 @@ Status ProxyManager::transferSync(StagingTask& task, StageBufferCache* cache) {
 }
 
 Status ProxyManager::allocateStageBuffers(const std::string& location) {
+    // Held across the slow allocate + register, which run once per location.
+    // Racing instead would register the same hundreds of MB twice, then throw
+    // one away.
+    std::unique_lock<std::shared_mutex> guard(stage_buffers_mutex_);
     if (stage_buffers_.count(location)) return Status::OK();
     StageBuffers buf;
     auto total_size = chunk_size_ * chunk_count_;
@@ -544,6 +619,7 @@ Status ProxyManager::allocateStageBuffers(const std::string& location) {
 }
 
 Status ProxyManager::freeStageBuffers(const std::string& location) {
+    std::unique_lock<std::shared_mutex> guard(stage_buffers_mutex_);
     auto it = stage_buffers_.find(location);
     if (it == stage_buffers_.end())
         return Status::InvalidArgument("Stage buffer not allocated" LOC_MARK);
@@ -556,10 +632,17 @@ Status ProxyManager::freeStageBuffers(const std::string& location) {
 
 Status ProxyManager::pinStageBuffer(const std::string& location,
                                     uint64_t& addr) {
+    std::shared_lock<std::shared_mutex> guard(stage_buffers_mutex_);
     auto it = stage_buffers_.find(location);
     if (it == stage_buffers_.end()) {
+        // allocateStageBuffers needs the lock exclusively, so drop ours. It
+        // re-checks under its own lock, so losing the race here is harmless.
+        guard.unlock();
         CHECK_STATUS(allocateStageBuffers(location));
+        guard.lock();
         it = stage_buffers_.find(location);
+        if (it == stage_buffers_.end())
+            return Status::InternalError("Stage buffer disappeared" LOC_MARK);
     }
 
     auto& buf = it->second;
@@ -574,6 +657,7 @@ Status ProxyManager::pinStageBuffer(const std::string& location,
 }
 
 Status ProxyManager::unpinStageBuffer(uint64_t addr) {
+    std::shared_lock<std::shared_mutex> guard(stage_buffers_mutex_);
     for (auto& [location, buf] : stage_buffers_) {
         auto base = reinterpret_cast<uint64_t>(buf.chunks);
         auto end = base + chunk_size_ * chunk_count_;
