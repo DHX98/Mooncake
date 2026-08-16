@@ -7,8 +7,6 @@
 #include "storage_backend.h"
 #include "pinned_buffer_pool.h"
 
-#include <functional>
-
 namespace mooncake {
 
 struct SsdMetric;

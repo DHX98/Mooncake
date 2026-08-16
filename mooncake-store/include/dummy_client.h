@@ -23,22 +23,19 @@ class DummyClient : public PyClient {
 
     int64_t unregister_shm();
 
-    int setup_real(const std::string &local_hostname,
-                   const std::string &metadata_server,
-                   size_t global_segment_size, size_t local_buffer_size,
-                   const std::string &protocol, const std::string &rdma_devices,
-                   const std::string &master_server_addr,
-                   const std::shared_ptr<TransferEngine> &transfer_engine,
-                   const std::string &ipc_socket_path,
-                   bool enable_ssd_offload = false,
-                   const std::string &ssd_offload_path = "",
-                   const std::string &tenant_id = "default",
-                   int64_t ssd_prefetch_cooldown_sec =
-                       DEFAULT_SSD_PREFETCH_COOLDOWN_SEC,
-                   int64_t ssd_prefetch_dedup_ttl_sec =
-                       DEFAULT_SSD_PREFETCH_DEDUP_TTL_SEC,
-                   bool enable_client_http_server = false,
-                   int client_http_port = DEFAULT_CLIENT_HTTP_PORT) {
+    int setup_real(
+        const std::string &local_hostname, const std::string &metadata_server,
+        size_t global_segment_size, size_t local_buffer_size,
+        const std::string &protocol, const std::string &rdma_devices,
+        const std::string &master_server_addr,
+        const std::shared_ptr<TransferEngine> &transfer_engine,
+        const std::string &ipc_socket_path, bool enable_ssd_offload = false,
+        const std::string &ssd_offload_path = "",
+        const std::string &tenant_id = "default",
+        int64_t ssd_prefetch_cooldown_sec = DEFAULT_SSD_PREFETCH_COOLDOWN_SEC,
+        int64_t ssd_prefetch_dedup_ttl_sec = DEFAULT_SSD_PREFETCH_DEDUP_TTL_SEC,
+        bool enable_client_http_server = false,
+        int client_http_port = DEFAULT_CLIENT_HTTP_PORT) {
         // Dummy client does not support real setup
         return -1;
     };

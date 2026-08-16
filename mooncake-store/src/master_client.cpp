@@ -558,9 +558,9 @@ MasterClient::GetReplicaListForPrefetch(const std::string& object_key) {
     ScopedVLogTimer timer(1, "MasterClient::GetReplicaListForPrefetch");
     timer.LogRequest("object_key=", object_key);
 
-    auto result = invoke_rpc<&WrappedMasterService::GetReplicaListForPrefetch,
-                             GetReplicaListResponse>(object_key,
-                                                     tenant_id_.value());
+    auto result =
+        invoke_rpc<&WrappedMasterService::GetReplicaListForPrefetch,
+                   GetReplicaListResponse>(object_key, tenant_id_.value());
     timer.LogResponseExpected(result);
     return result;
 }
@@ -573,8 +573,8 @@ MasterClient::BatchGetReplicaListForPrefetch(
 
     auto result =
         invoke_batch_rpc<&WrappedMasterService::BatchGetReplicaListForPrefetch,
-                         GetReplicaListResponse>(object_keys.size(), object_keys,
-                                                 tenant_id_.value());
+                         GetReplicaListResponse>(
+            object_keys.size(), object_keys, tenant_id_.value());
     timer.LogResponse("result=", result.size(), " operations");
     return result;
 }

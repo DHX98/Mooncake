@@ -171,8 +171,7 @@ class MasterClient {
     GetReplicaListForPrefetch(const std::string& object_key);
 
     [[nodiscard]] std::vector<tl::expected<GetReplicaListResponse, ErrorCode>>
-    BatchGetReplicaListForPrefetch(
-        const std::vector<std::string>& object_keys);
+    BatchGetReplicaListForPrefetch(const std::vector<std::string>& object_keys);
 
     /**
      * @brief Retrieves replica lists for object keys that match a regex

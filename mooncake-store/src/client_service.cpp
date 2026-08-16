@@ -1229,8 +1229,7 @@ std::vector<tl::expected<QueryResult, ErrorCode>> Client::BatchQueryForPrefetch(
     const std::vector<std::string>& object_keys) {
     std::chrono::steady_clock::time_point start_time =
         std::chrono::steady_clock::now();
-    auto response =
-        master_client_.BatchGetReplicaListForPrefetch(object_keys);
+    auto response = master_client_.BatchGetReplicaListForPrefetch(object_keys);
 
     if (response.size() != object_keys.size()) {
         LOG(ERROR) << "BatchQueryForPrefetch response size mismatch. Expected: "

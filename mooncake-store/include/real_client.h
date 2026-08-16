@@ -158,7 +158,11 @@ class PrefetchThrottle {
             const int64_t last_ms = it->second.completed_ms >= 0
                                         ? it->second.completed_ms
                                         : it->second.trigger_ms;
-            if (now - last_ms > ttl_ms) {
+            const bool is_terminal =
+                it->second.state == State::kCompleted ||
+                it->second.state == State::kFailed ||
+                it->second.state == State::kAlreadyResident;
+            if (is_terminal && now - last_ms > ttl_ms) {
                 it = entries_.erase(it);
             } else {
                 ++it;
@@ -294,7 +298,8 @@ class PrefetchThrottle {
     std::unordered_map<std::string, Entry> entries_;
 };
 
-// Replica tier selected for get() after optional prefetch wait ([GET-SRC] source=).
+// Replica tier selected for get() after optional prefetch wait ([GET-SRC]
+// source=).
 enum class PrefetchReplicaSource : uint8_t {
     kDram,
     kSsd,
@@ -314,14 +319,14 @@ enum class PrefetchOutcome : uint8_t {
 };
 
 PrefetchReplicaSource PrefetchReplicaSourceFromDescriptor(
-    const Replica::Descriptor& replica);
-const char* PrefetchReplicaSourceToString(PrefetchReplicaSource source);
+    const Replica::Descriptor &replica);
+const char *PrefetchReplicaSourceToString(PrefetchReplicaSource source);
 
 PrefetchOutcome ClassifyPrefetchOutcome(
     int64_t prefetch_trigger_ms, int64_t prefetch_done_ms, int64_t get_ms,
     PrefetchReplicaSource source, PrefetchThrottle::State prefetch_state,
     bool prefetch_wait_attempted, bool promote_attempted);
-const char* PrefetchOutcomeToString(PrefetchOutcome outcome);
+const char *PrefetchOutcomeToString(PrefetchOutcome outcome);
 
 class RealClient : public PyClient {
    public:
@@ -344,8 +349,7 @@ class RealClient : public PyClient {
         const std::string &ssd_offload_path = "",
         const std::string &tenant_id = "default",
         int64_t ssd_prefetch_cooldown_sec = DEFAULT_SSD_PREFETCH_COOLDOWN_SEC,
-        int64_t ssd_prefetch_dedup_ttl_sec =
-            DEFAULT_SSD_PREFETCH_DEDUP_TTL_SEC,
+        int64_t ssd_prefetch_dedup_ttl_sec = DEFAULT_SSD_PREFETCH_DEDUP_TTL_SEC,
         bool enable_client_http_server = false,
         int client_http_port = DEFAULT_CLIENT_HTTP_PORT);
 
@@ -1348,8 +1352,9 @@ class RealClient : public PyClient {
 
     // get()-side wait-for-prefetch. When a get selects a LOCAL_DISK (SSD)
     // replica but prefetch for the same key is in flight, poll every 1 ms
-    // (early exit on completion) up to this budget. Env MOONCAKE_SSD_GET_WAIT_MS
-    // overrides mooncake.json ssd_get_wait_ms. 0 disables waiting.
+    // (early exit on completion) up to this budget. Env
+    // MOONCAKE_SSD_GET_WAIT_MS overrides mooncake.json ssd_get_wait_ms. 0
+    // disables waiting.
     int64_t ssd_get_wait_ms_{DEFAULT_SSD_GET_WAIT_MS};
     int64_t ssd_get_wait_ms_config_{DEFAULT_SSD_GET_WAIT_MS};
 

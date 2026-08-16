@@ -243,8 +243,7 @@ class PyClient {
         const std::string &ssd_offload_path = "",
         const std::string &tenant_id = "default",
         int64_t ssd_prefetch_cooldown_sec = DEFAULT_SSD_PREFETCH_COOLDOWN_SEC,
-        int64_t ssd_prefetch_dedup_ttl_sec =
-            DEFAULT_SSD_PREFETCH_DEDUP_TTL_SEC,
+        int64_t ssd_prefetch_dedup_ttl_sec = DEFAULT_SSD_PREFETCH_DEDUP_TTL_SEC,
         bool enable_client_http_server = false,
         int client_http_port = DEFAULT_CLIENT_HTTP_PORT) = 0;
 

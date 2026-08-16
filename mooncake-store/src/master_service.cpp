@@ -3545,8 +3545,8 @@ auto MasterService::RegisterPrefetchTask(const UUID& client_id,
                            .holder_id = holder_id.value(),
                            .from_prefetch = true});
     promotion_in_flight_.fetch_add(1, std::memory_order_relaxed);
-    VLOG(1) << "prefetch_task_registered key=" << key
-            << " tenant=" << tenant_id << " size=" << object_size;
+    VLOG(1) << "prefetch_task_registered key=" << key << " tenant=" << tenant_id
+            << " size=" << object_size;
     return {};
 }
 
