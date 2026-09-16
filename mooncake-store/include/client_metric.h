@@ -553,6 +553,13 @@ struct SsdMetric {
     ylt::metric::summary_t ssd_total_latency_summary;
     std::chrono::steady_clock::time_point start_time_;
 
+    // Prefetch observation (replaces PrefetchOutcome / [PREFETCH-OUTCOME] logs).
+    std::atomic<uint64_t> prefetch_trigger_total{0};
+    std::atomic<uint64_t> prefetch_complete_total{0};
+    std::atomic<uint64_t> prefetch_fail_total{0};
+    std::atomic<uint64_t> get_src_ssd_total{0};
+    std::atomic<uint64_t> get_src_dram_total{0};
+
     void serialize(std::string& str) {
         ssd_read_bytes.serialize(str);
         ssd_write_bytes.serialize(str);

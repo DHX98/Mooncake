@@ -139,6 +139,15 @@ class Client {
      * indicating failure
      */
     tl::expected<QueryResult, ErrorCode> Query(const std::string& object_key);
+    tl::expected<QueryResult, ErrorCode> Query(const std::string& object_key,
+                                               QueryOptions options);
+
+    /**
+     * @brief Register a master-side promotion task for SSD prefetch without
+     * using the promotion-on-hit heartbeat queue.
+     */
+    tl::expected<void, ErrorCode> RegisterPrefetchTask(
+        const std::string& object_key);
 
     /**
      * @brief Queries replica lists for object keys that match a regex pattern.
@@ -162,6 +171,11 @@ class Client {
     std::vector<tl::expected<QueryResult, ErrorCode>> BatchQuery(
         const std::vector<std::string>& object_keys,
         const std::string& tenant_id);
+    std::vector<tl::expected<QueryResult, ErrorCode>> BatchQuery(
+        const std::vector<std::string>& object_keys, QueryOptions options);
+    std::vector<tl::expected<QueryResult, ErrorCode>> BatchQuery(
+        const std::vector<std::string>& object_keys,
+        const std::string& tenant_id, QueryOptions options);
 
     tl::expected<void, ErrorCode> VerifyObjectChecksum(
         const std::string& object_key, const std::vector<Slice>& slices,

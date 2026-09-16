@@ -82,6 +82,22 @@ class FileStorageTest : public ::testing::Test {
                                          *fileStorage.client_buffer_allocator_);
     }
 
+    tl::expected<std::shared_ptr<FileStorage::AllocatedBatch>, ErrorCode>
+    FileStorageAllocateAndLoad(FileStorage& fileStorage,
+                               const std::vector<std::string>& keys,
+                               const std::vector<int64_t>& sizes) {
+        auto allocate_res = FileStorageAllocateBatch(fileStorage, keys, sizes);
+        if (!allocate_res) {
+            return allocate_res;
+        }
+        auto load_res =
+            FileStorageBatchLoad(fileStorage, allocate_res.value()->slices);
+        if (!load_res) {
+            return tl::make_unexpected(load_res.error());
+        }
+        return allocate_res;
+    }
+
     void SetPinnedRestoreArena(FileStorage& fileStorage, void* address,
                                size_t size) {
         fileStorage.pinned_restore_arena_allocator_ =
@@ -978,13 +994,10 @@ TEST_F(FileStorageTest, BatchLoad_WithStorageBackendAdaptor) {
         FileStorageBatchOffload(fileStorage, keys, sizes, batch_data);
     ASSERT_TRUE(offload_res) << "FileStorageBatchOffload failed";
 
-    auto allocate_res = FileStorageAllocateBatch(fileStorage, keys, sizes);
-    ASSERT_TRUE(allocate_res) << "FileStorageAllocateBatch failed";
+    auto allocate_res = FileStorageAllocateAndLoad(fileStorage, keys, sizes);
+    ASSERT_TRUE(allocate_res) << "FileStorageAllocateAndLoad failed";
 
     auto batch = std::move(allocate_res.value());
-
-    auto load_res = FileStorageBatchLoad(fileStorage, batch->slices);
-    ASSERT_TRUE(load_res) << "FileStorageBatchLoad failed";
 
     for (const auto& it : batch->slices) {
         const std::string& key = it.first;
@@ -1016,13 +1029,8 @@ TEST_F(FileStorageTest, BatchLoadRecordsSsdMetrics) {
     ASSERT_TRUE(FileStorageBatchOffload(fileStorage, keys, sizes, batch_data));
     ASSERT_FALSE(keys.empty());
 
-    // Allocate buffers and call BatchLoad (read path)
-    auto allocate_res = FileStorageAllocateBatch(fileStorage, keys, sizes);
+    auto allocate_res = FileStorageAllocateAndLoad(fileStorage, keys, sizes);
     ASSERT_TRUE(allocate_res);
-
-    auto load_result =
-        FileStorageBatchLoad(fileStorage, allocate_res.value()->slices);
-    ASSERT_TRUE(load_result);
 
     // Verify SSD read metrics were recorded
     EXPECT_EQ(ssd_metric.ssd_read_ops.value(),
@@ -1103,12 +1111,8 @@ TEST_F(FileStorageTest, NullSsdMetricDoesNotCrash) {
     ASSERT_TRUE(FileStorageBatchOffload(fileStorage, keys, sizes, batch_data));
     ASSERT_FALSE(keys.empty());
 
-    auto allocate_res = FileStorageAllocateBatch(fileStorage, keys, sizes);
+    auto allocate_res = FileStorageAllocateAndLoad(fileStorage, keys, sizes);
     ASSERT_TRUE(allocate_res);
-
-    auto load_result =
-        FileStorageBatchLoad(fileStorage, allocate_res.value()->slices);
-    ASSERT_TRUE(load_result);
     // No crash = success. No metrics pointer, so nothing to verify.
 }
 

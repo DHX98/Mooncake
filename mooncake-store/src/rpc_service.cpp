@@ -271,7 +271,8 @@ WrappedMasterService::GetReplicaListByRegex(const std::string& str,
 
 tl::expected<GetReplicaListResponse, ErrorCode>
 WrappedMasterService::GetReplicaList(const std::string& key,
-                                     const std::string& tenant_id) {
+                                     const std::string& tenant_id,
+                                     QueryOptions options) {
     return execute_rpc(
         "GetReplicaList",
         [&] {
@@ -280,7 +281,7 @@ WrappedMasterService::GetReplicaList(const std::string& key,
                                          : TenantId::kDefaultValue,
                                      [&](const TenantId& resolved_tenant_id) {
                                          return master_service_.GetReplicaList(
-                                             key, resolved_tenant_id);
+                                             key, resolved_tenant_id, options);
                                      });
         },
         [&](auto& timer) { timer.LogRequest("key=", key); },
@@ -290,9 +291,19 @@ WrappedMasterService::GetReplicaList(const std::string& key,
         });
 }
 
+tl::expected<void, ErrorCode> WrappedMasterService::RegisterPrefetchTask(
+    const UUID& client_id, const std::string& key) {
+    ScopedVLogTimer timer(1, "RegisterPrefetchTask");
+    timer.LogRequest("client_id=", client_id, ", key=", key);
+    auto result = master_service_.RegisterPrefetchTask(client_id, key);
+    timer.LogResponseExpected(result);
+    return result;
+}
+
 std::vector<tl::expected<GetReplicaListResponse, ErrorCode>>
 WrappedMasterService::BatchGetReplicaList(const std::vector<std::string>& keys,
-                                          const std::string& tenant_id) {
+                                          const std::string& tenant_id,
+                                          QueryOptions options) {
     ScopedVLogTimer timer(1, "BatchGetReplicaList");
     const size_t total_keys = keys.size();
     timer.LogRequest("keys_count=", total_keys);
@@ -306,8 +317,8 @@ WrappedMasterService::BatchGetReplicaList(const std::vector<std::string>& keys,
         master_service_.IsTenantQuotaEnabled() ? std::string_view(tenant_id)
                                                : TenantId::kDefaultValue,
         keys.size(), [&](const TenantId& resolved_tenant_id) {
-            return master_service_.BatchGetReplicaList(keys,
-                                                       resolved_tenant_id);
+            return master_service_.BatchGetReplicaList(keys, resolved_tenant_id,
+                                                       options);
         });
 
     size_t failure_count = 0;
@@ -1900,6 +1911,9 @@ void RegisterRpcService(
     server.register_handler<&mooncake::WrappedMasterService::QueryTask>(
         &wrapped_master_service);
     server.register_handler<&mooncake::WrappedMasterService::FetchTasks>(
+        &wrapped_master_service);
+    server.register_handler<
+        &mooncake::WrappedMasterService::RegisterPrefetchTask>(
         &wrapped_master_service);
     server
         .register_handler<&mooncake::WrappedMasterService::MarkTaskToComplete>(

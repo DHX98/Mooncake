@@ -6,7 +6,10 @@
 namespace mooncake {
 
 inline uint32_t GetStoreRpcClientIoThreads() {
-    return Environ::Get().GetStoreRpcClientIoThreads();
+    // M30n: image common Environ is 256B and has no store_rpc_client_io_threads_.
+    // Do not read Environ::Get().GetStoreRpcClientIoThreads() (OOB).
+    constexpr uint32_t kImageSafeStoreRpcIoThreads = 16;
+    return kImageSafeStoreRpcIoThreads;
 }
 
 namespace detail {

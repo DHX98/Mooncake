@@ -19,6 +19,9 @@
 #include "device/cuda_ipc_buffer.h"
 
 #include <cstdlib>  // for atexit
+#include <exception>
+#include <execinfo.h>
+#include <glog/logging.h>
 #include <memory>
 
 #include "integration_utils.h"
@@ -2069,7 +2072,35 @@ class MooncakeDistributedNoFRegisterPyWrapper {
     MooncakeDistributedNoFRegisterPyWrapper() = default;
 };
 
+namespace {
+void mooncake_terminate_handler() {
+    if (std::exception_ptr ep = std::current_exception()) {
+        try {
+            std::rethrow_exception(ep);
+        } catch (const std::exception& e) {
+            LOG(ERROR) << "terminate_bt: what(): " << e.what();
+        } catch (...) {
+            LOG(ERROR) << "terminate_bt: what(): <unknown>";
+        }
+    } else {
+        LOG(ERROR) << "terminate_bt: what(): <no current_exception>";
+    }
+    void* frames[64];
+    int n = backtrace(frames, 64);
+    char** syms = backtrace_symbols(frames, n);
+    if (syms) {
+        for (int i = 0; i < n; ++i) {
+            LOG(ERROR) << "terminate_bt: " << syms[i];
+        }
+        free(syms);
+    }
+    google::FlushLogFiles(google::ERROR);
+    abort();
+}
+}  // namespace
+
 PYBIND11_MODULE(store, m) {
+    std::set_terminate(mooncake_terminate_handler);
     m.def("_serialize_tensor", &serialize_tensor_metadata,
           "Inspect a torch tensor as Mooncake tensor metadata, data pointer, "
           "size, and owner.");
@@ -2118,6 +2149,15 @@ PYBIND11_MODULE(store, m) {
         .def("__str__", [](const ReplicateConfig &config) {
             std::ostringstream oss;
             oss << config;
+            return oss.str();
+        });
+
+    py::class_<ExistOptions>(m, "ExistOptions")
+        .def(py::init<>())
+        .def_readwrite("prefetch_to_memory", &ExistOptions::prefetch_to_memory)
+        .def("__str__", [](const ExistOptions &options) {
+            std::ostringstream oss;
+            oss << options;
             return oss.str();
         });
 
@@ -2367,7 +2407,11 @@ PYBIND11_MODULE(store, m) {
                const std::string &ssd_offload_path = "",
                const std::string &tenant_id = "default",
                bool enable_client_http_server = false,
-               int client_http_port = DEFAULT_CLIENT_HTTP_PORT) {
+               int client_http_port = DEFAULT_CLIENT_HTTP_PORT,
+               int64_t ssd_prefetch_cooldown_sec =
+                   DEFAULT_SSD_PREFETCH_COOLDOWN_SEC,
+               int64_t ssd_prefetch_dedup_ttl_sec =
+                   DEFAULT_SSD_PREFETCH_DEDUP_TTL_SEC) {
                 auto real_client = self.init_real_client();
                 std::shared_ptr<mooncake::TransferEngine> transfer_engine =
                     nullptr;
@@ -2383,7 +2427,9 @@ PYBIND11_MODULE(store, m) {
                         local_buffer_size, protocol, rdma_devices,
                         master_server_addr, transfer_engine, "",
                         enable_ssd_offload, ssd_offload_path, tenant_id,
-                        enable_client_http_server, client_http_port);
+                        enable_client_http_server, client_http_port,
+                        ssd_prefetch_cooldown_sec,
+                        ssd_prefetch_dedup_ttl_sec);
                 }
                 return ret;
             },
@@ -2394,7 +2440,11 @@ PYBIND11_MODULE(store, m) {
             py::arg("enable_ssd_offload") = false,
             py::arg("ssd_offload_path") = "", py::arg("tenant_id") = "default",
             py::arg("enable_client_http_server") = false,
-            py::arg("client_http_port") = DEFAULT_CLIENT_HTTP_PORT)
+            py::arg("client_http_port") = DEFAULT_CLIENT_HTTP_PORT,
+            py::arg("ssd_prefetch_cooldown_sec") =
+                DEFAULT_SSD_PREFETCH_COOLDOWN_SEC,
+            py::arg("ssd_prefetch_dedup_ttl_sec") =
+                DEFAULT_SSD_PREFETCH_DEDUP_TTL_SEC)
         .def(
             "setup",
             [](MooncakeStorePyWrapper &self, const py::dict &config_dict) {
@@ -2434,7 +2484,14 @@ PYBIND11_MODULE(store, m) {
             "  tenant_id: Tenant identifier (default 'default').\n"
             "  enable_client_http_server: Enable client HTTP endpoints "
             "(default false).\n"
-            "  client_http_port: Client HTTP metrics port (default 9300).")
+            "  client_http_port: Client HTTP metrics port (default 9300).\n"
+            "  ssd_prefetch_cooldown_sec: SSD prefetch memory-pressure backoff "
+            "in seconds (default 5, 0 disables).\n"
+            "  ssd_prefetch_dedup_ttl_sec: SSD prefetch per-key dedup/"
+            "rate-limit TTL in seconds (default 30, 0 disables).\n"
+            "  ssd_get_wait_ms: get-side prefetch wait budget in milliseconds "
+            "(default 10, poll 1ms with early exit; 0 disables). Env "
+            "MOONCAKE_SSD_GET_WAIT_MS overrides this.")
         .def(
             "setup_dummy",
             [](MooncakeStorePyWrapper &self, size_t mem_pool_size,
@@ -2543,20 +2600,26 @@ PYBIND11_MODULE(store, m) {
             py::arg("keys"), py::arg("force") = false,
             "Batch remove objects by keys. Returns a list of status codes "
             "(0=success, negative=error code) for each key.")
-        .def("is_exist",
-             [](MooncakeStorePyWrapper &self, const std::string &key) {
-                 py::gil_scoped_release release;
-                 return self.store_->isExist(key);
-             })
+        .def(
+            "is_exist",
+            [](MooncakeStorePyWrapper &self, const std::string &key,
+               const ExistOptions &options) {
+                py::gil_scoped_release release;
+                return self.store_->isExist(key, options);
+            },
+            py::arg("key"), py::arg("options") = ExistOptions{})
         .def(
             "batch_is_exist",
             [](MooncakeStorePyWrapper &self,
-               const std::vector<std::string> &keys) {
+               const std::vector<std::string> &keys,
+               const ExistOptions &options) {
                 py::gil_scoped_release release;
-                return self.store_->batchIsExist(keys);
+                return self.store_->batchIsExist(keys, options);
             },
-            py::arg("keys"),
-            "Check if multiple objects exist. Returns list of results: 1 if "
+            py::arg("keys"), py::arg("options") = ExistOptions{},
+            "Check if multiple objects exist. When options.prefetch_to_memory "
+            "is True, triggers SSD-to-DRAM promotion for keys that only have "
+            "LOCAL_DISK replicas. Returns list of results: 1 if "
             "exists, 0 if not exists, -1 if error")
         .def("close",
              [](MooncakeStorePyWrapper &self) {

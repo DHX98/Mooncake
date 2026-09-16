@@ -1524,6 +1524,8 @@ int main(int argc, char* argv[]) {
     LOG(INFO) << "Mooncake master version: "
               << mooncake::MOONCAKE_DISPLAY_VERSION;
 
+    LOG(INFO) << "hihihi";
+
     // Initialize the master configuration
     mooncake::MasterConfig master_config;
     std::string conf_path = FLAGS_config_path;

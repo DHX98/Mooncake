@@ -71,6 +71,13 @@ struct PingResponse {
 };
 YLT_REFL(PingResponse, view_version_id, client_status);
 
+// Orthogonal to tenant_id. read_only skips lease / sketch / valid_get /
+// promotion enqueue and returns lease_ttl_ms = 0.
+struct QueryOptions {
+    bool read_only = false;
+};
+YLT_REFL(QueryOptions, read_only);
+
 /**
  * @brief Response structure for GetReplicaList operation
  */

@@ -1223,6 +1223,9 @@ std::optional<TransferFuture> TransferSubmitter::submitMemcpyOperations(
     return TransferFuture(state);
 }
 
+Status SubmitTransferImage48(TransferEngine& engine, BatchID batch_id,
+                            const std::vector<TransferRequest>& requests);
+
 std::optional<TransferFuture> TransferSubmitter::submitTransfer(
     std::vector<TransferRequest>& requests) {
     // Allocate batch ID
@@ -1233,8 +1236,8 @@ std::optional<TransferFuture> TransferSubmitter::submitTransfer(
         return std::nullopt;
     }
 
-    // Submit transfer
-    Status s = engine_.submitTransfer(batch_id, requests);
+    // Image Jul-15 TE divides vector bytes by 48; store TR is 56.
+    Status s = SubmitTransferImage48(engine_, batch_id, requests);
     if (!s.ok()) {
         LOG(ERROR) << "Failed to submit all transfers, error code is "
                    << s.code();

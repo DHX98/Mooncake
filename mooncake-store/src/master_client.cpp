@@ -38,6 +38,11 @@ struct RpcNameTraits<&WrappedMasterService::GetReplicaList> {
 };
 
 template <>
+struct RpcNameTraits<&WrappedMasterService::RegisterPrefetchTask> {
+    static constexpr const char* value = "RegisterPrefetchTask";
+};
+
+template <>
 struct RpcNameTraits<&WrappedMasterService::CalcCacheStats> {
     static constexpr const char* value = "CalcCacheStats";
 };
@@ -581,11 +586,29 @@ tl::expected<GetReplicaListResponse, ErrorCode> MasterClient::GetReplicaList(
 
 tl::expected<GetReplicaListResponse, ErrorCode> MasterClient::GetReplicaList(
     const std::string& object_key, const std::string& tenant_id) {
+    return GetReplicaList(object_key, tenant_id, QueryOptions{});
+}
+
+tl::expected<GetReplicaListResponse, ErrorCode> MasterClient::GetReplicaList(
+    const std::string& object_key, const std::string& tenant_id,
+    QueryOptions options) {
     ScopedVLogTimer timer(1, "MasterClient::GetReplicaList");
-    timer.LogRequest("object_key=", object_key, ", tenant_id=", tenant_id);
+    timer.LogRequest("object_key=", object_key, ", tenant_id=", tenant_id,
+                     ", read_only=", options.read_only);
 
     auto result = invoke_rpc<&WrappedMasterService::GetReplicaList,
-                             GetReplicaListResponse>(object_key, tenant_id);
+                             GetReplicaListResponse>(object_key, tenant_id,
+                                                     options);
+    timer.LogResponseExpected(result);
+    return result;
+}
+
+tl::expected<void, ErrorCode> MasterClient::RegisterPrefetchTask(
+    const UUID& client_id, const std::string& key) {
+    ScopedVLogTimer timer(1, "MasterClient::RegisterPrefetchTask");
+    timer.LogRequest("client_id=", client_id, ", key=", key);
+    auto result = invoke_rpc<&WrappedMasterService::RegisterPrefetchTask, void>(
+        client_id, key);
     timer.LogResponseExpected(result);
     return result;
 }
@@ -598,13 +621,21 @@ MasterClient::BatchGetReplicaList(const std::vector<std::string>& object_keys) {
 std::vector<tl::expected<GetReplicaListResponse, ErrorCode>>
 MasterClient::BatchGetReplicaList(const std::vector<std::string>& object_keys,
                                   const std::string& tenant_id) {
+    return BatchGetReplicaList(object_keys, tenant_id, QueryOptions{});
+}
+
+std::vector<tl::expected<GetReplicaListResponse, ErrorCode>>
+MasterClient::BatchGetReplicaList(const std::vector<std::string>& object_keys,
+                                  const std::string& tenant_id,
+                                  QueryOptions options) {
     ScopedVLogTimer timer(1, "MasterClient::BatchGetReplicaList");
     timer.LogRequest("keys_count=", object_keys.size(),
-                     ", tenant_id=", tenant_id);
+                     ", tenant_id=", tenant_id,
+                     ", read_only=", options.read_only);
 
     auto result = invoke_batch_rpc<&WrappedMasterService::BatchGetReplicaList,
                                    GetReplicaListResponse>(
-        object_keys.size(), object_keys, tenant_id);
+        object_keys.size(), object_keys, tenant_id, options);
     timer.LogResponse("result=", result.size(), " operations");
     return result;
 }

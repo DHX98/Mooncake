@@ -105,6 +105,7 @@ set(MOONCAKE_STORE_CLIENT_SOURCES
     client_buffer.cpp
     aligned_client_buffer.cpp
     real_client.cpp
+    ssd_prefetcher.cpp
     config/registered_pinned_memory_config.cpp
     registered_pinned_memory.cpp
     dummy_client.cpp

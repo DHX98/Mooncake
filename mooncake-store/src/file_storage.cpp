@@ -1002,6 +1002,174 @@ tl::expected<void, ErrorCode> FileStorage::ProcessPromotionTasks() {
     return {};
 }
 
+namespace {
+class PromotionStateGuard {
+   public:
+    PromotionStateGuard(Client* client, std::string key, std::string tenant_id)
+        : client_(client),
+          key_(std::move(key)),
+          tenant_id_(std::move(tenant_id)) {}
+
+    ~PromotionStateGuard() {
+        if (dismissed_ || client_ == nullptr) {
+            return;
+        }
+        auto release = client_->NotifyPromotionFailure(key_, tenant_id_);
+        if (!release) {
+            VLOG(1) << "SSD prefetch: NotifyPromotionFailure failed for"
+                    << " key=" << key_ << ", error=" << release.error();
+        }
+    }
+
+    void Dismiss() { dismissed_ = true; }
+
+    PromotionStateGuard(const PromotionStateGuard&) = delete;
+    PromotionStateGuard& operator=(const PromotionStateGuard&) = delete;
+
+   private:
+    Client* client_;
+    std::string key_;
+    std::string tenant_id_;
+    bool dismissed_{false};
+};
+}  // namespace
+
+std::optional<int64_t> FileStorage::LookupLocalObjectSize(
+    const std::string& key) const {
+    if (!storage_backend_) {
+        return std::nullopt;
+    }
+    if (auto size = storage_backend_->GetObjectDataSize(key);
+        size && *size > 0) {
+        return size;
+    }
+    if (client_) {
+        const auto scoped = TenantId(client_->tenant_id()).MakeScopedKey(key);
+        if (scoped != key) {
+            if (auto size = storage_backend_->GetObjectDataSize(scoped);
+                size && *size > 0) {
+                return size;
+            }
+        }
+    }
+    return std::nullopt;
+}
+
+tl::expected<void, ErrorCode> FileStorage::PrefetchKeys(
+    const std::vector<std::string>& keys, const std::vector<int64_t>& sizes,
+    bool* dram_pressure, PrefetchKeyCallback on_key_done) {
+    if (client_ == nullptr) {
+        return tl::make_unexpected(ErrorCode::INVALID_PARAMS);
+    }
+    if (keys.size() != sizes.size()) {
+        return tl::make_unexpected(ErrorCode::INVALID_PARAMS);
+    }
+
+    for (size_t i = 0; i < keys.size(); ++i) {
+        const auto& key = keys[i];
+        int64_t size = sizes[i];
+        if (size <= 0) {
+            LOG(WARNING) << "SSD prefetch: skipping key=" << key
+                         << " with non-positive size=" << size;
+            continue;
+        }
+        ProcessOneKey(key, size, dram_pressure, on_key_done);
+    }
+
+    return {};
+}
+
+void FileStorage::ProcessOneKey(const std::string& key, int64_t size,
+                                bool* dram_pressure,
+                                const PrefetchKeyCallback& on_key_done) {
+    const auto& tenant_id = client_->tenant_id();
+    const auto storage_key = TenantId(tenant_id).MakeScopedKey(key);
+    const std::vector<std::string> preferred_segments;
+
+    auto alloc_result = client_->PromotionAllocStart(
+        key, tenant_id, static_cast<uint64_t>(size), preferred_segments);
+    if (!alloc_result) {
+        VLOG(1) << "SSD prefetch: PromotionAllocStart failed for key=" << key
+                << ", error=" << alloc_result.error();
+        if (dram_pressure != nullptr &&
+            alloc_result.error() == ErrorCode::NO_AVAILABLE_HANDLE) {
+            *dram_pressure = true;
+        }
+        auto release = client_->NotifyPromotionFailure(key, tenant_id);
+        if (!release) {
+            VLOG(1) << "SSD prefetch: NotifyPromotionFailure failed for"
+                    << " key=" << key << ", error=" << release.error();
+        }
+        if (on_key_done) {
+            on_key_done(key, false);
+        }
+        return;
+    }
+
+    PromotionStateGuard guard(client_.get(), key, tenant_id);
+
+    std::vector<std::string> single_key{storage_key};
+    std::vector<int64_t> single_size{size};
+    auto allocate_res =
+        AllocateBatch(single_key, single_size, *client_buffer_allocator_);
+    if (!allocate_res) {
+        LOG(WARNING) << "SSD prefetch: AllocateBatch failed for key=" << key
+                     << ", error=" << allocate_res.error();
+        if (dram_pressure != nullptr &&
+            allocate_res.error() == ErrorCode::NO_AVAILABLE_HANDLE) {
+            *dram_pressure = true;
+        }
+        if (on_key_done) {
+            on_key_done(key, false);
+        }
+        return;
+    }
+    auto staging = allocate_res.value();
+    auto load_res = BatchLoad(staging->slices);
+    if (!load_res) {
+        LOG(WARNING) << "SSD prefetch: BatchLoad failed for key=" << key
+                     << ", error=" << load_res.error();
+        if (on_key_done) {
+            on_key_done(key, false);
+        }
+        return;
+    }
+
+    auto slice_it = staging->slices.find(storage_key);
+    if (slice_it == staging->slices.end()) {
+        LOG(WARNING) << "SSD prefetch: staging slice missing for key=" << key;
+        if (on_key_done) {
+            on_key_done(key, false);
+        }
+        return;
+    }
+    std::vector<Slice> tx_slices{slice_it->second};
+    ErrorCode write_err = client_->PromotionWrite(
+        alloc_result.value().memory_descriptor, tx_slices);
+    if (write_err != ErrorCode::OK) {
+        LOG(WARNING) << "SSD prefetch: PromotionWrite failed for key=" << key
+                     << ", error=" << write_err;
+        if (on_key_done) {
+            on_key_done(key, false);
+        }
+        return;
+    }
+
+    auto notify_res = client_->NotifyPromotionSuccess(key, tenant_id);
+    if (!notify_res) {
+        LOG(WARNING) << "SSD prefetch: NotifyPromotionSuccess failed for"
+                     << "key=" << key << ", error=" << notify_res.error();
+        if (on_key_done) {
+            on_key_done(key, false);
+        }
+        return;
+    }
+    guard.Dismiss();
+    if (on_key_done) {
+        on_key_done(key, true);
+    }
+}
+
 tl::expected<void, ErrorCode> FileStorage::BatchLoad(
     std::unordered_map<std::string, Slice>& batch_object) {
     auto start_time = std::chrono::steady_clock::now();

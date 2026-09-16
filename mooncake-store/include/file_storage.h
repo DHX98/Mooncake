@@ -1,9 +1,14 @@
 #pragma once
 
+#include <functional>
+#include <optional>
+
 #include "client_service.h"
 #include "client_buffer.h"
 #include "storage_backend.h"
 #include "pinned_buffer_pool.h"
+
+#include <functional>
 
 namespace mooncake {
 
@@ -92,6 +97,33 @@ class FileStorage {
     tl::expected<bool, ErrorCode> Exists(const std::string& key);
 
     FileStorageConfig config_;
+
+    /**
+     * @brief Promote a set of keys from local SSD to DRAM.
+     *
+     * For each key the method allocates a staging buffer, reads the data from
+     * the local SSD backend, transfers it to a freshly-allocated MEMORY
+     * replica via Transfer Engine, and commits the result on the master.
+     * Failures are logged per-key but do not propagate; this is best-effort.
+     *
+     * @param keys  Keys to promote (must already have LOCAL_DISK replicas)
+     * @param sizes Corresponding object sizes in bytes
+     * @param dram_pressure Optional out-flag. Set to true if any key failed to
+     *        promote because DRAM was saturated (NO_AVAILABLE_HANDLE), so the
+     *        caller can back off prefetch and let eviction/offload reclaim
+     *        memory. Never reset to false; caller initializes it.
+     * @return void on success, ErrorCode on critical (pre-loop) failure
+     */
+    using PrefetchKeyCallback =
+        std::function<void(const std::string& key, bool success)>;
+
+    tl::expected<void, ErrorCode> PrefetchKeys(
+        const std::vector<std::string>& keys, const std::vector<int64_t>& sizes,
+        bool* dram_pressure = nullptr,
+        PrefetchKeyCallback on_key_done = nullptr);
+
+    // Local SSD size from object_bucket_map_. Remote caller sizes are a hint.
+    std::optional<int64_t> LookupLocalObjectSize(const std::string& key) const;
 
     /**
      * @brief Releases buffer associated with a specific batch_id.
@@ -198,6 +230,10 @@ class FileStorage {
         std::unordered_map<std::string, std::vector<Slice>>& batched_slices);
 
     tl::expected<void, ErrorCode> RegisterLocalMemory();
+
+    void ProcessOneKey(const std::string& key, int64_t size,
+                       bool* dram_pressure,
+                       const PrefetchKeyCallback& on_key_done);
 
     tl::expected<std::shared_ptr<AllocatedBatch>, ErrorCode> AllocateBatch(
         const std::vector<std::string>& keys, const std::vector<int64_t>& sizes,

@@ -1173,9 +1173,15 @@ Client::QueryByRegex(const std::string& str) {
 
 tl::expected<QueryResult, ErrorCode> Client::Query(
     const std::string& object_key) {
+    return Query(object_key, QueryOptions{});
+}
+
+tl::expected<QueryResult, ErrorCode> Client::Query(
+    const std::string& object_key, QueryOptions options) {
     std::chrono::steady_clock::time_point start_time =
         std::chrono::steady_clock::now();
-    auto result = master_client_.GetReplicaList(object_key);
+    auto result = master_client_.GetReplicaList(
+        object_key, master_client_.tenant_id(), options);
     if (!result) {
         return tl::unexpected(result.error());
     }
@@ -1185,16 +1191,33 @@ tl::expected<QueryResult, ErrorCode> Client::Query(
         result.value().object_checksum);
 }
 
+tl::expected<void, ErrorCode> Client::RegisterPrefetchTask(
+    const std::string& object_key) {
+    return master_client_.RegisterPrefetchTask(client_id_, object_key);
+}
+
 std::vector<tl::expected<QueryResult, ErrorCode>> Client::BatchQuery(
     const std::vector<std::string>& object_keys) {
-    return BatchQuery(object_keys, master_client_.tenant_id());
+    return BatchQuery(object_keys, master_client_.tenant_id(), QueryOptions{});
 }
 
 std::vector<tl::expected<QueryResult, ErrorCode>> Client::BatchQuery(
     const std::vector<std::string>& object_keys, const std::string& tenant_id) {
+    return BatchQuery(object_keys, tenant_id, QueryOptions{});
+}
+
+std::vector<tl::expected<QueryResult, ErrorCode>> Client::BatchQuery(
+    const std::vector<std::string>& object_keys, QueryOptions options) {
+    return BatchQuery(object_keys, master_client_.tenant_id(), options);
+}
+
+std::vector<tl::expected<QueryResult, ErrorCode>> Client::BatchQuery(
+    const std::vector<std::string>& object_keys, const std::string& tenant_id,
+    QueryOptions options) {
     std::chrono::steady_clock::time_point start_time =
         std::chrono::steady_clock::now();
-    auto response = master_client_.BatchGetReplicaList(object_keys, tenant_id);
+    auto response =
+        master_client_.BatchGetReplicaList(object_keys, tenant_id, options);
 
     // Check if we got the expected number of responses
     if (response.size() != object_keys.size()) {
@@ -5087,7 +5110,12 @@ void Client::StorageHeartbeatThreadMain() {
             // Remote peers need this to locate our RDMA RPC port for
             // handshake.  Like segment descriptors, this entry is lost
             // when the HTTP metadata server is cleared on Master restart.
-            rc = metadata->rePublishRpcMetaEntry(local_hostname_);
+            // Image TE 0.3.11 has no rePublishRpcMetaEntry; republish via addRpcMetaEntry.
+            TransferMetadata::RpcMetaDesc rpc_desc;
+            rc = metadata->getRpcMetaEntry(local_hostname_, rpc_desc);
+            if (rc == 0) {
+                rc = metadata->addRpcMetaEntry(local_hostname_, rpc_desc);
+            }
             if (rc != 0) {
                 LOG(ERROR) << "Failed to re-publish RPC meta entry "
                            << "to metadata server, rc=" << rc
@@ -5150,7 +5178,13 @@ void Client::StorageHeartbeatThreadMain() {
                 // failed.  Retry it directly.
                 auto metadata = transfer_engine_->getMetadata();
                 if (metadata) {
-                    int rc = metadata->rePublishRpcMetaEntry(local_hostname_);
+                    TransferMetadata::RpcMetaDesc rpc_desc;
+                    int rc = metadata->getRpcMetaEntry(local_hostname_,
+                                                       rpc_desc);
+                    if (rc == 0) {
+                        rc = metadata->addRpcMetaEntry(local_hostname_,
+                                                       rpc_desc);
+                    }
                     if (rc != 0) {
                         LOG(ERROR)
                             << "Retry: failed to re-publish RPC "
@@ -5407,9 +5441,22 @@ bool Client::IsReplicaOnLocalMemory(const Replica::Descriptor& replica) {
     const auto replica_transfer_endpoint =
         replica.get_memory_descriptor().buffer_descriptor.transport_endpoint_;
     if (metadata_connstring_ == P2PHANDSHAKE) {
-        return replica_transfer_endpoint == GetTransportEndpoint();
+        if (replica_transfer_endpoint == GetTransportEndpoint()) {
+            return true;
+        }
+    } else if (local_hostname_ == replica_transfer_endpoint) {
+        return true;
     }
-    return local_hostname_ == replica_transfer_endpoint;
+    {
+        std::lock_guard<std::mutex> lock(mounted_segments_mutex_);
+        for (const auto& [segment_id, segment] : mounted_segments_) {
+            if (replica_transfer_endpoint == segment.name ||
+                replica_transfer_endpoint == segment.te_endpoint) {
+                return true;
+            }
+        }
+    }
+    return false;
 }
 
 }  // namespace mooncake

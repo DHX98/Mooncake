@@ -62,12 +62,15 @@ class WrappedMasterService {
     GetReplicaListByRegex(const std::string& str,
                           const std::string& tenant_id = "default");
 
+    // 3-arg RPC surface. Wire type is QueryOptions (no default: coro_rpc
+    // must see three arguments). read_only skips lease/sketch/promotion.
     tl::expected<GetReplicaListResponse, ErrorCode> GetReplicaList(
-        const std::string& key, const std::string& tenant_id = "default");
+        const std::string& key, const std::string& tenant_id,
+        QueryOptions options);
 
     std::vector<tl::expected<GetReplicaListResponse, ErrorCode>>
     BatchGetReplicaList(const std::vector<std::string>& keys,
-                        const std::string& tenant_id = "default");
+                        const std::string& tenant_id, QueryOptions options);
 
     // Read-only admin variants: no lease grants, no promotion, no metric
     // updates.
@@ -229,6 +232,9 @@ class WrappedMasterService {
     tl::expected<void, ErrorCode> NotifyOffloadSuccess(
         const UUID& client_id, const std::vector<OffloadTaskItem>& tasks,
         const std::vector<StorageObjectMetadata>& metadatas);
+
+    tl::expected<void, ErrorCode> RegisterPrefetchTask(const UUID& client_id,
+                                                       const std::string& key);
 
     // Promotion-on-hit RPCs.
     tl::expected<std::vector<PromotionTaskItem>, ErrorCode>

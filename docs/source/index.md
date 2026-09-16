@@ -135,6 +135,7 @@ design/store/mooncake-store
 design/kv-event/publisher-design
 design/kv-event/subscriber-guide
 design/nvme-kv-backend
+design/ssd-prefetch
 design/mooncake-backend-pg
 design/mooncake-ep
 design/p2p-store

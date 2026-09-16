@@ -26,6 +26,7 @@
 #if defined(USE_SUNRISE)
 #include "sunrise_allocator.h"
 #endif
+#include "ssd_prefetcher.h"
 #include <ylt/coro_http/coro_http_server.hpp>
 #include <ylt/coro_rpc/coro_rpc_server.hpp>
 #include <ylt/coro_io/coro_io.hpp>
@@ -97,7 +98,10 @@ class RealClient : public PyClient {
         const std::string &ssd_offload_path = "",
         const std::string &tenant_id = "default",
         bool enable_client_http_server = false,
-        int client_http_port = DEFAULT_CLIENT_HTTP_PORT);
+        int client_http_port = DEFAULT_CLIENT_HTTP_PORT,
+        int64_t ssd_prefetch_cooldown_sec = DEFAULT_SSD_PREFETCH_COOLDOWN_SEC,
+        int64_t ssd_prefetch_dedup_ttl_sec =
+            DEFAULT_SSD_PREFETCH_DEDUP_TTL_SEC);
 
     int setup_dummy(size_t mem_pool_size, size_t local_buffer_size,
                     const std::string &server_address,
@@ -363,17 +367,21 @@ class RealClient : public PyClient {
     /**
      * @brief Check if an object exists
      * @param key Key to check
+     * @param options Optional exist behavior (e.g. prefetch_to_memory)
      * @return 1 if exists, 0 if not exists, -1 if error
      */
-    int isExist(const std::string &key);
+    int isExist(const std::string &key,
+                const ExistOptions &options = ExistOptions{});
 
     /**
      * @brief Check if multiple objects exist
      * @param keys Vector of keys to check
+     * @param options Optional exist behavior (e.g. prefetch_to_memory)
      * @return Vector of existence results: 1 if exists, 0 if not exists, -1 if
      * error
      */
-    std::vector<int> batchIsExist(const std::vector<std::string> &keys);
+    std::vector<int> batchIsExist(const std::vector<std::string> &keys,
+                                  const ExistOptions &options = ExistOptions{});
 
     /**
      * @brief Get the size of an object
@@ -807,6 +815,23 @@ class RealClient : public PyClient {
                              const std::vector<int64_t> &sizes);
 
     /**
+     * @brief Holder-side RPC handler for cross-node SSD prefetch.
+     *
+     * Invoked by a remote requester when the LOCAL_DISK replica of a key is
+     * held by THIS node. Runs the same promotion as the local prefetch path:
+     * RegisterPrefetchTask (with this node's own client_id, so Master's
+     * holder_id == client_id check passes) + FileStorage::PrefetchKeys to
+     * stage the SSD object into DRAM. Best-effort and fire-and-forget: the
+     * actual SSD I/O runs on a detached thread and this returns immediately.
+     * @param keys SSD-only keys held by this node to promote into DRAM.
+     * @param sizes Object sizes (bytes) captured by the requester from
+     * Master metadata; index-aligned with keys.
+     * @return true if the prefetch work was accepted/scheduled.
+     */
+    bool prefetch_offload_object(const std::vector<std::string> &keys,
+                                 const std::vector<int64_t> &sizes);
+
+    /**
      * @brief Releases buffer associated with a specific batch_id.
      * Called by remote client after transfer completion.
      * @param batch_id The unique identifier of the batch to release
@@ -1115,6 +1140,15 @@ class RealClient : public PyClient {
     void teardown_ascend_shm_buffer(MappedShm &shm);
     tl::expected<void, ErrorCode> setup_ascend_internal(
         size_t local_buffer_size);
+
+    // get()-side wait-for-prefetch. When a get selects a LOCAL_DISK (SSD)
+    // replica but prefetch for the same key is in flight, poll every 1 ms
+    // (early exit on completion) up to this budget. Env MOONCAKE_SSD_GET_WAIT_MS
+    // overrides mooncake.json ssd_get_wait_ms. 0 disables waiting.
+    int64_t ssd_get_wait_ms_{DEFAULT_SSD_GET_WAIT_MS};
+    int64_t ssd_get_wait_ms_config_{DEFAULT_SSD_GET_WAIT_MS};
+
+    std::unique_ptr<SsdPrefetcher> prefetcher_;
 
    private:
     std::unordered_map<std::string, MountedSegmentRecord>
