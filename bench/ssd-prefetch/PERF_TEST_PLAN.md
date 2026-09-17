@@ -17,8 +17,10 @@ prompt。
 
 DSv4-Flash 是 MLA 架构，单 token KV 很小；更重要的是**当前实现的
 prefix cache 命中粒度是 16K tokens——prefix 短于 16K 根本不会命中
-缓存**。因此统一用 **32K tokens**（2 倍命中粒度）测试：每个 prefix
-都确定可命中，且 KV 搬运时间足够盖过 TTFT 噪声。
+缓存**。规则：**prefix 固定 16385**（一个完整 16K 可缓存块 + 1 token
+尾部避免边界歧义；尾部重算可忽略）。不要用 32K：16K 块的 KV 已有
+~GB 级，信号远超噪声，更长的 prefix 只会通过 max_model_len 多吃 HBM。
+约束：`16385 ≤ max_model_len − suffix − output_len`。
 
 ## 2. 对照设计（唯一变量原则）
 
@@ -62,7 +64,7 @@ prefix cache 命中粒度是 16K tokens——prefix 短于 16K 根本不会命�
 ### 4.1 生成数据集（两组共用同一份）
 
 ```bash
-python3 gen_dataset.py --num-prefixes 48 --prefix-tokens 32768 --seed 42
+python3 gen_dataset.py --num-prefixes 48 --prefix-tokens 16385 --seed 42
 # 产出 prompts.jsonl（主用）和 prompts_sharegpt.json（旧版 vllm 兜底）
 ```
 
@@ -137,7 +139,8 @@ mem_cache 仅 ~26 key）。三个叠加根因，已反映在上面的 v2 配置�
   SSD 读不自我提升）；B 组 r2 ≥ r1 的收益属正常（r1 已把数据提回
   DRAM）。若 A 组 r2 明显变快，说明有意外 promote，检查 master 配置。
 - **prefix 缓存根本没命中** → prefix 长度低于 16K 的命中粒度（本方案
-  固定 32K，不要调小）； suffix 造成的尾部不命中属正常，不影响主体。
+  固定 16385=16K+1，不要调小；HBM 充裕时可加大但无收益）；suffix 尾部
+  不命中属正常，不影响主体。
 - **TTFT 没差异** → 大概率：prefix 没真落 SSD（§3.2）、connector 没传
   prefetch options（§3.1）、SSD 是 tmpfs。
 - **B 组反而更慢** → 查 master 日志是否 NO_AVAILABLE_HANDLE 风暴（DRAM
@@ -145,7 +148,7 @@ mem_cache 仅 ~26 key）。三个叠加根因，已反映在上面的 v2 配置�
 - 可选压力抽查：`--max-concurrency 4` 跑一遍 measure（~5min），只看
   收益是否保持，不进主表。
 
-## 6. 时间预算（A2，32K-token prefill ≈ 2~4s/请求）
+## 6. 时间预算（A2，16K-token prefill ≈ 2~3s/请求）
 
 | 阶段 | 估时 |
 |---|---|

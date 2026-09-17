@@ -25,7 +25,7 @@
 ### 1. 生成数据集（两组共用）
 
 ```bash
-python3 gen_dataset.py --num-prefixes 48 --prefix-tokens 32768 --seed 42
+python3 gen_dataset.py --num-prefixes 48 --prefix-tokens 16385 --seed 42
 ```
 
 ### 2. A 组（SSD offload only）
@@ -89,9 +89,11 @@ sleep 30
 
 ## 注意
 
-- **prefix 长度固定 32K tokens，不要调小**：当前实现 prefix cache 的
-  命中粒度是 16K tokens，低于 16K 的 prefix 根本不会命中缓存，实验
-  直接无效。需要溢出更多/更少 DRAM 时只调 `--num-prefixes`。
+- **prefix 长度固定 16385（16K+1），不要调小**：当前实现 prefix cache
+  的命中粒度是 16K tokens，低于 16K 的 prefix 根本不会命中缓存，实验
+  直接无效。16385 已够（HBM 紧张时尤其不要加到 32K，`max_model_len`
+  只需 ≥ prefix+suffix+output）。需要溢出更多/更少 DRAM 时只调
+  `--num-prefixes`。
 - 两组之间**必须重启** master 和 vllm（缓存状态隔离），SSD 目录清空。
 - connector 侧若还没接 `prefetch_to_memory` 选项，B 组无效——先确认
   plan §3.1 再跑。

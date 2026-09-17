@@ -7,10 +7,12 @@ for vllm versions without custom dataset support). Deterministic via --seed:
 the SAME file must be used for fill and measure, and for both arms.
 
 DSv4-Flash is MLA (tiny KV per token), and the connector-side prefix cache
-hit granularity is 16K tokens: prefixes below 16K tokens can never hit the
-cache at all. Test with 32K tokens (2x the hit granularity) so every prefix
-is unambiguously cacheable and long enough for the SSD-vs-DRAM KV transfer
-time to dominate TTFT noise.
+hit granularity is 16K tokens: prefixes must be >= 16385 (one full 16K
+cacheable block plus a 1-token tail that avoids boundary ambiguity; the tail
+recompute is negligible). Larger prefixes (e.g. 32K) only cost more HBM via
+max_model_len without adding signal -- a single 16K block is already ~GB of
+KV, far above TTFT noise. Constraint: prefix <= max_model_len - suffix -
+output_len.
 """
 
 import argparse
@@ -32,7 +34,7 @@ def make_prefix(rng, approx_tokens):
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--num-prefixes", type=int, default=48)
-    ap.add_argument("--prefix-tokens", type=int, default=32768)
+    ap.add_argument("--prefix-tokens", type=int, default=16385)
     ap.add_argument("--suffix",
                     default="Summarize the above in one sentence.")
     ap.add_argument("--seed", type=int, default=42)
