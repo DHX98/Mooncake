@@ -107,6 +107,7 @@ class LocalDiskUnmountInterleavingTest;
 // PushOffloadingQueue directly with degenerate replica states that the
 // public PutStart/PutEnd path never produces.
 class MasterServiceSSDTest;
+class PrefetchTaskMasterTest;
 }  // namespace test
 namespace benchmarks {
 class BatchEvictBench;

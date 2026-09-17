@@ -6598,15 +6598,15 @@ RealClient::batch_get_into_multi_buffers_internal(
         std::optional<QueryResult> refreshed_qr;
         if (ssd_get_wait_ms_ > 0 && enable_ssd_prefetch_ && prefetcher_ &&
             best_replica->is_local_disk_replica()) {
-            refreshed_qr =
-                prefetcher_->WaitIfPromotionInFlight(key, ssd_get_wait_ms_);
-            if (refreshed_qr.has_value()) {
+            if (auto waited = prefetcher_->WaitIfPromotionInFlight(
+                    key, ssd_get_wait_ms_);
+                waited.has_value()) {
                 const auto *promoted = SelectBestReplica(
-                    refreshed_qr->replicas, local_endpoints);
+                    waited->replicas, local_endpoints);
                 if (promoted != nullptr && promoted->is_memory_replica()) {
-                    best_replica = promoted;
-                } else {
-                    refreshed_qr.reset();
+                    refreshed_qr.emplace(*waited);
+                    best_replica = SelectBestReplica(
+                        refreshed_qr->replicas, local_endpoints);
                 }
             }
         }

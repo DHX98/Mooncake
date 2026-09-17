@@ -314,7 +314,7 @@ std::optional<QueryResult> SsdPrefetcher::WaitIfPromotionInFlight(
         if (!has_memory) {
             return std::nullopt;
         }
-        return qr;
+        return std::optional<QueryResult>(*qr);
     };
 
     if (throttle->triggeredAt(key) >= 0) {
