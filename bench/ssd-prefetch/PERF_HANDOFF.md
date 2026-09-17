@@ -5,15 +5,13 @@
 在 A2 + vllm-ascend + DSv4-Flash 环境，用 `vllm bench serve` 做 A/B 对比：
 **SSD offload only vs SSD offload + prefetch**，输出 TTFT 降幅百分比。
 
-## 输入物（都在本目录 `bench/ssd-prefetch/`）
-
-本分支：`ssd-prefetch/perf-bench` @ https://github.com/DHX98/Mooncake
+## 输入物（都在这个目录）
 
 - `PERF_TEST_PLAN.md` — 完整方案（原理、判读规则、常见坑），先读
-- `gen_dataset.py` — 数据集生成（确定性，A/B 共用同一文件）
+- `perf/gen_dataset.py` — 数据集生成（确定性，A/B 共用同一文件）
 
-被测代码分支（已含全部特性，基础测试已通过）：
-`ssd-prefetch/all-in-one` @ 同一 fork。
+代码分支（已含全部特性，基础测试已通过）：
+`ssd-prefetch/all-in-one` @ https://github.com/DHX98/Mooncake
 
 ## 执行步骤
 
@@ -45,7 +43,12 @@ client/connector: `enable_ssd_offload=true`，`ssd_offload_path=<NVMe dir>`，
 ### 3. B 组（offload + prefetch）
 
 master 配置与 A **逐字相同**；client 增加：
-`enable_ssd_prefetch=true`、`ssd_get_wait_ms=10`。
+`enable_ssd_prefetch=true`、`ssd_get_wait_ms=2000`。
+
+**DRAM 容量要求（v2 新增，v1 失败根因之一）**：store 总容量必须 ≥
+fill 集 + overflow 集 + 一份 fill 集的提升空间（约 3× 单组工作集）。
+16MB segment 下 mem_cache 只有 ~26 个 key 就是太挤的信号——promotion
+会全部 NO_AVAILABLE_HANDLE 失败并触发 cooldown，什么都测不到。
 
 ### 4. 每组跑法（A、B 完全相同）
 
@@ -62,7 +65,8 @@ sleep 30
 # 前置检查：抽查 key 为 LOCAL_DISK-only（plan §3.2）；B 组确认 client 日志
 # 有 "SSD prefetch enabled"
 
-# measure x2（命令同 fill，换 result 文件名）
+# measure x2（c=2 制造排队窗口，其余同 fill，换 result 文件名）
+# vllm bench serve ... --max-concurrency 2 ... --result-filename <arm>_r1.json
 ... --result-filename <arm>_r1.json
 ... --result-filename <arm>_r2.json
 ```
@@ -75,7 +79,13 @@ sleep 30
 1. 6 个 result json（A/B × fill/r1/r2）
 2. TTFT 汇总表（median/p99/mean，两组，r1 为主）+ 降幅 %
 3. 前置检查的证据：SSD-only 抽查截图/输出、B 组 `SSD prefetch enabled` 日志行
-4. 异常时的 master/client 日志关键段（特别是 NO_AVAILABLE_HANDLE）
+4. **prefetch 生效证据（v2 新增，缺一不可）**：
+   - master.log 中 `prefetch_task_registered` 出现次数（应 ≈ fill keys 数，
+     为 0 说明 prefetch 没跑起来，TTFT 数字无意义）；
+   - client log 中 `DRAM saturated, backing off` 次数（应 ≈ 0）；
+   - 两份日志中 NO_AVAILABLE_HANDLE 次数（应 ≈ 0）；
+   - measure 后抽查 fill keys 应重新有 MEMORY 副本；
+   - SsdMetric `prefetch_complete_total` / `prefetch_fail_total`。
 
 ## 注意
 
@@ -85,4 +95,6 @@ sleep 30
 - 两组之间**必须重启** master 和 vllm（缓存状态隔离），SSD 目录清空。
 - connector 侧若还没接 `prefetch_to_memory` 选项，B 组无效——先确认
   plan §3.1 再跑。
-- 时间预算 ~30 分钟；压力抽查（c4×1 轮）可选，不进主结论。
+- **measure 必须 `--max-concurrency 2`**（v2 修正）：串行时 lookup 和 get
+  背靠背，prefetch 没有排队窗口，测不到收益（v1 失败根因）。
+- 时间预算 ~35 分钟；压力抽查（c4×1 轮）可选，不进主结论。

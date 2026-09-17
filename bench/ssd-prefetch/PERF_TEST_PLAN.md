@@ -25,14 +25,25 @@ prefix cache 命中粒度是 16K tokens——prefix 短于 16K 根本不会命�
 | | A 组 | B 组 |
 |---|---|---|
 | master | `enable_offload=true, offload_on_evict=true, promotion_on_hit=false, default_kv_lease_ttl=60000` | 同左（**逐字相同**） |
-| client（connector 侧配置） | `enable_ssd_offload=true, ssd_offload_path=<NVMe dir>` | A 组 + `enable_ssd_prefetch=true, ssd_get_wait_ms=10` |
+| client（connector 侧配置） | `enable_ssd_offload=true, ssd_offload_path=<NVMe dir>` | A 组 + `enable_ssd_prefetch=true, ssd_get_wait_ms=2000` |
 
 **关键控制**：
 - `promotion_on_hit=false` —— 否则 promotion-on-hit 会污染对照。
 - lease TTL 调大到 60s —— 覆盖 exist→get 窗口，排除 lease 过期的假阴性。
 - SSD 落在真实 NVMe（不要 tmpfs），否则 A/B 无差异。
 - 两组用**同一个数据集文件、同一个 --seed**；fill/measure 也是同一文件。
-- 只跑**串行**（`--max-concurrency 1`）：TTFT 信号最干净，机时最省。
+- **measure 阶段用 `--max-concurrency 2`，不是串行**（v2 修正，见 §5.1）：
+  串行时请求的 lookup（exist 探测）和 get 前后脚发生，probe→get 窗口≈0，
+  prefetch 根本来不及完成。c=2 让请求 N+1 的探测/提升与请求 N 的 prefill
+  （~5.5s）重叠——这正是 prefetch 设计要利用的排队窗口（RFC #3417 的核心
+  前提）。fill 阶段仍串行。
+- **DRAM 必须留出提升空间**（v2 修正）：store 总容量 ≥ fill 集 + overflow
+  集 + 一份 fill 集的提升空间（约 3× 单组工作集）。否则 promotion 全部
+  NO_AVAILABLE_HANDLE 失败并触发 cooldown 退让（机制按设计工作，但实验
+  什么都测不到）。16MB segment 配置下 mem_cache 只有 ~26 个 key 就是
+  太挤的信号。
+- **ssd_get_wait_ms 要匹配 promotion 时长**：10ms 对 GB 级 promotion
+  （秒级）毫无意义，B 组设 2000。
 
 ## 3. 前置检查（跑数前必做）
 
@@ -74,10 +85,10 @@ vllm bench serve \
 sleep 30
 # ---- SSD-only 前置检查（见 §3.2），不通过则调参重来 ----
 
-# ---- measure round 1 ----
-vllm bench serve ... （同上命令） --result-filename measure_r1.json
+# ---- measure round 1（c=2 制造 probe→get 排队窗口） ----
+vllm bench serve ... （同上命令，但 --max-concurrency 2） --result-filename measure_r1.json
 # ---- measure round 2（识别缓存污染） ----
-vllm bench serve ... （同上命令） --result-filename measure_r2.json
+vllm bench serve ... （同上） --result-filename measure_r2.json
 ```
 
 旧版 vllm-ascend 若没有 `vllm bench` 子命令或 `--dataset-name custom`：
@@ -100,7 +111,29 @@ bench 的 result json 里有 `mean_ttft_ms / median_ttft_ms / p99_ttft_ms`。
 
 ## 5. 判读规则
 
-- **主结论看 r1 串行**。A 组 r1/r2 应基本持平（promotion-on-hit 关闭，
+### 5.1 v1 教训（2026-09-17 首轮结果，A/B 无差异 -0.6%）
+
+首轮配置：c=1 串行、`ssd_get_wait_ms=10`、DRAM 紧张（16MB segment，
+mem_cache 仅 ~26 key）。三个叠加根因，已反映在上面的 v2 配置里：
+
+1. **无 probe→get 窗口**：串行下 lookup 与 get 背靠背，单请求 KV ~GB 级
+   （MLA 61 层 × ~1.1KB/token × 16K tokens），promotion 需秒级，来不及。
+2. **DRAM 饱和**：日志实测 NO_AVAILABLE_HANDLE（vllm.log + master.log），
+   PromotionAllocStart 失败 → 5s cooldown 退让 → prefetch 大部分被丢弃。
+3. **get_wait 10ms** 对秒级 promotion 无意义，get 直接回落 SSD。
+
+**每次 measure 必须同时采集这些证据**，否则无法区分"没收益"和"没生效"：
+- master.log: `prefetch_task_registered` 计数（measure 期间应 ≈ fill
+  keys 数；为 0 说明 prefetch 根本没跑起来）；
+- client log: `DRAM saturated, backing off` 次数（应 ≈ 0）；
+- measure 后抽查 fill keys 应重新有 MEMORY 副本；
+- SsdMetric: `prefetch_complete_total` / `prefetch_fail_total`；
+- NO_AVAILABLE_HANDLE 出现次数（应 ≈ 0；多则说明 DRAM 仍不足）。
+
+### 5.2 判读
+
+- **主结论看 r1（c=2）的中位数**。第 1 个请求无排队窗口、无收益属正常，
+  median 已将其稀释。A 组 r1/r2 应基本持平（promotion-on-hit 关闭，
   SSD 读不自我提升）；B 组 r2 ≥ r1 的收益属正常（r1 已把数据提回
   DRAM）。若 A 组 r2 明显变快，说明有意外 promote，检查 master 配置。
 - **prefix 缓存根本没命中** → prefix 长度低于 16K 的命中粒度（本方案
@@ -116,8 +149,8 @@ bench 的 result json 里有 `mean_ttft_ms / median_ttft_ms / p99_ttft_ms`。
 
 | 阶段 | 估时 |
 |---|---|
-| fill（48 请求，串行） | ~3 min |
+| fill（48 请求，串行） | ~4 min |
 | settle + SSD-only 检查 | ~1 min |
-| measure r1 + r2 | ~5 min（A 组偏慢） |
-| **单组小计** | **≤10 min** |
-| **A/B 两组 + 重启服务** | **~30 min** |
+| measure r1 + r2（c=2） | ~5 min（A 组偏慢） |
+| **单组小计** | **≤12 min** |
+| **A/B 两组 + 重启服务** | **~35 min** |
