@@ -66,8 +66,23 @@ start_vllm() {
   export MOONCAKE_OFFLOAD_BUCKET_KEYS_LIMIT=1
   export ACL_OP_INIT_MODE=1
   export VLLM_USE_V1=1
+  export OMP_PROC_BIND=false
+  export OMP_NUM_THREADS=10
+  export PYTORCH_NPU_ALLOC_CONF=expandable_segments:True
+  export HCCL_BUFFSIZE=1024
+  export TASK_QUEUE_ENABLE=1
+  export HCCL_OP_EXPANSION_MODE=AIV
+  export HCCL_IF_IP=80.48.37.141
+  export GLOO_SOCKET_IFNAME=enp189s0f0
+  export TP_SOCKET_IFNAME=enp189s0f0
+  export HCCL_SOCKET_IFNAME=enp189s0f0
+  export HCCL_INTRA_ROCE_ENABLE=1
+  export MC_METADATA_SERVER=P2PHANDSHAKE
+  export LOCAL_HOSTNAME=127.0.0.1
+  ulimit -u 65535 || true
   unset ASCEND_ENABLE_USE_FABRIC_MEM || true
   unset MOONCAKE_MASTER || true
+  unset MOONCAKE_GLOBAL_SEGMENT_SIZE || true
 
   KV='{"kv_connector":"AscendStoreConnector","kv_role":"kv_both","kv_load_failure_policy":"recompute","kv_connector_extra_config":{"lookup_rpc_port":"0","backend":"mooncake"}}'
 
@@ -79,6 +94,7 @@ start_vllm() {
     --enforce-eager \
     --no-enable-prefix-caching \
     --tensor-parallel-size 8 \
+    --data-parallel-size 1 \
     --max-model-len "$MAX_MODEL_LEN" \
     --block-size 128 \
     --kv-transfer-config "$KV" \
@@ -103,7 +119,10 @@ stop_all() {
     rm -f "$MASTER_PIDFILE"
   fi
   pkill -f "vllm serve $MODEL" 2>/dev/null || true
+  pkill -9 -f "VLLM::EngineCore" 2>/dev/null || true
+  pkill -9 -f "VLLM::Worker" 2>/dev/null || true
   pkill -f "mooncake_master --rpc_port=$RPC_PORT" 2>/dev/null || true
+  sleep 2
   echo "stopped :$HTTP_PORT :$RPC_PORT"
 }
 

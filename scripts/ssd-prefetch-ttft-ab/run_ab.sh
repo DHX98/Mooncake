@@ -37,6 +37,18 @@ one_arm() {
   DATASET="$DATADIR/prompts.jsonl" CONC="$FILL_CONCURRENCY" \
     "$HERE/bench.sh" "${arm}_fill.json"
 
+  python3 - "$RESULTDIR/${arm}_fill.bench.log" <<'CHK'
+import sys
+p = sys.argv[1]
+t = open(p, encoding='utf-8', errors='replace').read()
+n = 0
+for line in t.splitlines():
+    if 'Successful requests:' in line:
+        n = int(line.split(':')[-1].strip() or 0)
+print('FAIL_FAST_FILL success', n)
+if n <= 0:
+    print('FILL_ZERO_ABORT'); raise SystemExit(1)
+CHK
   echo "----- overflow (evict fill keys out of DRAM onto SSD) -----"
   DATASET="$DATADIR/overflow.jsonl" CONC="$FILL_CONCURRENCY" \
     NPROMPTS="$OVERFLOW_PREFIXES" BSEED="$OVERFLOW_SEED" \

@@ -1,3 +1,11 @@
+> **现场结果 2026-09-18**（以 `METHOD.md` 和 `evidence/v3-verify/RESULT.md` 为准；下文若干 grep / 预估数已被现场否定）
+>
+> - 没有改 Mooncake C++。c=4 r1 过线：median +85.20%，mean +81.42%，p99 +44.85%。
+> - kick 行是 `in_cooldown=0|1`，不是 `true|false`。592 次 kick，其中 211 次 `in_cooldown=1` → **不要删 `ignore_cooldown`**。
+> - 没有 `SsdMetric` 字符串；看 master 周期行里的 `Promotion: completed=/failed=`。
+> - `prefetch_task_registered` 本轮 master 1363（不是 ≈166）。
+> - 前两轮 A-fill 卡死是孤儿 `VLLM::Worker` 占卡，不是 prefetch kick。
+
 # v3-verify 验证交接单（内网测试 agent）
 
 分支：`ssd-prefetch/v3-verify`（= v2 折叠代码 + get-kick 打点 +
