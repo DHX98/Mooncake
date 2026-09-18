@@ -211,7 +211,8 @@ class PrefetchThrottle {
                 if (state == State::kCompleted) {
                     return true;
                 }
-                if (state == State::kFailed) {
+                if (state == State::kFailed ||
+                    state == State::kAlreadyResident) {
                     return false;
                 }
             }

@@ -53,7 +53,11 @@ class SsdPrefetcher {
     // dedup + a pool enqueue only: no RPC on the caller's thread. All keys
     // (local and remote holders alike) pass the dedup window first, so hot
     // probes cannot cause metadata-query or delegation-RPC storms.
-    void TriggerPrefetch(const std::vector<std::string>& keys);
+    // ignore_cooldown: get()-side kick must still try to promote even after
+    // a DRAM-saturation backoff, otherwise measure pays SSD get with no
+    // attempt to hide IO.
+    void TriggerPrefetch(const std::vector<std::string>& keys,
+                         bool ignore_cooldown = false);
 
     // Holder side of a remote prefetch request (prefetch_offload_object RPC):
     // dedup, size the staging from authoritative local metadata, then run
@@ -66,10 +70,11 @@ class SsdPrefetcher {
     // COMPLETE MEMORY replica is observed; std::nullopt otherwise (callers
     // fall back to the SSD read with no further delay).
     //
-    // Never waits without evidence of an in-flight promotion: a local
-    // throttle record (this process triggered the prefetch), or a single
-    // read-only re-query showing a PROCESSING MEMORY replica (another node
-    // is promoting). Re-queries are read-only (no lease, no metrics).
+    // budget_ms is the remaining *batch* budget (one deadline for the whole
+    // get), not a fresh per-key timeout. Never waits without evidence of an
+    // in-flight promotion: a local throttle record that is still live, or a
+    // read-only re-query showing a PROCESSING MEMORY replica. Fail / already
+    // resident / delegated keys return immediately.
     std::optional<QueryResult> WaitIfPromotionInFlight(
         const std::string& key, int64_t budget_ms);
 

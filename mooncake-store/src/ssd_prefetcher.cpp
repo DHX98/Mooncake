@@ -2,6 +2,7 @@
 
 #include <algorithm>
 #include <chrono>
+#include <optional>
 #include <thread>
 #include <unordered_map>
 #include <utility>
@@ -105,6 +106,8 @@ void RegisterAndPromote(
     if (!prefetch_res) {
         LOG(WARNING) << "SSD prefetch: PrefetchKeys failed, error="
                      << prefetch_res.error();
+    } else {
+        LOG(INFO) << "PrefetchKeys completed keys=" << promote_keys.size();
     }
     if (dram_pressure && throttle) {
         // DRAM saturated: back off so eviction/offload can reclaim memory
@@ -146,12 +149,13 @@ void SsdPrefetcher::SubmitJob(std::function<void()> job) {
     }
 }
 
-void SsdPrefetcher::TriggerPrefetch(const std::vector<std::string>& keys) {
+void SsdPrefetcher::TriggerPrefetch(const std::vector<std::string>& keys,
+                                   bool ignore_cooldown) {
     if (!initialized_.load() || keys.empty()) {
         return;
     }
     auto throttle = throttle_;
-    if (throttle->inCooldown()) {
+    if (!ignore_cooldown && throttle->inCooldown()) {
         VLOG(1) << "SSD prefetch: skipped (memory-pressure cooldown)";
         return;
     }
@@ -213,12 +217,28 @@ void SsdPrefetcher::TriggerPrefetch(const std::vector<std::string>& keys) {
                 }
                 if (route->holder_endpoint.empty() ||
                     route->holder_endpoint == local_rpc_addr) {
-                    local_keys.push_back(chunk[i]);
-                    local_sizes.push_back(route->local_disk_size);
+                    // Only the process that actually has the SSD object may
+                    // RegisterPrefetchTask. EngineCore (segment=0) otherwise
+                    // leaves a PROCESSING MEMORY replica that get() waits on
+                    // for the full per-key budget.
+                    std::optional<int64_t> local_size;
+                    if (file_storage) {
+                        local_size =
+                            file_storage->LookupLocalObjectSize(chunk[i]);
+                    }
+                    if (local_size && *local_size > 0) {
+                        local_keys.push_back(chunk[i]);
+                        local_sizes.push_back(*local_size);
+                    } else {
+                        throttle->markFailed(chunk[i]);
+                    }
                 } else {
                     remote_keys[route->holder_endpoint].push_back(chunk[i]);
                     remote_sizes[route->holder_endpoint].push_back(
                         route->local_disk_size);
+                    // Requester throttle must not block get(): the holder
+                    // tracks in-flight on its own process.
+                    throttle->markFailed(chunk[i]);
                 }
             }
 
@@ -318,10 +338,16 @@ std::optional<QueryResult> SsdPrefetcher::WaitIfPromotionInFlight(
     };
 
     if (throttle->triggeredAt(key) >= 0) {
-        // This process triggered the prefetch: wait on the local state
-        // machine (no RPC), then confirm via a single read-only re-query.
-        if (throttle->stateOf(key) != PrefetchThrottle::State::kCompleted) {
+        // Only wait for a promotion that has actually started. kTriggered
+        // means the pool job is still queued; waiting it burns the batch
+        // budget and is what produced the 70s+ p99 in v2.
+        const auto st = throttle->stateOf(key);
+        if (st == PrefetchThrottle::State::kCompleted) {
+            return requery_memory();
+        }
+        if (st == PrefetchThrottle::State::kInFlight) {
             throttle->waitForCompletion(key, budget_ms, /*poll_ms=*/1);
+            return requery_memory();
         }
         return requery_memory();
     }

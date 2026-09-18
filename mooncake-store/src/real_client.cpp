@@ -6561,6 +6561,30 @@ RealClient::batch_get_into_multi_buffers_internal(
     std::vector<DuplicateDiskOp> duplicate_disk_ops;
     valid_operations.reserve(num_keys);
     auto local_endpoints = client_->GetLocalEndpoints();
+    // One deadline for the whole get batch. Per-key ssd_get_wait_ms turned
+    // a 16k prefix (~35 keys) into tens of seconds of sequential polling.
+    const bool get_wait =
+        ssd_get_wait_ms_ > 0 && enable_ssd_prefetch_ && prefetcher_;
+    const int64_t get_wait_deadline =
+        get_wait ? PrefetchThrottle::NowMs() + ssd_get_wait_ms_ : 0;
+    if (get_wait) {
+        std::vector<std::string> disk_keys;
+        disk_keys.reserve(num_keys);
+        for (size_t i = 0; i < num_keys; ++i) {
+            if (!query_results[i] ||
+                query_results[i].value().replicas.empty()) {
+                continue;
+            }
+            const auto *best = SelectBestReplica(
+                query_results[i].value().replicas, local_endpoints);
+            if (best != nullptr && best->is_local_disk_replica()) {
+                disk_keys.push_back(keys[i]);
+            }
+        }
+        if (!disk_keys.empty()) {
+            prefetcher_->TriggerPrefetch(disk_keys, /*ignore_cooldown=*/true);
+        }
+    }
     for (size_t i = 0; i < num_keys; ++i) {
         const auto &key = keys[i];
         // Handle query failures
@@ -6591,22 +6615,23 @@ RealClient::batch_get_into_multi_buffers_internal(
             continue;
         }
 
-        // Optional get-side wait for SSD prefetch (ssd_get_wait_ms > 0).
-        // Only engages when the best replica is LOCAL_DISK and there is
-        // evidence of an in-flight promotion; otherwise zero added latency
-        // and no extra RPC. See SsdPrefetcher::WaitIfPromotionInFlight.
+        // Optional get-side wait for SSD prefetch. Budget is shared across
+        // this batch (remaining time until get_wait_deadline).
         std::optional<QueryResult> refreshed_qr;
-        if (ssd_get_wait_ms_ > 0 && enable_ssd_prefetch_ && prefetcher_ &&
-            best_replica->is_local_disk_replica()) {
-            if (auto waited = prefetcher_->WaitIfPromotionInFlight(
-                    key, ssd_get_wait_ms_);
-                waited.has_value()) {
-                const auto *promoted = SelectBestReplica(
-                    waited->replicas, local_endpoints);
-                if (promoted != nullptr && promoted->is_memory_replica()) {
-                    refreshed_qr.emplace(*waited);
-                    best_replica = SelectBestReplica(
-                        refreshed_qr->replicas, local_endpoints);
+        if (get_wait && best_replica->is_local_disk_replica()) {
+            const int64_t remaining =
+                get_wait_deadline - PrefetchThrottle::NowMs();
+            if (remaining > 0) {
+                if (auto waited = prefetcher_->WaitIfPromotionInFlight(
+                        key, remaining);
+                    waited.has_value()) {
+                    const auto *promoted = SelectBestReplica(
+                        waited->replicas, local_endpoints);
+                    if (promoted != nullptr && promoted->is_memory_replica()) {
+                        refreshed_qr.emplace(*waited);
+                        best_replica = SelectBestReplica(
+                            refreshed_qr->replicas, local_endpoints);
+                    }
                 }
             }
         }
