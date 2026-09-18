@@ -6582,6 +6582,13 @@ RealClient::batch_get_into_multi_buffers_internal(
             }
         }
         if (!disk_keys.empty()) {
+            // Verification instrumentation (v3-verify): proves whether the
+            // get-side kick fires at all, and whether ignore_cooldown ever
+            // matters (in_cooldown=true at kick time). Harmless to keep
+            // upstream as VLOG(1).
+            VLOG(1) << "SSD prefetch: get-side kick, disk_keys="
+                    << disk_keys.size() << ", in_cooldown="
+                    << prefetcher_->throttle()->inCooldown();
             prefetcher_->TriggerPrefetch(disk_keys, /*ignore_cooldown=*/true);
         }
     }
