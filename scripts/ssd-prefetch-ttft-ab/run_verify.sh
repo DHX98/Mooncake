@@ -1,6 +1,6 @@
 #!/bin/bash
 set -euo pipefail
-export ROOT=/home/d00883276/prefetch_916/perf_test_prefetch_v3_verify
+export ROOT=/home/tester/prefetch_916/perf_test_prefetch_v3_verify
 export RESULTDIR="$ROOT/results"
 export LOGDIR="$ROOT/logs"
 export DATADIR="$ROOT/data"
@@ -12,8 +12,8 @@ export GLOG_logtostderr=1
 unset http_proxy https_proxy HTTP_PROXY HTTPS_PROXY ALL_PROXY all_proxy
 cd "$ROOT/scripts"
 echo "===== VERIFY START $(date -u +%Y-%m-%dT%H:%M:%SZ) ====="
-echo "HEAD=$(git -C /home/d00883276/prefetch_916/src/Mooncake rev-parse --short HEAD)"
-echo "BRANCH=$(git -C /home/d00883276/prefetch_916/src/Mooncake branch --show-current)"
+echo "HEAD=$(git -C /home/tester/prefetch_916/src/Mooncake rev-parse --short HEAD)"
+echo "BRANCH=$(git -C /home/tester/prefetch_916/src/Mooncake branch --show-current)"
 echo "STORE=$(md5sum /usr/local/python3.12.13/lib/python3.12/site-packages/mooncake/libmooncake_store.so | awk '{print $1}')"
 echo "CONC=$MEASURE_CONCURRENCY MAX_NUM_SEQS=$MAX_NUM_SEQS GLOG_v=$GLOG_v ROOT=$ROOT"
 grep -n 'GLOG_v\|--v=1' "$ROOT/scripts/env.sh" "$ROOT/scripts/serve.sh" || true

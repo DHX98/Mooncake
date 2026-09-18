@@ -72,7 +72,7 @@ start_vllm() {
   export HCCL_BUFFSIZE=1024
   export TASK_QUEUE_ENABLE=1
   export HCCL_OP_EXPANSION_MODE=AIV
-  export HCCL_IF_IP=80.48.37.141
+  export HCCL_IF_IP=<bench-host>
   export GLOO_SOCKET_IFNAME=enp189s0f0
   export TP_SOCKET_IFNAME=enp189s0f0
   export HCCL_SOCKET_IFNAME=enp189s0f0

@@ -1,4 +1,4 @@
-# v3 r2 screen evidence (2026-09-17, 80.48.37.141, prefetch-916)
+# v3 r2 screen evidence (2026-09-17, <bench-host>, <bench-container>)
 
 Copied from `vllm bench serve` stdout (`*.bench.log`). JSON files are
 not the record of record.

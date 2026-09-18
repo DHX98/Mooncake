@@ -2,11 +2,11 @@
 # Pins for the DSV4 16k+1 A/B. Source this, then run the other scripts.
 # Override any variable before sourcing if your paths differ.
 
-ROOT="${ROOT:-/home/d00883276/prefetch_916/perf_test_prefetch_v3}"
+ROOT="${ROOT:-/home/tester/prefetch_916/perf_test_prefetch_v3}"
 HERE="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 
 PKG="${PKG:-/usr/local/python3.12.13/lib/python3.12/site-packages/mooncake}"
-RUNTIME="${RUNTIME:-/home/d00883276/prefetch_916/runtime}"
+RUNTIME="${RUNTIME:-/home/tester/prefetch_916/runtime}"
 MODEL="${MODEL:-/data/DeepSeek-V4-Flash-w8a8-mtp}"
 SERVED_NAME="${SERVED_NAME:-dsv4-flash}"
 

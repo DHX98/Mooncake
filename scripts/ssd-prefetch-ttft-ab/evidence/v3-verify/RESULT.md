@@ -2,8 +2,8 @@
 
 Branch: `ssd-prefetch/v3-verify` @ `8cdcc10f`
 Store overlay md5: `363b669c`
-Workdir: `/home/d00883276/perf_test_prefetch_v3_verify`
-Container: prefetch-916 (no new container)
+Workdir: `/home/tester/perf_test_prefetch_v3_verify`
+Container: <bench-container> (no new container)
 VERIFY START: 2026-09-18T07:32:32Z
 VERIFY DONE:  2026-09-18T08:22:51Z
 Knobs: MAX_NUM_SEQS=4, MEASURE_CONCURRENCY=4, GLOG_v=1, master `--v=1` off,

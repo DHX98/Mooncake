@@ -4,7 +4,7 @@ Human-readable replay of the v3 round-2 measurement that landed this
 bugfix. **Primary metric is measure r1.** `gain = (A - B) / A * 100`
 (positive = prefetch faster).
 
-## After the fix (v3 r2, 2026-09-17, 80.48.37.141 / prefetch-916)
+## After the fix (v3 r2, 2026-09-17, <bench-host> / <bench-container>)
 
 | arm | median TTFT | mean TTFT | p99 TTFT |
 |---|---:|---:|---:|
@@ -34,12 +34,12 @@ run_ab.sh
   └─ ARM=b  same flow, prefetch on → b_r1.bench.log
 ```
 
-Run **inside** `prefetch-916` (or any container that already has the
+Run **inside** `<bench-container>` (or any container that already has the
 all-in-one Mooncake + DSV4 vLLM stack). From the host:
 
 ```bash
 # host
-docker exec prefetch-916 bash --noprofile --norc \
+docker exec <bench-container> bash --noprofile --norc \
   /path/to/scripts/ssd-prefetch-ttft-ab/run_ab.sh
 ```
 
