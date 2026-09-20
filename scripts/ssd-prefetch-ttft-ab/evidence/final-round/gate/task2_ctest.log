@@ -1,0 +1,151 @@
+===== CTEST 2026-09-20T04:38:58Z =====
+Test project /home/tester/prefetch_916/src/Mooncake-pr3/build
+    Start  82: promotion_on_hit_test
+1/6 Test  #82: promotion_on_hit_test ............   Passed   76.09 sec
+    Start  84: file_storage_promotion_test
+2/6 Test  #84: file_storage_promotion_test ......   Passed    0.07 sec
+    Start 124: client_readonly_query_test
+3/6 Test #124: client_readonly_query_test .......Subprocess aborted***Exception:   3.05 sec
+Running main() from /home/tester/prefetch_916/src/Mooncake-pr3/extern/googletest-1.17.0/googletest/src/gtest_main.cc
+[==========] Running 4 tests from 1 test suite.
+[----------] Global test environment set-up.
+[----------] 4 tests from ClientReadOnlyQueryTest
+[ RUN      ] ClientReadOnlyQueryTest.ReturnsSameReplicasAsLeaseGrantingQuery
+I0920 04:40:15.046641 3730790 client_offboarding.cpp:94] Client offboarding worker started
+I0920 04:40:15.046854 3730793 master_service.cpp:3111] Task cleanup thread started
+I0920 04:40:15.047472 3730789 master_admin_service.cpp:324] Master admin server started on port 41835
+I0920 04:40:15.275470 3730789 client_metric.cpp:65] Client metrics enabled (default enabled)
+I0920 04:40:15.275509 3730789 client_metric.cpp:66] Client bandwidth summary enabled via MC_STORE_CLIENT_METRIC_BANDWIDTH
+I0920 04:40:15.279017 3730789 client_service.cpp:406] client_id=10541700740955110460-16341767343856698757
+I0920 04:40:15.279035 3730789 client_service.cpp:420] Client metrics enabled but reporting disabled (interval=0)
+I0920 04:40:15.280987 3730804 master_service.cpp:8122] Storage root directory or cluster ID is not set. persisting data is disabled.
+I0920 04:40:15.281067 3730789 client_service.cpp:1038] Storage root directory is not set. persisting data is disabled.
+I0920 04:40:15.281144 3730789 transfer_engine_impl.cpp:1123] Metrics reporting is disabled (set MC_TE_METRIC=1 to enable)
+I0920 04:40:15.281173 3730789 transfer_engine_impl.cpp:146] Transfer Engine parseHostNameWithPort. server_name: 127.0.0.1 port: 45553
+I0920 04:40:15.281224 3730789 transfer_engine_impl.cpp:213] Transfer Engine RPC using P2P handshake, listening on 127.0.0.1:16333
+I0920 04:40:15.281363 3730789 client_service.cpp:832] Transfer engine auto discovery is disabled for protocol: tcp
+E0920 04:40:15.281414 3730789 transfer_metadata.cpp:1295] Local segment descriptor not found
+I0920 04:40:15.281453 3730789 tcp_transport.cpp:426] TcpTransport: listen on port 16874
+I0920 04:40:15.281586 3730789 tcp_transport.cpp:442] TcpTransport: I/O pool started with 1 thread(s)
+I0920 04:40:15.282804 3730789 transfer_task.cpp:968] MC_STORE_MEMCPY not set, auto-detected: TCP-only environment, memcpy enabled
+I0920 04:40:15.284829 3730789 real_client.cpp:885] Registering local memory: 16777216 bytes
+I0920 04:40:15.284969 3730789 real_client.cpp:1022] Mounting segment: 16777216 bytes, 16777216 of 16777216
+I0920 04:40:15.285158 3730804 master_service.cpp:969] client_id=10541700740955110460-16341767343856698757, action=mount_segment, segment_name=127.0.0.1:45553
+W0920 04:40:15.286031 3730804 segment.cpp:333] segment_name=127.0.0.1:45553, warn=segment_already_exists
+I0920 04:40:17.288280 3730789 transfer_metadata.cpp:769] removeSegmentDesc 127.0.0.1:16333 finish
+I0920 04:40:17.341616 3730793 master_service.cpp:3134] Task cleanup thread stopped
+I0920 04:40:18.047336 3730790 client_offboarding.cpp:163] Client offboarding worker stopped
+[       OK ] ClientReadOnlyQueryTest.ReturnsSameReplicasAsLeaseGrantingQuery (3001 ms)
+[ RUN      ] ClientReadOnlyQueryTest.GrantsNoLease
+F0920 04:40:18.047623 3730789 utilities.cc:346] Check failed: !IsGoogleLoggingInitialized() You called InitGoogleLogging() twice!
+*** Check failure stack trace: ***
+    @     0xffffb9f3d41c  google::LogMessage::Fail()
+    @     0xffffb9f446d0  google::LogMessage::SendToLog()
+    @     0xffffb9f3d0f4  google::LogMessage::Flush()
+    @     0xffffb9f3eebc  google::LogMessageFatal::~LogMessageFatal()
+    @     0xffffb9f49cac  google::glog_internal_namespace_::InitGoogleLoggingUtilities()
+    @     0xaaaab70e8b68  mooncake::test::(anonymous namespace)::ClientReadOnlyQueryTest::SetUp()
+    @     0xaaaab79e5140  testing::internal::HandleExceptionsInMethodIfSupported<>()
+    @     0xaaaab79c2cdc  testing::Test::Run()
+    @     0xaaaab79c2ee4  testing::TestInfo::Run()
+    @     0xaaaab79c315c  testing::TestSuite::Run()
+    @     0xaaaab79dd534  testing::internal::UnitTestImpl::RunAllTests()
+    @     0xaaaab79c3240  testing::UnitTest::Run()
+    @     0xaaaab70e2000  main
+    @     0xffffb9817400  (unknown)
+    @     0xffffb98174d8  __libc_start_main
+    @     0xaaaab70e24b0  _start
+
+    Start 125: prefetch_throttle_test
+4/6 Test #125: prefetch_throttle_test ...........***Failed    0.03 sec
+Running main() from /home/tester/prefetch_916/src/Mooncake-pr3/extern/googletest-1.17.0/googletest/src/gtest_main.cc
+[==========] Running 12 tests from 1 test suite.
+[----------] Global test environment set-up.
+[----------] 12 tests from PrefetchThrottleTest
+[ RUN      ] PrefetchThrottleTest.ReserveDedupsWithinTtl
+[       OK ] PrefetchThrottleTest.ReserveDedupsWithinTtl (0 ms)
+[ RUN      ] PrefetchThrottleTest.ReserveAllowsNewKeysOnly
+[       OK ] PrefetchThrottleTest.ReserveAllowsNewKeysOnly (0 ms)
+[ RUN      ] PrefetchThrottleTest.ZeroTtlDisablesDedup
+[       OK ] PrefetchThrottleTest.ZeroTtlDisablesDedup (0 ms)
+[ RUN      ] PrefetchThrottleTest.FailedKeyRetriesAfterBackoffNotFullTtl
+/home/tester/prefetch_916/src/Mooncake-pr3/mooncake-store/tests/prefetch_throttle_test.cpp:69: Failure
+Expected equality of these values:
+  throttle.reserve({"a"}).size()
+    Which is: 0
+  1u
+    Which is: 1
+
+[  FAILED  ] PrefetchThrottleTest.FailedKeyRetriesAfterBackoffNotFullTtl (0 ms)
+[ RUN      ] PrefetchThrottleTest.CooldownBlocksUntilWindowExpires
+[       OK ] PrefetchThrottleTest.CooldownBlocksUntilWindowExpires (0 ms)
+[ RUN      ] PrefetchThrottleTest.ZeroCooldownDisablesBackoff
+[       OK ] PrefetchThrottleTest.ZeroCooldownDisablesBackoff (0 ms)
+[ RUN      ] PrefetchThrottleTest.CompletionLifecycle
+[       OK ] PrefetchThrottleTest.CompletionLifecycle (0 ms)
+[ RUN      ] PrefetchThrottleTest.AlreadyResidentClearsPromoteAttempted
+[       OK ] PrefetchThrottleTest.AlreadyResidentClearsPromoteAttempted (0 ms)
+[ RUN      ] PrefetchThrottleTest.WaitForCompletionReturnsOnComplete
+[       OK ] PrefetchThrottleTest.WaitForCompletionReturnsOnComplete (5 ms)
+[ RUN      ] PrefetchThrottleTest.WaitForCompletionTimesOutOrFailsFast
+[       OK ] PrefetchThrottleTest.WaitForCompletionTimesOutOrFailsFast (20 ms)
+[ RUN      ] PrefetchThrottleTest.DelegatedKeysBlockRetriggerAndNeverWait
+[       OK ] PrefetchThrottleTest.DelegatedKeysBlockRetriggerAndNeverWait (0 ms)
+[ RUN      ] PrefetchThrottleTest.ConcurrentReserveGrantsEachKeyOnce
+[       OK ] PrefetchThrottleTest.ConcurrentReserveGrantsEachKeyOnce (0 ms)
+[----------] 12 tests from PrefetchThrottleTest (26 ms total)
+
+[----------] Global test environment tear-down
+[==========] 12 tests from 1 test suite ran. (26 ms total)
+[  PASSED  ] 11 tests.
+[  FAILED  ] 1 test, listed below:
+[  FAILED  ] PrefetchThrottleTest.FailedKeyRetriesAfterBackoffNotFullTtl
+
+ 1 FAILED TEST
+
+    Start 126: prefetch_task_master_test
+5/6 Test #126: prefetch_task_master_test ........Subprocess aborted***Exception:   1.03 sec
+Running main() from /home/tester/prefetch_916/src/Mooncake-pr3/extern/googletest-1.17.0/googletest/src/gtest_main.cc
+[==========] Running 5 tests from 1 test suite.
+[----------] Global test environment set-up.
+[----------] 5 tests from PrefetchTaskMasterTest
+[ RUN      ] PrefetchTaskMasterTest.RegisterSuccessThenDuplicateSkips
+I0920 04:40:18.127723 3731052 client_offboarding.cpp:94] Client offboarding worker started
+I0920 04:40:18.127959 3731055 master_service.cpp:3111] Task cleanup thread started
+I0920 04:40:18.129869 3731051 master_service.cpp:969] client_id=10397856707456740931-11223068824516697512, action=mount_segment, segment_name=prefetch_seg_1
+I0920 04:40:18.130548 3731055 master_service.cpp:3134] Task cleanup thread stopped
+I0920 04:40:19.128275 3731052 client_offboarding.cpp:163] Client offboarding worker stopped
+[       OK ] PrefetchTaskMasterTest.RegisterSuccessThenDuplicateSkips (1001 ms)
+[ RUN      ] PrefetchTaskMasterTest.MissingKeyNotFound
+F0920 04:40:19.128664 3731051 utilities.cc:346] Check failed: !IsGoogleLoggingInitialized() You called InitGoogleLogging() twice!
+*** Check failure stack trace: ***
+    @     0xffff7f9cd41c  google::LogMessage::Fail()
+    @     0xffff7f9d46d0  google::LogMessage::SendToLog()
+    @     0xffff7f9cd0f4  google::LogMessage::Flush()
+    @     0xffff7f9ceebc  google::LogMessageFatal::~LogMessageFatal()
+    @     0xffff7f9d9cac  google::glog_internal_namespace_::InitGoogleLoggingUtilities()
+    @     0xaaaae57ab464  mooncake::test::PrefetchTaskMasterTest::SetUp()
+    @     0xaaaae59fbde0  testing::internal::HandleExceptionsInMethodIfSupported<>()
+    @     0xaaaae59d973c  testing::Test::Run()
+    @     0xaaaae59d9944  testing::TestInfo::Run()
+    @     0xaaaae59d9bbc  testing::TestSuite::Run()
+    @     0xaaaae59f3f94  testing::internal::UnitTestImpl::RunAllTests()
+    @     0xaaaae59d9ca0  testing::UnitTest::Run()
+    @     0xaaaae57a66c0  main
+    @     0xffff7f337400  (unknown)
+    @     0xffff7f3374d8  __libc_start_main
+    @     0xaaaae57a68f0  _start
+
+    Start 160: file_storage_test
+6/6 Test #160: file_storage_test ................   Passed   24.31 sec
+
+50% tests passed, 3 tests failed out of 6
+
+Total Test time (real) = 104.59 sec
+
+The following tests FAILED:
+	124 - client_readonly_query_test (Subprocess aborted)
+	125 - prefetch_throttle_test (Failed)
+	126 - prefetch_task_master_test (Subprocess aborted)
+Errors while running CTest
+CTEST_RC=8

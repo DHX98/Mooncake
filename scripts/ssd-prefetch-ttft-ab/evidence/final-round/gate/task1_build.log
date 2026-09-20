@@ -1,0 +1,103 @@
+===== TASK1 CMAKE 2026-09-20T04:38:18Z =====
+HEAD=8bfb51304c82c419e853a0f661337d364bdc2b1a
+nproc=1 nproc_all=192
+-- glog version '0.4.0' (< 0.6.0 or unknown): IsGoogleLoggingInitialized() unavailable
+CMAKE_BUILD_TYPE: Release
+-- [limit_jobs] Available memory: 1957131 MB, CPU cores: 192
+-- [limit_jobs] Compile jobs: 192 (1500 MB/job), Link jobs: 192 (4000 MB/job)
+-- [limit_jobs] Ninja job pools: compile=192, link=192
+-- Event-driven completion is disabled
+-- Http as metadata server support is enabled
+-- metrics is enabled
+CMake Warning (author) at /usr/local/python3.12.13/lib/python3.12/site-packages/cmake/data/share/cmake-4.4/Modules/FetchContent.cmake:1968 (message):
+  Calling FetchContent_Populate(yalantinglibs) is deprecated, call
+  FetchContent_MakeAvailable(yalantinglibs) instead.  Policy CMP0169 can be
+  set to OLD to allow FetchContent_Populate(yalantinglibs) to be called
+  directly for now, but the ability to call it with declared details will be
+  removed completely in a future version.
+Call Stack (most recent call first):
+  mooncake-common/FindYLT.cmake:20 (FetchContent_Populate)
+  mooncake-common/common.cmake:692 (include)
+  CMakeLists.txt:13 (include)
+This warning is for project developers.  Use -Wno-author to suppress it.
+
+-- -------------YLT INSTALL SETTING------------
+-- INSTALL_THIRDPARTY: ON
+-- INSTALL_STANDALONE: ON
+-- INSTALL_INDEPENDENT_THIRDPARTY: ON
+-- INSTALL_INDEPENDENT_STANDALONE: ON
+-- --------------------------------------------
+YLT is imported by fetchContent or add_subdirectory
+-- -------------YLT CONFIG SETTING-------------
+-- YLT_ENABLE_DL: ON
+-- YLT_ENABLE_SSL: OFF
+-- YLT_ENABLE_NTLS: OFF
+-- Enable ibverbs support
+-- YLT_ENABLE_ND: OFF
+-- YLT_ENABLE_PMR: OFF
+-- YLT_ENABLE_IO_URING: OFF
+-- YLT_ENABLE_STRUCT_PACK_UNPORTABLE_TYPE: OFF
+-- YLT_ENABLE_STRUCT_PACK_OPTIMIZE: OFF
+-- --------------------------------------------
+-- pybind11 v3.1.0 
+Using compatibility mode for Python, set PYBIND11_FINDPYTHON to NEW/OLD to silence this message
+-- USE_NOF=OFF, NoF SSD pool support is disabled
+-- CUDA: Disabled
+-- ROCm/HIP: Disabled
+-- Sunrise/Tang: Disabled
+-- Mooncake Store will be built
+-- io_uring: Disabled (liburing not found)
+-- Store HA backends are disabled
+-- AWS SDK not found, S3 functionality will be disabled
+-- Mooncake Store Rust bindings will be built
+CMake Warning (policy) at mooncake-store/rust/CMakeLists.txt:9 (add_custom_command):
+  Exactly one of PRE_BUILD, PRE_LINK, or POST_BUILD must be given.  Assuming
+  POST_BUILD to preserve backward compatibility.
+
+  Policy CMP0175 is not set: add_custom_command() rejects invalid arguments.
+  Run "cmake --help-policy CMP0175" for policy details.  Use the cmake_policy
+  command to set the policy and suppress this warning.
+This warning is for project developers.  Use -Wno-author or -Wno-policy to
+suppress it.
+
+CMake Warning (policy) at mooncake-store/rust/CMakeLists.txt:27 (add_custom_command):
+  Exactly one of PRE_BUILD, PRE_LINK, or POST_BUILD must be given.  Assuming
+  POST_BUILD to preserve backward compatibility.
+
+  Policy CMP0175 is not set: add_custom_command() rejects invalid arguments.
+  Run "cmake --help-policy CMP0175" for policy details.  Use the cmake_policy
+  command to set the policy and suppress this warning.
+This warning is for project developers.  Use -Wno-author or -Wno-policy to
+suppress it.
+
+CMake Warning (policy) at mooncake-store/rust/CMakeLists.txt:41 (add_custom_command):
+  Exactly one of PRE_BUILD, PRE_LINK, or POST_BUILD must be given.  Assuming
+  POST_BUILD to preserve backward compatibility.
+
+  Policy CMP0175 is not set: add_custom_command() rejects invalid arguments.
+  Run "cmake --help-policy CMP0175" for policy details.  Use the cmake_policy
+  command to set the policy and suppress this warning.
+This warning is for project developers.  Use -Wno-author or -Wno-policy to
+suppress it.
+
+CMake Warning (policy) at mooncake-store/rust/CMakeLists.txt:56 (add_custom_command):
+  Exactly one of PRE_BUILD, PRE_LINK, or POST_BUILD must be given.  Assuming
+  POST_BUILD to preserve backward compatibility.
+
+  Policy CMP0175 is not set: add_custom_command() rejects invalid arguments.
+  Run "cmake --help-policy CMP0175" for policy details.  Use the cmake_policy
+  command to set the policy and suppress this warning.
+This warning is for project developers.  Use -Wno-author or -Wno-policy to
+suppress it.
+
+-- Mooncake Python install directory: /usr/local/Ascend/ascend-toolkit/latest/python/site-packages/mooncake
+-- Configuring done (0.7s)
+-- Generating done (0.9s)
+-- Build files have been written to: /home/tester/prefetch_916/src/Mooncake-pr3/build
+CMAKE_RC=0
+BUILD_JOBS=64
+ninja: no work to do.
+BUILD_RC=0
+===== PREFETCH WARNINGS =====
+===== ERRORS =====
+TASK1_BUILD_DONE
