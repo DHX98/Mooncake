@@ -1,0 +1,14 @@
+# reconstructed from configs/serve.sh start_master
+mooncake_master \
+  --rpc_port=50111 \
+  --metrics_port=9021 \
+  --enable_offload=true \
+  --offload_on_evict=true \
+  --promotion_on_hit=false \
+  --default_kv_lease_ttl=60000 \
+  --root_fs_dir=$ROOT/ssd \
+  --eviction_high_watermark_ratio=0.6 \
+  --eviction_ratio=0.4 \
+  --memory_allocator=offset \
+  --logtostderr=true
+# no --v=1 on the successful run

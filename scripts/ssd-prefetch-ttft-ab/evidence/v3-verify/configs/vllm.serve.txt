@@ -1,0 +1,35 @@
+# reconstructed from configs/serve.sh + run_verify.sh overrides
+# env
+ASCEND_RT_VISIBLE_DEVICES=0,1,2,3,4,5,6,7
+MOONCAKE_CONFIG_PATH=<mooncake_a.json|mooncake_b.json>
+MOONCAKE_OFFLOAD_FILE_STORAGE_PATH=$ROOT/ssd
+MOONCAKE_SSD_GET_WAIT_MS=2000
+MOONCAKE_OFFLOAD_BUCKET_KEYS_LIMIT=1
+ACL_OP_INIT_MODE=1
+VLLM_USE_V1=1
+OMP_PROC_BIND=false
+OMP_NUM_THREADS=10
+PYTORCH_NPU_ALLOC_CONF=expandable_segments:True
+HCCL_BUFFSIZE=1024
+TASK_QUEUE_ENABLE=1
+HCCL_OP_EXPANSION_MODE=AIV
+HCCL_IF_IP=80.48.37.141
+GLOO_SOCKET_IFNAME=enp189s0f0
+TP_SOCKET_IFNAME=enp189s0f0
+HCCL_SOCKET_IFNAME=enp189s0f0
+HCCL_INTRA_ROCE_ENABLE=1
+MC_METADATA_SERVER=P2PHANDSHAKE
+LOCAL_HOSTNAME=127.0.0.1
+GLOG_v=1
+GLOG_logtostderr=1
+
+vllm serve /data/DeepSeek-V4-Flash-w8a8-mtp \
+  --host 0.0.0.0 --port 8271 --served-model-name dsv4-flash \
+  --trust-remote-code --enforce-eager --no-enable-prefix-caching \
+  --tensor-parallel-size 8 --data-parallel-size 1 \
+  --max-model-len 20480 --block-size 128 \
+  --kv-transfer-config '{"kv_connector":"AscendStoreConnector","kv_role":"kv_both","kv_load_failure_policy":"recompute","kv_connector_extra_config":{"lookup_rpc_port":"0","backend":"mooncake"}}' \
+  --enable-expert-parallel --quantization ascend \
+  --tokenizer-mode deepseek_v4 \
+  --max-num-batched-tokens 20480 --max-num-seqs 4 \
+  --gpu-memory-utilization 0.95
