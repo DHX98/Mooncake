@@ -72,7 +72,7 @@ start_vllm() {
   export HCCL_BUFFSIZE=1024
   export TASK_QUEUE_ENABLE=1
   export HCCL_OP_EXPANSION_MODE=AIV
-  export HCCL_IF_IP=<bench-host>
+  export HCCL_IF_IP=<host-ip>
   export GLOO_SOCKET_IFNAME=enp189s0f0
   export TP_SOCKET_IFNAME=enp189s0f0
   export HCCL_SOCKET_IFNAME=enp189s0f0
@@ -87,7 +87,7 @@ start_vllm() {
   KV='{"kv_connector":"AscendStoreConnector","kv_role":"kv_both","kv_load_failure_policy":"recompute","kv_connector_extra_config":{"lookup_rpc_port":"0","backend":"mooncake"}}'
 
   nohup vllm serve "$MODEL" \
-    --host 0.0.0.0 \
+    --host <host-ip> \
     --port "$HTTP_PORT" \
     --served-model-name "$SERVED_NAME" \
     --trust-remote-code \

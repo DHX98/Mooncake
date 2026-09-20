@@ -2,9 +2,9 @@
 
 没有改 Mooncake C++。本目录是 141 上实际跑过的现场包。
 分支：`ssd-prefetch/v3-verify` @ `8cdcc10f`（代码）+ 本证据提交。
-机器：`80.48.37.141`，容器 `prefetch-916`（不新建）。
-工作目录：`/home/d00883276/perf_test_prefetch_v3_verify`
-（bind 进容器为 `/home/d00883276/prefetch_916/perf_test_prefetch_v3_verify`）。
+机器：`<host-ip>`，容器 `<bench-container>`（不新建）。
+工作目录：`/home/<user><user><user>/perf_test_prefetch_v3_verify`
+（bind 进容器为 `/home/<user><user><user>/prefetch_916/perf_test_prefetch_v3_verify`）。
 
 先看本文件和 `RESULT.md`，再按需打开 gzip 全量日志。
 
@@ -31,8 +31,8 @@
 容器内：
 
 ```bash
-docker exec prefetch-916 bash --noprofile --norc \
-  /home/d00883276/prefetch_916/perf_test_prefetch_v3_verify/scripts/run_verify.sh
+docker exec <bench-container> bash --noprofile --norc \
+  /home/<user><user><user>/prefetch_916/perf_test_prefetch_v3_verify/scripts/run_verify.sh
 ```
 
 `run_verify.sh` 钉 ROOT / CONC=4 / MAX_NUM_SEQS=4 / GLOG_v=1，然后调 `run_ab.sh`。
@@ -108,6 +108,6 @@ evidence/v3-verify/
   runs/v3-r2-win/run.host.log  9/17 赢了的对照 host 日志
 ```
 
-9/17 全量 vllm/master 仍在 141：`/home/d00883276/perf_test_prefetch_v3/logs/{vllm,master}.log`。
+9/17 全量 vllm/master 仍在 141：`/home/<user><user><user>/perf_test_prefetch_v3/logs/{vllm,master}.log`。
 成功轮全量已经在本目录 `vllm.log.gz` / `master.log.gz`（上一笔证据提交）。
 

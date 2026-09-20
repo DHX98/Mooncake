@@ -13,7 +13,7 @@ PYTORCH_NPU_ALLOC_CONF=expandable_segments:True
 HCCL_BUFFSIZE=1024
 TASK_QUEUE_ENABLE=1
 HCCL_OP_EXPANSION_MODE=AIV
-HCCL_IF_IP=80.48.37.141
+HCCL_IF_IP=<host-ip>
 GLOO_SOCKET_IFNAME=enp189s0f0
 TP_SOCKET_IFNAME=enp189s0f0
 HCCL_SOCKET_IFNAME=enp189s0f0
@@ -24,7 +24,7 @@ GLOG_v=1
 GLOG_logtostderr=1
 
 vllm serve /data/DeepSeek-V4-Flash-w8a8-mtp \
-  --host 0.0.0.0 --port 8271 --served-model-name dsv4-flash \
+  --host <host-ip> --port 8271 --served-model-name dsv4-flash \
   --trust-remote-code --enforce-eager --no-enable-prefix-caching \
   --tensor-parallel-size 8 --data-parallel-size 1 \
   --max-model-len 20480 --block-size 128 \

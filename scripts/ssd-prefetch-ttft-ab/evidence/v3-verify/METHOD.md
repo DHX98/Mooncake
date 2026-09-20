@@ -4,11 +4,11 @@
 
 ## 环境
 
-- 机：80.48.37.141，容器 `prefetch-916`（不新建、不 pull）
+- 机：<host-ip>，容器 `<bench-container>`（不新建、不 pull）
 - 分支：`ssd-prefetch/v3-verify` @ `8cdcc10f`
 - overlay：`libmooncake_store.so` md5 `363b669c`
-- 工作目录：`/home/d00883276/perf_test_prefetch_v3_verify`
-  （bind 进容器为 `/home/d00883276/prefetch_916/perf_test_prefetch_v3_verify`）
+- 工作目录：`/home/<user><user>/perf_test_prefetch_v3_verify`
+  （bind 进容器为 `/home/<user><user>/prefetch_916/perf_test_prefetch_v3_verify`）
 - 只清空本实验 `$ROOT/ssd`，不动 `ssd_dsv4` / `ssd_8b` / 2646
 - 端口：HTTP 8271，RPC 50111，metrics 9021
 - 旋钮：prefix 16385，max_model_len 20480，segment 256MB，
@@ -20,8 +20,8 @@
 容器内：
 
 ```bash
-docker exec prefetch-916 bash --noprofile --norc \
-  /home/d00883276/prefetch_916/perf_test_prefetch_v3_verify/scripts/run_verify.sh
+docker exec <bench-container> bash --noprofile --norc \
+  /home/<user><user>/prefetch_916/perf_test_prefetch_v3_verify/scripts/run_verify.sh
 ```
 
 `run_verify.sh` 只做四件事：钉 ROOT/CONC/MAX_NUM_SEQS/GLOG_v，然后调 `run_ab.sh`。
@@ -33,7 +33,7 @@ docker exec prefetch-916 bash --noprofile --norc \
 ## 现场踩过的坑（HANDOFF 不对的地方以这里为准）
 
 1. **孤儿 `VLLM::Worker`**。EngineDead 之后 `pkill vllm serve` 杀不掉 PPID=1 的 worker，NPU 上留 64MB 占卡。下一轮 `/v1/models` 是活的，首包 16k generate 卡满 300s。`serve.sh stop` 必须再 `pkill -9 VLLM::Worker` / `VLLM::EngineCore`。重开前用 `npu-smi info -t proc-mem` 看 0–7 是否清空，不要只看 HBM%。
-2. **回放 `serve.sh` 缺现场环境**。能跑的 v3 有 `HCCL_IF_IP=80.48.37.141`、`GLOO/HCCL/TP_SOCKET_IFNAME=enp189s0f0`、`MC_METADATA_SERVER=P2PHANDSHAKE`、`LOCAL_HOSTNAME=127.0.0.1`、`--data-parallel-size 1`。HANDOFF 精简稿没有。
+2. **回放 `serve.sh` 缺现场环境**。能跑的 v3 有 `HCCL_IF_IP=<host-ip>`、`GLOO/HCCL/TP_SOCKET_IFNAME=enp189s0f0`、`MC_METADATA_SERVER=P2PHANDSHAKE`、`LOCAL_HOSTNAME=127.0.0.1`、`--data-parallel-size 1`。HANDOFF 精简稿没有。
 3. **`vllm bench` 全失败也返回 0**。必须读 `Successful requests:`，0 就停，否则会继续 overflow。
 4. **kick 日志是 `in_cooldown=0|1`，不是 `true|false`**。按 HANDOFF 去 `grep in_cooldown=true` 会得到 0，是假阴性。
 5. **没有 `SsdMetric` 字符串**。看 master 周期行里的 `Promotion: completed=/failed=/bytes=`。
@@ -56,7 +56,7 @@ docker exec prefetch-916 bash --noprofile --norc \
 | `promotion_last.txt` | master 最后几帧 Promotion |
 | `fail1.host.log` | 第一轮 A-fill 0/48 / EngineDead 的 host 日志 |
 
-原日志仍在 141：`/home/d00883276/perf_test_prefetch_v3_verify/logs/{vllm,master}.log`。
+原日志仍在 141：`/home/<user><user>/perf_test_prefetch_v3_verify/logs/{vllm,master}.log`。
 
 ## 本轮数字（r1 c=4，48/48）
 

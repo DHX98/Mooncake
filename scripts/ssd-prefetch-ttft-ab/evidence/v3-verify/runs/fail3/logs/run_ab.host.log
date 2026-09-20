@@ -2,14 +2,14 @@
 HEAD=8cdcc10f
 BRANCH=ssd-prefetch/v3-verify
 STORE=363b669c7a2e3b00b8ced5861b29f4d6
-CONC=4 MAX_NUM_SEQS=4 GLOG_v=1 ROOT=/home/d00883276/prefetch_916/perf_test_prefetch_v3_verify
-/home/d00883276/prefetch_916/perf_test_prefetch_v3_verify/scripts/env.sh:69:export GLOG_v=1
-emptied /home/d00883276/prefetch_916/perf_test_prefetch_v3_verify/ssd
-wrote /home/d00883276/prefetch_916/perf_test_prefetch_v3_verify/data/prompts.jsonl n=48 seed=42
-wrote /home/d00883276/prefetch_916/perf_test_prefetch_v3_verify/data/overflow.jsonl n=48 seed=1042
+CONC=4 MAX_NUM_SEQS=4 GLOG_v=1 ROOT=/home/<user>/prefetch_916/perf_test_prefetch_v3_verify
+/home/<user>/prefetch_916/perf_test_prefetch_v3_verify/scripts/env.sh:69:export GLOG_v=1
+emptied /home/<user>/prefetch_916/perf_test_prefetch_v3_verify/ssd
+wrote /home/<user>/prefetch_916/perf_test_prefetch_v3_verify/data/prompts.jsonl n=48 seed=42
+wrote /home/<user>/prefetch_916/perf_test_prefetch_v3_verify/data/overflow.jsonl n=48 seed=1042
 stopped :8271 :50111
 
 ########## ARM a  prefetch=OFF ##########
-json /home/d00883276/prefetch_916/perf_test_prefetch_v3_verify/scripts/mooncake_a.json prefetch False seg 256MB wait 2000
+json /home/<user>/prefetch_916/perf_test_prefetch_v3_verify/scripts/mooncake_a.json prefetch False seg 256MB wait 2000
 master pid=2303163 rpc=:50111
 vllm pid=2303202 http=:8271 arm=a

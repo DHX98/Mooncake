@@ -1,7 +1,7 @@
 #!/bin/bash
 # Full A/B. Read this file top to bottom — that is the test method.
 #
-#   docker exec prefetch-916 bash --noprofile --norc \
+#   docker exec <bench-container> bash --noprofile --norc \
 #     /path/to/scripts/ssd-prefetch-ttft-ab/run_ab.sh
 #
 # A = SSD offload only.  B = offload + prefetch.
