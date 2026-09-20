@@ -59,54 +59,39 @@ start_master() {
 start_vllm() {
   export LD_LIBRARY_PATH="$PKG${LD_LIBRARY_PATH:+:$LD_LIBRARY_PATH}"
   export PYTHONPATH="$RUNTIME${PYTHONPATH:+:$PYTHONPATH}"
-  export ASCEND_RT_VISIBLE_DEVICES="$NPU"
   export MOONCAKE_CONFIG_PATH="$MOONCAKE_JSON"
   export MOONCAKE_OFFLOAD_FILE_STORAGE_PATH="$SSD"
   export MOONCAKE_SSD_GET_WAIT_MS="$SSD_GET_WAIT_MS"
   export MOONCAKE_OFFLOAD_BUCKET_KEYS_LIMIT=1
-  export ACL_OP_INIT_MODE=1
-  export VLLM_USE_V1=1
-  export OMP_PROC_BIND=false
-  export OMP_NUM_THREADS=10
-  export PYTORCH_NPU_ALLOC_CONF=expandable_segments:True
-  export HCCL_BUFFSIZE=1024
-  export TASK_QUEUE_ENABLE=1
-  export HCCL_OP_EXPANSION_MODE=AIV
-  export HCCL_IF_IP=<host-ip>
-  export GLOO_SOCKET_IFNAME=enp189s0f0
-  export TP_SOCKET_IFNAME=enp189s0f0
-  export HCCL_SOCKET_IFNAME=enp189s0f0
-  export HCCL_INTRA_ROCE_ENABLE=1
   export MC_METADATA_SERVER=P2PHANDSHAKE
   export LOCAL_HOSTNAME=127.0.0.1
   ulimit -u 65535 || true
-  unset ASCEND_ENABLE_USE_FABRIC_MEM || true
   unset MOONCAKE_MASTER || true
   unset MOONCAKE_GLOBAL_SEGMENT_SIZE || true
 
-  KV='{"kv_connector":"AscendStoreConnector","kv_role":"kv_both","kv_load_failure_policy":"recompute","kv_connector_extra_config":{"lookup_rpc_port":"0","backend":"mooncake"}}'
+  # Platform-specific env (visibility devices, fabric/NCCL) from
+  # platforms/$PLATFORM.env, sourced via env.sh.
+  platform_vllm_env
 
   nohup vllm serve "$MODEL" \
-    --host <host-ip> \
+    --host "${VLLM_HOST:-0.0.0.0}" \
     --port "$HTTP_PORT" \
     --served-model-name "$SERVED_NAME" \
     --trust-remote-code \
     --enforce-eager \
     --no-enable-prefix-caching \
-    --tensor-parallel-size 8 \
+    --tensor-parallel-size "${TP_SIZE:-8}" \
     --data-parallel-size 1 \
     --max-model-len "$MAX_MODEL_LEN" \
-    --block-size 128 \
-    --kv-transfer-config "$KV" \
-    --enable-expert-parallel \
-    --quantization ascend \
-    --tokenizer-mode deepseek_v4 \
+    --block-size "$BLOCK_SIZE" \
+    --kv-transfer-config "$KV_JSON" \
     --max-num-batched-tokens "$MAX_MODEL_LEN" \
     --max-num-seqs "$MAX_NUM_SEQS" \
     --gpu-memory-utilization "$GPU_MEM" \
+    "${VLLM_EXTRA_ARGS[@]}" \
     >"$VLLM_LOG" 2>&1 &
   echo $! >"$VLLM_PIDFILE"
-  echo "vllm pid=$(cat "$VLLM_PIDFILE") http=:$HTTP_PORT arm=$ARM"
+  echo "vllm pid=$(cat "$VLLM_PIDFILE") http=:$HTTP_PORT arm=$ARM platform=$PLATFORM"
 }
 
 stop_all() {
