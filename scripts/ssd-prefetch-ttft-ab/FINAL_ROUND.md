@@ -2,9 +2,11 @@
 
 ## 两个目录，两个分支，别混
 
-- **被测代码**：`ssd-prefetch/pr3-exist-get-wiring` @ `8bfb5130`
-  （clone 后 `git checkout` 这个分支构建；这是上游 PR 候选，
-  **没有 get-kick、没有 ignore_cooldown**——和 v3-verify 实测代码不同）
+- **被测代码**：`ssd-prefetch/pr3-exist-get-wiring` @ `eabc511f`
+  （clone 后 `git checkout` 这个分支构建；上游 PR 候选。
+  本分支**已恢复 get-kick + ignore_cooldown**，并修复：
+  两个测试的 InitGoogleLogging 重复调用、throttle cooldown=0 的
+  kFailed 过期语义、format、smoke 环境变量钉死）
 - **测试脚本**：`ssd-prefetch/v3-verify` 分支的 `scripts/ssd-prefetch-ttft-ab/`
   （serve.sh / run_ab.sh / env.sh 已加固：会 pkill 孤儿 Worker、fill 0/48 会中止）
 
@@ -36,9 +38,10 @@ bash scripts/ci/run_ssd_offload_smoke.sh
 
 ## 任务 3：A/B 复跑（PR 分支的库 + v3-verify 的脚本）
 
-目的：上次 c=4 数据是带 get-kick 的代码测的，PR 分支删了它，
-这次复跑让数据和代码严格一致。流程照旧（fill → overflow → settle →
-measure），**measure 用 CONC=4**：
+目的：验证恢复 get-kick 后的最终代码。流程照旧
+（fill → overflow → settle → measure），**measure 用 CONC=4**。
+期望：median/mean/p99 三个增益均为正且显著（参照 +85% 量级）；
+**如果 p99 为负，标记失败并贴完整日志**：
 
 ```bash
 CONC=4 MAX_NUM_SEQS=4 bash scripts/ssd-prefetch-ttft-ab/run_ab.sh
