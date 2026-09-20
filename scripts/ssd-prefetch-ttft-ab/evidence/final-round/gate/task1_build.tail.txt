@@ -1,0 +1,80 @@
+[114/179] Linking CXX executable mooncake-store/tests/master_service_task_scenario_test
+[115/179] Linking CXX executable mooncake-store/tests/master_service_processing_key_double_erase_test
+[116/179] Linking CXX executable mooncake-store/benchmarks/file_interface_bench
+[117/179] Linking CXX executable mooncake-store/tests/promotion_on_hit_test
+[118/179] Linking CXX executable mooncake-store/tests/prefetch_task_master_test
+[119/179] Linking CXX executable mooncake-store/tests/master_service_evict_scenario_test
+[120/179] Linking CXX executable mooncake-store/tests/master_service_placement_scenario_test
+[121/179] Linking CXX executable mooncake-store/tests/master_service_segment_scenario_test
+[122/179] Linking CXX executable mooncake-store/tests/master_service_ssd_scenario_test
+[123/179] Linking CXX executable mooncake-store/benchmarks/uring_batch_read_bench
+[124/179] Linking CXX executable mooncake-store/tests/local_file_snapshot_object_store_test
+[125/179] Linking CXX executable mooncake-store/tests/master_service_group_scenario_test
+[126/179] Linking CXX executable mooncake-store/tests/master_service_offload_scenario_test
+[127/179] Linking CXX executable mooncake-store/tests/hot_standby_snapshot_bootstrap_test
+[128/179] Linking CXX executable mooncake-store/tests/master_snapshot_codec_test
+[129/179] Linking CXX executable mooncake-store/tests/snapshot_child_process_test
+[130/179] Linking CXX executable mooncake-store/tests/master_service_promotion_test_for_snapshot
+[131/179] Linking CXX executable mooncake-store/tests/master_service_group_test
+[132/179] Linking CXX executable mooncake-store/tests/master_service_ssd_test_for_snapshot
+[133/179] Linking CXX executable mooncake-store/benchmarks/storage_backend_bench
+[134/179] Linking CXX executable mooncake-store/tests/dynamic_replication_test
+[135/179] Linking CXX executable mooncake-store/tests/batch_oplog_snapshot_promotion_test
+[136/179] Linking CXX executable mooncake-store/tests/master_service_test
+[137/179] Linking CXX executable mooncake-store/tests/batch_oplog_snapshot_provider_test
+[138/179] Linking CXX executable mooncake-store/benchmarks/offset_allocator_concurrency_bench
+[139/179] Linking CXX executable mooncake-store/benchmarks/allocation_strategy_bench
+[140/179] Linking CXX executable mooncake-store/tests/master_service_scenario_test
+[141/179] Linking CXX executable mooncake-store/tests/object_data_type_test
+[142/179] Linking CXX executable mooncake-store/tests/master_metrics_test
+[143/179] Linking CXX executable mooncake-store/tests/master_service_test_for_snapshot
+[144/179] Linking CXX executable mooncake-store/tests/master_admin_server_test
+[145/179] Linking CXX executable mooncake-store/tests/master_service/dsl/master_scenario_test
+[146/179] Linking CXX executable mooncake-store/benchmarks/master_bench
+[147/179] Linking CXX executable mooncake-store/benchmarks/batch_oplog_promotion_bench
+[148/179] Linking CXX executable mooncake-store/benchmarks/batch_get_replica_bench
+[149/179] Linking CXX executable mooncake-store/benchmarks/batch_evict_bench
+[150/179] Linking CXX executable mooncake-store/tests/file_storage_promotion_test
+[151/179] Linking CXX executable mooncake-store/tests/high_availability_test
+[152/179] Linking CXX executable mooncake-store/tests/master_service_ha_test
+[153/179] Linking CXX executable mooncake-store/tests/client_storage_backend_test
+[154/179] Linking CXX executable mooncake-store/tests/stress_workload_test
+[155/179] Linking CXX executable mooncake-store/tests/ha_backend_availability_test
+[156/179] Linking CXX executable mooncake-store/tests/e2e/clientctl
+[157/179] Linking CXX executable mooncake-store/tests/e2e/chaosctl
+[158/179] Linking CXX executable mooncake-store/tests/e2e/oplog_ha_client
+[159/179] Linking CXX executable mooncake-store/tests/e2e/chaos_test
+[160/179] Linking CXX executable mooncake-store/tests/e2e/chaos_rand_test
+[161/179] Linking CXX executable mooncake-store/tests/batch_remove_test
+[162/179] Linking CXX executable mooncake-store/tests/e2e/e2e_rand_test
+[163/179] Linking CXX executable mooncake-store/tests/client_tcp_local_memcpy_test
+[164/179] Linking CXX executable mooncake-store/tests/e2e/client_runner
+[165/179] Linking CXX executable mooncake-store/tests/dfs_sync_client_test
+[166/179] Linking CXX executable mooncake-store/tests/non_ha_reconnect_test
+[167/179] Linking CXX executable mooncake-store/tests/task_integration_test
+[168/179] Linking CXX executable mooncake-store/tests/file_storage_test
+[169/179] Linking CXX executable mooncake-store/tests/client_local_hot_cache_test
+[170/179] Linking CXX executable mooncake-store/tests/rpc_timeout_test
+[171/179] Linking CXX executable mooncake-store/tests/client_metrics_test
+[172/179] Linking CXX executable mooncake-store/tests/client_readonly_query_test
+[173/179] Linking CXX executable mooncake-store/tests/pybind_client_test
+[174/179] Linking CXX executable mooncake-store/tests/e2e/storage_backend_e2e_test
+[175/179] Linking CXX executable mooncake-store/tests/health_check_test
+[176/179] Linking CXX executable mooncake-store/tests/client_integration_test
+[177/179] Linking CXX executable mooncake-store/tests/dummy_client_get_buffer_test
+[178/179] Linking CXX executable mooncake-store/tests/ipv6_client_test
+[179/179] Linking CXX shared module mooncake-integration/store.cpython-312-aarch64-linux-gnu.so
+lto-wrapper: warning: using serial compilation of 24 LTRANS jobs
+BUILD_RC=0
+===== PREFETCH WARNINGS =====
+===== ALL WARNINGS (non-extern) =====
+===== ERRORS (non-extern) =====
+===== BINARIES =====
+-rwxr-xr-x. 1 root root 8518072 Sep 20 16:36 /home/<user>/prefetch_916/src/Mooncake-pr3/build/mooncake-store/tests/prefetch_throttle_test
+-rwxr-xr-x. 1 root root 115705280 Sep 20 16:36 /home/<user>/prefetch_916/src/Mooncake-pr3/build/mooncake-store/tests/prefetch_task_master_test
+-rwxr-xr-x. 1 root root 425536152 Sep 20 16:36 /home/<user>/prefetch_916/src/Mooncake-pr3/build/mooncake-store/tests/client_readonly_query_test
+-rwxr-xr-x. 1 root root 123224528 Sep 20 16:36 /home/<user>/prefetch_916/src/Mooncake-pr3/build/mooncake-store/tests/promotion_on_hit_test
+-rwxr-xr-x. 1 root root 244176168 Sep 20 16:36 /home/<user>/prefetch_916/src/Mooncake-pr3/build/mooncake-store/tests/file_storage_promotion_test
+-rwxr-xr-x. 1 root root 387134384 Sep 20 16:36 /home/<user>/prefetch_916/src/Mooncake-pr3/build/mooncake-store/tests/file_storage_test
+POST_HEAD=104153ab9207e0bab8ae39adfe6260d4b0ddfaaa
+TASK1_BUILD_DONE

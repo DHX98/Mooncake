@@ -93,7 +93,7 @@ suppress it.
 -- Mooncake Python install directory: /usr/local/Ascend/ascend-toolkit/latest/python/site-packages/mooncake
 -- Configuring done (0.7s)
 -- Generating done (0.9s)
--- Build files have been written to: /home/tester/prefetch_916/src/Mooncake-pr3/build
+-- Build files have been written to: /home/<user>/prefetch_916/src/Mooncake-pr3/build
 CMAKE_RC=0
 BUILD_JOBS=64
 ninja: no work to do.

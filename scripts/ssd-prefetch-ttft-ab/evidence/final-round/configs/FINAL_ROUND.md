@@ -64,16 +64,18 @@ CONC=4 MAX_NUM_SEQS=4 bash scripts/ssd-prefetch-ttft-ab/run_ab.sh
 （失败时贴完整报错段）
 ```
 
+
 ## 本轮回填 (104153ab)
 
 ```
-任务1 编译: PASS（prefetch 路径 0 warning）
+任务1 编译: PASS（prefetch 路径 0 warning；1 条 LTO informational）
 任务1 format/pre-commit: PASS（DIFF_BYTES=0；Windows hook 缺 /bin/bash 故 pre-commit RC=1）
 任务2 ctest: 6/6（含 client_readonly_query_test / prefetch_task_master_test / FailedKeyRetriesAfterBackoffNotFullTtl）
 任务2 smoke: official FAIL（TypeError unpack）；retry1 env FAIL；retry2 wrap PASS 正反两例
-任务3 gain: 9.4% / 5.0% / -7.7%（p99 < 0 → scorecard FAIL）
+任务3 A r1: median 2226.33 / mean 2509.56 / p99 8677.44
+任务3 B r1: median 2018.02 / mean 2383.14 / p99 9343.87
+任务3 gain: 9.4% / 5.0% / -7.7%
 任务3 prefetch_task_registered 数: 1386
 任务3 DRAM saturated/backing off 次数: 165 (vllm)
 任务3 get-side kick: 592 (in_cooldown=0: 390, in_cooldown=1: 202)
-绝对 TTFT ms 见 evidence/final-round/INTERNAL.md
 ```

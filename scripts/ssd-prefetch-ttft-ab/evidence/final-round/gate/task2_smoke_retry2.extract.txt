@@ -1,0 +1,5 @@
+1:===== SMOKE RETRY2 2026-09-20T16:50:42Z wrap-unpack poll=2 wait=40 =====
+177:Ran 2 tests in 15.387s
+179:OK
+180:SMOKE_RETRY2_RC=0
+181:TASK2_SMOKE_RETRY2_DONE

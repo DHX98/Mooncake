@@ -1,0 +1,18 @@
+1:===== SMOKE RETRY 2026-09-20T16:45:46Z poll=2 wait=40 =====
+164:Ran 3 tests in 69.853s
+166:OK
+316:Ran 3 tests in 41.035s
+318:OK (skipped=1)
+517:ERROR: test_exist_with_prefetch_promotes_ssd_only_key (__main__.TestPrefetchOnExist.test_exist_with_prefetch_promotes_ssd_only_key)
+521:  File "/home/<user>/prefetch_916/src/Mooncake-pr3/mooncake-wheel/tests/test_prefetch_on_exist.py", line 201, in test_exist_with_prefetch_promotes_ssd_only_key
+524:TypeError: unhashable type: 'dict'
+527:FAIL: test_exist_without_prefetch_does_not_promote (__main__.TestPrefetchOnExist.test_exist_without_prefetch_does_not_promote)
+531:  File "/home/<user>/prefetch_916/src/Mooncake-pr3/mooncake-wheel/tests/test_prefetch_on_exist.py", line 224, in test_exist_without_prefetch_does_not_promote
+534:  File "/home/<user>/prefetch_916/src/Mooncake-pr3/mooncake-wheel/tests/test_prefetch_on_exist.py", line 184, in _find_cold_key
+537:  File "/home/<user>/prefetch_916/src/Mooncake-pr3/mooncake-wheel/tests/test_prefetch_on_exist.py", line 125, in wait_until
+538:    raise AssertionError(
+539:AssertionError: timeout (40s) waiting for a LOCAL_DISK-only key after eviction - is offload_on_evict=true and the segment small enough to overflow?; last={'DISK,MEMORY': 5}
+542:Ran 2 tests in 49.188s
+544:FAILED (failures=1, errors=1)
+7199:SMOKE_RETRY_RC=1
+7200:TASK2_SMOKE_RETRY_DONE

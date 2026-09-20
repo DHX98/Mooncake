@@ -1,9 +1,7 @@
-prefetch_task_registered_master=593
-prefetch_task_registered_vllm=0
+prefetch_task_registered_master=1386
 dram_saturated_master=0
-dram_saturated_vllm=45
-memory_pressure_cooldown_master=0
-memory_pressure_cooldown_vllm=669
-get_side_kick_vllm=0
+dram_saturated_vllm=165
+get_side_kick_vllm=592
+in_cooldown_0=390
+in_cooldown_1=202
 logs_are_arm_b_only=1
-
