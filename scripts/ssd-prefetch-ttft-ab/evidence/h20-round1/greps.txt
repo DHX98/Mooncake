@@ -1,0 +1,15 @@
+A_R1 success=48 fail=0 med=2605.86 mean=3183.65 p99=10768.36
+A_R2 success=48 fail=0 med=2994.47 mean=2949.48 p99=5113.44
+B_R1 success=48 fail=0 med=2580.78 mean=3197.01 p99=10791.03
+B_R2 success=48 fail=0 med=2561.11 mean=2483.34 p99=5078.65
+A_FILL success=48 fail=0 med=1347.27 mean=1473.20 p99=4478.87
+A_OVERFLOW success=48 fail=0 med=1348.99 mean=1349.02 p99=1355.92
+B_FILL success=48 fail=0 med=1329.10 mean=1454.08 p99=4456.16
+B_OVERFLOW success=48 fail=0 med=1330.16 mean=1333.01 p99=1403.73
+ENGINE_MD5 275b0687e217c9013f527e3e5faf980a unpack=0
+UNPACK_HITS 0
+FILE_READ_FAIL 616
+PENDING_HITS 0
+DROPPED_HITS 8
+PATH hybrid_unpack + store.so pending-fail + worker drop-failed-keys
+EXCLUDED first official run_ab 0/48 a_r1.bench.log b_r1.bench.log; hung 47/48 r2; leftover 17:56 r1
