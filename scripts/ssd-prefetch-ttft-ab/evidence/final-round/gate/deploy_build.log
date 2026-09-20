@@ -1,0 +1,83 @@
+===== DEPLOY BUILD 2026-09-20T14:10:42Z =====
+HEAD=eabc511f589280d208f87cac5881f2bf1f419c01
+USE_ASCEND_DIRECT=USE_ASCEND_DIRECT:BOOL=ON
+BUILD_JOBS=64
+[1/33] Building CXX object mooncake-store/src/CMakeFiles/mooncake_store_client_objects.dir/nvme_kv_connector.cpp.o
+[2/33] Building CXX object mooncake-store/src/CMakeFiles/mooncake_store_client_objects.dir/config/file_storage_config.cpp.o
+[3/33] Building CXX object mooncake-store/src/CMakeFiles/mooncake_store_shared_objects.dir/storage/distributed/distributed_storage_backend.cpp.o
+[4/33] Building CXX object mooncake-store/src/CMakeFiles/mooncake_store_client_objects.dir/transfer_task.cpp.o
+[5/33] Building CXX object mooncake-store/src/CMakeFiles/mooncake_store_master_objects.dir/client_offboarding.cpp.o
+[6/33] Building CXX object mooncake-store/src/CMakeFiles/mooncake_store_master_objects.dir/ha/snapshot/master_snapshot_codec.cpp.o
+[7/33] Building CXX object mooncake-store/src/CMakeFiles/mooncake_store_client_objects.dir/nvme_kv_backend.cpp.o
+[8/33] Building CXX object mooncake-store/src/CMakeFiles/mooncake_store_master_objects.dir/master_snapshot_manager.cpp.o
+[9/33] Building CXX object mooncake-store/src/CMakeFiles/mooncake_store_master_objects.dir/serialize/serializer.cpp.o
+[10/33] Building CXX object mooncake-store/src/CMakeFiles/mooncake_store_client_objects.dir/engram/engram_store.cpp.o
+[11/33] Building CXX object mooncake-store/src/CMakeFiles/mooncake_store_client_objects.dir/ssd_register_client.cpp.o
+[12/33] Building CXX object mooncake-integration/CMakeFiles/store.dir/store/engram_store_py.cpp.o
+[13/33] Building CXX object mooncake-store/src/CMakeFiles/mooncake_store_client_objects.dir/ssd_prefetcher.cpp.o
+[14/33] Building CXX object mooncake-store/src/CMakeFiles/mooncake_store_client_objects.dir/file_storage.cpp.o
+[15/33] Building CXX object mooncake-store/src/CMakeFiles/mooncake_store_client_objects.dir/store_c.cpp.o
+[16/33] Building CXX object mooncake-integration/CMakeFiles/store.dir/store/buffer_pool.cpp.o
+[17/33] Building CXX object mooncake-store/src/CMakeFiles/mooncake_store_client_objects.dir/storage_backend.cpp.o
+[18/33] Building CXX object mooncake-store/src/CMakeFiles/mooncake_store_client_objects.dir/client_service.cpp.o
+[19/33] Building CXX object mooncake-store/src/CMakeFiles/mooncake_master.dir/master.cpp.o
+[20/33] Building CXX object mooncake-store/src/CMakeFiles/mooncake_store_master_objects.dir/rpc_service.cpp.o
+[21/33] Building CXX object mooncake-integration/CMakeFiles/store.dir/store/store_py.cpp.o
+In file included from /home/<user><user>/prefetch_916/src/Mooncake-pr3/mooncake-integration/store/store_py.cpp:493:
+/home/<user><user>/prefetch_916/src/Mooncake-pr3/mooncake-integration/store/store_py_internal.h:1416:40: warning: ‘std::optional<mooncake::{anonymous}::RawTensorShardWritePlan> mooncake::{anonymous}::build_raw_tensor_shard_write_plan(const mooncake::ParsedTensorMetadata&, int, int, int, const char*)’ defined but not used [-Wunused-function]
+ 1416 | std::optional<RawTensorShardWritePlan> build_raw_tensor_shard_write_plan(
+      |                                        ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/home/<user><user>/prefetch_916/src/Mooncake-pr3/mooncake-integration/store/store_py_internal.h:1083:35: warning: ‘std::optional<mooncake::{anonymous}::ResolvedTensorRead> mooncake::{anonymous}::resolve_parallelism_shard_read(const std::function<std::optional<mooncake::ParsedTensorMetadata>(const std::__cxx11::basic_string<char>&, std::shared_ptr<mooncake::BufferHandle>*)>&, const string&, const mooncake::{anonymous}::TensorParallelismSpec&)’ defined but not used [-Wunused-function]
+ 1083 | std::optional<ResolvedTensorRead> resolve_parallelism_shard_read(
+      |                                   ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/home/<user><user>/prefetch_916/src/Mooncake-pr3/mooncake-integration/store/store_py_internal.h:1011:31: warning: ‘std::optional<mooncake::{anonymous}::ReadTargetSpec> mooncake::{anonymous}::parse_read_target_spec(const pybind11::object&)’ defined but not used [-Wunused-function]
+ 1011 | std::optional<ReadTargetSpec> parse_read_target_spec(const py::object &obj) {
+      |                               ^~~~~~~~~~~~~~~~~~~~~~
+/home/<user><user>/prefetch_916/src/Mooncake-pr3/mooncake-integration/store/store_py_internal.h:974:38: warning: ‘std::optional<mooncake::{anonymous}::WriterShardTensorInfo> mooncake::{anonymous}::build_writer_shard_tensor_info(const string&, const pybind11::object&, const mooncake::{anonymous}::WriterPartitionSpec&, const string&)’ defined but not used [-Wunused-function]
+  974 | std::optional<WriterShardTensorInfo> build_writer_shard_tensor_info(
+      |                                      ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/home/<user><user>/prefetch_916/src/Mooncake-pr3/mooncake-integration/store/store_py_internal.h:863:6: warning: ‘bool mooncake::{anonymous}::is_default_replicate_config(const mooncake::ReplicateConfig&)’ defined but not used [-Wunused-function]
+  863 | bool is_default_replicate_config(const ReplicateConfig &config) {
+      |      ^~~~~~~~~~~~~~~~~~~~~~~~~~~
+/home/<user><user>/prefetch_916/src/Mooncake-pr3/mooncake-integration/store/store_py_internal.h:831:6: warning: ‘bool mooncake::{anonymous}::parallelism_specs_equal_by_kind(const mooncake::{anonymous}::TensorParallelismSpec&, const mooncake::{anonymous}::TensorParallelismSpec&, bool)’ defined but not used [-Wunused-function]
+  831 | bool parallelism_specs_equal_by_kind(const TensorParallelismSpec &lhs,
+      |      ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/home/<user><user>/prefetch_916/src/Mooncake-pr3/mooncake-integration/store/store_py_internal.h:768:25: warning: ‘std::optional<pybind11::list> mooncake::{anonymous}::validate_batch_writer_partition_list(const pybind11::object&, size_t, const string&)’ defined but not used [-Wunused-function]
+  768 | std::optional<py::list> validate_batch_writer_partition_list(
+      |                         ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/home/<user><user>/prefetch_916/src/Mooncake-pr3/mooncake-integration/store/store_py_internal.h:761:25: warning: ‘std::optional<pybind11::list> mooncake::{anonymous}::validate_batch_parallelism_list(const pybind11::object&, size_t, const string&)’ defined but not used [-Wunused-function]
+  761 | std::optional<py::list> validate_batch_parallelism_list(
+      |                         ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/home/<user><user>/prefetch_916/src/Mooncake-pr3/mooncake-integration/store/store_py_internal.h:685:1: warning: ‘std::optional<mooncake::{anonymous}::ResolvedParallelismWriteRequest> mooncake::{anonymous}::resolve_parallelism_write_request(const pybind11::object&, const pybind11::object&, const string&)’ defined but not used [-Wunused-function]
+  685 | resolve_parallelism_write_request(const py::object &parallelism_obj,
+      | ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/home/<user><user>/prefetch_916/src/Mooncake-pr3/mooncake-integration/store/store_py_internal.h:459:1: warning: ‘std::optional<mooncake::{anonymous}::ParallelismShardTensorInfo> mooncake::{anonymous}::build_requested_parallelism_shard_info(const pybind11::handle&, const mooncake::{anonymous}::TensorParallelismSpec&, const string&, const string&)’ defined but not used [-Wunused-function]
+  459 | build_requested_parallelism_shard_info(const py::handle &tensor,
+      | ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/home/<user><user>/prefetch_916/src/Mooncake-pr3/mooncake-integration/store/store_py_internal.h:403:43: warning: ‘std::optional<mooncake::{anonymous}::ParallelismShardTensorInfo> mooncake::{anonymous}::build_direct_parallelism_shard_info(const pybind11::handle&, const std::vector<mooncake::{anonymous}::ParallelAxisSpec>&, const string&, bool)’ defined but not used [-Wunused-function]
+  403 | std::optional<ParallelismShardTensorInfo> build_direct_parallelism_shard_info(
+      |                                           ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/home/<user><user>/prefetch_916/src/Mooncake-pr3/mooncake-integration/store/store_py_internal.h:381:29: warning: ‘std::optional<mooncake::{anonymous}::PyTensorInfo> mooncake::{anonymous}::build_direct_parallelism_shard_info(const pybind11::handle&, const std::vector<mooncake::{anonymous}::ParallelAxisSpec>&, const string&)’ defined but not used [-Wunused-function]
+  381 | std::optional<PyTensorInfo> build_direct_parallelism_shard_info(
+      |                             ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+[22/33] Building CXX object mooncake-store/src/CMakeFiles/mooncake_store_master_objects.dir/ha/leadership/master_service_supervisor.cpp.o
+[23/33] Building CXX object mooncake-store/src/CMakeFiles/mooncake_client.dir/real_client_main.cpp.o
+[24/33] Building CXX object mooncake-store/src/CMakeFiles/mooncake_store_master_objects.dir/master_admin_service.cpp.o
+[25/33] Building CXX object mooncake-store/src/CMakeFiles/mooncake_store_master_objects.dir/master_service.cpp.o
+[26/33] Linking CXX static library mooncake-store/src/libmooncake_store_master.a
+[27/33] Linking CXX executable mooncake-store/src/mooncake_master
+[28/33] Building CXX object mooncake-store/src/CMakeFiles/mooncake_store_client_objects.dir/real_client.cpp.o
+[29/33] Building CXX object mooncake-store/src/CMakeFiles/mooncake_store_client_objects.dir/dummy_client.cpp.o
+[30/33] Building CXX object mooncake-store/src/CMakeFiles/mooncake_store_client_objects.dir/master_client.cpp.o
+[31/33] Linking CXX shared library mooncake-store/src/libmooncake_store.so
+[32/33] Linking CXX executable mooncake-store/src/mooncake_client
+[33/33] Linking CXX shared module mooncake-integration/store.cpython-312-aarch64-linux-gnu.so
+BUILD_RC=0
+===== ARTIFACTS =====
+/home/<user><user>/prefetch_916/920_pre_pr/build-deploy/mooncake-store/src/libmooncake_store.so
+/home/<user><user>/prefetch_916/920_pre_pr/build-deploy/mooncake-store/src/mooncake_master
+/home/<user><user>/prefetch_916/920_pre_pr/build-deploy/mooncake-transfer-engine/src/libtransfer_engine.so
+/home/<user><user>/prefetch_916/920_pre_pr/build-deploy/mooncake-integration/store.cpython-312-aarch64-linux-gnu.so
+/home/<user><user>/prefetch_916/920_pre_pr/build-deploy/mooncake-common/src/libmooncake_common.so
+USE_ASCEND_DIRECT_AFTER=USE_ASCEND_DIRECT:BOOL=ON
+DEPLOY_BUILD_DONE

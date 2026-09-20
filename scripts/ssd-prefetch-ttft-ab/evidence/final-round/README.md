@@ -1,34 +1,25 @@
-# final-round evidence (PR3 exist-get-wiring @ 8bfb5130)
+# final-round evidence (PR3 exist-get-wiring @ eabc511f)
 
-Code under test: `ssd-prefetch/pr3-exist-get-wiring` @ `8bfb5130`
-(no get-kick, no ignore_cooldown).
+Code under test: `ssd-prefetch/pr3-exist-get-wiring` @ `eabc511f589280d208f87cac5881f2bf1f419c01`
 
 Replay scripts: `ssd-prefetch/v3-verify` `scripts/ssd-prefetch-ttft-ab/`
-(hardened serve/run_ab: orphan Worker pkill, fill-0 abort).
+(on-box overlay; FINAL_ROUND names eabc511f). A/B was not run.
 
-Measure: CONC=4, MAX_NUM_SEQS=4, GLOG_v=1. Primary = r1.
+## Task 1 / 2 / 3
 
-## Task 1 / 2 (gate)
+任务1 编译: PASS（prefetch 路径 0 warning；16 条无关 warning 见 INTERNAL）
+任务1 format/pre-commit: FAIL（diff 见 format.diff，勿提交）
+任务2 ctest: SKIP（任务1 FAIL，按 fail policy 未跑）
+任务2 smoke: SKIP（任务1 FAIL，按 fail policy 未跑）
+任务3 A r1: SKIP
+任务3 B r1: SKIP
+任务3 gain: SKIP
+任务3 prefetch_task_registered 数: SKIP
+任务3 DRAM saturated/backing off 次数: SKIP
 
-- build: PASS, 0 error, no prefetch-path warning
-- format/pre-commit: FAIL (18 C++ clang-format wraps + 1 ruff-format on
-  `test_prefetch_on_exist.py`). Diff not committed on the PR branch.
-- ctest: 3/6
-- smoke: FAIL (`test_prefetch_on_exist` both cases)
+format.diff: 2 files, wrap-only (`prefetch_throttle.h` 3 wrap sites;
+`test_prefetch_on_exist.py` blank line + 3 assertEqual wraps).
+Do not apply to the PR branch.
 
-## Task 3 A/B gain (r1, (A-B)/A)
-
-- median: 7.2%
-- mean: 6.3%
-- p99: -4.0%
-
-Absolute milliseconds are in `INTERNAL.md` only.
-
-## Arm-B log greps (serve.sh truncates logs on each arm start)
-
-- prefetch_task_registered: 593 (master)
-- DRAM saturated, backing off: 45 (vllm)
-- memory-pressure cooldown: 669 (vllm)
-- get-side kick: 0 (expected: PR3 deleted it)
-
-Full master/vllm logs stay on the bench host (too large to push).
+Deploy build finished RC=0 with USE_ASCEND_DIRECT=ON. Not installed and
+not used for A/B.
