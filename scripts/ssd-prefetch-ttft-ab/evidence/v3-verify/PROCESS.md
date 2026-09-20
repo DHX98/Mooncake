@@ -105,5 +105,9 @@ evidence/v3-verify/
   kicks.txt / promotion_last.txt
   runs/fail1|fail2|fail3/    三轮失败的 host + vllm + master + bench
   runs/success/*.json        成功轮 bench JSON
-  runs/v3-r2-win/            9/17 赢了的对照日志
+  runs/v3-r2-win/run.host.log  9/17 赢了的对照 host 日志
 ```
+
+9/17 全量 vllm/master 仍在 141：`/home/d00883276/perf_test_prefetch_v3/logs/{vllm,master}.log`。
+成功轮全量已经在本目录 `vllm.log.gz` / `master.log.gz`（上一笔证据提交）。
+
