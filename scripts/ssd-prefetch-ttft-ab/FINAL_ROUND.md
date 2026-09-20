@@ -2,7 +2,7 @@
 
 ## 两个目录，两个分支，别混
 
-- **被测代码**：`ssd-prefetch/pr3-exist-get-wiring` @ `21d8f1aa`
+- **被测代码**：`ssd-prefetch/pr3-exist-get-wiring` @ `104153ab`
   （clone 后 `git checkout` 这个分支构建；上游 PR 候选。
   本分支**已恢复 get-kick + ignore_cooldown**，并修复：
   两个测试的 InitGoogleLogging 重复调用、throttle cooldown=0 的
