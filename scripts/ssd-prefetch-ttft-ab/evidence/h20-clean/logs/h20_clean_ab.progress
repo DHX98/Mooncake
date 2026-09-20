@@ -1,0 +1,33 @@
+2026-09-20T22:11:41Z PHASE=arm_a_start ARM=a suc=- fail=- frf_v=0 frf_m=0 pend=0 ssd=/home/<user>/gpu_refactor/h20_ttft_ab/ssd df=227G glog=0 start
+2026-09-20T22:11:41Z PHASE=arm_a_serve ARM=a suc=- fail=- frf_v=0 frf_m=0 pend=0 ssd=/home/<user>/gpu_refactor/h20_ttft_ab/ssd_ab2 df=227G glog=0 serve start glog0
+2026-09-20T22:12:55Z PHASE=arm_a_fill ARM=a suc=- fail=- frf_v=0 frf_m=0 pend=0 ssd=/home/<user>/gpu_refactor/h20_ttft_ab/ssd_ab2 df=227G glog=0 fill c=1
+2026-09-20T22:14:51Z PHASE=arm_a_fill ARM=a suc=48 fail=0 frf_v=0 frf_m=0 pend=0 ssd=/home/<user>/gpu_refactor/h20_ttft_ab/ssd_ab2 df=223G glog=0 fill done
+2026-09-20T22:14:51Z PHASE=arm_a_overflow ARM=a suc=48 fail=0 frf_v=0 frf_m=0 pend=0 ssd=/home/<user>/gpu_refactor/h20_ttft_ab/ssd_ab2 df=223G glog=0 overflow c=1
+2026-09-20T22:16:42Z PHASE=arm_a_overflow ARM=a suc=48 fail=0 frf_v=0 frf_m=0 pend=0 ssd=/home/<user>/gpu_refactor/h20_ttft_ab/ssd_ab2 df=222G glog=0 overflow done
+2026-09-20T22:16:42Z PHASE=arm_a_settle ARM=a suc=48 fail=0 frf_v=0 frf_m=0 pend=0 ssd=/home/<user>/gpu_refactor/h20_ttft_ab/ssd_ab2 df=222G glog=0 settle 90s
+2026-09-20T22:18:12Z PHASE=arm_a_gate_r1 ARM=a suc=48 fail=0 frf_v=0 frf_m=0 pend=0 ssd=/home/<user>/gpu_refactor/h20_ttft_ab/ssd_ab2 df=222G glog=0 gate before r1
+2026-09-20T22:18:12Z PHASE=arm_a_r1 ARM=a suc=48 fail=0 frf_v=0 frf_m=0 pend=0 ssd=/home/<user>/gpu_refactor/h20_ttft_ab/ssd_ab2 df=222G glog=0 measure r1 c=4
+2026-09-20T22:21:44Z PHASE=arm_a_r1_hang_evidence ARM=a suc=48 fail=0 frf_v=1564656 frf_m=0 pend=0 ssd=/home/<user>/gpu_refactor/h20_ttft_ab/ssd_ab2 df=214G glog=0 r1 hang; glog1 window then remesure once
+2026-09-20T22:24:41Z PHASE=arm_a_r1_remesure ARM=a suc=48 fail=0 frf_v=0 frf_m=0 pend=0 ssd=/home/<user>/gpu_refactor/h20_ttft_ab/ssd_ab2 df=214G glog=0 r1 remesure glog0
+2026-09-20T22:26:07Z PHASE=arm_a_r1_remesure ARM=a suc=48 fail=0 frf_v=0 frf_m=0 pend=0 ssd=/home/<user>/gpu_refactor/h20_ttft_ab/ssd_ab2 df=212G glog=0 r1 done
+2026-09-20T22:26:07Z PHASE=arm_a_gate_r2 ARM=a suc=48 fail=0 frf_v=0 frf_m=0 pend=0 ssd=/home/<user>/gpu_refactor/h20_ttft_ab/ssd_ab2 df=212G glog=0 gate before r2
+2026-09-20T22:26:07Z PHASE=arm_a_r2 ARM=a suc=48 fail=0 frf_v=0 frf_m=0 pend=0 ssd=/home/<user>/gpu_refactor/h20_ttft_ab/ssd_ab2 df=212G glog=0 measure r2 c=4
+2026-09-20T22:27:33Z PHASE=arm_a_r2 ARM=a suc=48 fail=0 frf_v=520 frf_m=0 pend=0 ssd=/home/<user>/gpu_refactor/h20_ttft_ab/ssd_ab2 df=211G glog=0 r2 done
+2026-09-20T22:27:35Z PHASE=arm_a_stop ARM=a suc=48 fail=0 frf_v=520 frf_m=0 pend=0 ssd=/home/<user>/gpu_refactor/h20_ttft_ab/ssd_ab2 df=211G glog=0 arm stop
+2026-09-20T22:27:35Z PHASE=arm_b_start ARM=b suc=- fail=- frf_v=520 frf_m=0 pend=0 ssd=/home/<user>/gpu_refactor/h20_ttft_ab/ssd_ab2 df=211G glog=0 start
+2026-09-20T22:27:35Z PHASE=arm_b_serve ARM=b suc=- fail=- frf_v=0 frf_m=0 pend=0 ssd=/home/<user>/gpu_refactor/h20_ttft_ab/ssd_ab2_b df=211G glog=0 serve start glog0
+2026-09-20T22:28:50Z PHASE=arm_b_fill ARM=b suc=- fail=- frf_v=0 frf_m=0 pend=0 ssd=/home/<user>/gpu_refactor/h20_ttft_ab/ssd_ab2_b df=211G glog=0 fill c=1
+2026-09-20T22:30:45Z PHASE=arm_b_fill ARM=b suc=48 fail=0 frf_v=0 frf_m=0 pend=0 ssd=/home/<user>/gpu_refactor/h20_ttft_ab/ssd_ab2_b df=208G glog=0 fill done
+2026-09-20T22:30:46Z PHASE=arm_b_overflow ARM=b suc=48 fail=0 frf_v=0 frf_m=0 pend=0 ssd=/home/<user>/gpu_refactor/h20_ttft_ab/ssd_ab2_b df=208G glog=0 overflow c=1
+2026-09-20T22:32:36Z PHASE=arm_b_overflow ARM=b suc=48 fail=0 frf_v=0 frf_m=0 pend=0 ssd=/home/<user>/gpu_refactor/h20_ttft_ab/ssd_ab2_b df=206G glog=0 overflow done
+2026-09-20T22:32:36Z PHASE=arm_b_settle ARM=b suc=48 fail=0 frf_v=0 frf_m=0 pend=0 ssd=/home/<user>/gpu_refactor/h20_ttft_ab/ssd_ab2_b df=206G glog=0 settle 90s
+2026-09-20T22:34:07Z PHASE=arm_b_gate_r1 ARM=b suc=48 fail=0 frf_v=0 frf_m=0 pend=0 ssd=/home/<user>/gpu_refactor/h20_ttft_ab/ssd_ab2_b df=206G glog=0 gate before r1
+2026-09-20T22:34:07Z PHASE=arm_b_r1 ARM=b suc=48 fail=0 frf_v=0 frf_m=0 pend=0 ssd=/home/<user>/gpu_refactor/h20_ttft_ab/ssd_ab2_b df=206G glog=0 measure r1 c=4
+2026-09-20T22:37:38Z PHASE=arm_b_r1_hang_evidence ARM=b suc=48 fail=0 frf_v=1196053 frf_m=0 pend=0 ssd=/home/<user>/gpu_refactor/h20_ttft_ab/ssd_ab2_b df=202G glog=0 r1 hang; glog1 window then remesure once
+2026-09-20T22:40:34Z PHASE=arm_b_r1_remesure ARM=b suc=48 fail=0 frf_v=0 frf_m=0 pend=0 ssd=/home/<user>/gpu_refactor/h20_ttft_ab/ssd_ab2_b df=202G glog=0 r1 remesure glog0
+2026-09-20T22:42:00Z PHASE=arm_b_r1_remesure ARM=b suc=48 fail=0 frf_v=0 frf_m=0 pend=0 ssd=/home/<user>/gpu_refactor/h20_ttft_ab/ssd_ab2_b df=200G glog=0 r1 done
+2026-09-20T22:42:00Z PHASE=arm_b_gate_r2 ARM=b suc=48 fail=0 frf_v=0 frf_m=0 pend=0 ssd=/home/<user>/gpu_refactor/h20_ttft_ab/ssd_ab2_b df=200G glog=0 gate before r2
+2026-09-20T22:42:00Z PHASE=arm_b_r2 ARM=b suc=48 fail=0 frf_v=0 frf_m=0 pend=0 ssd=/home/<user>/gpu_refactor/h20_ttft_ab/ssd_ab2_b df=200G glog=0 measure r2 c=4
+2026-09-20T22:43:20Z PHASE=arm_b_r2 ARM=b suc=48 fail=0 frf_v=1617 frf_m=0 pend=0 ssd=/home/<user>/gpu_refactor/h20_ttft_ab/ssd_ab2_b df=199G glog=0 r2 done
+2026-09-20T22:43:23Z PHASE=arm_b_stop ARM=b suc=48 fail=0 frf_v=1617 frf_m=0 pend=0 ssd=/home/<user>/gpu_refactor/h20_ttft_ab/ssd_ab2_b df=199G glog=0 arm stop
+2026-09-20T22:43:27Z PHASE=done ARM=b suc=48 fail=0 frf_v=1617 frf_m=0 pend=0 ssd=/home/<user>/gpu_refactor/h20_ttft_ab/ssd_ab2_b df=199G glog=0 both arms finished

@@ -1,0 +1,34 @@
+FILE_READ_FAIL counts (gate-time from host log)
+GATE a_before_r1 FILE_READ_FAIL vllm=0 master=0
+GATE_PASS a_before_r1
+GATE a_before_r2 FILE_READ_FAIL vllm=0 master=0
+GATE_PASS a_before_r2
+GATE b_before_r1 FILE_READ_FAIL vllm=0 master=0
+GATE_PASS b_before_r1
+GATE b_before_r2 FILE_READ_FAIL vllm=0 master=0
+GATE_PASS b_before_r2
+
+current vllm.log FILE_READ_FAIL=1617 still_pending=0 (post-stop leftover, not a gate)
+current master.log FILE_READ_FAIL=0
+
+rotated vllm.log FILE_READ_FAIL / still_pending / bytes
+vllm.log FILE_READ_FAIL=1617 still_pending=0 bytes=11718521
+vllm.log.before_a_retry FILE_READ_FAIL=2982 still_pending=0 bytes=20971520
+vllm.log.before_b_20260920T222735Z FILE_READ_FAIL=520 still_pending=0 bytes=9503362
+vllm.log.before_clean_20260920T220500Z FILE_READ_FAIL=616 still_pending=0 bytes=61101282
+vllm.log.glog1_a_r1_20260920T222332Z FILE_READ_FAIL=0 still_pending=0 bytes=289912
+vllm.log.glog1_b_r1_20260920T223919Z FILE_READ_FAIL=0 still_pending=0 bytes=279384
+vllm.log.last20mb FILE_READ_FAIL=2366 still_pending=80504 bytes=20971520
+vllm.log.last20mb2 FILE_READ_FAIL=2204 still_pending=0 bytes=20971520
+vllm.log.tail_clean_20260920T220500Z FILE_READ_FAIL=0 still_pending=0 bytes=2097152
+
+Official measures that passed a FILE_READ_FAIL=0 gate: A_R1 remesure, A_R2, B_R1 remesure, B_R2.
+Hung first r1 attempts (voided): FILE_READ_FAIL>>0 on rotated hang logs; still_pending=0 at GLOG_v=0.
+vllm.log.hang_a_r1 FILE_READ_FAIL=1564656 still_pending=0
+vllm.log.hang_b_r1 FILE_READ_FAIL=1196053 still_pending=0
+vllm.log.glog1_a_r1 FILE_READ_FAIL=0 still_pending=0
+vllm.log.glog1_b_r1 FILE_READ_FAIL=0 still_pending=0
+GATE a_before_r1_remesure FILE_READ_FAIL vllm=0 master=0
+GATE_PASS a_before_r1_remesure
+GATE b_before_r1_remesure FILE_READ_FAIL vllm=0 master=0
+GATE_PASS b_before_r1_remesure

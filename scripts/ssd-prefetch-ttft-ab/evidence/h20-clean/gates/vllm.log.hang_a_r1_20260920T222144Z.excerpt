@@ -1,0 +1,6 @@
+# Voided A r1 hang log (GLOG_v=0). Key hashes elided.
+FILE_READ_FAIL=1564656
+still_pending=0
+Read size mismatch / SSD read failed: present (FILE_READ_FAIL)
+sample: E0920 22:21:38 real_client.cpp:6830] SSD read failed for key 'DeepSeek-V4-Flash@tp_rank:0@...': FILE_READ_FAIL
+src=vllm.log.hang_a_r1_20260920T222144Z

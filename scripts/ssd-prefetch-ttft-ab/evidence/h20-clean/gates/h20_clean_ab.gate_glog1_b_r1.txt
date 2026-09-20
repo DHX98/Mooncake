@@ -1,0 +1,8 @@
+===== GATE glog1_b_r1 2026-09-20T22:39:19Z =====
+VLLM_LOG /home/<user>/gpu_refactor/h20_ttft_ab/logs/vllm.log
+MASTER_LOG /home/<user>/gpu_refactor/h20_ttft_ab/logs/master.log
+FILE_READ_FAIL_VLLM 0
+FILE_READ_FAIL_MASTER 0
+STILL_PENDING 0
+----- FILE_READ_FAIL / Read size mismatch / SSD read failed / still pending (vllm, 40) -----
+----- same (master, 40) -----
