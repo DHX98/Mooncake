@@ -1,5 +1,8 @@
 # H20 round1 official A/B measure (internal)
 
+Store hang (FILE_READ_FAIL + PENDING wait-all, both arms): `STORE_BATCH_HANG.md`.
+That path is on Mooncake main and is not in the prefetch commit.
+
 Official passing H20 SSD-prefetch TTFT A/B. First official run_ab 0/48
 (~17:31-17:38 a_r1/b_r1), hung 47/48 r2 logs, and leftover 17:56 r1 are
 not this win and are not in this tree.

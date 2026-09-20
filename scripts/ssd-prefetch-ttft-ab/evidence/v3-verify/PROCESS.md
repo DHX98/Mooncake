@@ -88,12 +88,16 @@ r1 c=4，48/48：
 4. `prefetch_task_registered` 本轮 master 1363，不是 ≈166。
 5. `vllm bench` 全失败也返回 0，必须读 `Successful requests:`。
 6. RESULTDIR 里 A 阶段也可能写出 `b_*` 文件名，以时间戳和 host 日志为准。
+7. **H20 overflow 后 measure 卡尾巴**（2026-09-20）。`FILE_READ_FAIL` +
+   同批 PENDING，主干 wait-all 空转；A 臂 prefetch OFF 一样。不是本 PR。
+   见 `STORE_BATCH_HANG.md` 和 `../h20-round1/STORE_BATCH_HANG.md`。
 
 ## 目录
 
 ```
 evidence/v3-verify/
   PROCESS.md                 本文件
+  STORE_BATCH_HANG.md        H20 overflow 后 SSD GET 批等待（指向 h20-round1）
   RESULT.md                  结论和 TTFT 表
   STEP0.md                   9/17 r2 零成本 grep
   METHOD.md                  （上一级 scripts/ssd-prefetch-ttft-ab/METHOD.md）

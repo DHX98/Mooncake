@@ -1,0 +1,58 @@
+# Scrubbed excerpts. Keys truncated. No host IPs.
+
+## 19:07 stock store.so (hang + log flood)
+
+VLLM_SIZE 118969908733
+COUNTS FILE_READ_FAIL=1006 Batch_get_offload=284 SSD_read_failed=296
+PENDING_HITS 31222
+disk 100% avail 33G
+ssd_files 10691
+
+E0920 19:07:47.596419 file_storage.cpp:1111] Batch load object failed,err_code = FILE_READ_FAIL
+E0920 19:07:47.596423 file_storage.cpp:251] Batch load object failed,err_code = FILE_READ_FAIL
+E0920 19:07:47.596431 real_client.cpp:7320] Batch get offload object failed,err_code = FILE_READ_FAIL
+E0920 19:07:47.596489 real_client.cpp:6830] SSD read failed for key 'DeepSeek-V4-Flash@tp_rank:0@pcp0@dcp0@pp_rank:0@group:0@90b5b411...'
+
+## 19:29 field store.so (GET returns; FILE_READ_FAIL remains)
+
+VLLM_SIZE 7134962203
+COUNTS FILE_READ_FAIL=1110 Failed_to_get=16
+
+E0920 19:29:54.155769 file_storage.cpp:1111] Batch load object failed,err_code = FILE_READ_FAIL
+E0920 19:29:54.155772 file_storage.cpp:251] Batch load object failed,err_code = FILE_READ_FAIL
+E0920 19:29:54.389547 file_storage.cpp:1111] Batch load object failed,err_code = FILE_READ_FAIL
+E0920 19:29:54.389550 file_storage.cpp:251] Batch load object failed,err_code = FILE_READ_FAIL
+E0920 19:29:54.389515 storage_backend.cpp:1859] Read size mismatch for key: default?DeepSeek-V4-Flash@tp_rank:0@pcp0@dcp0@pp_rank:0@group:0@bd95b6fd...
+E0920 19:29:54.389608 real_client.cpp:7529] Failed to invoke batch_get_offload_object, client_addr = <host-ip>:<port>, error is: FILE_READ_FAIL
+E0920 19:29:54.389611 real_client.cpp:7436] Batch get offload object failed with error: FILE_READ_FAIL
+E0920 19:29:54.389626 real_client.cpp:6830] SSD read failed for key 'DeepSeek-V4-Flash@tp_rank:0@...'
+WARNING 09-20 19:29:54 [worker.py:1098] Failed to get 28 Mooncake keys from sub-batch (batch_keys=86, ...)
+
+## 20:03-20:16 ARM=a prefetch OFF (field store.so)
+
+FILE_READ_FAIL 2875
+PENDING_HITS 0
+DROPPED_HITS 38
+enable_ssd_prefetch false  (configs/mooncake_a.json)
+
+E0920 20:03:30.311446 real_client.cpp:6830] SSD read failed for key 'DeepSeek-V4-Flash@tp_rank:0@...'
+E0920 20:03:30.311486 file_storage.cpp:1111] Batch load object failed,err_code = FILE_READ_FAIL
+E0920 20:03:30.311487 file_storage.cpp:251] Batch load object failed,err_code = FILE_READ_FAIL
+E0920 20:03:30.311493 real_client.cpp:7320] Batch get offload object failed,err_code = FILE_READ_FAIL
+
+## 20:29 ARM=a r2 hung 47/48 (field store.so, GET returning)
+
+FILE_READ_FAIL 921
+dropped keys 16
+still pending 0
+
+E0920 20:29:35.454640 file_storage.cpp:251] Batch load object failed,err_code = FILE_READ_FAIL
+E0920 20:29:35.454648 real_client.cpp:7320] Batch get offload object failed,err_code = FILE_READ_FAIL
+WARNING 09-20 20:29:35 [worker.py:1107] Failed to get 36 Mooncake keys from sub-batch (batch_keys=86, ...); dropped keys
+
+## passing attempt2 truncated vllm.log (ARM=a)
+
+FILE_READ_FAIL 616
+PENDING_HITS 0
+DROPPED_HITS 8
+UNPACK_HITS 0

@@ -73,3 +73,16 @@ cooldown 行：vllm 2150 / master 0。DRAM saturated：vllm 177 / master 0。reg
 Promotion 最后一帧：completed=503 failed=860 bytes=1.40 GB，DRAM 97.5%，Keys 3840。
 
 VERIFY：2026-09-18T07:32:32Z → 08:22:51Z。
+
+## H20 官方 A/B：store 批等待（2026-09-20）
+
+141 这轮没改 C++。H20 按同一套 fill→overflow→measure c=4 跑时，SSD GET
+会 `FILE_READ_FAIL`（有 `Read size mismatch`），同批兄弟一直 PENDING，
+主干 wait-all 空转到 60s，`GLOG_v=1` 把 pending 日志打到约 111G。
+**A 臂 prefetch OFF 一样。** 不是即将合入的 prefetch 功能。
+
+main 上这段还在。现场只热修过 box 上的 `store.so`，没写进 PR commit。
+只编译不会碰到；复现要 overflow 后并发 GET 且读失败。
+
+写给 maintainer 的现象 / 修法 / 摘录：
+`../h20-round1/STORE_BATCH_HANG.md`。本目录一页：`STORE_BATCH_HANG.md`。

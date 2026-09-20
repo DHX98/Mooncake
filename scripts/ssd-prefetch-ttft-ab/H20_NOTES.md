@@ -30,6 +30,16 @@
    A2 一致，TTFT 收益的构成（排队窗口藏 SSD 读）不变，数字量级可能
    不同，以实测为准。
 
+## overflow 后 measure 卡住（2026-09-20）
+
+官方 H20 A/B 在 fill/overflow 48/48 之后，measure 会停在 45/48、47/48。
+SSD GET 报 `FILE_READ_FAIL`（`Read size mismatch`），同批其它 transfer
+一直 PENDING。主干 `transfer_task` 等全部终态，空转到 60s。
+`run_verify.sh` 的 `GLOG_v=1` 会把 `still pending` 打到上百 G。
+
+prefetch OFF 的 A 臂同样发生。只编译 PR 不会走到。
+全文：`evidence/h20-round1/STORE_BATCH_HANG.md`。
+
 ## 提交证据前
 
 照 `FINAL_ROUND.md` 铁律：先 `bash scrub.sh <文件>` 再 `git add`。

@@ -7,8 +7,8 @@
 - 机：<bench-host>，容器 `<bench-container>`（不新建、不 pull）
 - 分支：`ssd-prefetch/v3-verify` @ `8cdcc10f`
 - overlay：`libmooncake_store.so` md5 `363b669c`
-- 工作目录：`/home/tester/perf_test_prefetch_v3_verify`
-  （bind 进容器为 `/home/tester/prefetch_916/perf_test_prefetch_v3_verify`）
+- 工作目录：`/home/<user>/perf_test_prefetch_v3_verify`
+  （bind 进容器为 `/home/<user>/prefetch_916/perf_test_prefetch_v3_verify`）
 - 只清空本实验 `$ROOT/ssd`，不动 `ssd_dsv4` / `ssd_8b` / 2646
 - 端口：HTTP 8271，RPC 50111，metrics 9021
 - 旋钮：prefix 16385，max_model_len 20480，segment 256MB，
@@ -21,7 +21,7 @@
 
 ```bash
 docker exec <bench-container> bash --noprofile --norc \
-  /home/tester/prefetch_916/perf_test_prefetch_v3_verify/scripts/run_verify.sh
+  /home/<user>/prefetch_916/perf_test_prefetch_v3_verify/scripts/run_verify.sh
 ```
 
 `run_verify.sh` 只做四件事：钉 ROOT/CONC/MAX_NUM_SEQS/GLOG_v，然后调 `run_ab.sh`。
@@ -56,7 +56,7 @@ docker exec <bench-container> bash --noprofile --norc \
 | `promotion_last.txt` | master 最后几帧 Promotion |
 | `fail1.host.log` | 第一轮 A-fill 0/48 / EngineDead 的 host 日志 |
 
-原日志仍在 141：`/home/tester/perf_test_prefetch_v3_verify/logs/{vllm,master}.log`。
+原日志仍在 141：`/home/<user>/perf_test_prefetch_v3_verify/logs/{vllm,master}.log`。
 
 ## 本轮数字（r1 c=4，48/48）
 
@@ -73,3 +73,17 @@ cooldown 行：vllm 2150 / master 0。DRAM saturated：vllm 177 / master 0。reg
 Promotion 最后一帧：completed=503 failed=860 bytes=1.40 GB，DRAM 97.5%，Keys 3840。
 
 VERIFY：2026-09-18T07:32:32Z → 08:22:51Z。
+
+## H20 官方 A/B：store 批等待（2026-09-20）
+
+141 这轮没改 C++。H20 按同一套 fill→overflow→measure c=4 跑时，SSD GET
+会 `FILE_READ_FAIL`（有 `Read size mismatch`），同批兄弟一直 PENDING，
+主干 wait-all 空转到 60s，`GLOG_v=1` 把 pending 日志打到约 111G。
+**A 臂 prefetch OFF 一样。** 不是即将合入的 prefetch 功能。
+
+main 上这段还在。现场只热修过 box 上的 `store.so`，没写进 PR commit。
+只编译不会碰到；复现要 overflow 后并发 GET 且读失败。
+
+写给 maintainer 的现象 / 修法 / 摘录：
+`evidence/h20-round1/STORE_BATCH_HANG.md`。
+架构师入口也有一页：`evidence/v3-verify/STORE_BATCH_HANG.md`。

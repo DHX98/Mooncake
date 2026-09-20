@@ -1,0 +1,21 @@
+# H20 store batch hang timeline 2026-09-20 CST
+# host <host-ip> container <bench-container>
+# code ssd-prefetch/pr3-exist-get-wiring @ eabc511f
+# engine.so md5 275b0687e217c9013f527e3e5faf980a never rebuilt
+
+# excluded: first official run_ab r1 0/48 = vLLM 0.23 hybrid get_block_ids unpack
+
+leftover ~17:56  ARM=b  store=stock     B leftover r1 48/48
+18:14            ARM=b  store=stock     B fill 48/48
+18:16            ARM=b  store=stock     B overflow 48/48
+18:17-18:41      ARM=b  store=stock     full refill measure r1/r2 bench timeout 720s (tail hung)
+19:07            ARM=b  store=stock     FILE_READ_FAIL=1006 still_pending=31222 vllm.log_bytes=118969908733 disk=100pct_33G_free ssd_files=10691
+19:22            —      store=field     rebuilt store.so only (fail-fast / 3s / 5ms sleep / Fileread 3s)
+19:29            ARM=b  store=field     FILE_READ_FAIL=1110 Failed_to_get=16 Read_size_mismatch present; r2 47/48
+after            ARM=b  store=field     B r1/r2 48/48 after batch_remove failed keys + same-SSD restart (.bpass)
+20:03-20:16      ARM=a  store=field     prefetch=false FILE_READ_FAIL=2875 DROPPED=38 PENDING=0 r1/r2 timeout
+20:29            ARM=a  store=field     FILE_READ_FAIL=921 dropped=16 A r2 47/48
+attempt2         ARM=a  store=field     A r1/r2 48/48; truncated vllm.log FILE_READ_FAIL=616 PENDING=0 DROPPED=8
+
+# passing CARD.md numbers are attempt2 / .bpass on the field store.so
+# FILE_READ_FAIL remains after the hang is gone

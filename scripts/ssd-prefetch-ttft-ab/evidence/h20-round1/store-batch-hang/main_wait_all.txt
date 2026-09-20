@@ -1,0 +1,24 @@
+# kvcache-ai/Mooncake main and this PR tree (2026-09-20)
+# mooncake-store/src/transfer_task.cpp  TransferEngineOperationState::check_task_status
+
+// Wait for ALL tasks to reach a terminal state before setting the result,
+// even if some have already failed. This prevents the caller from seeing
+// "completed" while background transfers are still in progress, which
+// could cause issues when freeBatchID is called in the destructor.
+
+if (!all_terminated) {
+    // Some tasks are still in progress; wait for next poll iteration.
+    // Do NOT set result yet, even if some tasks have already failed.
+    return;
+}
+
+# wait_for_completion
+constexpr int64_t timeout_milliseconds = 60 * 1000;
+# poll loop: no sleep; VLOG(1) "Transfer engine operation still pending for batch"
+
+# include/transfer_task.h  FilereadOperationState::wait_for_completion
+cv_.wait(lock, [this] { return result_.has_value(); });
+# infinite; no timeout
+
+# PR 2478 (poll backoff / sleep) closed, not merged (latency).
+# USE_EVENT_DRIVEN_COMPLETION defaults OFF.
