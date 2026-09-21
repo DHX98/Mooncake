@@ -38,3 +38,5 @@ Absolute milliseconds are in `INTERNAL.md` only.
 - get-side kick: 592 (vllm; in_cooldown=0: 390, in_cooldown=1: 202)
 
 Full master/vllm logs stay on the bench host (too large to push).
+
+p99-negative analysis for the architect: `../a2-p99-analysis/`.

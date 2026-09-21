@@ -1,0 +1,23 @@
+# Arm-B logs only (serve.sh truncates at arm start). Scrubbed.
+
+file_read_fail=0
+pending=0
+prefetch_task_registered_total=1386
+prefetch_task_registered_r1_17:47-17:48=0
+prefetch_task_registered_first_ts=17:49:24
+dram_saturated_total=165
+dram_saturated_r1=0
+dram_saturated_r2=165
+get_side_kick_total=592
+get_side_kick_r1=344
+get_side_kick_r1_in_cooldown_0=344
+get_side_kick_r1_in_cooldown_1=0
+get_side_kick_r1_disk_keys=40
+get_side_kick_r2=248
+in_cooldown_1_total=202
+promotion_r1_completed=0
+promotion_r1_failed=0
+promotion_end_completed=531
+promotion_end_failed=855
+mem_after_overflow_settle=1.20/2.00GB_59.9pct_keys=3666
+mem_end=1.95/2.00GB_97.6pct_keys=3840
