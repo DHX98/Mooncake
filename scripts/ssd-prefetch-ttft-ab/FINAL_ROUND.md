@@ -38,7 +38,10 @@ bash scripts/ci/run_ssd_offload_smoke.sh
 
 ## 任务 3：A/B 复跑（PR 分支的库 + v3-verify 的脚本）
 
-**前提闸门（2026-09-21 新增，必做）**：overflow+settle 之后、measure 之前，
+**前提闸门（2026-09-21 新增，必做）**：用 `ssd_gate.py`（harness 内置，
+查询专用客户端 segment=0/buffer=0，别用 4MB——会被
+validate_single_segment_size 拒绝；setup 失败必须 FAIL-fast，
+不允许把 except 路径的 MISSING 当探针结果）。：overflow+settle 之后、measure 之前，
 对 fill keys 抽查 `batch_get_replica_desc`——必须能采到 LOCAL_DISK-only
 （无 MEMORY）的 key。上一轮 p99 为负的根因就是 A 臂工作集没落到 SSD
 （master lease 60s 把 key 钉在 DRAM，现在已改 2s）。抽查不通过：
