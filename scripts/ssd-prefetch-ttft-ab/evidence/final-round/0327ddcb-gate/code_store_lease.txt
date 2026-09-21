@@ -1,0 +1,8 @@
+CODE_HEAD=0327ddcb1f59af995a9ac00242d7e41bf30b21fd
+PR3_DIRTY=0
+STORE_MD5=d270ecea149d2c1dfcf34e062544b660
+MASTER_MD5=3fbef11a55bd49da52ab5af0db1918b0
+STORE_SO_MD5=818e9adf581fdc44be07b3f09f7dd5df
+MD5_SOURCE=docker exec container site-packages (host path md5 missed; same hashes as run_ab.host.log STORE/MASTER)
+===== SERVE LEASE =====
+42:    --default_kv_lease_ttl=${KV_LEASE_TTL_MS:-2000} \

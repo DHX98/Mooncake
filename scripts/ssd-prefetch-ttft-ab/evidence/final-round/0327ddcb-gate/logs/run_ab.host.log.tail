@@ -1,0 +1,348 @@
+===== HOST LOG HEAD =====
+===== FINAL A/B START 2026-09-21T04:19:39Z =====
+CODE_HEAD=0327ddcb1f59af995a9ac00242d7e41bf30b21fd
+STORE=d270ecea149d2c1dfcf34e062544b660
+MASTER=3fbef11a55bd49da52ab5af0db1918b0
+LEASE_TTL_MS=2000
+42:    --default_kv_lease_ttl=${KV_LEASE_TTL_MS:-2000} \
+CONC=4 MEASURE_CONCURRENCY=4 MAX_NUM_SEQS=4 GLOG_v=1
+SOCKET_IFNAME=enp189s0f0 HCCL_SOCKET_IFNAME=enp189s0f0 FABRIC_IP=<host-ip>
+serve starting
+stopped :8271 :50111
+emptied /home/<user>/prefetch_916/920_pre_pr/perf/ssd
+wrote /home/<user>/prefetch_916/920_pre_pr/perf/data/prompts.jsonl n=48 seed=42
+wrote /home/<user>/prefetch_916/920_pre_pr/perf/data/overflow.jsonl n=48 seed=1042
+stopped :8271 :50111
+
+########## ARM a  prefetch=OFF ##########
+json /home/<user>/prefetch_916/920_pre_pr/ttft-ab/mooncake_a.json prefetch False seg 256MB wait 2000
+master pid=876 rpc=:50111
+vllm pid=911 http=:8271 arm=a platform=ascend
+ready :8271 dsv4-flash
+----- fill (write prefixes into the store) -----
+===== vllm bench serve  a_fill.json  c=1  n=48 =====
+tee /home/<user>/prefetch_916/920_pre_pr/ttft-ab/results/a_fill.bench.log
+INFO 09-21 04:27:36 [__init__.py:44] Available plugins for group vllm.platform_plugins:
+INFO 09-21 04:27:36 [__init__.py:46] - ascend -> vllm_ascend:register
+INFO 09-21 04:27:36 [__init__.py:49] All plugins in this group will be loaded. Set `VLLM_PLUGINS` to control which plugins to load.
+INFO 09-21 04:27:36 [__init__.py:238] Platform plugin ascend is activated
+INFO 09-21 04:27:36 [platform.py:62] Breakable cudagraph is force disabled on Ascend because DeepSeek V4 PIECEWISE cudagraph is not supported yet.
+2026-09-21 04:27:47,362 - 8698 - ServiceProfiler - INFO - VLLM_USE_V1 not set, auto-detected via vLLM 0.23.0+empty: default 1
+INFO 09-21 04:27:48 [__init__.py:115] Registered model loader `<class 'vllm_ascend.model_loader.netloader.netloader.ModelNetLoaderElastic'>` with load format `netloader`
+INFO 09-21 04:27:48 [__init__.py:115] Registered model loader `<class 'vllm_ascend.model_loader.rfork.rfork_loader.RForkModelLoader'>` with load format `rfork`
+Namespace(subparser='bench', bench_type='serve', dispatch_function=<function BenchmarkServingSubcommand.cmd at 0xffff106a2f20>, trust_remote_code=True, seed=42, num_prompts=48, dataset_name='custom', no_stream=False, dataset_path='/home/<user>/prefetch_916/920_pre_pr/perf/data/prompts.jsonl', no_oversample=False, skip_chat_template=True, enable_multimodal_chat=False, disable_shuffle=False, custom_output_len=8, custom_ensure_client_side_data=False, spec_bench_output_len=256, spec_bench_category=None, sonnet_input_len=550, sonnet_output_len=150, sonnet_prefix_len=200, sharegpt_output_len=None, timed_trace_chunk_hash_size=16, timed_trace_sec_multiplier=1, timed_trace_label_timestamp='timestamp', timed_trace_label_input_length='input_length', timed_trace_label_output_length='output_length', timed_trace_label_hash_ids='hash_ids', blazedit_min_distance=0.0, blazedit_max_distance=1.0, asr_max_audio_len_sec=inf, asr_min_audio_len_sec=0.0, random_input_len=1024, random_output_len=128, random_range_ratio='0.0', random_prefix_len=0, random_batch_size=1, no_reranker=False, random_mm_base_items_per_request=1, random_mm_num_mm_items_range_ratio=0.0, random_mm_limit_mm_per_prompt={'image': 255, 'video': 1}, random_mm_bucket_config={(256, 256, 1): 0.5, (720, 1280, 1): 0.5, (720, 1280, 16): 0.0}, hf_subset=None, hf_split=None, hf_name=None, hf_output_len=None, prefix_repetition_prefix_len=256, prefix_repetition_suffix_len=256, prefix_repetition_num_prefixes=10, prefix_repetition_output_len=128, speed_bench_dataset_subset='qualitative', speed_bench_output_len=4096, speed_bench_category=None, label=None, backend='openai', base_url='http://127.0.0.1:8271', host='127.0.0.1', port=8000, endpoint='/v1/completions', header=None, max_concurrency=1, model='dsv4-flash', input_len=None, output_len=None, tokenizer='/data/DeepSeek-V4-Flash-w8a8-mtp', tokenizer_mode='auto', use_beam_search=False, logprobs=None, request_rate=inf, burstiness=1.0, disable_tqdm=False, num_warmups=0, profile=False, save_result=True, save_detailed=False, append_result=False, metadata=None, result_dir='/home/<user>/prefetch_916/920_pre_pr/ttft-ab/results', result_filename='a_fill.json', ignore_eos=False, self_timed=None, percentile_metrics='ttft', metric_percentiles='50,90,99', goodput=None, request_id_prefix='bench-26196d5c-', top_p=None, top_k=None, min_p=None, temperature=None, frequency_penalty=None, presence_penalty=None, repetition_penalty=None, served_model_name=None, lora_modules=None, lora_assignment='random', ramp_up_strategy=None, ramp_up_start_rps=None, ramp_up_end_rps=None, ready_check_timeout_sec=0, chat_template_kwargs=None, extra_body=None, skip_tokenizer_init=False, insecure=False, plot_timeline=False, timeline_itl_thresholds='25,50', plot_dataset_stats=False)
+`rope_parameters`'s factor field must be a float >= 1, got 16
+`rope_parameters`'s beta_fast field must be a float, got 32
+`rope_parameters`'s beta_slow field must be a float, got 1
+`rope_parameters`'s factor field must be a float >= 1, got 16
+`rope_parameters`'s beta_fast field must be a float, got 32
+`rope_parameters`'s beta_slow field must be a float, got 1
+`rope_parameters`'s factor field must be a float >= 1, got 16
+`rope_parameters`'s beta_fast field must be a float, got 32
+`rope_parameters`'s beta_slow field must be a float, got 1
+`rope_parameters`'s factor field must be a float >= 1, got 16
+`rope_parameters`'s beta_fast field must be a float, got 32
+`rope_parameters`'s beta_slow field must be a float, got 1
+WARNING: vllm bench serve no longer sets temperature==0 (greedy) in requests by default. The default will be determined on the server side and can be model/API specific. For the old behavior, include --temperature=0.
+Starting initial single prompt test run...
+Skipping endpoint ready check.
+Starting main benchmark run...
+Traffic request rate: inf
+Burstiness factor: 1.0 (Poisson process)
+===== SSD_GATE / SETUP =====
+55:Successful requests:                     48        
+83:SSD_GATE snapshot fill keys via http://127.0.0.1:9021/get_all_keys
+84:SSD_GATE validate n=1920 file=/home/<user>/prefetch_916/920_pre_pr/ttft-ab/results/a_fill_keys.txt
+85:SSD_GATE listed METRICS_PORT=9021 n=1920 /home/<user>/prefetch_916/920_pre_pr/ttft-ab/results/a_fill_keys.txt
+120:Successful requests:                     48        
+147:----- settle 90s (leases / offload) -----
+148:----- SSD_GATE probe attempt=1 (fill keys, one sample, no poll) -----
+149:SSD_GATE store setup segment=4194304 protocol=tcp master=127.0.0.1:50111
+168:I0921 04:38:46.498009 19683 ascend_direct_transport.cpp:118] install AscendDirectTransport for: 127.0.0.1:16872
+177:E0921 04:38:46.509279 19683 ascend_direct_transport.cpp:127] AscendDirectTransport: cannot allocate local segment, ret: -1
+178:I0921 04:38:46.509291 19683 ascend_direct_transport.cpp:104] AscendDirectTransport destructor called
+200:I0921 04:38:47.611837 19683 ascend_direct_transport.cpp:118] install AscendDirectTransport for: 127.0.0.1:16030
+215:E0921 04:38:47.612322 19683 ascend_direct_transport.cpp:127] AscendDirectTransport: cannot allocate local segment, ret: -1
+216:I0921 04:38:47.612327 19683 ascend_direct_transport.cpp:104] AscendDirectTransport destructor called
+238:I0921 04:38:48.735670 19683 ascend_direct_transport.cpp:118] install AscendDirectTransport for: 127.0.0.1:16616
+259:E0921 04:38:48.736136 19683 ascend_direct_transport.cpp:127] AscendDirectTransport: cannot allocate local segment, ret: -1
+260:I0921 04:38:48.736142 19683 ascend_direct_transport.cpp:104] AscendDirectTransport destructor called
+282:I0921 04:38:49.851683 19683 ascend_direct_transport.cpp:118] install AscendDirectTransport for: 127.0.0.1:16530
+309:E0921 04:38:49.852149 19683 ascend_direct_transport.cpp:127] AscendDirectTransport: cannot allocate local segment, ret: -1
+310:I0921 04:38:49.852154 19683 ascend_direct_transport.cpp:104] AscendDirectTransport destructor called
+332:I0921 04:38:50.971724 19683 ascend_direct_transport.cpp:118] install AscendDirectTransport for: 127.0.0.1:16860
+365:E0921 04:38:50.972204 19683 ascend_direct_transport.cpp:127] AscendDirectTransport: cannot allocate local segment, ret: -1
+366:I0921 04:38:50.972210 19683 ascend_direct_transport.cpp:104] AscendDirectTransport destructor called
+388:I0921 04:38:52.096485 19683 ascend_direct_transport.cpp:118] install AscendDirectTransport for: 127.0.0.1:15610
+427:E0921 04:38:52.096971 19683 ascend_direct_transport.cpp:127] AscendDirectTransport: cannot allocate local segment, ret: -1
+428:I0921 04:38:52.096975 19683 ascend_direct_transport.cpp:104] AscendDirectTransport destructor called
+450:I0921 04:38:53.211891 19683 ascend_direct_transport.cpp:118] install AscendDirectTransport for: 127.0.0.1:16745
+495:E0921 04:38:53.212378 19683 ascend_direct_transport.cpp:127] AscendDirectTransport: cannot allocate local segment, ret: -1
+496:I0921 04:38:53.212383 19683 ascend_direct_transport.cpp:104] AscendDirectTransport destructor called
+518:I0921 04:38:54.331983 19683 ascend_direct_transport.cpp:118] install AscendDirectTransport for: 127.0.0.1:16953
+569:E0921 04:38:54.332460 19683 ascend_direct_transport.cpp:127] AscendDirectTransport: cannot allocate local segment, ret: -1
+570:I0921 04:38:54.332465 19683 ascend_direct_transport.cpp:104] AscendDirectTransport destructor called
+592:I0921 04:38:55.452054 19683 ascend_direct_transport.cpp:118] install AscendDirectTransport for: 127.0.0.1:15131
+649:E0921 04:38:55.452548 19683 ascend_direct_transport.cpp:127] AscendDirectTransport: cannot allocate local segment, ret: -1
+650:I0921 04:38:55.452564 19683 ascend_direct_transport.cpp:104] AscendDirectTransport destructor called
+672:I0921 04:38:56.572043 19683 ascend_direct_transport.cpp:118] install AscendDirectTransport for: 127.0.0.1:16644
+735:E0921 04:38:56.572530 19683 ascend_direct_transport.cpp:127] AscendDirectTransport: cannot allocate local segment, ret: -1
+736:I0921 04:38:56.572537 19683 ascend_direct_transport.cpp:104] AscendDirectTransport destructor called
+758:I0921 04:38:57.691803 19683 ascend_direct_transport.cpp:118] install AscendDirectTransport for: 127.0.0.1:16035
+827:E0921 04:38:57.692296 19683 ascend_direct_transport.cpp:127] AscendDirectTransport: cannot allocate local segment, ret: -1
+828:I0921 04:38:57.692302 19683 ascend_direct_transport.cpp:104] AscendDirectTransport destructor called
+850:I0921 04:38:58.815735 19683 ascend_direct_transport.cpp:118] install AscendDirectTransport for: 127.0.0.1:15098
+925:E0921 04:38:58.816239 19683 ascend_direct_transport.cpp:127] AscendDirectTransport: cannot allocate local segment, ret: -1
+926:I0921 04:38:58.816247 19683 ascend_direct_transport.cpp:104] AscendDirectTransport destructor called
+948:I0921 04:38:59.932140 19683 ascend_direct_transport.cpp:118] install AscendDirectTransport for: 127.0.0.1:16596
+1029:E0921 04:38:59.932627 19683 ascend_direct_transport.cpp:127] AscendDirectTransport: cannot allocate local segment, ret: -1
+1030:I0921 04:38:59.932636 19683 ascend_direct_transport.cpp:104] AscendDirectTransport destructor called
+1052:I0921 04:39:01.051987 19683 ascend_direct_transport.cpp:118] install AscendDirectTransport for: 127.0.0.1:15620
+1139:E0921 04:39:01.052459 19683 ascend_direct_transport.cpp:127] AscendDirectTransport: cannot allocate local segment, ret: -1
+1140:I0921 04:39:01.052466 19683 ascend_direct_transport.cpp:104] AscendDirectTransport destructor called
+1162:I0921 04:39:02.171873 19683 ascend_direct_transport.cpp:118] install AscendDirectTransport for: 127.0.0.1:16854
+1255:E0921 04:39:02.172348 19683 ascend_direct_transport.cpp:127] AscendDirectTransport: cannot allocate local segment, ret: -1
+1256:I0921 04:39:02.172354 19683 ascend_direct_transport.cpp:104] AscendDirectTransport destructor called
+1278:I0921 04:39:03.292286 19683 ascend_direct_transport.cpp:118] install AscendDirectTransport for: 127.0.0.1:15286
+1377:E0921 04:39:03.292770 19683 ascend_direct_transport.cpp:127] AscendDirectTransport: cannot allocate local segment, ret: -1
+1378:I0921 04:39:03.292778 19683 ascend_direct_transport.cpp:104] AscendDirectTransport destructor called
+1400:I0921 04:39:04.411866 19683 ascend_direct_transport.cpp:118] install AscendDirectTransport for: 127.0.0.1:16398
+1505:E0921 04:39:04.412523 19683 ascend_direct_transport.cpp:127] AscendDirectTransport: cannot allocate local segment, ret: -1
+1506:I0921 04:39:04.412539 19683 ascend_direct_transport.cpp:104] AscendDirectTransport destructor called
+1528:I0921 04:39:05.531699 19683 ascend_direct_transport.cpp:118] install AscendDirectTransport for: 127.0.0.1:16016
+1639:E0921 04:39:05.532198 19683 ascend_direct_transport.cpp:127] AscendDirectTransport: cannot allocate local segment, ret: -1
+1640:I0921 04:39:05.532207 19683 ascend_direct_transport.cpp:104] AscendDirectTransport destructor called
+1662:I0921 04:39:06.655953 19683 ascend_direct_transport.cpp:118] install AscendDirectTransport for: 127.0.0.1:15893
+1779:E0921 04:39:06.656436 19683 ascend_direct_transport.cpp:127] AscendDirectTransport: cannot allocate local segment, ret: -1
+1780:I0921 04:39:06.656445 19683 ascend_direct_transport.cpp:104] AscendDirectTransport destructor called
+1802:I0921 04:39:07.771890 19683 ascend_direct_transport.cpp:118] install AscendDirectTransport for: 127.0.0.1:15323
+1925:E0921 04:39:07.772372 19683 ascend_direct_transport.cpp:127] AscendDirectTransport: cannot allocate local segment, ret: -1
+1926:I0921 04:39:07.772379 19683 ascend_direct_transport.cpp:104] AscendDirectTransport destructor called
+1932:SSD_GATE probe err RuntimeError store.setup ret=-1
+1933:----- SSD_GATE -----
+1937:LOCAL_DISK=0
+1938:LOCAL_DISK-only=0
+1940:GATE_PASS=0
+1943:SSD_GATE attempt 1 FAIL — OVERFLOW_PREFIXES=96 retry once
+1979:Successful requests:                     96        
+2006:----- settle 90s (retry) -----
+2007:----- SSD_GATE probe attempt=2 -----
+2008:SSD_GATE store setup segment=4194304 protocol=tcp master=127.0.0.1:50111
+2027:I0921 04:48:02.304064 22606 ascend_direct_transport.cpp:118] install AscendDirectTransport for: 127.0.0.1:15909
+2036:E0921 04:48:02.315317 22606 ascend_direct_transport.cpp:127] AscendDirectTransport: cannot allocate local segment, ret: -1
+2037:I0921 04:48:02.315326 22606 ascend_direct_transport.cpp:104] AscendDirectTransport destructor called
+2059:I0921 04:48:03.436218 22606 ascend_direct_transport.cpp:118] install AscendDirectTransport for: 127.0.0.1:16410
+2074:E0921 04:48:03.436694 22606 ascend_direct_transport.cpp:127] AscendDirectTransport: cannot allocate local segment, ret: -1
+2075:I0921 04:48:03.436699 22606 ascend_direct_transport.cpp:104] AscendDirectTransport destructor called
+2097:I0921 04:48:04.575979 22606 ascend_direct_transport.cpp:118] install AscendDirectTransport for: 127.0.0.1:16786
+2118:E0921 04:48:04.576476 22606 ascend_direct_transport.cpp:127] AscendDirectTransport: cannot allocate local segment, ret: -1
+2119:I0921 04:48:04.576481 22606 ascend_direct_transport.cpp:104] AscendDirectTransport destructor called
+2141:I0921 04:48:05.691982 22606 ascend_direct_transport.cpp:118] install AscendDirectTransport for: 127.0.0.1:16146
+2168:E0921 04:48:05.692438 22606 ascend_direct_transport.cpp:127] AscendDirectTransport: cannot allocate local segment, ret: -1
+2169:I0921 04:48:05.692443 22606 ascend_direct_transport.cpp:104] AscendDirectTransport destructor called
+2191:I0921 04:48:06.812080 22606 ascend_direct_transport.cpp:118] install AscendDirectTransport for: 127.0.0.1:16009
+2224:E0921 04:48:06.812554 22606 ascend_direct_transport.cpp:127] AscendDirectTransport: cannot allocate local segment, ret: -1
+2225:I0921 04:48:06.812561 22606 ascend_direct_transport.cpp:104] AscendDirectTransport destructor called
+2247:I0921 04:48:07.931986 22606 ascend_direct_transport.cpp:118] install AscendDirectTransport for: 127.0.0.1:15134
+2286:E0921 04:48:07.932474 22606 ascend_direct_transport.cpp:127] AscendDirectTransport: cannot allocate local segment, ret: -1
+2287:I0921 04:48:07.932480 22606 ascend_direct_transport.cpp:104] AscendDirectTransport destructor called
+2309:I0921 04:48:09.052366 22606 ascend_direct_transport.cpp:118] install AscendDirectTransport for: 127.0.0.1:16023
+2354:E0921 04:48:09.052853 22606 ascend_direct_transport.cpp:127] AscendDirectTransport: cannot allocate local segment, ret: -1
+2355:I0921 04:48:09.052858 22606 ascend_direct_transport.cpp:104] AscendDirectTransport destructor called
+2377:I0921 04:48:10.172317 22606 ascend_direct_transport.cpp:118] install AscendDirectTransport for: 127.0.0.1:16178
+2428:E0921 04:48:10.172845 22606 ascend_direct_transport.cpp:127] AscendDirectTransport: cannot allocate local segment, ret: -1
+2429:I0921 04:48:10.172853 22606 ascend_direct_transport.cpp:104] AscendDirectTransport destructor called
+2451:I0921 04:48:11.296653 22606 ascend_direct_transport.cpp:118] install AscendDirectTransport for: 127.0.0.1:15200
+2508:E0921 04:48:11.297184 22606 ascend_direct_transport.cpp:127] AscendDirectTransport: cannot allocate local segment, ret: -1
+2509:I0921 04:48:11.297204 22606 ascend_direct_transport.cpp:104] AscendDirectTransport destructor called
+2531:I0921 04:48:12.413153 22606 ascend_direct_transport.cpp:118] install AscendDirectTransport for: 127.0.0.1:16183
+2594:E0921 04:48:12.413698 22606 ascend_direct_transport.cpp:127] AscendDirectTransport: cannot allocate local segment, ret: -1
+2595:I0921 04:48:12.413707 22606 ascend_direct_transport.cpp:104] AscendDirectTransport destructor called
+2617:I0921 04:48:13.536834 22606 ascend_direct_transport.cpp:118] install AscendDirectTransport for: 127.0.0.1:15374
+2686:E0921 04:48:13.537367 22606 ascend_direct_transport.cpp:127] AscendDirectTransport: cannot allocate local segment, ret: -1
+2687:I0921 04:48:13.537379 22606 ascend_direct_transport.cpp:104] AscendDirectTransport destructor called
+2709:I0921 04:48:14.653043 22606 ascend_direct_transport.cpp:118] install AscendDirectTransport for: 127.0.0.1:16132
+2784:E0921 04:48:14.653538 22606 ascend_direct_transport.cpp:127] AscendDirectTransport: cannot allocate local segment, ret: -1
+2785:I0921 04:48:14.653546 22606 ascend_direct_transport.cpp:104] AscendDirectTransport destructor called
+2807:I0921 04:48:15.772109 22606 ascend_direct_transport.cpp:118] install AscendDirectTransport for: 127.0.0.1:16449
+2888:E0921 04:48:15.772583 22606 ascend_direct_transport.cpp:127] AscendDirectTransport: cannot allocate local segment, ret: -1
+2889:I0921 04:48:15.772591 22606 ascend_direct_transport.cpp:104] AscendDirectTransport destructor called
+2911:I0921 04:48:16.896046 22606 ascend_direct_transport.cpp:118] install AscendDirectTransport for: 127.0.0.1:16701
+2998:E0921 04:48:16.896534 22606 ascend_direct_transport.cpp:127] AscendDirectTransport: cannot allocate local segment, ret: -1
+2999:I0921 04:48:16.896543 22606 ascend_direct_transport.cpp:104] AscendDirectTransport destructor called
+3021:I0921 04:48:18.011890 22606 ascend_direct_transport.cpp:118] install AscendDirectTransport for: 127.0.0.1:16615
+3114:E0921 04:48:18.012367 22606 ascend_direct_transport.cpp:127] AscendDirectTransport: cannot allocate local segment, ret: -1
+3115:I0921 04:48:18.012375 22606 ascend_direct_transport.cpp:104] AscendDirectTransport destructor called
+3137:I0921 04:48:19.131944 22606 ascend_direct_transport.cpp:118] install AscendDirectTransport for: 127.0.0.1:16383
+3236:E0921 04:48:19.132436 22606 ascend_direct_transport.cpp:127] AscendDirectTransport: cannot allocate local segment, ret: -1
+3237:I0921 04:48:19.132444 22606 ascend_direct_transport.cpp:104] AscendDirectTransport destructor called
+3259:I0921 04:48:20.251607 22606 ascend_direct_transport.cpp:118] install AscendDirectTransport for: 127.0.0.1:16137
+3364:E0921 04:48:20.252079 22606 ascend_direct_transport.cpp:127] AscendDirectTransport: cannot allocate local segment, ret: -1
+3365:I0921 04:48:20.252096 22606 ascend_direct_transport.cpp:104] AscendDirectTransport destructor called
+3387:I0921 04:48:21.375686 22606 ascend_direct_transport.cpp:118] install AscendDirectTransport for: 127.0.0.1:15436
+3498:E0921 04:48:21.376181 22606 ascend_direct_transport.cpp:127] AscendDirectTransport: cannot allocate local segment, ret: -1
+3499:I0921 04:48:21.376191 22606 ascend_direct_transport.cpp:104] AscendDirectTransport destructor called
+3521:I0921 04:48:22.491536 22606 ascend_direct_transport.cpp:118] install AscendDirectTransport for: 127.0.0.1:16086
+3638:E0921 04:48:22.492009 22606 ascend_direct_transport.cpp:127] AscendDirectTransport: cannot allocate local segment, ret: -1
+3639:I0921 04:48:22.492019 22606 ascend_direct_transport.cpp:104] AscendDirectTransport destructor called
+3661:I0921 04:48:23.611792 22606 ascend_direct_transport.cpp:118] install AscendDirectTransport for: 127.0.0.1:16836
+3784:E0921 04:48:23.612272 22606 ascend_direct_transport.cpp:127] AscendDirectTransport: cannot allocate local segment, ret: -1
+3785:I0921 04:48:23.612282 22606 ascend_direct_transport.cpp:104] AscendDirectTransport destructor called
+3791:SSD_GATE probe err RuntimeError store.setup ret=-1
+3792:----- SSD_GATE -----
+3796:LOCAL_DISK=0
+3797:LOCAL_DISK-only=0
+3799:GATE_PASS=0
+3802:SSD_GATE attempt 2 FAIL — stop arm and whole run, no measure
+3803:SSD_GATE_FAIL dumped /home/<user>/prefetch_916/920_pre_pr/ttft-ab/results/a_ssd_gate_fail (scrub later, not now)
+===== HOST LOG TAIL =====
+I0921 04:48:23.611406 22606 client_service.cpp:1050] Quota bytes: 0
+I0921 04:48:23.611500 22606 storage_backend.cpp:118] Reconstructing storage state from disk at: "/home/<user>/prefetch_916/920_pre_pr/perf/ssd/mooncake_cluster"
+I0921 04:48:23.611572 22606 storage_backend.cpp:208] Init: Quota: 5599241714073, Used: 0, Available: 5599241714073
+I0921 04:48:23.611614 22606 transfer_engine_impl.cpp:1123] Metrics reporting is disabled (set MC_TE_METRIC=1 to enable)
+I0921 04:48:23.611630 22606 transfer_engine_impl.cpp:146] Transfer Engine parseHostNameWithPort. server_name: 127.0.0.1 port: 12504
+I0921 04:48:23.611696 22606 transfer_engine_impl.cpp:213] Transfer Engine RPC using P2P handshake, listening on 127.0.0.1:16836
+I0921 04:48:23.611792 22606 ascend_direct_transport.cpp:118] install AscendDirectTransport for: 127.0.0.1:16836
+I0921 04:48:23.611804 22606 utils.cpp:146] [AscendTE] resolving link config, te is created for store=false, HCCL_INTRA_ROCE_ENABLE=(unset)
+I0921 04:48:23.611809 22606 utils.cpp:162] [AscendTE] resolved ASCEND_GLOBAL_RESOURCE_CONFIG (protocol_desc): (none)
+I0921 04:48:23.611814 22606 ascend_direct_transport.cpp:194] [AscendTE] init local segment, te is created for store=false, roce_mode=false, use_fabric_mem=false
+E0921 04:48:23.611831 22606 ascend_direct_transport.cpp:242] Call acl failed, detail: [PID: 22606] 2026-09-21-04:48:23.611.917 Invalid_Argument(EE1001): The argument is invalid.Reason: rtGetDevMsg execution failed, the context is a null pointer.
+        Solution: 1.Check the input parameter range of the function. 2.Check the function invocation relationship.
+        TraceBack (most recent call last):
+        ctx is NULL![FUNC:GetDevErrMsg][FILE:api_impl.cc][LINE:6108]
+        The argument is invalid.Reason: rtGetDevMsg execution failed, the context is a null pointer.
+
+[PID: 22606] 2026-09-21-04:48:22.491.661 Invalid_Argument(EE1001): The argument is invalid.Reason: rtGetDevMsg execution failed, the context is a null pointer.
+        Solution: 1.Check the input parameter range of the function. 2.Check the function invocation relationship.
+        TraceBack (most recent call last):
+        ctx is NULL![FUNC:GetDevErrMsg][FILE:api_impl.cc][LINE:6108]
+        The argument is invalid.Reason: rtGetDevMsg execution failed, the context is a null pointer.
+
+[PID: 22606] 2026-09-21-04:48:21.375.809 Invalid_Argument(EE1001): The argument is invalid.Reason: rtGetDevMsg execution failed, the context is a null pointer.
+        Solution: 1.Check the input parameter range of the function. 2.Check the function invocation relationship.
+        TraceBack (most recent call last):
+        ctx is NULL![FUNC:GetDevErrMsg][FILE:api_impl.cc][LINE:6108]
+        The argument is invalid.Reason: rtGetDevMsg execution failed, the context is a null pointer.
+
+[PID: 22606] 2026-09-21-04:48:20.251.731 Invalid_Argument(EE1001): The argument is invalid.Reason: rtGetDevMsg execution failed, the context is a null pointer.
+        Solution: 1.Check the input parameter range of the function. 2.Check the function invocation relationship.
+        TraceBack (most recent call last):
+        ctx is NULL![FUNC:GetDevErrMsg][FILE:api_impl.cc][LINE:6108]
+        The argument is invalid.Reason: rtGetDevMsg execution failed, the context is a null pointer.
+
+[PID: 22606] 2026-09-21-04:48:19.132.076 Invalid_Argument(EE1001): The argument is invalid.Reason: rtGetDevMsg execution failed, the context is a null pointer.
+        Solution: 1.Check the input parameter range of the function. 2.Check the function invocation relationship.
+        TraceBack (most recent call last):
+        ctx is NULL![FUNC:GetDevErrMsg][FILE:api_impl.cc][LINE:6108]
+        The argument is invalid.Reason: rtGetDevMsg execution failed, the context is a null pointer.
+
+[PID: 22606] 2026-09-21-04:48:18.012.013 Invalid_Argument(EE1001): The argument is invalid.Reason: rtGetDevMsg execution failed, the context is a null pointer.
+        Solution: 1.Check the input parameter range of the function. 2.Check the function invocation relationship.
+        TraceBack (most recent call last):
+        ctx is NULL![FUNC:GetDevErrMsg][FILE:api_impl.cc][LINE:6108]
+        The argument is invalid.Reason: rtGetDevMsg execution failed, the context is a null pointer.
+
+[PID: 22606] 2026-09-21-04:48:16.896.172 Invalid_Argument(EE1001): The argument is invalid.Reason: rtGetDevMsg execution failed, the context is a null pointer.
+        Solution: 1.Check the input parameter range of the function. 2.Check the function invocation relationship.
+        TraceBack (most recent call last):
+        ctx is NULL![FUNC:GetDevErrMsg][FILE:api_impl.cc][LINE:6108]
+        The argument is invalid.Reason: rtGetDevMsg execution failed, the context is a null pointer.
+
+[PID: 22606] 2026-09-21-04:48:15.772.232 Invalid_Argument(EE1001): The argument is invalid.Reason: rtGetDevMsg execution failed, the context is a null pointer.
+        Solution: 1.Check the input parameter range of the function. 2.Check the function invocation relationship.
+        TraceBack (most recent call last):
+        ctx is NULL![FUNC:GetDevErrMsg][FILE:api_impl.cc][LINE:6108]
+        The argument is invalid.Reason: rtGetDevMsg execution failed, the context is a null pointer.
+
+[PID: 22606] 2026-09-21-04:48:14.653.168 Invalid_Argument(EE1001): The argument is invalid.Reason: rtGetDevMsg execution failed, the context is a null pointer.
+        Solution: 1.Check the input parameter range of the function. 2.Check the function invocation relationship.
+        TraceBack (most recent call last):
+        ctx is NULL![FUNC:GetDevErrMsg][FILE:api_impl.cc][LINE:6108]
+        The argument is invalid.Reason: rtGetDevMsg execution failed, the context is a null pointer.
+
+[PID: 22606] 2026-09-21-04:48:13.536.968 Invalid_Argument(EE1001): The argument is invalid.Reason: rtGetDevMsg execution failed, the context is a null pointer.
+        Solution: 1.Check the input parameter range of the function. 2.Check the function invocation relationship.
+        TraceBack (most recent call last):
+        ctx is NULL![FUNC:GetDevErrMsg][FILE:api_impl.cc][LINE:6108]
+        The argument is invalid.Reason: rtGetDevMsg execution failed, the context is a null pointer.
+
+[PID: 22606] 2026-09-21-04:48:12.413.303 Invalid_Argument(EE1001): The argument is invalid.Reason: rtGetDevMsg execution failed, the context is a null pointer.
+        Solution: 1.Check the input parameter range of the function. 2.Check the function invocation relationship.
+        TraceBack (most recent call last):
+        ctx is NULL![FUNC:GetDevErrMsg][FILE:api_impl.cc][LINE:6108]
+        The argument is invalid.Reason: rtGetDevMsg execution failed, the context is a null pointer.
+
+[PID: 22606] 2026-09-21-04:48:11.296.792 Invalid_Argument(EE1001): The argument is invalid.Reason: rtGetDevMsg execution failed, the context is a null pointer.
+        Solution: 1.Check the input parameter range of the function. 2.Check the function invocation relationship.
+        TraceBack (most recent call last):
+        ctx is NULL![FUNC:GetDevErrMsg][FILE:api_impl.cc][LINE:6108]
+        The argument is invalid.Reason: rtGetDevMsg execution failed, the context is a null pointer.
+
+[PID: 22606] 2026-09-21-04:48:10.172.451 Invalid_Argument(EE1001): The argument is invalid.Reason: rtGetDevMsg execution failed, the context is a null pointer.
+        Solution: 1.Check the input parameter range of the function. 2.Check the function invocation relationship.
+        TraceBack (most recent call last):
+        ctx is NULL![FUNC:GetDevErrMsg][FILE:api_impl.cc][LINE:6108]
+        The argument is invalid.Reason: rtGetDevMsg execution failed, the context is a null pointer.
+
+[PID: 22606] 2026-09-21-04:48:09.052.494 Invalid_Argument(EE1001): The argument is invalid.Reason: rtGetDevMsg execution failed, the context is a null pointer.
+        Solution: 1.Check the input parameter range of the function. 2.Check the function invocation relationship.
+        TraceBack (most recent call last):
+        ctx is NULL![FUNC:GetDevErrMsg][FILE:api_impl.cc][LINE:6108]
+        The argument is invalid.Reason: rtGetDevMsg execution failed, the context is a null pointer.
+
+[PID: 22606] 2026-09-21-04:48:07.932.108 Invalid_Argument(EE1001): The argument is invalid.Reason: rtGetDevMsg execution failed, the context is a null pointer.
+        Solution: 1.Check the input parameter range of the function. 2.Check the function invocation relationship.
+        TraceBack (most recent call last):
+        ctx is NULL![FUNC:GetDevErrMsg][FILE:api_impl.cc][LINE:6108]
+        The argument is invalid.Reason: rtGetDevMsg execution failed, the context is a null pointer.
+
+[PID: 22606] 2026-09-21-04:48:06.812.210 Invalid_Argument(EE1001): The argument is invalid.Reason: rtGetDevMsg execution failed, the context is a null pointer.
+        Solution: 1.Check the input parameter range of the function. 2.Check the function invocation relationship.
+        TraceBack (most recent call last):
+        ctx is NULL![FUNC:GetDevErrMsg][FILE:api_impl.cc][LINE:6108]
+        The argument is invalid.Reason: rtGetDevMsg execution failed, the context is a null pointer.
+
+[PID: 22606] 2026-09-21-04:48:05.692.104 Invalid_Argument(EE1001): The argument is invalid.Reason: rtGetDevMsg execution failed, the context is a null pointer.
+        Solution: 1.Check the input parameter range of the function. 2.Check the function invocation relationship.
+        TraceBack (most recent call last):
+        ctx is NULL![FUNC:GetDevErrMsg][FILE:api_impl.cc][LINE:6108]
+        The argument is invalid.Reason: rtGetDevMsg execution failed, the context is a null pointer.
+
+[PID: 22606] 2026-09-21-04:48:04.576.107 Invalid_Argument(EE1001): The argument is invalid.Reason: rtGetDevMsg execution failed, the context is a null pointer.
+        Solution: 1.Check the input parameter range of the function. 2.Check the function invocation relationship.
+        TraceBack (most recent call last):
+        ctx is NULL![FUNC:GetDevErrMsg][FILE:api_impl.cc][LINE:6108]
+        The argument is invalid.Reason: rtGetDevMsg execution failed, the context is a null pointer.
+
+[PID: 22606] 2026-09-21-04:48:03.436.340 Invalid_Argument(EE1001): The argument is invalid.Reason: rtGetDevMsg execution failed, the context is a null pointer.
+        Solution: 1.Check the input parameter range of the function. 2.Check the function invocation relationship.
+        TraceBack (most recent call last):
+        ctx is NULL![FUNC:GetDevErrMsg][FILE:api_impl.cc][LINE:6108]
+        The argument is invalid.Reason: rtGetDevMsg execution failed, the context is a null pointer.
+
+[PID: 22606] 2026-09-21-04:48:02.314.387 Invalid_Argument(EE1001): The argument is invalid.Reason: rtGetDevMsg execution failed, the context is a null pointer.
+        Solution: 1.Check the input parameter range of the function. 2.Check the function invocation relationship.
+        TraceBack (most recent call last):
+        ctx is NULL![FUNC:GetDevErrMsg][FILE:api_impl.cc][LINE:6108]
+        The argument is invalid.Reason: rtGetDevMsg execution failed, the context is a null pointer.
+E0921 04:48:23.612272 22606 ascend_direct_transport.cpp:127] AscendDirectTransport: cannot allocate local segment, ret: -1
+I0921 04:48:23.612282 22606 ascend_direct_transport.cpp:104] AscendDirectTransport destructor called
+E0921 04:48:23.612286 22606 transfer_engine_impl.cpp:280] Failed to install Ascend transport
+E0921 04:48:23.612290 22606 client_service.cpp:813] Failed to initialize transfer engine, rc=-1
+E0921 04:48:23.612293 22606 client_service.cpp:1083] Failed to initialize transfer engine
+W0921 04:48:24.627091 22606 real_client.cpp:858] Failed to create client on port 12504, retry 20/20
+E0921 04:48:24.727198 22606 real_client.cpp:866] Failed to create client after 20 retries
+SSD_GATE probe err RuntimeError store.setup ret=-1
+----- SSD_GATE -----
+n_fill_keys=1920
+n_sampled=64
+MEMORY=0
+LOCAL_DISK=0
+LOCAL_DISK-only=0
+MISSING=64
+GATE_PASS=0
+attempt=2
+reason=probe_err RuntimeError
+SSD_GATE attempt 2 FAIL — stop arm and whole run, no measure
+SSD_GATE_FAIL dumped /home/<user>/prefetch_916/920_pre_pr/ttft-ab/results/a_ssd_gate_fail (scrub later, not now)
+stopped :8271 :50111

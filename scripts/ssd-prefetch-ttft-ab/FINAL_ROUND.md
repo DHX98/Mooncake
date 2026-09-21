@@ -85,3 +85,19 @@ CONC=4 MAX_NUM_SEQS=4 bash scripts/ssd-prefetch-ttft-ab/run_ab.sh
 任务3 get-side kick: 592 (in_cooldown=0: 390, in_cooldown=1: 202)
 绝对 TTFT ms 见 evidence/final-round/INTERNAL.md
 ```
+
+## 本轮回填 (0327ddcb)
+
+Stopped at arm A LOCAL_DISK gate. No r1 measure. Evidence: `evidence/final-round/0327ddcb-gate/`.
+
+```
+任务1 编译: SKIP this round (already green; reused 104153ab binaries; C++ vs 0327ddcb = test file only)
+任务1 format/pre-commit: SKIP
+任务2 ctest/smoke: SKIP
+任务3 A r1: N/A (stopped at LOCAL_DISK gate)
+任务3 B r1: N/A
+任务3 gain: N/A (p99 N/A, not a negative-p99 fail; gate fail)
+任务3 prefetch_task_registered 数: N/A (no measure)
+任务3 DRAM saturated/backing off 次数: N/A
+任务3 gate: FAIL attempt=2 reason=store.setup ret=-1 (tcp sidecar). listed fill keys=1920. sampled=64 all recorded MISSING via except path. overflow retry 48->96. Master after retry: Mem 42.3% of 2GB, SSD 22.64GB, evicted keys=5456. Did not enter measure.
+```
