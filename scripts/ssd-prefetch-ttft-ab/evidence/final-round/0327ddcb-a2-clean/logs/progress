@@ -1,0 +1,13 @@
+2026-09-21T10:05:43Z PHASE=arm_a_start ARM=a suc=- fail=- start
+2026-09-21T10:05:45Z PHASE=arm_a_serve ARM=a suc=- fail=- serve start glog0
+2026-09-21T10:13:55Z PHASE=arm_a_fill ARM=a suc=- fail=- fill c=1
+2026-09-21T10:19:01Z PHASE=arm_a_fill ARM=a suc=48 fail=0 fill 48/0
+2026-09-21T10:19:02Z PHASE=arm_a_overflow ARM=a suc=48 fail=0 overflow c=1 n=48 no enlarge
+2026-09-21T10:24:03Z PHASE=arm_a_overflow ARM=a suc=48 fail=0 overflow 48/0
+2026-09-21T10:24:04Z PHASE=arm_a_settle ARM=a suc=48 fail=0 settle 90s
+2026-09-21T10:25:35Z PHASE=arm_a_local_disk ARM=a suc=48 fail=0 LOCAL_DISK list+probe
+2026-09-21T10:26:02Z PHASE=arm_a_local_disk_fail ARM=a suc=48 fail=0 LOCAL_DISK fail rc=10 no measure no enlarge
+2026-09-21T10:26:06Z PHASE=arm_b_start ARM=b suc=- fail=- start
+2026-09-21T10:26:07Z PHASE=arm_b_serve ARM=b suc=- fail=- serve start glog0
+2026-09-21T10:41:12Z PHASE=arm_b_wait_fail ARM=b suc=- fail=- wait_ready fail
+2026-09-21T10:41:22Z PHASE=done ARM=b suc=- fail=- partial A_RC=10 B_RC=1

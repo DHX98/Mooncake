@@ -1,0 +1,7 @@
+A_RC=10
+B_RC=1
+A_R1={'success': 48, 'fail': 0, 'med': '2226.33', 'mean': '2509.56', 'p99': '8677.44'}
+B_R1={'success': 48, 'fail': 0, 'med': '2018.02', 'mean': '2383.14', 'p99': '9343.87'}
+GAINS={'med': 9.356654224665704, 'mean': 5.037536460574765, 'p99': -7.680030054947085}
+A_GATE={'n_fill_keys': '3840', 'n_sampled': '64', 'MEMORY': '0', 'LOCAL_DISK': '0', 'LOCAL_DISK-only': '0', 'MISSING': '64', 'GATE_PASS': '0', 'attempt': '1', 'reason': 'probe_err RuntimeError'}
+B_GATE={}

@@ -101,3 +101,22 @@ Stopped at arm A LOCAL_DISK gate. No r1 measure. Evidence: `evidence/final-round
 任务3 DRAM saturated/backing off 次数: N/A
 任务3 gate: FAIL attempt=2 reason=store.setup ret=-1 (tcp sidecar). listed fill keys=1920. sampled=64 all recorded MISSING via except path. overflow retry 48->96. Master after retry: Mem 42.3% of 2GB, SSD 22.64GB, evicted keys=5456. Did not enter measure.
 ```
+
+## 本轮回填 (0327ddcb a2-clean)
+
+N/A measure. Arm A stopped at LOCAL_DISK harness gate (`GATE_SEGMENT=0` still
+`AscendDirectTransport cannot allocate local segment` / `store.setup ret=-1`).
+Arm B `wait_ready` fail after EngineCore WorkerProc init. Evidence:
+`evidence/final-round/0327ddcb-a2-clean/`.
+
+```
+任务1 编译: SKIP this round (reused binaries; no C++ edit)
+任务1 format/pre-commit: SKIP
+任务2 ctest/smoke: SKIP
+任务3 A r1: N/A (LOCAL_DISK harness fail; GATE_SEGMENT=0)
+任务3 B r1: N/A (EngineCore wait_ready fail)
+任务3 gain: N/A (no measure)
+任务3 prefetch_task_registered 数: N/A
+任务3 DRAM saturated/backing off 次数: N/A
+任务3 gate: FAIL A=HARNESS store.setup ret=-1 (segment=0 tcp sidecar; listed 3840 keys; MISSING=64 except path). A fill/overflow 48/0. Master 10:25:58Z Mem 50.5% SSD 21.28GB keys 3840 evicted 3478. B=runtime wait_ready. FILE_READ_FAIL=0. MODEL fallback /data/weights/DeepSeek-V4-Flash-0731-w8a8 (historical mtp path gone).
+```

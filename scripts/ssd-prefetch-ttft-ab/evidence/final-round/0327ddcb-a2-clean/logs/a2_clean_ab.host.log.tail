@@ -1,0 +1,240 @@
+===== HOST LOG EXCERPTS (gate + B fail; 20 AscendDirect retries omitted) =====
+----- lines 1-38 -----
+===== CLEAN_AB_START 2026-09-21T10:05:38Z =====
+===== PREFLIGHT =====
+PR3_HEAD=0327ddcb1f59af995a9ac00242d7e41bf30b21fd
+PR3_DIRTY=0
+STORE_MD5 d270ecea149d2c1dfcf34e062544b660
+MODEL_OK /data/weights/DeepSeek-V4-Flash-0731-w8a8
+GATE_CONFIRM
+21:GATE_SEGMENT = 0
+22:GATE_BUFFER = 0
+208:    if GATE_SEGMENT != 0 and (GATE_SEGMENT < 1024 * 1024 or GATE_SEGMENT > 8 * 1024 * 1024):
+209:        raise RuntimeError(f"refusing segment {GATE_SEGMENT}")
+216:        "global_segment_size": str(GATE_SEGMENT),
+217:        "local_buffer_size": str(GATE_BUFFER),
+224:    log(f"SSD_GATE store setup segment={GATE_SEGMENT} protocol=tcp master={MASTER}")
+HAS_prefetch_to_memory True
+===== LEFTOVER OUR SERVE ONLY =====
+stopped :8271 :50111
+stopped serve arm=a
+
+########## CLEAN one_arm a prefetch=OFF ssd=/home/<user>/prefetch_916/920_pre_pr/perf/ssd_ab2 ##########
+2026-09-21T10:05:43Z PHASE=arm_a_start ARM=a suc=- fail=- start
+emptied /home/<user>/prefetch_916/920_pre_pr/perf/ssd_ab2 n=0
+ROTATED_VLLM /home/<user>/prefetch_916/920_pre_pr/perf/logs/vllm.log.before_a_20260921T100543Z
+ROTATED_MASTER /home/<user>/prefetch_916/920_pre_pr/perf/logs/master.log.before_a_20260921T100543Z
+DATASET_REUSE /home/<user>/prefetch_916/920_pre_pr/perf/data/prompts.jsonl
+DATASET_REUSE /home/<user>/prefetch_916/920_pre_pr/perf/data/overflow.jsonl
+2026-09-21T10:05:45Z PHASE=arm_a_serve ARM=a suc=- fail=- serve start glog0
+stopped :8271 :50111
+stopped serve arm=a
+json /home/<user>/prefetch_916/920_pre_pr/ttft-ab/mooncake_a.json prefetch False seg 256MB wait 2000
+master pid=281 rpc=:50111
+vllm pid=316 http=:8271 arm=a platform=ascend
+SERVE_START_RC=0 arm=a ssd=/home/<user>/prefetch_916/920_pre_pr/perf/ssd_ab2 glog=0
+ready :8271 dsv4-flash
+WAIT_READY_RC=0
+STORE_MD5 d270ecea149d2c1dfcf34e062544b660
+PR3_HEAD=0327ddcb1f59af995a9ac00242d7e41bf30b21fd
+PR3_DIRTY=0
+----- lines 265-302 -----
+
+ 31%|███▏      | 15/48 [01:23<03:04,  5.59s/it]BENCH_PROG a_overflow.json completed=15 t=117s
+
+ 33%|███▎      | 16/48 [01:29<02:58,  5.59s/it]BENCH_PROG a_overflow.json completed=16 t=122s
+
+ 35%|███▌      | 17/48 [01:34<02:53,  5.59s/it]BENCH_PROG a_overflow.json completed=17 t=127s
+
+ 38%|███▊      | 18/48 [01:40<02:47,  5.58s/it]BENCH_PROG a_overflow.json completed=18 t=132s
+
+ 40%|███▉      | 19/48 [01:46<02:41,  5.58s/it]BENCH_PROG a_overflow.json completed=19 t=137s
+
+ 42%|████▏     | 20/48 [01:51<02:36,  5.59s/it]BENCH_PROG a_overflow.json completed=20 t=142s
+
+ 44%|████▍     | 21/48 [01:57<02:31,  5.61s/it]BENCH_PROG a_overflow.json completed=21 t=147s
+
+ 46%|████▌     | 22/48 [02:02<02:25,  5.61s/it]BENCH_PROG a_overflow.json completed=22 t=152s
+
+ 48%|████▊     | 23/48 [02:08<02:19,  5.59s/it]BENCH_PROG a_overflow.json completed=23 t=157s
+
+ 50%|█████     | 24/48 [02:14<02:14,  5.60s/it]BENCH_PROG a_overflow.json completed=24 t=162s
+
+ 52%|█████▏    | 25/48 [02:19<02:08,  5.60s/it]BENCH_PROG a_overflow.json completed=25 t=172s
+
+ 54%|█████▍    | 26/48 [02:25<02:03,  5.59s/it]BENCH_PROG a_overflow.json completed=26 t=177s
+
+ 56%|█████▋    | 27/48 [02:30<01:57,  5.58s/it]BENCH_PROG a_overflow.json completed=27 t=182s
+
+ 58%|█████▊    | 28/48 [02:36<01:51,  5.59s/it]BENCH_PROG a_overflow.json completed=28 t=187s
+
+ 60%|██████    | 29/48 [02:42<01:46,  5.59s/it]BENCH_PROG a_overflow.json completed=29 t=193s
+
+ 62%|██████▎   | 30/48 [02:47<01:40,  5.58s/it]BENCH_PROG a_overflow.json completed=30 t=198s
+
+ 65%|██████▍   | 31/48 [02:53<01:34,  5.57s/it]BENCH_PROG a_overflow.json completed=31 t=203s
+
+ 67%|██████▋   | 32/48 [02:58<01:29,  5.57s/it]BENCH_PROG a_overflow.json completed=32 t=208s
+
+ 69%|██████▉   | 33/48 [03:04<01:23,  5.57s/it]BENCH_PROG a_overflow.json completed=33 t=213s
+----- lines 1968-2127 -----
+[PID: 23044] 2026-09-21-10:25:54.396.362 Invalid_Argument(EE1001): The argument is invalid.Reason: rtGetDevMsg execution failed, the context is a null pointer.
+        Solution: 1.Check the input parameter range of the function. 2.Check the function invocation relationship.
+        TraceBack (most recent call last):
+        ctx is NULL![FUNC:GetDevErrMsg][FILE:api_impl.cc][LINE:6108]
+        The argument is invalid.Reason: rtGetDevMsg execution failed, the context is a null pointer.
+
+[PID: 23044] 2026-09-21-10:25:53.276.264 Invalid_Argument(EE1001): The argument is invalid.Reason: rtGetDevMsg execution failed, the context is a null pointer.
+        Solution: 1.Check the input parameter range of the function. 2.Check the function invocation relationship.
+        TraceBack (most recent call last):
+        ctx is NULL![FUNC:GetDevErrMsg][FILE:api_impl.cc][LINE:6108]
+        The argument is invalid.Reason: rtGetDevMsg execution failed, the context is a null pointer.
+
+[PID: 23044] 2026-09-21-10:25:52.156.743 Invalid_Argument(EE1001): The argument is invalid.Reason: rtGetDevMsg execution failed, the context is a null pointer.
+        Solution: 1.Check the input parameter range of the function. 2.Check the function invocation relationship.
+        TraceBack (most recent call last):
+        ctx is NULL![FUNC:GetDevErrMsg][FILE:api_impl.cc][LINE:6108]
+        The argument is invalid.Reason: rtGetDevMsg execution failed, the context is a null pointer.
+
+[PID: 23044] 2026-09-21-10:25:51.036.549 Invalid_Argument(EE1001): The argument is invalid.Reason: rtGetDevMsg execution failed, the context is a null pointer.
+        Solution: 1.Check the input parameter range of the function. 2.Check the function invocation relationship.
+        TraceBack (most recent call last):
+        ctx is NULL![FUNC:GetDevErrMsg][FILE:api_impl.cc][LINE:6108]
+        The argument is invalid.Reason: rtGetDevMsg execution failed, the context is a null pointer.
+
+[PID: 23044] 2026-09-21-10:25:49.916.628 Invalid_Argument(EE1001): The argument is invalid.Reason: rtGetDevMsg execution failed, the context is a null pointer.
+        Solution: 1.Check the input parameter range of the function. 2.Check the function invocation relationship.
+        TraceBack (most recent call last):
+        ctx is NULL![FUNC:GetDevErrMsg][FILE:api_impl.cc][LINE:6108]
+        The argument is invalid.Reason: rtGetDevMsg execution failed, the context is a null pointer.
+
+[PID: 23044] 2026-09-21-10:25:48.796.358 Invalid_Argument(EE1001): The argument is invalid.Reason: rtGetDevMsg execution failed, the context is a null pointer.
+        Solution: 1.Check the input parameter range of the function. 2.Check the function invocation relationship.
+        TraceBack (most recent call last):
+        ctx is NULL![FUNC:GetDevErrMsg][FILE:api_impl.cc][LINE:6108]
+        The argument is invalid.Reason: rtGetDevMsg execution failed, the context is a null pointer.
+
+[PID: 23044] 2026-09-21-10:25:47.676.503 Invalid_Argument(EE1001): The argument is invalid.Reason: rtGetDevMsg execution failed, the context is a null pointer.
+        Solution: 1.Check the input parameter range of the function. 2.Check the function invocation relationship.
+        TraceBack (most recent call last):
+        ctx is NULL![FUNC:GetDevErrMsg][FILE:api_impl.cc][LINE:6108]
+        The argument is invalid.Reason: rtGetDevMsg execution failed, the context is a null pointer.
+
+[PID: 23044] 2026-09-21-10:25:46.560.182 Invalid_Argument(EE1001): The argument is invalid.Reason: rtGetDevMsg execution failed, the context is a null pointer.
+        Solution: 1.Check the input parameter range of the function. 2.Check the function invocation relationship.
+        TraceBack (most recent call last):
+        ctx is NULL![FUNC:GetDevErrMsg][FILE:api_impl.cc][LINE:6108]
+        The argument is invalid.Reason: rtGetDevMsg execution failed, the context is a null pointer.
+
+[PID: 23044] 2026-09-21-10:25:45.436.305 Invalid_Argument(EE1001): The argument is invalid.Reason: rtGetDevMsg execution failed, the context is a null pointer.
+        Solution: 1.Check the input parameter range of the function. 2.Check the function invocation relationship.
+        TraceBack (most recent call last):
+        ctx is NULL![FUNC:GetDevErrMsg][FILE:api_impl.cc][LINE:6108]
+        The argument is invalid.Reason: rtGetDevMsg execution failed, the context is a null pointer.
+
+[PID: 23044] 2026-09-21-10:25:44.316.446 Invalid_Argument(EE1001): The argument is invalid.Reason: rtGetDevMsg execution failed, the context is a null pointer.
+        Solution: 1.Check the input parameter range of the function. 2.Check the function invocation relationship.
+        TraceBack (most recent call last):
+        ctx is NULL![FUNC:GetDevErrMsg][FILE:api_impl.cc][LINE:6108]
+        The argument is invalid.Reason: rtGetDevMsg execution failed, the context is a null pointer.
+
+[PID: 23044] 2026-09-21-10:25:43.196.673 Invalid_Argument(EE1001): The argument is invalid.Reason: rtGetDevMsg execution failed, the context is a null pointer.
+        Solution: 1.Check the input parameter range of the function. 2.Check the function invocation relationship.
+        TraceBack (most recent call last):
+        ctx is NULL![FUNC:GetDevErrMsg][FILE:api_impl.cc][LINE:6108]
+        The argument is invalid.Reason: rtGetDevMsg execution failed, the context is a null pointer.
+
+[PID: 23044] 2026-09-21-10:25:42.080.368 Invalid_Argument(EE1001): The argument is invalid.Reason: rtGetDevMsg execution failed, the context is a null pointer.
+        Solution: 1.Check the input parameter range of the function. 2.Check the function invocation relationship.
+        TraceBack (most recent call last):
+        ctx is NULL![FUNC:GetDevErrMsg][FILE:api_impl.cc][LINE:6108]
+        The argument is invalid.Reason: rtGetDevMsg execution failed, the context is a null pointer.
+
+[PID: 23044] 2026-09-21-10:25:40.956.957 Invalid_Argument(EE1001): The argument is invalid.Reason: rtGetDevMsg execution failed, the context is a null pointer.
+        Solution: 1.Check the input parameter range of the function. 2.Check the function invocation relationship.
+        TraceBack (most recent call last):
+        ctx is NULL![FUNC:GetDevErrMsg][FILE:api_impl.cc][LINE:6108]
+        The argument is invalid.Reason: rtGetDevMsg execution failed, the context is a null pointer.
+
+[PID: 23044] 2026-09-21-10:25:39.836.204 Invalid_Argument(EE1001): The argument is invalid.Reason: rtGetDevMsg execution failed, the context is a null pointer.
+        Solution: 1.Check the input parameter range of the function. 2.Check the function invocation relationship.
+        TraceBack (most recent call last):
+        ctx is NULL![FUNC:GetDevErrMsg][FILE:api_impl.cc][LINE:6108]
+        The argument is invalid.Reason: rtGetDevMsg execution failed, the context is a null pointer.
+
+[PID: 23044] 2026-09-21-10:25:38.716.251 Invalid_Argument(EE1001): The argument is invalid.Reason: rtGetDevMsg execution failed, the context is a null pointer.
+        Solution: 1.Check the input parameter range of the function. 2.Check the function invocation relationship.
+        TraceBack (most recent call last):
+        ctx is NULL![FUNC:GetDevErrMsg][FILE:api_impl.cc][LINE:6108]
+        The argument is invalid.Reason: rtGetDevMsg execution failed, the context is a null pointer.
+
+[PID: 23044] 2026-09-21-10:25:37.596.176 Invalid_Argument(EE1001): The argument is invalid.Reason: rtGetDevMsg execution failed, the context is a null pointer.
+        Solution: 1.Check the input parameter range of the function. 2.Check the function invocation relationship.
+        TraceBack (most recent call last):
+        ctx is NULL![FUNC:GetDevErrMsg][FILE:api_impl.cc][LINE:6108]
+        The argument is invalid.Reason: rtGetDevMsg execution failed, the context is a null pointer.
+
+[PID: 23044] 2026-09-21-10:25:36.481.738 Invalid_Argument(EE1001): The argument is invalid.Reason: rtGetDevMsg execution failed, the context is a null pointer.
+        Solution: 1.Check the input parameter range of the function. 2.Check the function invocation relationship.
+        TraceBack (most recent call last):
+        ctx is NULL![FUNC:GetDevErrMsg][FILE:api_impl.cc][LINE:6108]
+        The argument is invalid.Reason: rtGetDevMsg execution failed, the context is a null pointer.
+E0921 10:25:57.761075 23044 ascend_direct_transport.cpp:127] AscendDirectTransport: cannot allocate local segment, ret: -1
+I0921 10:25:57.761081 23044 ascend_direct_transport.cpp:104] AscendDirectTransport destructor called
+E0921 10:25:57.761085 23044 transfer_engine_impl.cpp:280] Failed to install Ascend transport
+E0921 10:25:57.761089 23044 client_service.cpp:813] Failed to initialize transfer engine, rc=-1
+E0921 10:25:57.761096 23044 client_service.cpp:1083] Failed to initialize transfer engine
+W0921 10:25:58.771335 23044 real_client.cpp:858] Failed to create client on port 13455, retry 20/20
+E0921 10:25:58.871462 23044 real_client.cpp:866] Failed to create client after 20 retries
+SSD_GATE probe err RuntimeError store.setup ret=-1
+----- SSD_GATE -----
+n_fill_keys=3840
+n_sampled=64
+MEMORY=0
+LOCAL_DISK=0
+LOCAL_DISK-only=0
+MISSING=64
+GATE_PASS=0
+attempt=1
+reason=probe_err RuntimeError
+SSD_GATE_PROBE_RC=1
+----- /home/<user>/prefetch_916/920_pre_pr/ttft-ab/results/a_ssd_gate.txt -----
+n_fill_keys=3840
+n_sampled=64
+MEMORY=0
+LOCAL_DISK=0
+LOCAL_DISK-only=0
+MISSING=64
+GATE_PASS=0
+attempt=1
+reason=probe_err RuntimeError
+HARNESS_ERROR store.setup/probe_err arm=a
+HARNESS_OR_GATE_DUMP /home/<user>/prefetch_916/920_pre_pr/ttft-ab/results/a_ssd_gate_fail
+2026-09-21T10:26:02Z PHASE=arm_a_local_disk_fail ARM=a suc=48 fail=0 LOCAL_DISK fail rc=10 no measure no enlarge
+stopped :8271 :50111
+stopped serve arm=a
+A_RC=10
+A_FILL success=48 fail=0 med=3128.56 mean=3157.17 p99=3831.27
+A_OVERFLOW success=48 fail=0 med=3049.44 mean=3045.18 p99=3093.82
+A_R1 success=48 fail=0 med=2226.33 mean=2509.56 p99=8677.44
+A_R2 success=48 fail=0 med=1842.75 mean=1836.95 p99=2474.03
+
+########## CLEAN one_arm b prefetch=ON ssd=/home/<user>/prefetch_916/920_pre_pr/perf/ssd_ab2_b ##########
+2026-09-21T10:26:06Z PHASE=arm_b_start ARM=b suc=- fail=- start
+emptied /home/<user>/prefetch_916/920_pre_pr/perf/ssd_ab2_b n=0
+ROTATED_VLLM /home/<user>/prefetch_916/920_pre_pr/perf/logs/vllm.log.before_b_20260921T102606Z
+ROTATED_MASTER /home/<user>/prefetch_916/920_pre_pr/perf/logs/master.log.before_b_20260921T102606Z
+DATASET_REUSE /home/<user>/prefetch_916/920_pre_pr/perf/data/prompts.jsonl
+DATASET_REUSE /home/<user>/prefetch_916/920_pre_pr/perf/data/overflow.jsonl
+2026-09-21T10:26:07Z PHASE=arm_b_serve ARM=b suc=- fail=- serve start glog0
+stopped :8271 :50111
+stopped serve arm=b
+json /home/<user>/prefetch_916/920_pre_pr/ttft-ab/mooncake_b.json prefetch True seg 256MB wait 2000
+master pid=23579 rpc=:50111
+vllm pid=23614 http=:8271 arm=b platform=ascend
+SERVE_START_RC=0 arm=b ssd=/home/<user>/prefetch_916/920_pre_pr/perf/ssd_ab2_b glog=0
+NOT_READY :8271
+(EngineCore pid=23685)     super().__init__(vllm_config)
+(EngineCore pid=23685)   File "/vllm-workspace/vllm/vllm/tracing/otel.py", line 178, in sync_wrapper
+(EngineCore pid=23685)     return func(*args, **kwargs)
+(EngineCore pid=23685)            ^^^^^^^^^^^^^^^^^^^^^

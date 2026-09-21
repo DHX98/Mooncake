@@ -1,0 +1,15 @@
+# this-round greps (a2-clean host + status + b-wait dump)
+
+FILE_READ_FAIL=0
+  a2_clean_ab.status: FILE_READ_FAIL_VLLM=0 FILE_READ_FAIL_MASTER=0
+  a2_clean_ab.gate_b_wait_fail.txt: FILE_READ_FAIL_VLLM 0 FILE_READ_FAIL_MASTER 0
+  a2_clean_ab.host.log: 0 hits
+
+store.setup ret=-1
+  a2_clean_ab.host.log: 1
+  SSD_GATE probe err RuntimeError store.setup ret=-1
+
+AscendDirectTransport: cannot allocate local segment
+  a2_clean_ab.host.log: 20
+  first: E0921 10:25:36.482760 AscendDirectTransport: cannot allocate local segment, ret: -1
+  last:  E0921 10:25:57.761075 AscendDirectTransport: cannot allocate local segment, ret: -1

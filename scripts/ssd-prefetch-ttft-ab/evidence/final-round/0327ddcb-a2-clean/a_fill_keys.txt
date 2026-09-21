@@ -1,0 +1,7 @@
+n=3840
+===== sample 5 =====
+DeepSeek-V4-Flash-0731-w8a8@pcp0@dcp0@head_or_tp_rank:0@pp_rank:0@group:0@cache_role:kv@cache_family:c4@928c9dbae1cc6925a9efc4c8d56e1445ec676223ea8345eb3fe4919d6b2f72bb
+DeepSeek-V4-Flash-0731-w8a8@pcp0@dcp0@head_or_tp_rank:0@pp_rank:0@group:0@cache_role:kv@cache_family:c4@23f4616c0a3e26f7816a057e5523c9d6790823242f5154b1efa171eda83e5a96
+DeepSeek-V4-Flash-0731-w8a8@pcp0@dcp0@head_or_tp_rank:0@pp_rank:0@group:0@cache_role:kv@cache_family:c4@c28d9b3466a01acfb957082f07111348be7ce25f11921dbad6964d2423c8a09e
+DeepSeek-V4-Flash-0731-w8a8@pcp0@dcp0@head_or_tp_rank:0@pp_rank:0@group:0@cache_role:kv@cache_family:c4@5d284e6aa1c070b5b7a815abfd363dc837a975d29f5761d99fc6cca83ffe3b34
+DeepSeek-V4-Flash-0731-w8a8@pcp0@dcp0@head_or_tp_rank:0@pp_rank:0@group:0@cache_role:kv@cache_family:c4@3392e5e89af7f4a835c68df09a6f43e242613d85a61d585c17a843c28f4eafa1
