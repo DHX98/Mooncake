@@ -1,0 +1,59 @@
+CYCLE=1 TS=2026-09-21T12:44:01Z
+REASON=FAIL cycle 1 A_RC=0 B_RC=0 r1_pass=no. See diagnosis: prefetch_task_registered/promotion/kick/FILE_READ_FAIL/fill-overflow/B enable_ssd_prefetch.
+A_RC=0 B_RC=0
+A_R1 success=48 fail=0 med=4673.44 mean=4378.15 p99=11833.09
+B_R1 success=48 fail=0 med=4774.92 mean=4884.19 p99=8587.41
+A_FILL success=48 fail=0 med=2391.67 mean=3199.25 p99=22338.96
+A_OVERFLOW success=48 fail=0 med=2335.24 mean=2365.34 p99=2617.18
+B_FILL success=48 fail=0 med=2390.10 mean=2429.33 p99=2959.49
+B_OVERFLOW success=48 fail=0 med=2330.73 mean=2349.01 p99=2625.21
+A_LD=STORE_PROOF_PROCEED
+B_LD=STORE_PROOF_PROCEED
+----- A store proof -----
+SSD=/home/<user>/prefetch_916/920_pre_pr/perf/ssd_ab2
+SSD_FILES=812
+SSD_BYTES=1220303294
+EVICTED_KEYS=171
+SSD_STORAGE=11.84 GB / 18.00 TB
+DISK_BYTES_METRICS=11840000000
+STORE_HAPPENED=1
+ADMIN_TAIL=I0921 12:14:57.399910  6543 master_admin_service.cpp:315] Master Admin Metrics: role=leader, state=serving, service_ready=true, master={Mem Storage: 1.01 GB / 2.00 GB (50.3%) | NVMe-oF SSD: 0 B / 0 B | SSD Storage: 11.84 GB / 18.00 TB | Keys: 3840 (soft-pinned: 0) | Clients: 9 | Requests (Success/Total per sec): PutStart=0.00/0.00, PutEnd=0.00/0.00, PutRevoke=0.00/0.00, Get=0.00/0.00, Exist=0.00/0.00, Del=0.00/0.00, DelAll=0.00/0.00, Ping=9.00/9.00, CopyStart=0.00/0.00, CopyEnd=0.00/0.00, CopyRe
+----- B store proof -----
+SSD=/home/<user>/prefetch_916/920_pre_pr/perf/ssd_ab2_b
+SSD_FILES=844
+SSD_BYTES=1253585576
+EVICTED_KEYS=236
+SSD_STORAGE=11.87 GB / 18.00 TB
+DISK_BYTES_METRICS=11870000000
+STORE_HAPPENED=1
+ADMIN_TAIL=I0921 12:38:18.118489 22717 master_admin_service.cpp:315] Master Admin Metrics: role=leader, state=serving, service_ready=true, master={Mem Storage: 830.73 MB / 2.00 GB (40.6%) | NVMe-oF SSD: 0 B / 0 B | SSD Storage: 11.87 GB / 18.00 TB | Keys: 3840 (soft-pinned: 0) | Clients: 9 | Requests (Success/Total per sec): PutStart=0.00/0.00, PutEnd=0.00/0.00, PutRevoke=0.00/0.00, Get=0.00/0.00, Exist=0.00/0.00, Del=0.00/0.00, DelAll=0.00/0.00, Ping=9.00/9.00, CopyStart=0.00/0.00, CopyEnd=0.00/0.00, Copy
+----- B prefetch / enable -----
+/home/<user>/prefetch_916/920_pre_pr/perf/logs/b_greps.txt:prefetch_task_registered=0
+/home/<user>/prefetch_916/920_pre_pr/perf/logs/b_greps.txt:promotion=138
+/home/<user>/prefetch_916/920_pre_pr/perf/logs/b_greps.txt:kick_vllm=0
+/home/<user>/prefetch_916/920_pre_pr/perf/logs/b_greps.txt:kick_master=0
+/home/<user>/prefetch_916/920_pre_pr/perf/logs/b_greps.txt:FILE_READ_FAIL_VLLM=0
+/home/<user>/prefetch_916/920_pre_pr/perf/logs/b_greps.txt:FILE_READ_FAIL_MASTER=0
+/home/<user>/prefetch_916/920_pre_pr/perf/logs/b_greps.txt:----- prefetch_task_registered (master, 20) -----
+/home/<user>/prefetch_916/920_pre_pr/perf/logs/b_greps.txt:/home/<user>/prefetch_916/920_pre_pr/perf/logs/vllm.log:(Worker_TP1_EP1 pid=22896) INFO 09-21 12:27:23 [mooncake_backend.py:276] Mooncake store.setup(config) ssd_get_wait_ms=2000 cfg={'local_hostname': '<host-ip>', 'metadata_server': 'P2PHANDSHAKE', 'global_segment_size': '268435456', 'local_buffer_size': '8388608', 'protocol': 'ascend', 'rdma_devices': '', 'master_server_addr': '127.0.0.1:50111', 'tenant_id': 'default', 'enable_ssd_prefetch': 'true', 'enable_ssd_offload': 'true', 'ssd_offload_path': '/home/<user>/prefetch_916/920_pre_pr/perf/ssd_ab2_b/rank_1', 'ssd_prefetch_cooldown_sec': '5', 'ssd_prefetch_dedup_ttl_sec': '30', 'ssd_get_wait_ms': '2000'}
+/home/<user>/prefetch_916/920_pre_pr/perf/logs/b_greps.txt:/home/<user>/prefetch_916/920_pre_pr/perf/logs/vllm.log:(Worker_TP6_EP6 pid=23208) INFO 09-21 12:27:23 [mooncake_backend.py:276] Mooncake store.setup(config) ssd_get_wait_ms=2000 cfg={'local_hostname': '<host-ip>', 'metadata_server': 'P2PHANDSHAKE', 'global_segment_size': '268435456', 'local_buffer_size': '8388608', 'protocol': 'ascend', 'rdma_devices': '', 'master_server_addr': '127.0.0.1:50111', 'tenant_id': 'default', 'enable_ssd_prefetch': 'true', 'enable_ssd_offload': 'true', 'ssd_offload_path': '/home/<user>/prefetch_916/920_pre_pr/perf/ssd_ab2_b/rank_6', 'ssd_prefetch_cooldown_sec': '5', 'ssd_prefetch_dedup_ttl_sec': '30', 'ssd_get_wait_ms': '2000'}
+/home/<user>/prefetch_916/920_pre_pr/perf/logs/b_greps.txt:/home/<user>/prefetch_916/920_pre_pr/perf/logs/vllm.log:(Worker_TP7_EP7 pid=23274) INFO 09-21 12:27:23 [mooncake_backend.py:276] Mooncake store.setup(config) ssd_get_wait_ms=2000 cfg={'local_hostname': '<host-ip>', 'metadata_server': 'P2PHANDSHAKE', 'global_segment_size': '268435456', 'local_buffer_size': '8388608', 'protocol': 'ascend', 'rdma_devices': '', 'master_server_addr': '127.0.0.1:50111', 'tenant_id': 'default', 'enable_ssd_prefetch': 'true', 'enable_ssd_offload': 'true', 'ssd_offload_path': '/home/<user>/prefetch_916/920_pre_pr/perf/ssd_ab2_b/rank_7', 'ssd_prefetch_cooldown_sec': '5', 'ssd_prefetch_dedup_ttl_sec': '30', 'ssd_get_wait_ms': '2000'}
+/home/<user>/prefetch_916/920_pre_pr/perf/logs/b_greps.txt:/home/<user>/prefetch_916/920_pre_pr/perf/logs/vllm.log:(Worker_TP5_EP5 pid=23147) INFO 09-21 12:27:23 [mooncake_backend.py:276] Mooncake store.setup(config) ssd_get_wait_ms=2000 cfg={'local_hostname': '<host-ip>', 'metadata_server': 'P2PHANDSHAKE', 'global_segment_size': '268435456', 'local_buffer_size': '8388608', 'protocol': 'ascend', 'rdma_devices': '', 'master_server_addr': '127.0.0.1:50111', 'tenant_id': 'default', 'enable_ssd_prefetch': 'true', 'enable_ssd_offload': 'true', 'ssd_offload_path': '/home/<user>/prefetch_916/920_pre_pr/perf/ssd_ab2_b/rank_5', 'ssd_prefetch_cooldown_sec': '5', 'ssd_prefetch_dedup_ttl_sec': '30', 'ssd_get_wait_ms': '2000'}
+/home/<user>/prefetch_916/920_pre_pr/perf/logs/b_greps.txt:/home/<user>/prefetch_916/920_pre_pr/perf/logs/vllm.log:(Worker_TP3_EP3 pid=23019) INFO 09-21 12:27:23 [mooncake_backend.py:276] Mooncake store.setup(config) ssd_get_wait_ms=2000 cfg={'local_hostname': '<host-ip>', 'metadata_server': 'P2PHANDSHAKE', 'global_segment_size': '268435456', 'local_buffer_size': '8388608', 'protocol': 'ascend', 'rdma_devices': '', 'master_server_addr': '127.0.0.1:50111', 'tenant_id': 'default', 'enable_ssd_prefetch': 'true', 'enable_ssd_offload': 'true', 'ssd_offload_path': '/home/<user>/prefetch_916/920_pre_pr/perf/ssd_ab2_b/rank_3', 'ssd_prefetch_cooldown_sec': '5', 'ssd_prefetch_dedup_ttl_sec': '30', 'ssd_get_wait_ms': '2000'}
+/home/<user>/prefetch_916/920_pre_pr/perf/logs/b_greps.txt:/home/<user>/prefetch_916/920_pre_pr/perf/logs/vllm.log:(Worker_TP2_EP2 pid=22961) INFO 09-21 12:27:23 [mooncake_backend.py:276] Mooncake store.setup(config) ssd_get_wait_ms=2000 cfg={'local_hostname': '<host-ip>', 'metadata_server': 'P2PHANDSHAKE', 'global_segment_size': '268435456', 'local_buffer_size': '8388608', 'protocol': 'ascend', 'rdma_devices': '', 'master_server_addr': '127.0.0.1:50111', 'tenant_id': 'default', 'enable_ssd_prefetch': 'true', 'enable_ssd_offload': 'true', 'ssd_offload_path': '/home/<user>/prefetch_916/920_pre_pr/perf/ssd_ab2_b/rank_2', 'ssd_prefetch_cooldown_sec': '5', 'ssd_prefetch_dedup_ttl_sec': '30', 'ssd_get_wait_ms': '2000'}
+/home/<user>/prefetch_916/920_pre_pr/perf/logs/b_greps.txt:/home/<user>/prefetch_916/920_pre_pr/perf/logs/vllm.log:(Worker_TP0_EP0 pid=22862) INFO 09-21 12:27:23 [mooncake_backend.py:276] Mooncake store.setup(config) ssd_get_wait_ms=2000 cfg={'local_hostname': '<host-ip>', 'metadata_server': 'P2PHANDSHAKE', 'global_segment_size': '268435456', 'local_buffer_size': '8388608', 'protocol': 'ascend', 'rdma_devices': '', 'master_server_addr': '127.0.0.1:50111', 'tenant_id': 'default', 'enable_ssd_prefetch': 'true', 'enable_ssd_offload': 'true', 'ssd_offload_path': '/home/<user>/prefetch_916/920_pre_pr/perf/ssd_ab2_b/rank_0', 'ssd_prefetch_cooldown_sec': '5', 'ssd_prefetch_dedup_ttl_sec': '30', 'ssd_get_wait_ms': '2000'}
+/home/<user>/prefetch_916/920_pre_pr/perf/logs/b_greps.txt:/home/<user>/prefetch_916/920_pre_pr/perf/logs/vllm.log:(Worker_TP4_EP4 pid=23081) INFO 09-21 12:27:23 [mooncake_backend.py:276] Mooncake store.setup(config) ssd_get_wait_ms=2000 cfg={'local_hostname': '<host-ip>', 'metadata_server': 'P2PHANDSHAKE', 'global_segment_size': '268435456', 'local_buffer_size': '8388608', 'protocol': 'ascend', 'rdma_devices': '', 'master_server_addr': '127.0.0.1:50111', 'tenant_id': 'default', 'enable_ssd_prefetch': 'true', 'enable_ssd_offload': 'true', 'ssd_offload_path': '/home/<user>/prefetch_916/920_pre_pr/perf/ssd_ab2_b/rank_4', 'ssd_prefetch_cooldown_sec': '5', 'ssd_prefetch_dedup_ttl_sec': '30', 'ssd_get_wait_ms': '2000'}
+/home/<user>/prefetch_916/920_pre_pr/perf/logs/b_greps.txt:/home/<user>/prefetch_916/920_pre_pr/perf/logs/vllm.log:(EngineCore pid=22814) INFO 09-21 12:27:51 [mooncake_backend.py:276] Mooncake store.setup(config) ssd_get_wait_ms=2000 cfg={'local_hostname': '<host-ip>', 'metadata_server': 'P2PHANDSHAKE', 'global_segment_size': '0', 'local_buffer_size': '0', 'protocol': 'ascend', 'rdma_devices': '', 'master_server_addr': '127.0.0.1:50111', 'tenant_id': 'default', 'enable_ssd_prefetch': 'true', 'enable_ssd_offload': 'true', 'ssd_offload_path': '/home/<user>/prefetch_916/920_pre_pr/perf/ssd_ab2_b', 'ssd_prefetch_cooldown_sec': '5', 'ssd_prefetch_dedup_ttl_sec': '30', 'ssd_get_wait_ms': '2000'}
+/home/<user>/prefetch_916/920_pre_pr/perf/logs/b_greps.txt:----- get-side / kick (20) -----
+/home/<user>/prefetch_916/920_pre_pr/ttft-ab/mooncake_b.json:  "enable_ssd_prefetch": true,
+----- A greps head -----
+prefetch_task_registered=0
+promotion=143
+kick_vllm=0
+kick_master=0
+FILE_READ_FAIL_VLLM=0
+FILE_READ_FAIL_MASTER=0
+----- prefetch_task_registered (master, 20) -----
+----- get-side / kick (20) -----
+HANGS=0
+B_ENABLE_SSD_PREFETCH=True

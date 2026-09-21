@@ -1,0 +1,69 @@
+2026-09-21T11:40:59Z CYCLE=1 PHASE=cycle_1_start ARM=none suc=- fail=- cycle 1 start
+2026-09-21T11:41:00Z CYCLE=1 PHASE=arm_a_start ARM=a suc=- fail=- start
+2026-09-21T11:41:03Z CYCLE=1 PHASE=arm_a_serve ARM=a suc=- fail=- serve start glog0 reclaim+retry
+2026-09-21T12:03:48Z CYCLE=1 PHASE=arm_a_fill ARM=a suc=- fail=- fill c=1
+2026-09-21T12:08:59Z CYCLE=1 PHASE=arm_a_fill ARM=a suc=48 fail=0 fill 48/0
+2026-09-21T12:09:00Z CYCLE=1 PHASE=arm_a_overflow ARM=a suc=48 fail=0 overflow c=1 n=48 no enlarge
+2026-09-21T12:13:05Z CYCLE=1 PHASE=arm_a_overflow ARM=a suc=48 fail=0 overflow 48/0
+2026-09-21T12:13:06Z CYCLE=1 PHASE=arm_a_settle ARM=a suc=48 fail=0 settle 90s
+2026-09-21T12:14:37Z CYCLE=1 PHASE=arm_a_local_disk ARM=a suc=48 fail=0 LOCAL_DISK list+probe (not a stop)
+2026-09-21T12:15:04Z CYCLE=1 PHASE=arm_a_local_disk ARM=a suc=48 fail=0 LOCAL_DISK label=STORE_PROOF_PROCEED store=STORE_HAPPENED=1
+2026-09-21T12:15:05Z CYCLE=1 PHASE=arm_a_frf ARM=a suc=48 fail=0 FILE_READ_FAIL gate
+2026-09-21T12:15:06Z CYCLE=1 PHASE=arm_a_r1 ARM=a suc=48 fail=0 measure r1 c=4
+2026-09-21T12:17:55Z CYCLE=1 PHASE=arm_a_r1 ARM=a suc=48 fail=0 r1 done
+2026-09-21T12:17:56Z CYCLE=1 PHASE=arm_a_frf_r2 ARM=a suc=48 fail=0 FILE_READ_FAIL before r2
+2026-09-21T12:17:58Z CYCLE=1 PHASE=arm_a_r2 ARM=a suc=48 fail=0 measure r2 c=4
+2026-09-21T12:20:36Z CYCLE=1 PHASE=arm_a_r2 ARM=a suc=48 fail=0 r2 done
+2026-09-21T12:20:40Z CYCLE=1 PHASE=arm_a_stop ARM=a suc=48 fail=0 arm stop
+2026-09-21T12:20:41Z CYCLE=1 PHASE=arm_b_start ARM=b suc=- fail=- start
+2026-09-21T12:20:43Z CYCLE=1 PHASE=arm_b_serve ARM=b suc=- fail=- serve start glog0 reclaim+retry
+2026-09-21T12:27:59Z CYCLE=1 PHASE=arm_b_fill ARM=b suc=- fail=- fill c=1
+2026-09-21T12:32:14Z CYCLE=1 PHASE=arm_b_fill ARM=b suc=48 fail=0 fill 48/0
+2026-09-21T12:32:15Z CYCLE=1 PHASE=arm_b_overflow ARM=b suc=48 fail=0 overflow c=1 n=48 no enlarge
+2026-09-21T12:36:25Z CYCLE=1 PHASE=arm_b_overflow ARM=b suc=48 fail=0 overflow 48/0
+2026-09-21T12:36:26Z CYCLE=1 PHASE=arm_b_settle ARM=b suc=48 fail=0 settle 90s
+2026-09-21T12:37:58Z CYCLE=1 PHASE=arm_b_local_disk ARM=b suc=48 fail=0 LOCAL_DISK list+probe (not a stop)
+2026-09-21T12:38:24Z CYCLE=1 PHASE=arm_b_local_disk ARM=b suc=48 fail=0 LOCAL_DISK label=STORE_PROOF_PROCEED store=STORE_HAPPENED=1
+2026-09-21T12:38:25Z CYCLE=1 PHASE=arm_b_frf ARM=b suc=48 fail=0 FILE_READ_FAIL gate
+2026-09-21T12:38:27Z CYCLE=1 PHASE=arm_b_r1 ARM=b suc=48 fail=0 measure r1 c=4
+2026-09-21T12:41:10Z CYCLE=1 PHASE=arm_b_r1 ARM=b suc=48 fail=0 r1 done
+2026-09-21T12:41:12Z CYCLE=1 PHASE=arm_b_frf_r2 ARM=b suc=48 fail=0 FILE_READ_FAIL before r2
+2026-09-21T12:41:13Z CYCLE=1 PHASE=arm_b_r2 ARM=b suc=48 fail=0 measure r2 c=4
+2026-09-21T12:43:51Z CYCLE=1 PHASE=arm_b_r2 ARM=b suc=48 fail=0 r2 done
+2026-09-21T12:43:55Z CYCLE=1 PHASE=arm_b_stop ARM=b suc=48 fail=0 arm stop
+2026-09-21T12:44:03Z CYCLE=1 PHASE=cycle_1_gap ARM=b suc=48 fail=0 cycle gap: stop our serve, wipe SSD, reclaim NPU
+2026-09-21T12:44:21Z CYCLE=2 PHASE=cycle_2_start ARM=b suc=48 fail=0 cycle 2 start
+2026-09-21T12:44:23Z CYCLE=2 PHASE=arm_a_start ARM=a suc=- fail=- start
+2026-09-21T12:44:24Z CYCLE=2 PHASE=arm_a_serve ARM=a suc=- fail=- serve start glog0 reclaim+retry
+2026-09-21T12:51:45Z CYCLE=2 PHASE=arm_a_fill ARM=a suc=- fail=- fill c=1
+2026-09-21T12:56:05Z CYCLE=2 PHASE=arm_a_fill ARM=a suc=48 fail=0 fill 48/0
+2026-09-21T12:56:06Z CYCLE=2 PHASE=arm_a_overflow ARM=a suc=48 fail=0 overflow c=1 n=48 no enlarge
+2026-09-21T13:00:21Z CYCLE=2 PHASE=arm_a_overflow ARM=a suc=48 fail=0 overflow 48/0
+2026-09-21T13:00:22Z CYCLE=2 PHASE=arm_a_settle ARM=a suc=48 fail=0 settle 90s
+2026-09-21T13:01:54Z CYCLE=2 PHASE=arm_a_local_disk ARM=a suc=48 fail=0 LOCAL_DISK list+probe (not a stop)
+2026-09-21T13:02:20Z CYCLE=2 PHASE=arm_a_local_disk ARM=a suc=48 fail=0 LOCAL_DISK label=STORE_PROOF_PROCEED store=STORE_HAPPENED=1
+2026-09-21T13:02:21Z CYCLE=2 PHASE=arm_a_frf ARM=a suc=48 fail=0 FILE_READ_FAIL gate
+2026-09-21T13:02:23Z CYCLE=2 PHASE=arm_a_r1 ARM=a suc=48 fail=0 measure r1 c=4
+2026-09-21T13:05:06Z CYCLE=2 PHASE=arm_a_r1 ARM=a suc=48 fail=0 r1 done
+2026-09-21T13:05:08Z CYCLE=2 PHASE=arm_a_frf_r2 ARM=a suc=48 fail=0 FILE_READ_FAIL before r2
+2026-09-21T13:05:09Z CYCLE=2 PHASE=arm_a_r2 ARM=a suc=48 fail=0 measure r2 c=4
+2026-09-21T13:07:48Z CYCLE=2 PHASE=arm_a_r2 ARM=a suc=48 fail=0 r2 done
+2026-09-21T13:07:51Z CYCLE=2 PHASE=arm_a_stop ARM=a suc=48 fail=0 arm stop
+2026-09-21T13:07:53Z CYCLE=2 PHASE=arm_b_start ARM=b suc=- fail=- start
+2026-09-21T13:07:55Z CYCLE=2 PHASE=arm_b_serve ARM=b suc=- fail=- serve start glog0 reclaim+retry
+2026-09-21T13:15:07Z CYCLE=2 PHASE=arm_b_fill ARM=b suc=- fail=- fill c=1
+2026-09-21T13:19:22Z CYCLE=2 PHASE=arm_b_fill ARM=b suc=48 fail=0 fill 48/0
+2026-09-21T13:19:23Z CYCLE=2 PHASE=arm_b_overflow ARM=b suc=48 fail=0 overflow c=1 n=48 no enlarge
+2026-09-21T13:23:28Z CYCLE=2 PHASE=arm_b_overflow ARM=b suc=48 fail=0 overflow 48/0
+2026-09-21T13:23:29Z CYCLE=2 PHASE=arm_b_settle ARM=b suc=48 fail=0 settle 90s
+2026-09-21T13:25:01Z CYCLE=2 PHASE=arm_b_local_disk ARM=b suc=48 fail=0 LOCAL_DISK list+probe (not a stop)
+2026-09-21T13:25:27Z CYCLE=2 PHASE=arm_b_local_disk ARM=b suc=48 fail=0 LOCAL_DISK label=STORE_PROOF_PROCEED store=STORE_HAPPENED=1
+2026-09-21T13:25:28Z CYCLE=2 PHASE=arm_b_frf ARM=b suc=48 fail=0 FILE_READ_FAIL gate
+2026-09-21T13:25:29Z CYCLE=2 PHASE=arm_b_r1 ARM=b suc=48 fail=0 measure r1 c=4
+2026-09-21T13:28:13Z CYCLE=2 PHASE=arm_b_r1 ARM=b suc=48 fail=0 r1 done
+2026-09-21T13:28:15Z CYCLE=2 PHASE=arm_b_frf_r2 ARM=b suc=48 fail=0 FILE_READ_FAIL before r2
+2026-09-21T13:28:16Z CYCLE=2 PHASE=arm_b_r2 ARM=b suc=48 fail=0 measure r2 c=4
+2026-09-21T13:30:54Z CYCLE=2 PHASE=arm_b_r2 ARM=b suc=48 fail=0 r2 done
+2026-09-21T13:30:58Z CYCLE=2 PHASE=arm_b_stop ARM=b suc=48 fail=0 arm stop
+2026-09-21T13:31:06Z CYCLE=2 PHASE=done ARM=b suc=48 fail=0 PASS cycle=2
+2026-09-21T13:31:13Z CYCLE=2 PHASE=done ARM=b suc=48 fail=0 PASS

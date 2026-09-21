@@ -1,0 +1,14 @@
+CYCLE=2
+A_RC=0
+B_RC=0
+A_R1={'success': 48, 'fail': 0, 'med': '4776.03', 'mean': '5057.06', 'p99': '8476.83'}
+B_R1={'success': 48, 'fail': 0, 'med': '4706.92', 'mean': '4568.42', 'p99': '8210.17'}
+GAINS={'med': 1.4470177113627778, 'mean': 9.66253119401392, 'p99': 3.1457514188676647}
+PASS_R1=yes
+A_LD=STORE_PROOF_PROCEED
+B_LD=STORE_PROOF_PROCEED
+A_STORE={'SSD': '/home/<user>/prefetch_916/920_pre_pr/perf/ssd_ab2', 'SSD_FILES': '820', 'SSD_BYTES': '1228059738', 'EVICTED_KEYS': '136', 'SSD_STORAGE': '11.85 GB / 18.00 TB', 'DISK_BYTES_METRICS': '11850000000', 'STORE_HAPPENED': '1', 'ADMIN_TAIL': 'I0921 13:02:09.121063 33813 master_admin_service.cpp:315] Master Admin Metrics: role=leader, state=serving, service_ready=true, master={Mem Storage: 933.41 MB / 2.00 GB (45.6%) | NVMe-oF SSD: 0 B / 0 B | SSD Storage: 11.85 GB / 18.00 TB | Keys: 3840 (soft-pinned: 0) | Clients: 9 | Requests (Success/Total per sec): PutStart=0.00/0.00, PutEnd=0.00/0.00, PutRevoke=0.00/0.00, Get=0.00/0.00, Exist=0.00/0.00, Del=0.00/0.00, DelAll=0.00/0.00, Ping=9.00/9.00, CopyStart=0.00/0.00, CopyEnd=0.00/0.00, Copy'}
+B_STORE={'SSD': '/home/<user>/prefetch_916/920_pre_pr/perf/ssd_ab2_b', 'SSD_FILES': '820', 'SSD_BYTES': '1227579254', 'EVICTED_KEYS': '172', 'SSD_STORAGE': '11.85 GB / 18.00 TB', 'DISK_BYTES_METRICS': '11850000000', 'STORE_HAPPENED': '1', 'ADMIN_TAIL': 'I0921 13:25:21.416023 44424 master_admin_service.cpp:315] Master Admin Metrics: role=leader, state=serving, service_ready=true, master={Mem Storage: 734.61 MB / 2.00 GB (35.9%) | NVMe-oF SSD: 0 B / 0 B | SSD Storage: 11.85 GB / 18.00 TB | Keys: 3840 (soft-pinned: 0) | Clients: 9 | Requests (Success/Total per sec): PutStart=0.00/0.00, PutEnd=0.00/0.00, PutRevoke=0.00/0.00, Get=0.00/0.00, Exist=0.00/0.00, Del=0.00/0.00, DelAll=0.00/0.00, Ping=9.00/9.00, CopyStart=0.00/0.00, CopyEnd=0.00/0.00, Copy'}
+A_GATE={'n_fill_keys': '458', 'n_sampled': '64', 'MEMORY': '0', 'LOCAL_DISK': '0', 'LOCAL_DISK-only': '0', 'MISSING': '64', 'GATE_PASS': '0', 'attempt': '1', 'reason': 'probe_err RuntimeError'}
+B_GATE={'n_fill_keys': '425', 'n_sampled': '64', 'MEMORY': '0', 'LOCAL_DISK': '0', 'LOCAL_DISK-only': '0', 'MISSING': '64', 'GATE_PASS': '0', 'attempt': '1', 'reason': 'probe_err RuntimeError'}
+HANGS=0
