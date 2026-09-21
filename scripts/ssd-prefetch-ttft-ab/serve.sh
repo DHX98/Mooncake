@@ -39,7 +39,7 @@ start_master() {
     --enable_offload=true \
     --offload_on_evict=true \
     --promotion_on_hit=false \
-    --default_kv_lease_ttl=60000 \
+    --default_kv_lease_ttl=${KV_LEASE_TTL_MS:-2000} \
     --root_fs_dir="$SSD" \
     --eviction_high_watermark_ratio=0.6 \
     --eviction_ratio=0.4 \

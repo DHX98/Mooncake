@@ -38,6 +38,14 @@ bash scripts/ci/run_ssd_offload_smoke.sh
 
 ## 任务 3：A/B 复跑（PR 分支的库 + v3-verify 的脚本）
 
+**前提闸门（2026-09-21 新增，必做）**：overflow+settle 之后、measure 之前，
+对 fill keys 抽查 `batch_get_replica_desc`——必须能采到 LOCAL_DISK-only
+（无 MEMORY）的 key。上一轮 p99 为负的根因就是 A 臂工作集没落到 SSD
+（master lease 60s 把 key 钉在 DRAM，现在已改 2s）。抽查不通过：
+加大 overflow 重试一次；仍不通过就停轮贴日志，**不许带着不成立的
+前提进 measure**（那样的 p99 数字没有意义）。
+
+
 目的：验证恢复 get-kick 后的最终代码。流程照旧
 （fill → overflow → settle → measure），**measure 用 CONC=4**。
 期望：median/mean/p99 三个增益均为正且显著（参照 +85% 量级）；
