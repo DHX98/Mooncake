@@ -1,0 +1,8 @@
+SSD=/home/<user>/prefetch_916/920_pre_pr/perf/ssd_ab2_b
+SSD_FILES=818
+SSD_BYTES=1226552602
+EVICTED_KEYS=202
+SSD_STORAGE=11.85 GB / 18.00 TB
+DISK_BYTES_METRICS=11850000000
+STORE_HAPPENED=1
+ADMIN_TAIL=I0922 02:27:35.488487 66257 master_admin_service.cpp:315] Master Admin Metrics: role=leader, state=serving, service_ready=true, master={Mem Storage: 785.85 MB / 2.00 GB (38.4%) | NVMe-oF SSD: 0 B / 0 B | SSD Storage: 11.85 GB / 18.00 TB | Keys: 3840 (soft-pinned: 0) | Clients: 9 | Requests (Success/Total per sec): PutStart=0.00/0.00, PutEnd=0.00/0.00, PutRevoke=0.00/0.00, Get=0.00/0.00, Exist=0.00/0.00, Del=0.00/0.00, DelAll=0.00/0.00, Ping=9.00/9.00, CopyStart=0.00/0.00, CopyEnd=0.00/0.00, Copy
