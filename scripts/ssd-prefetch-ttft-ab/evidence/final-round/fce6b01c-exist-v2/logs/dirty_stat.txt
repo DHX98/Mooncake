@@ -1,0 +1,17 @@
+PORCELAIN_COUNT=4
+ M mooncake-store/include/master_service.h
+ M mooncake-store/include/object_runtime_state.h
+ M mooncake-store/src/dummy_client.cpp
+A  mooncake-wheel/mooncake/buffer_pool.py
+
+ mooncake-store/include/master_service.h       | 1522 ++++++++++++++++++++++++-
+ mooncake-store/include/object_runtime_state.h |    3 +
+ mooncake-store/src/dummy_client.cpp           |    1 +
+ mooncake-wheel/mooncake/buffer_pool.py        |   12 +
+ 4 files changed, 1535 insertions(+), 3 deletions(-)
+
+master_service.h: restored from the two parents, +1522/−3
+object_runtime_state.h: +3 (PromotionTask::from_prefetch)
+dummy_client.cpp: +1 (closing brace on DummyClient::batchProbeKey)
+buffer_pool.py: 12 lines from prefetch parent c448bad
+Not in fce6b01c686067f22be107dbb69c96ff07f22a0c. Not pushed to feat/ssd-prefetch-on-exist-v2.

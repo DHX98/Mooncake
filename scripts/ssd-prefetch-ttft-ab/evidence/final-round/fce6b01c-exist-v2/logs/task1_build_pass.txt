@@ -1,0 +1,13 @@
+HEAD=fce6b01c686067f22be107dbb69c96ff07f22a0c
+BRANCH=feat/ssd-prefetch-on-exist-v2
+cmake -S . -B build -G Ninja -DCMAKE_BUILD_TYPE=Release -DBUILD_UNIT_TESTS=ON
+cmake --build build
+-- Configuring done (0.7s)
+-- Generating done (0.9s)
+CMAKE_RC=0
+BUILD_JOBS=64
+[425/425] Linking CXX shared module mooncake-integration/store.cpython-312-aarch64-linux-gnu.so
+BUILD_RC=0
+prefetch_error_count=0
+probe_warn_count=1
+note: the one warning is tests/master_service/dsl/scenario.cpp, not probeKey and not object_metadata.

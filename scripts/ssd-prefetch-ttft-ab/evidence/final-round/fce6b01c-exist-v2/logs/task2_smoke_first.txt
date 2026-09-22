@@ -1,0 +1,9 @@
+PHASE=smoke 2026-09-22T08:41:55Z
+script: bash scripts/ci/run_ssd_offload_smoke.sh
+scripts/ci/services.sh: line 29: ss: command not found
+::error::metadata did not listen on ports 8080 within 5 seconds
+=== metadata ===
+2026-09-22 08:41:56,261 - root - INFO - HTTP Metadata Server started on <host-ip>:8080
+2026-09-22 08:42:01,155 - root - INFO - Shutting down...
+SMOKE_RC=1
+note: metadata had started. The wait failed because ss was missing.

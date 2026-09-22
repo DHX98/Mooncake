@@ -1,0 +1,14 @@
+HEAD=fce6b01c686067f22be107dbb69c96ff07f22a0c
+BRANCH=feat/ssd-prefetch-on-exist-v2
+CMAKE_RC=0
+BUILD_RC=1
+prefetch_error_count=93
+note: 93 is the truncated-header cascade, not 93 independent prefetch errors.
+
+/usr/include/zstd.h:11:8: error: expected unqualified-id before string constant
+mooncake-store/include/common/zstd_util.h:6:1: error: expected unqualified-id before 'namespace'
+mooncake-store/include/master_service.h:126:21: note: to match this '{'
+  126 | class MasterService {
+mooncake-store/include/master_service.h:1051:16: error: 'client_offboarding_worker_' was not declared in this scope; did you mean 'ClientOffboardingWorker'?
+[129/730] Building CXX object mooncake-transfer-engine/src/transport/rpc_communicator/CMakeFiles/rpc_communicator.dir/rpc_communicator.cpp.o
+ninja: build stopped: subcommand failed.
