@@ -81,34 +81,8 @@ class OrderedOpLogWriter;
 struct MetadataStoragePlugin;
 
 namespace test {
-class MasterServiceTest;
-class MasterServiceSnapshotTestBase;
-class SnapshotChildProcessTest;
-// Friended so the promotion-on-hit tests can drive a serialize/reset/
-// deserialize cycle directly via the otherwise-private
-// MetadataSerializer, and inspect private clamp fields. This avoids
-// standing up a full snapshot catalog + child-process harness, and
-// exposing test-only accessors on MasterService itself.
-class PromotionOnHitTest;
-class DynamicReplicationTest;
-class MasterServiceTenantQuotaTest;
-class MasterScenario;
-class MasterServiceHATest;
-// Friended so the processing_keys double-erase reproduction test can
-// invalidate a segment allocator via PrepareUnmountSegment WITHOUT the
-// ClearInvalidHandles sweep that MasterService::UnmountSegment performs.
-class MasterServiceProcessingKeyDoubleEraseTest;
-// Friended so the LOCAL_DISK deregistration interleaving tests can run the
-// two halves of UnmountLocalDiskSegment (deregistration, replica sweep)
-// with a competing mount + register serialized between them, pinning the
-// interleaving instead of hoping a thread scheduler produces it.
-class LocalDiskUnmountInterleavingTest;
-// Friended so the #2997 regression test can call the private
-// PushOffloadingQueue directly with degenerate replica states that the
-// public PutStart/PutEnd path never produces.
-class MasterServiceSSDTest;
-class PrefetchTaskMasterTest;
 class MasterServiceTestPeer;
+class PrefetchTaskMasterTest;
 }  // namespace test
 
 // std::unordered_map/set never shrink their bucket array on erase, so a
@@ -150,30 +124,11 @@ void ShrinkBucketsIfSparse(UnorderedContainer& container) {
  */
 
 class MasterService {
-    // Test friend class for snapshot/restore testing
-    friend class test::MasterServiceSnapshotTestBase;
-    friend class test::MasterServiceTest;
-    friend class test::SnapshotChildProcessTest;
-    friend class test::PromotionOnHitTest;
-    friend class test::PrefetchTaskMasterTest;
-    friend class test::DynamicReplicationTest;
-    friend class test::MasterServiceTenantQuotaTest;
-    // The scenario DSL controls lease timestamps so eviction tests do not
-    // depend on sleeps or the background eviction thread.
-    friend class test::MasterScenario;
-    // double-erase processing_keys UAF repro (2026-08-03 prod segfault)
-    friend class test::MasterServiceProcessingKeyDoubleEraseTest;
-    friend class test::LocalDiskUnmountInterleavingTest;
-    // #2997 regression: exercises PushOffloadingQueue's no-op paths directly.
-    friend class test::MasterServiceSSDTest;
-    friend class MasterSnapshotManager;  // Allow access to internal state for
-                                         // snapshot
-    friend class ClientOffboardingWorker;
-    friend class ha::MasterSnapshotCodec;      // Allow codec to access private
-                                               // members
-    friend class test::MasterServiceHATest;
     friend class test::MasterServiceTestPeer;
+    friend class test::PrefetchTaskMasterTest;
+    friend class MasterSnapshotManager;    // Allow access to internal state for
                                            // snapshot
+    friend class ClientOffboardingWorker;
     friend class ha::MasterSnapshotCodec;  // Allow codec to access private
                                            // members
 
