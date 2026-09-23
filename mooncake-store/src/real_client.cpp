@@ -1434,7 +1434,7 @@ tl::expected<void, ErrorCode> RealClient::setup_internal(
     int client_http_port = client_http_port_opt.value();
 
     // SSD prefetch knobs (all default off; see
-    // docs/source/design/ssd-prefetch.md).
+    // docs/source/design/store/ssd-prefetch.md).
     enable_ssd_prefetch_ =
         get_config_bool(config, CONFIG_KEY_ENABLE_SSD_PREFETCH, false);
     auto prefetch_cooldown_opt =

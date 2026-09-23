@@ -545,7 +545,7 @@ class PyClient {
 
     // ExistOptions variants. The default implementation ignores the options
     // (prefetch unsupported); RealClient overrides them when
-    // enable_ssd_prefetch is on. See docs/source/design/ssd-prefetch.md.
+    // enable_ssd_prefetch is on. See docs/source/design/store/ssd-prefetch.md.
     virtual int isExist(const std::string &key, const ExistOptions &options) {
         (void)options;
         return isExist(key);
