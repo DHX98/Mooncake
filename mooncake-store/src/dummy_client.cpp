@@ -1358,6 +1358,7 @@ std::vector<int> DummyClient::batchProbeKey(
     }
 
     return results;
+}
 
 std::vector<int> DummyClient::batchIsExist(const std::vector<std::string>& keys,
                                            const ExistOptions& options) {
