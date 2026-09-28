@@ -1,0 +1,371 @@
+Test project /home/<user>/prefetch_916/src/Mooncake-pr3/build
+    Start  88: file_storage_promotion_test
+1/3 Test  #88: file_storage_promotion_test ......***Failed    0.09 sec
+[==========] Running 12 tests from 1 test suite.
+[----------] Global test environment set-up.
+[----------] 12 tests from FileStoragePromotionTest
+[ RUN      ] FileStoragePromotionTest.EmptyQueueIsNoOp
+I0928 10:10:46.923548 22985 client_metric.cpp:67] Client metrics enabled (default enabled)
+I0928 10:10:46.923579 22985 client_metric.cpp:68] Client bandwidth summary enabled via MC_STORE_CLIENT_METRIC_BANDWIDTH
+I0928 10:10:46.926460 22985 client_service.cpp:408] client_id=10252578826992270317-11519187422197597578
+I0928 10:10:46.926474 22985 client_service.cpp:422] Client metrics enabled but reporting disabled (interval=0)
+I0928 10:10:46.927994 22985 aligned_client_buffer.cpp:127] AlignedClientBufferAllocator: allocated 4194304 bytes at address 0xffff9d3af000 (aligned to 4096 bytes)
+I0928 10:10:46.930013 22985 storage_backend.cpp:1507] BucketStorageBackend: Allocated 33554432 bytes aligned buffer at 0xffff9181d000
+I0928 10:10:46.930037 22985 file_storage.cpp:118] Shutdown FileStorage...
+I0928 10:10:46.930043 22985 aligned_client_buffer.cpp:161] AlignedClientBufferAllocator: freeing aligned memory at 0xffff9d3af000 (4194304 bytes)
+[       OK ] FileStoragePromotionTest.EmptyQueueIsNoOp (8 ms)
+[ RUN      ] FileStoragePromotionTest.HeartbeatSegmentNotFoundIsBenign
+I0928 10:10:46.931859 22985 client_metric.cpp:67] Client metrics enabled (default enabled)
+I0928 10:10:46.931869 22985 client_metric.cpp:68] Client bandwidth summary enabled via MC_STORE_CLIENT_METRIC_BANDWIDTH
+I0928 10:10:46.934058 22985 client_service.cpp:408] client_id=4702146064086868905-11317018333756783009
+I0928 10:10:46.934072 22985 client_service.cpp:422] Client metrics enabled but reporting disabled (interval=0)
+I0928 10:10:46.935122 22985 aligned_client_buffer.cpp:127] AlignedClientBufferAllocator: allocated 4194304 bytes at address 0xaaaaef0f6000 (aligned to 4096 bytes)
+I0928 10:10:46.936710 22985 storage_backend.cpp:1507] BucketStorageBackend: Allocated 33554432 bytes aligned buffer at 0xffff8dfff000
+I0928 10:10:46.936728 22985 file_storage.cpp:118] Shutdown FileStorage...
+I0928 10:10:46.936734 22985 aligned_client_buffer.cpp:161] AlignedClientBufferAllocator: freeing aligned memory at 0xaaaaef0f6000 (4194304 bytes)
+[       OK ] FileStoragePromotionTest.HeartbeatSegmentNotFoundIsBenign (5 ms)
+[ RUN      ] FileStoragePromotionTest.HeartbeatHardErrorPropagates
+I0928 10:10:46.937712 22985 client_metric.cpp:67] Client metrics enabled (default enabled)
+I0928 10:10:46.937722 22985 client_metric.cpp:68] Client bandwidth summary enabled via MC_STORE_CLIENT_METRIC_BANDWIDTH
+I0928 10:10:46.939829 22985 client_service.cpp:408] client_id=15370512123541006756-18164170981482056637
+I0928 10:10:46.939842 22985 client_service.cpp:422] Client metrics enabled but reporting disabled (interval=0)
+I0928 10:10:46.940110 22985 aligned_client_buffer.cpp:127] AlignedClientBufferAllocator: allocated 4194304 bytes at address 0xaaaaef0f6000 (aligned to 4096 bytes)
+I0928 10:10:46.940693 22985 storage_backend.cpp:1507] BucketStorageBackend: Allocated 33554432 bytes aligned buffer at 0xffff8dfff000
+W0928 10:10:46.940709 22985 file_storage.cpp:1073] PromotionObjectHeartbeat failed: INTERNAL_ERROR
+I0928 10:10:46.940752 22985 file_storage.cpp:118] Shutdown FileStorage...
+I0928 10:10:46.940757 22985 aligned_client_buffer.cpp:161] AlignedClientBufferAllocator: freeing aligned memory at 0xaaaaef0f6000 (4194304 bytes)
+[       OK ] FileStoragePromotionTest.HeartbeatHardErrorPropagates (3 ms)
+[ RUN      ] FileStoragePromotionTest.NonPositiveSizeSkipped
+I0928 10:10:46.941695 22985 client_metric.cpp:67] Client metrics enabled (default enabled)
+I0928 10:10:46.941704 22985 client_metric.cpp:68] Client bandwidth summary enabled via MC_STORE_CLIENT_METRIC_BANDWIDTH
+I0928 10:10:46.943799 22985 client_service.cpp:408] client_id=6863569933010012303-4485001817272828294
+I0928 10:10:46.943812 22985 client_service.cpp:422] Client metrics enabled but reporting disabled (interval=0)
+I0928 10:10:46.944011 22985 aligned_client_buffer.cpp:127] AlignedClientBufferAllocator: allocated 4194304 bytes at address 0xaaaaef0f6000 (aligned to 4096 bytes)
+I0928 10:10:46.944773 22985 storage_backend.cpp:1507] BucketStorageBackend: Allocated 33554432 bytes aligned buffer at 0xffff8dfff000
+E0928 10:10:46.944839 22985 storage_backend.cpp:1732] Key not found: default
+k_good
+E0928 10:10:46.944847 22985 file_storage.cpp:1109] Batch load object failed,err_code = INVALID_KEY
+W0928 10:10:46.944850 22985 file_storage.cpp:958] Promotion: BatchLoad failed for key=k_good, error=INVALID_KEY
+I0928 10:10:46.944859 22985 file_storage.cpp:118] Shutdown FileStorage...
+I0928 10:10:46.944864 22985 aligned_client_buffer.cpp:161] AlignedClientBufferAllocator: freeing aligned memory at 0xaaaaef0f6000 (4194304 bytes)
+[       OK ] FileStoragePromotionTest.NonPositiveSizeSkipped (4 ms)
+[ RUN      ] FileStoragePromotionTest.AllocStartFailureSkipsKey
+I0928 10:10:46.945798 22985 client_metric.cpp:67] Client metrics enabled (default enabled)
+I0928 10:10:46.945807 22985 client_metric.cpp:68] Client bandwidth summary enabled via MC_STORE_CLIENT_METRIC_BANDWIDTH
+I0928 10:10:46.948040 22985 client_service.cpp:408] client_id=2040070033909198177-6946472716197756293
+I0928 10:10:46.948053 22985 client_service.cpp:422] Client metrics enabled but reporting disabled (interval=0)
+I0928 10:10:46.948244 22985 aligned_client_buffer.cpp:127] AlignedClientBufferAllocator: allocated 4194304 bytes at address 0xaaaaef0f7000 (aligned to 4096 bytes)
+I0928 10:10:46.948791 22985 storage_backend.cpp:1507] BucketStorageBackend: Allocated 33554432 bytes aligned buffer at 0xffff8dfff000
+E0928 10:10:46.948819 22985 storage_backend.cpp:1732] Key not found: default
+k2
+E0928 10:10:46.948825 22985 file_storage.cpp:1109] Batch load object failed,err_code = INVALID_KEY
+W0928 10:10:46.948829 22985 file_storage.cpp:958] Promotion: BatchLoad failed for key=k2, error=INVALID_KEY
+I0928 10:10:46.948835 22985 file_storage.cpp:118] Shutdown FileStorage...
+I0928 10:10:46.948839 22985 aligned_client_buffer.cpp:161] AlignedClientBufferAllocator: freeing aligned memory at 0xaaaaef0f7000 (4194304 bytes)
+[       OK ] FileStoragePromotionTest.AllocStartFailureSkipsKey (3 ms)
+[ RUN      ] FileStoragePromotionTest.BatchLoadFailureLeavesNoNotify
+I0928 10:10:46.949754 22985 client_metric.cpp:67] Client metrics enabled (default enabled)
+I0928 10:10:46.949764 22985 client_metric.cpp:68] Client bandwidth summary enabled via MC_STORE_CLIENT_METRIC_BANDWIDTH
+I0928 10:10:46.951754 22985 client_service.cpp:408] client_id=7153355311987914698-11788917141410766218
+I0928 10:10:46.951767 22985 client_service.cpp:422] Client metrics enabled but reporting disabled (interval=0)
+I0928 10:10:46.951929 22985 aligned_client_buffer.cpp:127] AlignedClientBufferAllocator: allocated 4194304 bytes at address 0xaaaaef4f8000 (aligned to 4096 bytes)
+I0928 10:10:46.953217 22985 storage_backend.cpp:1507] BucketStorageBackend: Allocated 33554432 bytes aligned buffer at 0xffff8dfff000
+E0928 10:10:46.953241 22985 storage_backend.cpp:1732] Key not found: default
+k_missing
+E0928 10:10:46.953248 22985 file_storage.cpp:1109] Batch load object failed,err_code = INVALID_KEY
+W0928 10:10:46.953251 22985 file_storage.cpp:958] Promotion: BatchLoad failed for key=k_missing, error=INVALID_KEY
+I0928 10:10:46.953258 22985 file_storage.cpp:118] Shutdown FileStorage...
+I0928 10:10:46.953261 22985 aligned_client_buffer.cpp:161] AlignedClientBufferAllocator: freeing aligned memory at 0xaaaaef4f8000 (4194304 bytes)
+[       OK ] FileStoragePromotionTest.BatchLoadFailureLeavesNoNotify (4 ms)
+[ RUN      ] FileStoragePromotionTest.TransferWriteFailureLeavesNoNotify
+I0928 10:10:46.954190 22985 client_metric.cpp:67] Client metrics enabled (default enabled)
+I0928 10:10:46.954198 22985 client_metric.cpp:68] Client bandwidth summary enabled via MC_STORE_CLIENT_METRIC_BANDWIDTH
+I0928 10:10:46.956303 22985 client_service.cpp:408] client_id=17168505831707268530-17955312728882911401
+I0928 10:10:46.956315 22985 client_service.cpp:422] Client metrics enabled but reporting disabled (interval=0)
+I0928 10:10:46.956930 22985 aligned_client_buffer.cpp:127] AlignedClientBufferAllocator: allocated 4194304 bytes at address 0xaaaaef8f9000 (aligned to 4096 bytes)
+I0928 10:10:46.957540 22985 storage_backend.cpp:1507] BucketStorageBackend: Allocated 33554432 bytes aligned buffer at 0xffff8dfff000
+E0928 10:10:46.957561 22985 storage_backend.cpp:1732] Key not found: default
+k_te_fail
+E0928 10:10:46.957567 22985 file_storage.cpp:1109] Batch load object failed,err_code = INVALID_KEY
+W0928 10:10:46.957571 22985 file_storage.cpp:958] Promotion: BatchLoad failed for key=k_te_fail, error=INVALID_KEY
+I0928 10:10:46.957576 22985 file_storage.cpp:118] Shutdown FileStorage...
+I0928 10:10:46.957580 22985 aligned_client_buffer.cpp:161] AlignedClientBufferAllocator: freeing aligned memory at 0xaaaaef8f9000 (4194304 bytes)
+[       OK ] FileStoragePromotionTest.TransferWriteFailureLeavesNoNotify (4 ms)
+[ RUN      ] FileStoragePromotionTest.NotifyFailureDoesNotAbortBatch
+I0928 10:10:46.958521 22985 client_metric.cpp:67] Client metrics enabled (default enabled)
+I0928 10:10:46.958530 22985 client_metric.cpp:68] Client bandwidth summary enabled via MC_STORE_CLIENT_METRIC_BANDWIDTH
+I0928 10:10:46.960675 22985 client_service.cpp:408] client_id=3913090474780613722-7874247797737224850
+I0928 10:10:46.960687 22985 client_service.cpp:422] Client metrics enabled but reporting disabled (interval=0)
+I0928 10:10:46.961306 22985 aligned_client_buffer.cpp:127] AlignedClientBufferAllocator: allocated 4194304 bytes at address 0xaaaaefcfa000 (aligned to 4096 bytes)
+I0928 10:10:46.961894 22985 storage_backend.cpp:1507] BucketStorageBackend: Allocated 33554432 bytes aligned buffer at 0xffff8dfff000
+E0928 10:10:46.961918 22985 storage_backend.cpp:1732] Key not found: default
+k1
+E0928 10:10:46.961925 22985 file_storage.cpp:1109] Batch load object failed,err_code = INVALID_KEY
+W0928 10:10:46.961928 22985 file_storage.cpp:958] Promotion: BatchLoad failed for key=k1, error=INVALID_KEY
+E0928 10:10:46.961934 22985 storage_backend.cpp:1732] Key not found: default
+k2
+E0928 10:10:46.961939 22985 file_storage.cpp:1109] Batch load object failed,err_code = INVALID_KEY
+W0928 10:10:46.961942 22985 file_storage.cpp:958] Promotion: BatchLoad failed for key=k2, error=INVALID_KEY
+I0928 10:10:46.961946 22985 file_storage.cpp:118] Shutdown FileStorage...
+I0928 10:10:46.961951 22985 aligned_client_buffer.cpp:161] AlignedClientBufferAllocator: freeing aligned memory at 0xaaaaefcfa000 (4194304 bytes)
+[       OK ] FileStoragePromotionTest.NotifyFailureDoesNotAbortBatch (4 ms)
+[ RUN      ] FileStoragePromotionTest.PerKeyFailuresAreIndependent
+I0928 10:10:46.962899 22985 client_metric.cpp:67] Client metrics enabled (default enabled)
+I0928 10:10:46.962908 22985 client_metric.cpp:68] Client bandwidth summary enabled via MC_STORE_CLIENT_METRIC_BANDWIDTH
+I0928 10:10:46.965008 22985 client_service.cpp:408] client_id=17171544684152754150-7062590670943423891
+I0928 10:10:46.965019 22985 client_service.cpp:422] Client metrics enabled but reporting disabled (interval=0)
+I0928 10:10:46.965646 22985 aligned_client_buffer.cpp:127] AlignedClientBufferAllocator: allocated 4194304 bytes at address 0xaaaaf00fb000 (aligned to 4096 bytes)
+I0928 10:10:46.966224 22985 storage_backend.cpp:1507] BucketStorageBackend: Allocated 33554432 bytes aligned buffer at 0xffff8dfff000
+E0928 10:10:46.966250 22985 storage_backend.cpp:1732] Key not found: default
+k_write_fail
+E0928 10:10:46.966256 22985 file_storage.cpp:1109] Batch load object failed,err_code = INVALID_KEY
+W0928 10:10:46.966260 22985 file_storage.cpp:958] Promotion: BatchLoad failed for key=k_write_fail, error=INVALID_KEY
+E0928 10:10:46.966266 22985 storage_backend.cpp:1732] Key not found: default
+k_normal
+E0928 10:10:46.966270 22985 file_storage.cpp:1109] Batch load object failed,err_code = INVALID_KEY
+W0928 10:10:46.966274 22985 file_storage.cpp:958] Promotion: BatchLoad failed for key=k_normal, error=INVALID_KEY
+I0928 10:10:46.966279 22985 file_storage.cpp:118] Shutdown FileStorage...
+I0928 10:10:46.966281 22985 aligned_client_buffer.cpp:161] AlignedClientBufferAllocator: freeing aligned memory at 0xaaaaf00fb000 (4194304 bytes)
+[       OK ] FileStoragePromotionTest.PerKeyFailuresAreIndependent (4 ms)
+[ RUN      ] FileStoragePromotionTest.AllocStartFailureNotifiesMaster
+I0928 10:10:46.967248 22985 client_metric.cpp:67] Client metrics enabled (default enabled)
+I0928 10:10:46.967257 22985 client_metric.cpp:68] Client bandwidth summary enabled via MC_STORE_CLIENT_METRIC_BANDWIDTH
+I0928 10:10:46.969345 22985 client_service.cpp:408] client_id=14646841580859072825-12814852017808700807
+I0928 10:10:46.969357 22985 client_service.cpp:422] Client metrics enabled but reporting disabled (interval=0)
+I0928 10:10:46.969964 22985 aligned_client_buffer.cpp:127] AlignedClientBufferAllocator: allocated 4194304 bytes at address 0xaaaaf04fc000 (aligned to 4096 bytes)
+I0928 10:10:46.970537 22985 storage_backend.cpp:1507] BucketStorageBackend: Allocated 33554432 bytes aligned buffer at 0xffff8dfff000
+I0928 10:10:46.970558 22985 file_storage.cpp:118] Shutdown FileStorage...
+I0928 10:10:46.970563 22985 aligned_client_buffer.cpp:161] AlignedClientBufferAllocator: freeing aligned memory at 0xaaaaf04fc000 (4194304 bytes)
+[       OK ] FileStoragePromotionTest.AllocStartFailureNotifiesMaster (4 ms)
+[ RUN      ] FileStoragePromotionTest.PostAllocFailuresAllNotifyMaster
+I0928 10:10:46.971524 22985 client_metric.cpp:67] Client metrics enabled (default enabled)
+I0928 10:10:46.971534 22985 client_metric.cpp:68] Client bandwidth summary enabled via MC_STORE_CLIENT_METRIC_BANDWIDTH
+I0928 10:10:46.973629 22985 client_service.cpp:408] client_id=18250715914602567308-13437757749668933005
+I0928 10:10:46.973641 22985 client_service.cpp:422] Client metrics enabled but reporting disabled (interval=0)
+I0928 10:10:46.974252 22985 aligned_client_buffer.cpp:127] AlignedClientBufferAllocator: allocated 4194304 bytes at address 0xaaaaf08fd000 (aligned to 4096 bytes)
+I0928 10:10:46.974836 22985 storage_backend.cpp:1507] BucketStorageBackend: Allocated 33554432 bytes aligned buffer at 0xffff8dfff000
+E0928 10:10:46.974864 22985 storage_backend.cpp:1732] Key not found: default
+k_load_fail
+E0928 10:10:46.974870 22985 file_storage.cpp:1109] Batch load object failed,err_code = INVALID_KEY
+W0928 10:10:46.974874 22985 file_storage.cpp:958] Promotion: BatchLoad failed for key=k_load_fail, error=INVALID_KEY
+E0928 10:10:46.974880 22985 storage_backend.cpp:1732] Key not found: default
+k_notify_fail
+E0928 10:10:46.974884 22985 file_storage.cpp:1109] Batch load object failed,err_code = INVALID_KEY
+W0928 10:10:46.974887 22985 file_storage.cpp:958] Promotion: BatchLoad failed for key=k_notify_fail, error=INVALID_KEY
+I0928 10:10:46.974895 22985 file_storage.cpp:118] Shutdown FileStorage...
+I0928 10:10:46.974900 22985 aligned_client_buffer.cpp:161] AlignedClientBufferAllocator: freeing aligned memory at 0xaaaaf08fd000 (4194304 bytes)
+[       OK ] FileStoragePromotionTest.PostAllocFailuresAllNotifyMaster (4 ms)
+[ RUN      ] FileStoragePromotionTest.PrefetchKeysStopsBatchOnDramPressure
+I0928 10:10:46.975831 22985 client_metric.cpp:67] Client metrics enabled (default enabled)
+I0928 10:10:46.975839 22985 client_metric.cpp:68] Client bandwidth summary enabled via MC_STORE_CLIENT_METRIC_BANDWIDTH
+I0928 10:10:46.977919 22985 client_service.cpp:408] client_id=7440291186766661091-18324614411707341711
+I0928 10:10:46.977931 22985 client_service.cpp:422] Client metrics enabled but reporting disabled (interval=0)
+I0928 10:10:46.978802 22985 aligned_client_buffer.cpp:127] AlignedClientBufferAllocator: allocated 4194304 bytes at address 0xaaaaf0cfe000 (aligned to 4096 bytes)
+I0928 10:10:46.979382 22985 storage_backend.cpp:1507] BucketStorageBackend: Allocated 33554432 bytes aligned buffer at 0xffff8dfff000
+E0928 10:10:46.979406 22985 storage_backend.cpp:1732] Key not found: default
+pk2
+E0928 10:10:46.979413 22985 file_storage.cpp:1109] Batch load object failed,err_code = INVALID_KEY
+W0928 10:10:46.979416 22985 file_storage.cpp:958] Promotion: BatchLoad failed for key=pk2, error=INVALID_KEY
+E0928 10:10:46.979422 22985 storage_backend.cpp:1732] Key not found: default
+pk3
+E0928 10:10:46.979426 22985 file_storage.cpp:1109] Batch load object failed,err_code = INVALID_KEY
+W0928 10:10:46.979429 22985 file_storage.cpp:958] Promotion: BatchLoad failed for key=pk3, error=INVALID_KEY
+E0928 10:10:46.979434 22985 storage_backend.cpp:1732] Key not found: default
+pk4
+E0928 10:10:46.979437 22985 file_storage.cpp:1109] Batch load object failed,err_code = INVALID_KEY
+W0928 10:10:46.979440 22985 file_storage.cpp:958] Promotion: BatchLoad failed for key=pk4, error=INVALID_KEY
+/home/<user>/prefetch_916/src/Mooncake-pr3/mooncake-store/tests/file_storage_promotion_test.cpp:414: Failure
+Expected equality of these values:
+  fake->alloc_calls.load()
+    Which is: 4
+  1
+
+/home/<user>/prefetch_916/src/Mooncake-pr3/mooncake-store/tests/file_storage_promotion_test.cpp:415: Failure
+Expected equality of these values:
+  attempted
+    Which is: { "pk1", "pk2", "pk3", "pk4" }
+  std::vector<std::string>({"pk1"})
+    Which is: { "pk1" }
+
+/home/<user>/prefetch_916/src/Mooncake-pr3/mooncake-store/tests/file_storage_promotion_test.cpp:416: Failure
+Expected equality of these values:
+  fake->notify_failure_calls.load()
+    Which is: 4
+  1
+
+/home/<user>/prefetch_916/src/Mooncake-pr3/mooncake-store/tests/file_storage_promotion_test.cpp:417: Failure
+Expected equality of these values:
+  fake->notify_failure_keys
+    Which is: { "pk1", "pk2", "pk3", "pk4" }
+  std::vector<std::string>({"pk1"})
+    Which is: { "pk1" }
+
+I0928 10:10:46.979555 22985 file_storage.cpp:118] Shutdown FileStorage...
+I0928 10:10:46.979559 22985 aligned_client_buffer.cpp:161] AlignedClientBufferAllocator: freeing aligned memory at 0xaaaaf0cfe000 (4194304 bytes)
+[  FAILED  ] FileStoragePromotionTest.PrefetchKeysStopsBatchOnDramPressure (4 ms)
+[----------] 12 tests from FileStoragePromotionTest (57 ms total)
+
+[----------] Global test environment tear-down
+[==========] 12 tests from 1 test suite ran. (57 ms total)
+[  PASSED  ] 11 tests.
+[  FAILED  ] 1 test, listed below:
+[  FAILED  ] FileStoragePromotionTest.PrefetchKeysStopsBatchOnDramPressure
+
+ 1 FAILED TEST
+
+    Start 135: prefetch_throttle_test
+2/3 Test #135: prefetch_throttle_test ...........***Failed    0.03 sec
+Running main() from /home/<user>/prefetch_916/920_pre_pr/vendor/googletest-1.17.0/googletest/src/gtest_main.cc
+[==========] Running 13 tests from 1 test suite.
+[----------] Global test environment set-up.
+[----------] 13 tests from PrefetchThrottleTest
+[ RUN      ] PrefetchThrottleTest.ReserveDedupsWithinTtl
+[       OK ] PrefetchThrottleTest.ReserveDedupsWithinTtl (0 ms)
+[ RUN      ] PrefetchThrottleTest.ReserveAllowsNewKeysOnly
+[       OK ] PrefetchThrottleTest.ReserveAllowsNewKeysOnly (0 ms)
+[ RUN      ] PrefetchThrottleTest.ZeroTtlDisablesDedup
+[       OK ] PrefetchThrottleTest.ZeroTtlDisablesDedup (0 ms)
+[ RUN      ] PrefetchThrottleTest.ZeroTtlKeepsNoPerKeyState
+/home/<user>/prefetch_916/src/Mooncake-pr3/mooncake-store/tests/prefetch_throttle_test.cpp:70: Failure
+Expected equality of these values:
+  throttle.stateOf("a")
+    Which is: 1-byte object <02>
+  PrefetchThrottle::State::kFailed
+    Which is: 1-byte object <03>
+
+/home/<user>/prefetch_916/src/Mooncake-pr3/mooncake-store/tests/prefetch_throttle_test.cpp:71: Failure
+Expected equality of these values:
+  throttle.stateOf("b")
+    Which is: 1-byte object <01>
+  PrefetchThrottle::State::kFailed
+    Which is: 1-byte object <03>
+
+[  FAILED  ] PrefetchThrottleTest.ZeroTtlKeepsNoPerKeyState (0 ms)
+[ RUN      ] PrefetchThrottleTest.FailedKeyRetriesAfterBackoffNotFullTtl
+[       OK ] PrefetchThrottleTest.FailedKeyRetriesAfterBackoffNotFullTtl (0 ms)
+[ RUN      ] PrefetchThrottleTest.CooldownBlocksUntilWindowExpires
+[       OK ] PrefetchThrottleTest.CooldownBlocksUntilWindowExpires (0 ms)
+[ RUN      ] PrefetchThrottleTest.ZeroCooldownDisablesBackoff
+[       OK ] PrefetchThrottleTest.ZeroCooldownDisablesBackoff (0 ms)
+[ RUN      ] PrefetchThrottleTest.CompletionLifecycle
+[       OK ] PrefetchThrottleTest.CompletionLifecycle (0 ms)
+[ RUN      ] PrefetchThrottleTest.AlreadyResidentClearsPromoteAttempted
+[       OK ] PrefetchThrottleTest.AlreadyResidentClearsPromoteAttempted (0 ms)
+[ RUN      ] PrefetchThrottleTest.WaitForCompletionReturnsOnComplete
+[       OK ] PrefetchThrottleTest.WaitForCompletionReturnsOnComplete (5 ms)
+[ RUN      ] PrefetchThrottleTest.WaitForCompletionTimesOutOrFailsFast
+[       OK ] PrefetchThrottleTest.WaitForCompletionTimesOutOrFailsFast (19 ms)
+[ RUN      ] PrefetchThrottleTest.DelegatedKeysBlockRetriggerAndNeverWait
+[       OK ] PrefetchThrottleTest.DelegatedKeysBlockRetriggerAndNeverWait (0 ms)
+[ RUN      ] PrefetchThrottleTest.ConcurrentReserveGrantsEachKeyOnce
+[       OK ] PrefetchThrottleTest.ConcurrentReserveGrantsEachKeyOnce (0 ms)
+[----------] 13 tests from PrefetchThrottleTest (26 ms total)
+
+[----------] Global test environment tear-down
+[==========] 13 tests from 1 test suite ran. (26 ms total)
+[  PASSED  ] 12 tests.
+[  FAILED  ] 1 test, listed below:
+[  FAILED  ] PrefetchThrottleTest.ZeroTtlKeepsNoPerKeyState
+
+ 1 FAILED TEST
+
+    Start 136: prefetch_task_master_test
+3/3 Test #136: prefetch_task_master_test ........***Failed    7.08 sec
+Running main() from /home/<user>/prefetch_916/920_pre_pr/vendor/googletest-1.17.0/googletest/src/gtest_main.cc
+[==========] Running 7 tests from 1 test suite.
+[----------] Global test environment set-up.
+[----------] 7 tests from PrefetchTaskMasterTest
+[ RUN      ] PrefetchTaskMasterTest.RegisterSuccessThenDuplicateSkips
+I0928 10:10:47.032507 23086 client_offboarding.cpp:94] Client offboarding worker started
+I0928 10:10:47.032734 23089 master_service.cpp:3028] Task cleanup thread started
+I0928 10:10:47.034657 23085 master_service.cpp:890] client_id=4922036454029399975-8038912847590474680, action=mount_segment, segment_name=prefetch_seg_1
+I0928 10:10:47.035215 23089 master_service.cpp:3051] Task cleanup thread stopped
+I0928 10:10:48.086958 23086 client_offboarding.cpp:163] Client offboarding worker stopped
+[       OK ] PrefetchTaskMasterTest.RegisterSuccessThenDuplicateSkips (1055 ms)
+[ RUN      ] PrefetchTaskMasterTest.MissingKeyNotFound
+I0928 10:10:48.087806 23093 client_offboarding.cpp:94] Client offboarding worker started
+I0928 10:10:48.088006 23096 master_service.cpp:3028] Task cleanup thread started
+I0928 10:10:48.088248 23085 master_service.cpp:890] client_id=813457770726181523-6517747462094125721, action=mount_segment, segment_name=prefetch_seg_2
+I0928 10:10:48.088577 23096 master_service.cpp:3051] Task cleanup thread stopped
+I0928 10:10:49.088397 23093 client_offboarding.cpp:163] Client offboarding worker stopped
+[       OK ] PrefetchTaskMasterTest.MissingKeyNotFound (1001 ms)
+[ RUN      ] PrefetchTaskMasterTest.NonHolderRejected
+I0928 10:10:49.088994 23100 client_offboarding.cpp:94] Client offboarding worker started
+I0928 10:10:49.089140 23103 master_service.cpp:3028] Task cleanup thread started
+I0928 10:10:49.089473 23085 master_service.cpp:890] client_id=17026061573252082381-16758419873381721220, action=mount_segment, segment_name=prefetch_seg_3
+I0928 10:10:49.089547 23085 master_service.cpp:890] client_id=15728324895329367231-17475169851989426846, action=mount_segment, segment_name=prefetch_seg_3b
+I0928 10:10:49.089983 23103 master_service.cpp:3051] Task cleanup thread stopped
+I0928 10:10:50.089371 23100 client_offboarding.cpp:163] Client offboarding worker stopped
+[       OK ] PrefetchTaskMasterTest.NonHolderRejected (1000 ms)
+[ RUN      ] PrefetchTaskMasterTest.MemoryReplicaPresentSkips
+I0928 10:10:50.089820 23107 client_offboarding.cpp:94] Client offboarding worker started
+I0928 10:10:50.089937 23110 master_service.cpp:3028] Task cleanup thread started
+I0928 10:10:50.090142 23085 master_service.cpp:890] client_id=2397588510847230463-1233034133907056281, action=mount_segment, segment_name=prefetch_seg_4
+I0928 10:10:50.090504 23110 master_service.cpp:3051] Task cleanup thread stopped
+I0928 10:10:51.090260 23107 client_offboarding.cpp:163] Client offboarding worker stopped
+[       OK ] PrefetchTaskMasterTest.MemoryReplicaPresentSkips (1000 ms)
+[ RUN      ] PrefetchTaskMasterTest.NotifyPromotionSuccessGrantsLeaseForPrefetch
+I0928 10:10:51.090724 23114 client_offboarding.cpp:94] Client offboarding worker started
+I0928 10:10:51.090893 23117 master_service.cpp:3028] Task cleanup thread started
+I0928 10:10:51.091194 23085 master_service.cpp:890] client_id=14720672649227947388-15880963725143443085, action=mount_segment, segment_name=prefetch_seg_5
+I0928 10:10:51.091781 23117 master_service.cpp:3051] Task cleanup thread stopped
+I0928 10:10:52.091105 23114 client_offboarding.cpp:163] Client offboarding worker stopped
+[       OK ] PrefetchTaskMasterTest.NotifyPromotionSuccessGrantsLeaseForPrefetch (1000 ms)
+[ RUN      ] PrefetchTaskMasterTest.PrefetchFailureDoesNotRecordCandidate
+I0928 10:10:52.091521 23121 client_offboarding.cpp:94] Client offboarding worker started
+I0928 10:10:52.091638 23124 master_service.cpp:3028] Task cleanup thread started
+I0928 10:10:52.091845 23085 master_service.cpp:890] client_id=11404143238626252463-11132577618127816103, action=mount_segment, segment_name=prefetch_seg_leak
+/home/<user>/prefetch_916/src/Mooncake-pr3/mooncake-store/tests/prefetch_task_master_test.cpp:316: Failure
+Value of: CandidateFailuresForTesting(service.get(), TenantId::Default(), "pkl") .has_value()
+  Actual: true
+Expected: false
+
+I0928 10:10:52.092209 23124 master_service.cpp:3051] Task cleanup thread stopped
+I0928 10:10:53.091850 23121 client_offboarding.cpp:163] Client offboarding worker stopped
+[  FAILED  ] PrefetchTaskMasterTest.PrefetchFailureDoesNotRecordCandidate (1000 ms)
+[ RUN      ] PrefetchTaskMasterTest.RegisterPropagatesCandidateFailureCount
+I0928 10:10:53.092267 23128 client_offboarding.cpp:94] Client offboarding worker started
+I0928 10:10:53.092389 23131 master_service.cpp:3028] Task cleanup thread started
+I0928 10:10:53.092666 23085 master_service.cpp:890] client_id=13565808398391969597-1304156050402431107, action=mount_segment, segment_name=prefetch_seg_prop
+/home/<user>/prefetch_916/src/Mooncake-pr3/mooncake-store/tests/prefetch_task_master_test.cpp:341: Failure
+Expected equality of these values:
+  TaskFailuresForTesting(service.get(), TenantId::Default(), "pkp")
+    Which is: (0)
+  std::optional<uint32_t>(2)
+    Which is: (2)
+
+/home/<user>/prefetch_916/src/Mooncake-pr3/mooncake-store/tests/prefetch_task_master_test.cpp:344: Failure
+Value of: CandidateFailuresForTesting(service.get(), TenantId::Default(), "pkp") .has_value()
+  Actual: true
+Expected: false
+
+/home/<user>/prefetch_916/src/Mooncake-pr3/mooncake-store/tests/prefetch_task_master_test.cpp:352: Failure
+Value of: CandidateFailuresForTesting(service.get(), TenantId::Default(), "pkp") .has_value()
+  Actual: true
+Expected: false
+
+I0928 10:10:53.093029 23131 master_service.cpp:3051] Task cleanup thread stopped
+I0928 10:10:54.092623 23128 client_offboarding.cpp:163] Client offboarding worker stopped
+[  FAILED  ] PrefetchTaskMasterTest.RegisterPropagatesCandidateFailureCount (1000 ms)
+[----------] 7 tests from PrefetchTaskMasterTest (7060 ms total)
+
+[----------] Global test environment tear-down
+[==========] 7 tests from 1 test suite ran. (7060 ms total)
+[  PASSED  ] 5 tests.
+[  FAILED  ] 2 tests, listed below:
+[  FAILED  ] PrefetchTaskMasterTest.PrefetchFailureDoesNotRecordCandidate
+[  FAILED  ] PrefetchTaskMasterTest.RegisterPropagatesCandidateFailureCount
+
+ 2 FAILED TESTS
+
+
+0% tests passed, 3 tests failed out of 3
+
+Total Test time (real) =   7.21 sec
+
+The following tests FAILED:
+	 88 - file_storage_promotion_test (Failed)
+	135 - prefetch_throttle_test (Failed)
+	136 - prefetch_task_master_test (Failed)
+Errors while running CTest
+CTEST_RC=8
