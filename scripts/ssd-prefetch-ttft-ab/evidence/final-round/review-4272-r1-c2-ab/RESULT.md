@@ -8,4 +8,4 @@ r1 gain（(A−B)/A）：median 0.25%，mean 0.10%，p99 1.28%。三档为正，
 
 B 臂 `enable_ssd_prefetch=true`。master 指标 Promotion completed/failed/admitted 均为 0。`GLOG_v=1` 的 8 条探针里 get-side kick = 0。没有改产品代码。c=4 未跑。
 
-零触发排查见 `DIAGNOSIS.md`。测量窗口的 `GLOG_vmodule` 证据见 `VLOG_WINDOW.md`：delegating 2970，`RegisterPrefetchTask failed` 1920（样例均为 `REPLICA_IS_NOT_READY`），get-side kick 384。
+零触发排查见 `DIAGNOSIS.md`。测量窗口的 `GLOG_vmodule` 证据见 `VLOG_WINDOW.md`。`REPLICA_IS_NOT_READY` 的 D/F 对照见 `NOT_READY.md`：1920 个不同 key，失败当下 admin 查到 COMPLETE 的 LOCAL_DISK；settle 300s 后计数不变。
