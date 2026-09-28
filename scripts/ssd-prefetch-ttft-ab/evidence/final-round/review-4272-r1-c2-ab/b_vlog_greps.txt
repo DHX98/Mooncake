@@ -1,0 +1,8 @@
+VLOG_PROBE arm=b BENCH_RC=0 n=8 c=2
+kick_vllm=0
+kick_master=0
+promotion_completed=0
+prefetch_task_registered=0
+dram_saturated=0
+slot_exhaust=0
+cooldown_event_lines=0
