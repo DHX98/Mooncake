@@ -8,4 +8,4 @@ r1 gain（(A−B)/A）：median 0.25%，mean 0.10%，p99 1.28%。三档为正，
 
 B 臂 `enable_ssd_prefetch=true`。master 指标 Promotion completed/failed/admitted 均为 0。`GLOG_v=1` 的 8 条探针里 get-side kick = 0。没有改产品代码。c=4 未跑。
 
-零触发排查见 `DIAGNOSIS.md`。prefetcher 已初始化，运行中的 connector 会传 `prefetch_to_memory=True`。闸门和 `test_prefetch_on_exist.py` 的失败都是无 NPU context 时 Ascend segment 分配返回 -1。
+零触发排查见 `DIAGNOSIS.md`。测量窗口的 `GLOG_vmodule` 证据见 `VLOG_WINDOW.md`：delegating 2970，`RegisterPrefetchTask failed` 1920（样例均为 `REPLICA_IS_NOT_READY`），get-side kick 384。
