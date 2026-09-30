@@ -34,6 +34,7 @@ Prerequisites:
     ``MOONCAKE_OFFLOAD_BUCKET_SIZE_LIMIT_BYTES=10485760`` on the client.
 """
 
+import ctypes
 import os
 import time
 import unittest
@@ -216,6 +217,45 @@ class TestPrefetchOnExist(unittest.TestCase):
 
         got = self.store.get(cold_key)
         self.assertEqual(bytes(got), expected, "get after prefetch must be bit-exact")
+
+    def test_get_wait_success_carries_live_lease(self):
+        """ssd_get_wait_ms > 0: a get that arrives while the promotion is
+        still in flight waits for it, and the post-wait transfer must carry
+        a live lease. A QueryReadOnly result (lease_ttl_ms forced to 0)
+        would turn every successful wait into LEASE_EXPIRED at BatchGet's
+        post-transfer lease check."""
+        reference = self._make_cold_keys("waitlease")
+        timestamp = int(time.time() * 1000)
+        big_key = f"prefetch_waitlease_big_{timestamp}"
+        big_value = os.urandom(16 * 1024 * 1024)
+        self.assertEqual(self.store.put(big_key, big_value), 0)
+        cold_key, type_hist = self._find_cold_key([big_key])
+        self.assertEqual(cold_key, big_key)
+        print(f"replica-type histogram: {type_hist}")
+
+        self.assertEqual(self.store.is_exist(big_key, _prefetch_options(True)), 1)
+        # Let the async job register the task and start the SSD read, so
+        # the get lands inside the kInFlight window rather than kTriggered
+        # (no wait) or after kCompleted (initial query already sees MEMORY).
+        time.sleep(0.025)
+
+        capacity = len(big_value)
+        destination = (ctypes.c_ubyte * capacity)()
+        destination_ptr = ctypes.addressof(destination)
+        self.assertEqual(self.store.register_buffer(destination_ptr, capacity), 0)
+        try:
+            results = self.store.batch_get_into_multi_buffers(
+                [big_key], [[destination_ptr]], [[capacity]], False
+            )
+            self.assertEqual(
+                list(results),
+                [capacity],
+                "post-wait get must succeed; a forced-expired lease turns "
+                "it into LEASE_EXPIRED",
+            )
+            self.assertEqual(bytes(destination), big_value)
+        finally:
+            self.store.unregister_buffer(destination_ptr)
 
     def test_exist_without_prefetch_does_not_promote(self):
         """Negative control: plain is_exist must not promote. Only
