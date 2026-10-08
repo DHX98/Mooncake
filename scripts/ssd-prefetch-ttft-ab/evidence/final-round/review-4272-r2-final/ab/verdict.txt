@@ -1,0 +1,7 @@
+A_RC=0
+B_RC=0
+A_R1={'success': 48, 'fail': 0, 'med': '1560.81', 'mean': '1473.32', 'p99': '2344.79'}
+B_R1={'success': 48, 'fail': 0, 'med': '1290.98', 'mean': '1361.25', 'p99': '2226.75'}
+GAINS={'med': 17.287818504494457, 'mean': 7.6066299242527045, 'p99': 5.034139517824623}
+A_GATE={'n_fill_keys': '3840', 'n_sampled': '64', 'MEMORY': '9', 'LOCAL_DISK': '59', 'LOCAL_DISK-only': '55', 'MISSING': '0', 'GATE_PASS': '1', 'attempt': '1', 'reason': 'http_batch_query_keys'}
+B_GATE={'n_fill_keys': '3840', 'n_sampled': '64', 'MEMORY': '8', 'LOCAL_DISK': '59', 'LOCAL_DISK-only': '56', 'MISSING': '0', 'GATE_PASS': '1', 'attempt': '1', 'reason': 'http_batch_query_keys'}

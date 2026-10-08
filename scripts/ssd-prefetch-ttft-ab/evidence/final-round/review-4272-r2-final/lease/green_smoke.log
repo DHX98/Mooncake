@@ -1,0 +1,617 @@
+STORE_SO=<home>/prefetch_916/src/Mooncake-r2/build/mooncake-integration/store.cpython-312-aarch64-linux-gnu.so
+WARNING: Logging before InitGoogleLogging() is written to STDERR
+I1008 11:35:04.909933 213777 client_metric.cpp:80] Client metrics enabled (default enabled)
+I1008 11:35:04.910013 213777 client_metric.cpp:81] Client bandwidth summary enabled via MC_STORE_CLIENT_METRIC_BANDWIDTH
+I1008 11:35:04.943498 213777 client_service.cpp:458] client_id=6867364668888785017-17058773568192761517
+I1008 11:35:04.943518 213777 client_service.cpp:472] Client metrics enabled but reporting disabled (interval=0)
+I1008 11:35:04.946089 213777 client_service.cpp:1111] Storage root directory is: /tmp/mooncake_ci_ssd_offload
+I1008 11:35:04.946103 213777 client_service.cpp:1112] Fs subdir is: mooncake_cluster
+I1008 11:35:04.946107 213777 client_service.cpp:1113] Disk eviction enabled: 1
+I1008 11:35:04.946111 213777 client_service.cpp:1115] Quota bytes: 0
+I1008 11:35:04.946547 213777 storage_backend.cpp:122] Reconstructing storage state from disk at: "/tmp/mooncake_ci_ssd_offload/mooncake_cluster"
+I1008 11:35:04.946650 213777 storage_backend.cpp:212] Init: Quota: 5599241714073, Used: 0, Available: 5599241714073
+I1008 11:35:04.946702 213777 transfer_engine_impl.cpp:1140] Metrics reporting is disabled (set MC_TE_METRIC=1 to enable)
+I1008 11:35:04.946745 213777 transfer_engine_impl.cpp:146] Transfer Engine parseHostNameWithPort. server_name: localhost port: 12424
+I1008 11:35:04.949992 213777 transfer_metadata_plugin.cpp:1462] Found active interface enp189s0f0 with IP <ip>
+I1008 11:35:04.950035 213777 transfer_metadata_plugin.cpp:1451] Skipping interface virbr0 (not UP or not RUNNING)
+I1008 11:35:04.950040 213777 transfer_metadata_plugin.cpp:1462] Found active interface docker0 with IP <ip>
+I1008 11:35:04.950044 213777 transfer_metadata_plugin.cpp:1462] Found active interface tunl0 with IP <ip>
+I1008 11:35:04.950107 213777 transfer_engine_impl.cpp:213] Transfer Engine RPC using new RPC mapping, listening on <ip>:16903
+E1008 11:35:04.953397 213777 transfer_metadata_plugin.cpp:355] GET http://<ip>:8080/metadata?key=mooncake%2Frpc_meta%2Flocalhost%3A12424 http=404 body: metadata not found
+I1008 11:35:04.954128 213777 client_service.cpp:891] Transfer engine auto discovery is disabled for protocol: tcp
+W1008 11:35:04.954142 213777 client_service.cpp:926] TCP protocol does not use device names, ignoring
+W1008 11:35:04.954763 213777 transfer_metadata.cpp:1322] Failed to retrieve segment descriptor, name localhost:12424
+E1008 11:35:04.955745 213777 transfer_metadata_plugin.cpp:355] GET http://<ip>:8080/metadata?key=mooncake%2Fram%2Flocalhost%3A12424 http=404 body: metadata not found
+I1008 11:35:04.956241 213777 tcp_transport.cpp:433] TcpTransport: listen on port 16665
+I1008 11:35:04.956459 213777 tcp_transport.cpp:449] TcpTransport: I/O pool started with 1 thread(s)
+I1008 11:35:04.957574 213777 transfer_task.cpp:1043] MC_STORE_MEMCPY not set, auto-detected: TCP-only environment, memcpy enabled
+I1008 11:35:04.957594 213777 real_client.cpp:1047] Successfully created client on port 12424 after 1 attempt(s)
+I1008 11:35:04.958822 213777 real_client.cpp:1082] Registering local memory: 536870912 bytes
+I1008 11:35:04.959820 213777 real_client.cpp:1224] Mounting segment: 536870912 bytes, 536870912 of 536870912
+completed 500 entries
+completed 1000 entries
+completed 500 entries
+completed 1000 entries
+
+=== Put Operations STATISTICS ===
+Operations: 1000 (Success: 1000, Failure: 0)
+Success Rate: 100.00%
+Duration: 4.93 seconds
+Data Transferred: 1000.00 MB
+Latency (ms): Min=0.56, Max=1.85, Avg=0.75
+Percentiles (ms): P90=0.85, P99=1.18, P999=1.18
+==================================================
+
+=== Batch Get Operations STATISTICS ===
+Operations: 1000 (Success: 1000, Failure: 0)
+Success Rate: 100.00%
+Duration: 32.89 seconds
+Data Transferred: 1000.00 MB
+Latency (ms): Min=0.81, Max=3.82, Avg=1.15
+Percentiles (ms): P90=1.38, P99=2.01, P999=2.01
+==================================================
+Cleanup completed
+.Thread 0 started
+Thread 1 started
+Thread 2 started
+Thread 3 started
+Thread 3 completed
+Thread 2 completed
+Thread 0 completed
+Thread 1 completed
+Cleanup completed
+
+=== Concurrent Put Operations STATISTICS ===
+Operations: 4000 (Success: 4000, Failure: 0)
+Success Rate: 100.00%
+Duration: 0.00 seconds
+Data Transferred: 4000.00 MB
+Latency (ms): Min=0.27, Max=2.40, Avg=0.59
+Percentiles (ms): P90=0.98, P99=1.32, P999=1.82
+==================================================
+
+=== Concurrent Get Operations STATISTICS ===
+Operations: 4000 (Success: 4000, Failure: 0)
+Success Rate: 100.00%
+Duration: 0.00 seconds
+Data Transferred: 4000.00 MB
+Latency (ms): Min=0.39, Max=24.55, Avg=1.51
+Percentiles (ms): P90=2.26, P99=6.48, P999=16.43
+==================================================
+
+=== Concurrent overall STATISTICS ===
+Concurrent Throughput: 1058.28 ops/sec, 1058.28 MB/s
+Total Operations: 8000, Duration: 7.56 seconds
+Put Concurrency Efficiency: 400.00%
+  • Average Thread Time: 0.6095s
+  • Slowest Thread Time: 0.6102s
+  • Efficiency Ratio: 1.00
+Get Concurrency Efficiency: 400.00%
+  • Average Thread Time: 1.7618s
+  • Slowest Thread Time: 1.9479s
+  • Efficiency Ratio: 0.90
+.completed 500 entries
+completed 1000 entries
+completed 500 entries
+completed 1000 entries
+
+=== Put Operations STATISTICS ===
+Operations: 1000 (Success: 1000, Failure: 0)
+Success Rate: 100.00%
+Duration: 4.91 seconds
+Data Transferred: 1000.00 MB
+Latency (ms): Min=0.56, Max=2.26, Avg=0.72
+Percentiles (ms): P90=0.97, P99=1.21, P999=1.21
+==================================================
+
+=== Get Operations STATISTICS ===
+Operations: 1000 (Success: 1000, Failure: 0)
+Success Rate: 100.00%
+Duration: 0.79 seconds
+Data Transferred: 1000.00 MB
+Latency (ms): Min=0.35, Max=1.57, Avg=0.54
+Percentiles (ms): P90=0.80, P99=0.92, P999=0.92
+==================================================
+Cleanup completed
+.
+----------------------------------------------------------------------
+Ran 3 tests in 67.352s
+
+OK
+sWARNING: Logging before InitGoogleLogging() is written to STDERR
+I1008 11:36:14.948637 215970 client_metric.cpp:80] Client metrics enabled (default enabled)
+I1008 11:36:14.948694 215970 client_metric.cpp:81] Client bandwidth summary enabled via MC_STORE_CLIENT_METRIC_BANDWIDTH
+I1008 11:36:14.951889 215970 client_service.cpp:458] client_id=16449961943414899596-17613468918250775989
+I1008 11:36:14.951911 215970 client_service.cpp:472] Client metrics enabled but reporting disabled (interval=0)
+I1008 11:36:14.953680 215970 client_service.cpp:1111] Storage root directory is: /tmp/mooncake_ci_promotion
+I1008 11:36:14.953696 215970 client_service.cpp:1112] Fs subdir is: mooncake_cluster
+I1008 11:36:14.953699 215970 client_service.cpp:1113] Disk eviction enabled: 1
+I1008 11:36:14.953703 215970 client_service.cpp:1115] Quota bytes: 0
+I1008 11:36:14.954136 215970 storage_backend.cpp:122] Reconstructing storage state from disk at: "/tmp/mooncake_ci_promotion/mooncake_cluster"
+I1008 11:36:14.954217 215970 storage_backend.cpp:212] Init: Quota: 5599241714073, Used: 0, Available: 5599241714073
+I1008 11:36:14.954263 215970 transfer_engine_impl.cpp:1140] Metrics reporting is disabled (set MC_TE_METRIC=1 to enable)
+I1008 11:36:14.954290 215970 transfer_engine_impl.cpp:146] Transfer Engine parseHostNameWithPort. server_name: localhost port: 12434
+I1008 11:36:14.957687 215970 transfer_metadata_plugin.cpp:1462] Found active interface enp189s0f0 with IP <ip>
+I1008 11:36:14.957706 215970 transfer_metadata_plugin.cpp:1451] Skipping interface virbr0 (not UP or not RUNNING)
+I1008 11:36:14.957712 215970 transfer_metadata_plugin.cpp:1462] Found active interface docker0 with IP <ip>
+I1008 11:36:14.957715 215970 transfer_metadata_plugin.cpp:1462] Found active interface tunl0 with IP <ip>
+I1008 11:36:14.957803 215970 transfer_engine_impl.cpp:213] Transfer Engine RPC using new RPC mapping, listening on <ip>:15547
+E1008 11:36:14.960399 215970 transfer_metadata_plugin.cpp:355] GET http://<ip>:8080/metadata?key=mooncake%2Frpc_meta%2Flocalhost%3A12434 http=404 body: metadata not found
+I1008 11:36:14.960969 215970 client_service.cpp:891] Transfer engine auto discovery is disabled for protocol: tcp
+W1008 11:36:14.961447 215970 transfer_metadata.cpp:1322] Failed to retrieve segment descriptor, name localhost:12434
+E1008 11:36:14.961935 215970 transfer_metadata_plugin.cpp:355] GET http://<ip>:8080/metadata?key=mooncake%2Fram%2Flocalhost%3A12434 http=404 body: metadata not found
+I1008 11:36:14.962395 215970 tcp_transport.cpp:433] TcpTransport: listen on port 16161
+I1008 11:36:14.962548 215970 tcp_transport.cpp:449] TcpTransport: I/O pool started with 1 thread(s)
+I1008 11:36:14.963624 215970 transfer_task.cpp:1043] MC_STORE_MEMCPY not set, auto-detected: TCP-only environment, memcpy enabled
+I1008 11:36:14.963642 215970 real_client.cpp:1047] Successfully created client on port 12434 after 1 attempt(s)
+I1008 11:36:14.965139 215970 real_client.cpp:1082] Registering local memory: 67108864 bytes
+I1008 11:36:14.966102 215970 real_client.cpp:1224] Mounting segment: 33554432 bytes, 33554432 of 33554432
+I1008 11:36:14.967931 215970 real_client.cpp:1329] Offload RPC server started on port 38469
+I1008 11:36:15.150038 215970 aligned_client_buffer.cpp:127] AlignedClientBufferAllocator: allocated 1342177280 bytes at address 0xfffb6f7ef000 (aligned to 4096 bytes)
+I1008 11:36:15.151423 215970 storage_backend.cpp:1511] BucketStorageBackend: Allocated 33554432 bytes aligned buffer at 0xfffb65fff000
+I1008 11:36:15.153345 215970 storage_backend.cpp:2160] Bucket backend max_total_size not set; using 90% of disk capacity: 5599241714073 bytes
+I1008 11:36:15.153379 215970 storage_backend.cpp:2167] Initialized BucketIdGenerator with fresh start. No existing buckets found; starting from ID: 7337817602978
+I1008 11:36:15.153385 215970 file_storage.cpp:150] IsEnableOffloading result: true
+I1008 11:36:15.154114 216206 file_storage.cpp:215] Starting periodic task with interval: 2s, running is: 1
+I1008 11:36:15.154202 216207 file_storage.cpp:1274] action=client_buffer_gc_thread_started
+.I1008 11:36:41.169788 215970 file_storage.cpp:118] Shutdown FileStorage...
+I1008 11:36:44.155961 216207 file_storage.cpp:1295] action=client_buffer_gc_thread_stopped
+I1008 11:36:44.156072 215970 aligned_client_buffer.cpp:161] AlignedClientBufferAllocator: freeing aligned memory at 0xfffb6f7ef000 (1342177280 bytes)
+I1008 11:36:46.708997 215970 client_metric.cpp:80] Client metrics enabled (default enabled)
+I1008 11:36:46.709043 215970 client_metric.cpp:81] Client bandwidth summary enabled via MC_STORE_CLIENT_METRIC_BANDWIDTH
+I1008 11:36:46.713924 215970 client_service.cpp:458] client_id=9962622481977814886-2829380638514585274
+I1008 11:36:46.713949 215970 client_service.cpp:472] Client metrics enabled but reporting disabled (interval=0)
+I1008 11:36:46.714332 215970 client_service.cpp:1111] Storage root directory is: /tmp/mooncake_ci_promotion
+I1008 11:36:46.714344 215970 client_service.cpp:1112] Fs subdir is: mooncake_cluster
+I1008 11:36:46.714349 215970 client_service.cpp:1113] Disk eviction enabled: 1
+I1008 11:36:46.714352 215970 client_service.cpp:1115] Quota bytes: 0
+I1008 11:36:46.714458 215970 storage_backend.cpp:122] Reconstructing storage state from disk at: "/tmp/mooncake_ci_promotion/mooncake_cluster"
+I1008 11:36:46.715415 215970 storage_backend.cpp:212] Init: Quota: 5599241714073, Used: 16384, Available: 5599241697689
+I1008 11:36:46.715480 215970 transfer_engine_impl.cpp:1140] Metrics reporting is disabled (set MC_TE_METRIC=1 to enable)
+I1008 11:36:46.715502 215970 transfer_engine_impl.cpp:146] Transfer Engine parseHostNameWithPort. server_name: localhost port: 12626
+I1008 11:36:46.719038 215970 transfer_metadata_plugin.cpp:1462] Found active interface enp189s0f0 with IP <ip>
+I1008 11:36:46.719058 215970 transfer_metadata_plugin.cpp:1451] Skipping interface virbr0 (not UP or not RUNNING)
+I1008 11:36:46.719062 215970 transfer_metadata_plugin.cpp:1462] Found active interface docker0 with IP <ip>
+I1008 11:36:46.719066 215970 transfer_metadata_plugin.cpp:1462] Found active interface tunl0 with IP <ip>
+I1008 11:36:46.719173 215970 transfer_engine_impl.cpp:213] Transfer Engine RPC using new RPC mapping, listening on <ip>:16285
+E1008 11:36:46.720027 215970 transfer_metadata_plugin.cpp:355] GET http://<ip>:8080/metadata?key=mooncake%2Frpc_meta%2Flocalhost%3A12626 http=404 body: metadata not found
+I1008 11:36:46.720587 215970 client_service.cpp:891] Transfer engine auto discovery is disabled for protocol: tcp
+W1008 11:36:46.720988 215970 transfer_metadata.cpp:1322] Failed to retrieve segment descriptor, name localhost:12626
+E1008 11:36:46.721459 215970 transfer_metadata_plugin.cpp:355] GET http://<ip>:8080/metadata?key=mooncake%2Fram%2Flocalhost%3A12626 http=404 body: metadata not found
+I1008 11:36:46.721904 215970 tcp_transport.cpp:433] TcpTransport: listen on port 15215
+I1008 11:36:46.722067 215970 tcp_transport.cpp:449] TcpTransport: I/O pool started with 1 thread(s)
+I1008 11:36:46.722824 215970 transfer_task.cpp:1043] MC_STORE_MEMCPY not set, auto-detected: TCP-only environment, memcpy enabled
+I1008 11:36:46.722843 215970 real_client.cpp:1047] Successfully created client on port 12626 after 1 attempt(s)
+I1008 11:36:46.724324 215970 real_client.cpp:1082] Registering local memory: 67108864 bytes
+I1008 11:36:46.725314 215970 real_client.cpp:1224] Mounting segment: 33554432 bytes, 33554432 of 33554432
+I1008 11:36:46.726816 215970 real_client.cpp:1329] Offload RPC server started on port 34411
+I1008 11:36:46.906524 215970 aligned_client_buffer.cpp:127] AlignedClientBufferAllocator: allocated 1342177280 bytes at address 0xfffb6ffff000 (aligned to 4096 bytes)
+I1008 11:36:46.908203 215970 storage_backend.cpp:1511] BucketStorageBackend: Allocated 33554432 bytes aligned buffer at 0xfffb6dffd000
+I1008 11:36:46.910748 215970 storage_backend.cpp:2160] Bucket backend max_total_size not set; using 90% of disk capacity: 5599241714073 bytes
+I1008 11:36:46.910780 215970 storage_backend.cpp:2167] Initialized BucketIdGenerator with fresh start. No existing buckets found; starting from ID: 7337817729954
+I1008 11:36:46.910785 215970 file_storage.cpp:150] IsEnableOffloading result: true
+I1008 11:36:46.911437 216232 file_storage.cpp:215] Starting periodic task with interval: 2s, running is: 1
+I1008 11:36:46.911490 216233 file_storage.cpp:1274] action=client_buffer_gc_thread_started
+W1008 11:36:47.074940 215970 client_service.cpp:2052] Failed to start put operation for key=poh_32_1791459406 due to insufficient space. Consider lowering eviction_high_watermark_ratio or mounting more segments.
+W1008 11:36:47.079383 215970 client_service.cpp:2052] Failed to start put operation for key=poh_33_1791459406 due to insufficient space. Consider lowering eviction_high_watermark_ratio or mounting more segments.
+W1008 11:36:47.083484 215970 client_service.cpp:2052] Failed to start put operation for key=poh_34_1791459406 due to insufficient space. Consider lowering eviction_high_watermark_ratio or mounting more segments.
+W1008 11:36:47.087527 215970 client_service.cpp:2052] Failed to start put operation for key=poh_35_1791459406 due to insufficient space. Consider lowering eviction_high_watermark_ratio or mounting more segments.
+W1008 11:36:47.091553 215970 client_service.cpp:2052] Failed to start put operation for key=poh_36_1791459406 due to insufficient space. Consider lowering eviction_high_watermark_ratio or mounting more segments.
+W1008 11:36:47.095592 215970 client_service.cpp:2052] Failed to start put operation for key=poh_37_1791459406 due to insufficient space. Consider lowering eviction_high_watermark_ratio or mounting more segments.
+W1008 11:36:47.099619 215970 client_service.cpp:2052] Failed to start put operation for key=poh_38_1791459406 due to insufficient space. Consider lowering eviction_high_watermark_ratio or mounting more segments.
+W1008 11:36:47.103638 215970 client_service.cpp:2052] Failed to start put operation for key=poh_39_1791459406 due to insufficient space. Consider lowering eviction_high_watermark_ratio or mounting more segments.
+W1008 11:36:47.107704 215970 client_service.cpp:2052] Failed to start put operation for key=poh_40_1791459406 due to insufficient space. Consider lowering eviction_high_watermark_ratio or mounting more segments.
+W1008 11:36:47.111724 215970 client_service.cpp:2052] Failed to start put operation for key=poh_41_1791459406 due to insufficient space. Consider lowering eviction_high_watermark_ratio or mounting more segments.
+W1008 11:36:47.115779 215970 client_service.cpp:2052] Failed to start put operation for key=poh_42_1791459406 due to insufficient space. Consider lowering eviction_high_watermark_ratio or mounting more segments.
+W1008 11:36:47.119835 215970 client_service.cpp:2052] Failed to start put operation for key=poh_43_1791459406 due to insufficient space. Consider lowering eviction_high_watermark_ratio or mounting more segments.
+W1008 11:36:47.123863 215970 client_service.cpp:2052] Failed to start put operation for key=poh_44_1791459406 due to insufficient space. Consider lowering eviction_high_watermark_ratio or mounting more segments.
+W1008 11:36:47.127905 215970 client_service.cpp:2052] Failed to start put operation for key=poh_45_1791459406 due to insufficient space. Consider lowering eviction_high_watermark_ratio or mounting more segments.
+W1008 11:36:47.131932 215970 client_service.cpp:2052] Failed to start put operation for key=poh_46_1791459406 due to insufficient space. Consider lowering eviction_high_watermark_ratio or mounting more segments.
+W1008 11:36:47.135946 215970 client_service.cpp:2052] Failed to start put operation for key=poh_47_1791459406 due to insufficient space. Consider lowering eviction_high_watermark_ratio or mounting more segments.
+W1008 11:36:47.139997 215970 client_service.cpp:2052] Failed to start put operation for key=poh_48_1791459406 due to insufficient space. Consider lowering eviction_high_watermark_ratio or mounting more segments.
+W1008 11:36:47.144019 215970 client_service.cpp:2052] Failed to start put operation for key=poh_49_1791459406 due to insufficient space. Consider lowering eviction_high_watermark_ratio or mounting more segments.
+W1008 11:36:47.148041 215970 client_service.cpp:2052] Failed to start put operation for key=poh_50_1791459406 due to insufficient space. Consider lowering eviction_high_watermark_ratio or mounting more segments.
+W1008 11:36:47.152074 215970 client_service.cpp:2052] Failed to start put operation for key=poh_51_1791459406 due to insufficient space. Consider lowering eviction_high_watermark_ratio or mounting more segments.
+W1008 11:36:47.156100 215970 client_service.cpp:2052] Failed to start put operation for key=poh_52_1791459406 due to insufficient space. Consider lowering eviction_high_watermark_ratio or mounting more segments.
+W1008 11:36:47.160116 215970 client_service.cpp:2052] Failed to start put operation for key=poh_53_1791459406 due to insufficient space. Consider lowering eviction_high_watermark_ratio or mounting more segments.
+W1008 11:36:47.164182 215970 client_service.cpp:2052] Failed to start put operation for key=poh_54_1791459406 due to insufficient space. Consider lowering eviction_high_watermark_ratio or mounting more segments.
+W1008 11:36:47.168203 215970 client_service.cpp:2052] Failed to start put operation for key=poh_55_1791459406 due to insufficient space. Consider lowering eviction_high_watermark_ratio or mounting more segments.
+W1008 11:36:47.172254 215970 client_service.cpp:2052] Failed to start put operation for key=poh_56_1791459406 due to insufficient space. Consider lowering eviction_high_watermark_ratio or mounting more segments.
+W1008 11:36:47.176281 215970 client_service.cpp:2052] Failed to start put operation for key=poh_57_1791459406 due to insufficient space. Consider lowering eviction_high_watermark_ratio or mounting more segments.
+W1008 11:36:47.180303 215970 client_service.cpp:2052] Failed to start put operation for key=poh_58_1791459406 due to insufficient space. Consider lowering eviction_high_watermark_ratio or mounting more segments.
+W1008 11:36:47.184337 215970 client_service.cpp:2052] Failed to start put operation for key=poh_59_1791459406 due to insufficient space. Consider lowering eviction_high_watermark_ratio or mounting more segments.
+W1008 11:36:47.188364 215970 client_service.cpp:2052] Failed to start put operation for key=poh_60_1791459406 due to insufficient space. Consider lowering eviction_high_watermark_ratio or mounting more segments.
+W1008 11:36:47.192384 215970 client_service.cpp:2052] Failed to start put operation for key=poh_61_1791459406 due to insufficient space. Consider lowering eviction_high_watermark_ratio or mounting more segments.
+W1008 11:36:47.196441 215970 client_service.cpp:2052] Failed to start put operation for key=poh_62_1791459406 due to insufficient space. Consider lowering eviction_high_watermark_ratio or mounting more segments.
+W1008 11:36:47.200461 215970 client_service.cpp:2052] Failed to start put operation for key=poh_63_1791459406 due to insufficient space. Consider lowering eviction_high_watermark_ratio or mounting more segments.
+W1008 11:36:47.204485 215970 client_service.cpp:2052] Failed to start put operation for key=poh_64_1791459406 due to insufficient space. Consider lowering eviction_high_watermark_ratio or mounting more segments.
+W1008 11:36:47.208518 215970 client_service.cpp:2052] Failed to start put operation for key=poh_65_1791459406 due to insufficient space. Consider lowering eviction_high_watermark_ratio or mounting more segments.
+W1008 11:36:47.212539 215970 client_service.cpp:2052] Failed to start put operation for key=poh_66_1791459406 due to insufficient space. Consider lowering eviction_high_watermark_ratio or mounting more segments.
+W1008 11:36:47.216562 215970 client_service.cpp:2052] Failed to start put operation for key=poh_67_1791459406 due to insufficient space. Consider lowering eviction_high_watermark_ratio or mounting more segments.
+W1008 11:36:47.220625 215970 client_service.cpp:2052] Failed to start put operation for key=poh_68_1791459406 due to insufficient space. Consider lowering eviction_high_watermark_ratio or mounting more segments.
+W1008 11:36:47.224648 215970 client_service.cpp:2052] Failed to start put operation for key=poh_69_1791459406 due to insufficient space. Consider lowering eviction_high_watermark_ratio or mounting more segments.
+W1008 11:36:47.228695 215970 client_service.cpp:2052] Failed to start put operation for key=poh_70_1791459406 due to insufficient space. Consider lowering eviction_high_watermark_ratio or mounting more segments.
+W1008 11:36:47.232718 215970 client_service.cpp:2052] Failed to start put operation for key=poh_71_1791459406 due to insufficient space. Consider lowering eviction_high_watermark_ratio or mounting more segments.
+W1008 11:36:47.236750 215970 client_service.cpp:2052] Failed to start put operation for key=poh_72_1791459406 due to insufficient space. Consider lowering eviction_high_watermark_ratio or mounting more segments.
+W1008 11:36:47.240777 215970 client_service.cpp:2052] Failed to start put operation for key=poh_73_1791459406 due to insufficient space. Consider lowering eviction_high_watermark_ratio or mounting more segments.
+W1008 11:36:47.244804 215970 client_service.cpp:2052] Failed to start put operation for key=poh_74_1791459406 due to insufficient space. Consider lowering eviction_high_watermark_ratio or mounting more segments.
+W1008 11:36:47.248816 215970 client_service.cpp:2052] Failed to start put operation for key=poh_75_1791459406 due to insufficient space. Consider lowering eviction_high_watermark_ratio or mounting more segments.
+W1008 11:36:47.252859 215970 client_service.cpp:2052] Failed to start put operation for key=poh_76_1791459406 due to insufficient space. Consider lowering eviction_high_watermark_ratio or mounting more segments.
+W1008 11:36:47.256876 215970 client_service.cpp:2052] Failed to start put operation for key=poh_77_1791459406 due to insufficient space. Consider lowering eviction_high_watermark_ratio or mounting more segments.
+W1008 11:36:47.260901 215970 client_service.cpp:2052] Failed to start put operation for key=poh_78_1791459406 due to insufficient space. Consider lowering eviction_high_watermark_ratio or mounting more segments.
+W1008 11:36:47.264938 215970 client_service.cpp:2052] Failed to start put operation for key=poh_79_1791459406 due to insufficient space. Consider lowering eviction_high_watermark_ratio or mounting more segments.
+W1008 11:36:47.268965 215970 client_service.cpp:2052] Failed to start put operation for key=poh_80_1791459406 due to insufficient space. Consider lowering eviction_high_watermark_ratio or mounting more segments.
+W1008 11:36:47.273001 215970 client_service.cpp:2052] Failed to start put operation for key=poh_81_1791459406 due to insufficient space. Consider lowering eviction_high_watermark_ratio or mounting more segments.
+W1008 11:36:47.277029 215970 client_service.cpp:2052] Failed to start put operation for key=poh_82_1791459406 due to insufficient space. Consider lowering eviction_high_watermark_ratio or mounting more segments.
+W1008 11:36:47.281046 215970 client_service.cpp:2052] Failed to start put operation for key=poh_83_1791459406 due to insufficient space. Consider lowering eviction_high_watermark_ratio or mounting more segments.
+W1008 11:36:47.285095 215970 client_service.cpp:2052] Failed to start put operation for key=poh_84_1791459406 due to insufficient space. Consider lowering eviction_high_watermark_ratio or mounting more segments.
+W1008 11:36:47.289119 215970 client_service.cpp:2052] Failed to start put operation for key=poh_85_1791459406 due to insufficient space. Consider lowering eviction_high_watermark_ratio or mounting more segments.
+W1008 11:36:47.293144 215970 client_service.cpp:2052] Failed to start put operation for key=poh_86_1791459406 due to insufficient space. Consider lowering eviction_high_watermark_ratio or mounting more segments.
+W1008 11:36:47.297173 215970 client_service.cpp:2052] Failed to start put operation for key=poh_87_1791459406 due to insufficient space. Consider lowering eviction_high_watermark_ratio or mounting more segments.
+W1008 11:36:47.301194 215970 client_service.cpp:2052] Failed to start put operation for key=poh_88_1791459406 due to insufficient space. Consider lowering eviction_high_watermark_ratio or mounting more segments.
+W1008 11:36:47.305212 215970 client_service.cpp:2052] Failed to start put operation for key=poh_89_1791459406 due to insufficient space. Consider lowering eviction_high_watermark_ratio or mounting more segments.
+W1008 11:36:47.309260 215970 client_service.cpp:2052] Failed to start put operation for key=poh_90_1791459406 due to insufficient space. Consider lowering eviction_high_watermark_ratio or mounting more segments.
+W1008 11:36:47.313280 215970 client_service.cpp:2052] Failed to start put operation for key=poh_91_1791459406 due to insufficient space. Consider lowering eviction_high_watermark_ratio or mounting more segments.
+W1008 11:36:47.317309 215970 client_service.cpp:2052] Failed to start put operation for key=poh_92_1791459406 due to insufficient space. Consider lowering eviction_high_watermark_ratio or mounting more segments.
+W1008 11:36:47.321339 215970 client_service.cpp:2052] Failed to start put operation for key=poh_93_1791459406 due to insufficient space. Consider lowering eviction_high_watermark_ratio or mounting more segments.
+W1008 11:36:47.325366 215970 client_service.cpp:2052] Failed to start put operation for key=poh_94_1791459406 due to insufficient space. Consider lowering eviction_high_watermark_ratio or mounting more segments.
+W1008 11:36:47.329407 215970 client_service.cpp:2052] Failed to start put operation for key=poh_95_1791459406 due to insufficient space. Consider lowering eviction_high_watermark_ratio or mounting more segments.
+replica-type histogram after phase 2: {'DISK,LOCAL_DISK,MEMORY': 25, 'DISK,LOCAL_DISK': 5, 'DISK,MEMORY': 2}
+I1008 11:36:50.337553 215970 real_client.cpp:8635] Time taken for batch_get_into_offload_object_internal: 3ms, with target_rpc_service_addr: localhost:34411, key size: 1, batch_id: 1, gc ttl: 5000ms.
+I1008 11:36:50.340902 215970 real_client.cpp:8635] Time taken for batch_get_into_offload_object_internal: 2ms, with target_rpc_service_addr: localhost:34411, key size: 1, batch_id: 2, gc ttl: 5000ms.
+I1008 11:36:50.344046 215970 real_client.cpp:8635] Time taken for batch_get_into_offload_object_internal: 1ms, with target_rpc_service_addr: localhost:34411, key size: 1, batch_id: 3, gc ttl: 5000ms.
+I1008 11:36:50.345865 215970 real_client.cpp:8635] Time taken for batch_get_into_offload_object_internal: 1ms, with target_rpc_service_addr: localhost:34411, key size: 1, batch_id: 4, gc ttl: 5000ms.
+replica types for poh_7_1791459406 after promotion: ['LOCAL_DISK', 'DISK', 'MEMORY']
+.I1008 11:36:52.372611 215970 file_storage.cpp:118] Shutdown FileStorage...
+I1008 11:36:53.911937 216233 file_storage.cpp:1295] action=client_buffer_gc_thread_stopped
+I1008 11:36:53.912019 215970 aligned_client_buffer.cpp:161] AlignedClientBufferAllocator: freeing aligned memory at 0xfffb6ffff000 (1342177280 bytes)
+
+----------------------------------------------------------------------
+Ran 3 tests in 41.015s
+
+OK (skipped=1)
+WARNING: Logging before InitGoogleLogging() is written to STDERR
+I1008 11:36:56.965001 220560 client_metric.cpp:80] Client metrics enabled (default enabled)
+I1008 11:36:56.965067 220560 client_metric.cpp:81] Client bandwidth summary enabled via MC_STORE_CLIENT_METRIC_BANDWIDTH
+I1008 11:36:56.968170 220560 client_service.cpp:458] client_id=17169462093989286839-12471165187585548180
+I1008 11:36:56.968189 220560 client_service.cpp:472] Client metrics enabled but reporting disabled (interval=0)
+I1008 11:36:56.970057 220560 client_service.cpp:1111] Storage root directory is: /tmp/mooncake_ci_prefetch
+I1008 11:36:56.970072 220560 client_service.cpp:1112] Fs subdir is: mooncake_cluster
+I1008 11:36:56.970075 220560 client_service.cpp:1113] Disk eviction enabled: 1
+I1008 11:36:56.970078 220560 client_service.cpp:1115] Quota bytes: 0
+I1008 11:36:56.970520 220560 storage_backend.cpp:122] Reconstructing storage state from disk at: "/tmp/mooncake_ci_prefetch/mooncake_cluster"
+I1008 11:36:56.970603 220560 storage_backend.cpp:212] Init: Quota: 5599241714073, Used: 0, Available: 5599241714073
+I1008 11:36:56.970649 220560 transfer_engine_impl.cpp:1140] Metrics reporting is disabled (set MC_TE_METRIC=1 to enable)
+I1008 11:36:56.970675 220560 transfer_engine_impl.cpp:146] Transfer Engine parseHostNameWithPort. server_name: <ip> port: 12886
+I1008 11:36:56.974174 220560 transfer_metadata_plugin.cpp:1462] Found active interface enp189s0f0 with IP <ip>
+I1008 11:36:56.974190 220560 transfer_metadata_plugin.cpp:1451] Skipping interface virbr0 (not UP or not RUNNING)
+I1008 11:36:56.974195 220560 transfer_metadata_plugin.cpp:1462] Found active interface docker0 with IP <ip>
+I1008 11:36:56.974201 220560 transfer_metadata_plugin.cpp:1462] Found active interface tunl0 with IP <ip>
+I1008 11:36:56.974280 220560 transfer_engine_impl.cpp:213] Transfer Engine RPC using new RPC mapping, listening on <ip>:15744
+E1008 11:36:56.976971 220560 transfer_metadata_plugin.cpp:355] GET http://<ip>:8080/metadata?key=mooncake%2Frpc_meta%2F127.0.0.1%3A12886 http=404 body: metadata not found
+I1008 11:36:56.977538 220560 client_service.cpp:891] Transfer engine auto discovery is disabled for protocol: tcp
+W1008 11:36:56.977980 220560 transfer_metadata.cpp:1322] Failed to retrieve segment descriptor, name <ip>:12886
+E1008 11:36:56.978521 220560 transfer_metadata_plugin.cpp:355] GET http://<ip>:8080/metadata?key=mooncake%2Fram%2F127.0.0.1%3A12886 http=404 body: metadata not found
+I1008 11:36:56.979036 220560 tcp_transport.cpp:433] TcpTransport: listen on port 15054
+I1008 11:36:56.979306 220560 tcp_transport.cpp:449] TcpTransport: I/O pool started with 1 thread(s)
+I1008 11:36:56.980072 220560 transfer_task.cpp:1043] MC_STORE_MEMCPY not set, auto-detected: TCP-only environment, memcpy enabled
+I1008 11:36:56.980089 220560 real_client.cpp:1047] Successfully created client on port 12886 after 1 attempt(s)
+I1008 11:36:56.981248 220560 real_client.cpp:1082] Registering local memory: 67108864 bytes
+I1008 11:36:56.982173 220560 real_client.cpp:1224] Mounting segment: 33554432 bytes, 33554432 of 33554432
+I1008 11:36:56.983705 220560 real_client.cpp:1329] Offload RPC server started on port 45687
+I1008 11:36:57.164430 220560 aligned_client_buffer.cpp:127] AlignedClientBufferAllocator: allocated 1342177280 bytes at address 0xfffb7bfff000 (aligned to 4096 bytes)
+I1008 11:36:57.165913 220560 storage_backend.cpp:1511] BucketStorageBackend: Allocated 33554432 bytes aligned buffer at 0xfffb783fc000
+I1008 11:36:57.167753 220560 storage_backend.cpp:2160] Bucket backend max_total_size not set; using 90% of disk capacity: 5599241714073 bytes
+I1008 11:36:57.167788 220560 storage_backend.cpp:2167] Initialized BucketIdGenerator with fresh start. No existing buckets found; starting from ID: 7337817775504
+I1008 11:36:57.167794 220560 file_storage.cpp:150] IsEnableOffloading result: true
+I1008 11:36:57.168529 220796 file_storage.cpp:215] Starting periodic task with interval: 2s, running is: 1
+I1008 11:36:57.168618 220797 file_storage.cpp:1274] action=client_buffer_gc_thread_started
+I1008 11:36:57.168774 220560 ssd_prefetcher.cpp:134] SSD prefetch runtime: pool_size=4, ssd_get_wait_ms=2000
+I1008 11:36:57.168790 220560 real_client.cpp:1376] SSD prefetch enabled: ssd_prefetch_cooldown_sec=5s, ssd_prefetch_dedup_ttl_sec=30s, ssd_get_wait_ms=2000ms
+W1008 11:36:57.333082 220560 client_service.cpp:2052] Failed to start put operation for key=prefetch_promote_32_1791459417168 due to insufficient space. Consider lowering eviction_high_watermark_ratio or mounting more segments.
+W1008 11:36:57.337584 220560 client_service.cpp:2052] Failed to start put operation for key=prefetch_promote_33_1791459417168 due to insufficient space. Consider lowering eviction_high_watermark_ratio or mounting more segments.
+W1008 11:36:57.341665 220560 client_service.cpp:2052] Failed to start put operation for key=prefetch_promote_34_1791459417168 due to insufficient space. Consider lowering eviction_high_watermark_ratio or mounting more segments.
+W1008 11:36:57.345753 220560 client_service.cpp:2052] Failed to start put operation for key=prefetch_promote_35_1791459417168 due to insufficient space. Consider lowering eviction_high_watermark_ratio or mounting more segments.
+W1008 11:36:57.349838 220560 client_service.cpp:2052] Failed to start put operation for key=prefetch_promote_36_1791459417168 due to insufficient space. Consider lowering eviction_high_watermark_ratio or mounting more segments.
+W1008 11:36:57.353900 220560 client_service.cpp:2052] Failed to start put operation for key=prefetch_promote_37_1791459417168 due to insufficient space. Consider lowering eviction_high_watermark_ratio or mounting more segments.
+W1008 11:36:57.357991 220560 client_service.cpp:2052] Failed to start put operation for key=prefetch_promote_38_1791459417168 due to insufficient space. Consider lowering eviction_high_watermark_ratio or mounting more segments.
+W1008 11:36:57.362058 220560 client_service.cpp:2052] Failed to start put operation for key=prefetch_promote_39_1791459417168 due to insufficient space. Consider lowering eviction_high_watermark_ratio or mounting more segments.
+W1008 11:36:57.366117 220560 client_service.cpp:2052] Failed to start put operation for key=prefetch_promote_40_1791459417168 due to insufficient space. Consider lowering eviction_high_watermark_ratio or mounting more segments.
+W1008 11:36:57.370196 220560 client_service.cpp:2052] Failed to start put operation for key=prefetch_promote_41_1791459417168 due to insufficient space. Consider lowering eviction_high_watermark_ratio or mounting more segments.
+W1008 11:36:57.374253 220560 client_service.cpp:2052] Failed to start put operation for key=prefetch_promote_42_1791459417168 due to insufficient space. Consider lowering eviction_high_watermark_ratio or mounting more segments.
+W1008 11:36:57.378333 220560 client_service.cpp:2052] Failed to start put operation for key=prefetch_promote_43_1791459417168 due to insufficient space. Consider lowering eviction_high_watermark_ratio or mounting more segments.
+W1008 11:36:57.382412 220560 client_service.cpp:2052] Failed to start put operation for key=prefetch_promote_44_1791459417168 due to insufficient space. Consider lowering eviction_high_watermark_ratio or mounting more segments.
+W1008 11:36:57.386472 220560 client_service.cpp:2052] Failed to start put operation for key=prefetch_promote_45_1791459417168 due to insufficient space. Consider lowering eviction_high_watermark_ratio or mounting more segments.
+W1008 11:36:57.390542 220560 client_service.cpp:2052] Failed to start put operation for key=prefetch_promote_46_1791459417168 due to insufficient space. Consider lowering eviction_high_watermark_ratio or mounting more segments.
+W1008 11:36:57.394621 220560 client_service.cpp:2052] Failed to start put operation for key=prefetch_promote_47_1791459417168 due to insufficient space. Consider lowering eviction_high_watermark_ratio or mounting more segments.
+W1008 11:36:57.398679 220560 client_service.cpp:2052] Failed to start put operation for key=prefetch_promote_48_1791459417168 due to insufficient space. Consider lowering eviction_high_watermark_ratio or mounting more segments.
+W1008 11:36:57.402786 220560 client_service.cpp:2052] Failed to start put operation for key=prefetch_promote_49_1791459417168 due to insufficient space. Consider lowering eviction_high_watermark_ratio or mounting more segments.
+W1008 11:36:57.406852 220560 client_service.cpp:2052] Failed to start put operation for key=prefetch_promote_50_1791459417168 due to insufficient space. Consider lowering eviction_high_watermark_ratio or mounting more segments.
+W1008 11:36:57.410907 220560 client_service.cpp:2052] Failed to start put operation for key=prefetch_promote_51_1791459417168 due to insufficient space. Consider lowering eviction_high_watermark_ratio or mounting more segments.
+W1008 11:36:57.414992 220560 client_service.cpp:2052] Failed to start put operation for key=prefetch_promote_52_1791459417168 due to insufficient space. Consider lowering eviction_high_watermark_ratio or mounting more segments.
+W1008 11:36:57.419056 220560 client_service.cpp:2052] Failed to start put operation for key=prefetch_promote_53_1791459417168 due to insufficient space. Consider lowering eviction_high_watermark_ratio or mounting more segments.
+W1008 11:36:57.423120 220560 client_service.cpp:2052] Failed to start put operation for key=prefetch_promote_54_1791459417168 due to insufficient space. Consider lowering eviction_high_watermark_ratio or mounting more segments.
+W1008 11:36:57.427209 220560 client_service.cpp:2052] Failed to start put operation for key=prefetch_promote_55_1791459417168 due to insufficient space. Consider lowering eviction_high_watermark_ratio or mounting more segments.
+W1008 11:36:57.431346 220560 client_service.cpp:2052] Failed to start put operation for key=prefetch_promote_56_1791459417168 due to insufficient space. Consider lowering eviction_high_watermark_ratio or mounting more segments.
+W1008 11:36:57.435413 220560 client_service.cpp:2052] Failed to start put operation for key=prefetch_promote_57_1791459417168 due to insufficient space. Consider lowering eviction_high_watermark_ratio or mounting more segments.
+W1008 11:36:57.439471 220560 client_service.cpp:2052] Failed to start put operation for key=prefetch_promote_58_1791459417168 due to insufficient space. Consider lowering eviction_high_watermark_ratio or mounting more segments.
+W1008 11:36:57.443519 220560 client_service.cpp:2052] Failed to start put operation for key=prefetch_promote_59_1791459417168 due to insufficient space. Consider lowering eviction_high_watermark_ratio or mounting more segments.
+W1008 11:36:57.447567 220560 client_service.cpp:2052] Failed to start put operation for key=prefetch_promote_60_1791459417168 due to insufficient space. Consider lowering eviction_high_watermark_ratio or mounting more segments.
+W1008 11:36:57.451634 220560 client_service.cpp:2052] Failed to start put operation for key=prefetch_promote_61_1791459417168 due to insufficient space. Consider lowering eviction_high_watermark_ratio or mounting more segments.
+W1008 11:36:57.455682 220560 client_service.cpp:2052] Failed to start put operation for key=prefetch_promote_62_1791459417168 due to insufficient space. Consider lowering eviction_high_watermark_ratio or mounting more segments.
+W1008 11:36:57.459776 220560 client_service.cpp:2052] Failed to start put operation for key=prefetch_promote_63_1791459417168 due to insufficient space. Consider lowering eviction_high_watermark_ratio or mounting more segments.
+W1008 11:36:57.463826 220560 client_service.cpp:2052] Failed to start put operation for key=prefetch_promote_64_1791459417168 due to insufficient space. Consider lowering eviction_high_watermark_ratio or mounting more segments.
+W1008 11:36:57.467865 220560 client_service.cpp:2052] Failed to start put operation for key=prefetch_promote_65_1791459417168 due to insufficient space. Consider lowering eviction_high_watermark_ratio or mounting more segments.
+W1008 11:36:57.471974 220560 client_service.cpp:2052] Failed to start put operation for key=prefetch_promote_66_1791459417168 due to insufficient space. Consider lowering eviction_high_watermark_ratio or mounting more segments.
+W1008 11:36:57.476065 220560 client_service.cpp:2052] Failed to start put operation for key=prefetch_promote_67_1791459417168 due to insufficient space. Consider lowering eviction_high_watermark_ratio or mounting more segments.
+W1008 11:36:57.480118 220560 client_service.cpp:2052] Failed to start put operation for key=prefetch_promote_68_1791459417168 due to insufficient space. Consider lowering eviction_high_watermark_ratio or mounting more segments.
+W1008 11:36:57.484185 220560 client_service.cpp:2052] Failed to start put operation for key=prefetch_promote_69_1791459417168 due to insufficient space. Consider lowering eviction_high_watermark_ratio or mounting more segments.
+W1008 11:36:57.488229 220560 client_service.cpp:2052] Failed to start put operation for key=prefetch_promote_70_1791459417168 due to insufficient space. Consider lowering eviction_high_watermark_ratio or mounting more segments.
+W1008 11:36:57.492269 220560 client_service.cpp:2052] Failed to start put operation for key=prefetch_promote_71_1791459417168 due to insufficient space. Consider lowering eviction_high_watermark_ratio or mounting more segments.
+W1008 11:36:57.496326 220560 client_service.cpp:2052] Failed to start put operation for key=prefetch_promote_72_1791459417168 due to insufficient space. Consider lowering eviction_high_watermark_ratio or mounting more segments.
+W1008 11:36:57.500360 220560 client_service.cpp:2052] Failed to start put operation for key=prefetch_promote_73_1791459417168 due to insufficient space. Consider lowering eviction_high_watermark_ratio or mounting more segments.
+W1008 11:36:57.504446 220560 client_service.cpp:2052] Failed to start put operation for key=prefetch_promote_74_1791459417168 due to insufficient space. Consider lowering eviction_high_watermark_ratio or mounting more segments.
+W1008 11:36:57.508486 220560 client_service.cpp:2052] Failed to start put operation for key=prefetch_promote_75_1791459417168 due to insufficient space. Consider lowering eviction_high_watermark_ratio or mounting more segments.
+W1008 11:36:57.512521 220560 client_service.cpp:2052] Failed to start put operation for key=prefetch_promote_76_1791459417168 due to insufficient space. Consider lowering eviction_high_watermark_ratio or mounting more segments.
+W1008 11:36:57.516600 220560 client_service.cpp:2052] Failed to start put operation for key=prefetch_promote_77_1791459417168 due to insufficient space. Consider lowering eviction_high_watermark_ratio or mounting more segments.
+W1008 11:36:57.520646 220560 client_service.cpp:2052] Failed to start put operation for key=prefetch_promote_78_1791459417168 due to insufficient space. Consider lowering eviction_high_watermark_ratio or mounting more segments.
+W1008 11:36:57.524689 220560 client_service.cpp:2052] Failed to start put operation for key=prefetch_promote_79_1791459417168 due to insufficient space. Consider lowering eviction_high_watermark_ratio or mounting more segments.
+W1008 11:36:57.528760 220560 client_service.cpp:2052] Failed to start put operation for key=prefetch_promote_80_1791459417168 due to insufficient space. Consider lowering eviction_high_watermark_ratio or mounting more segments.
+W1008 11:36:57.532806 220560 client_service.cpp:2052] Failed to start put operation for key=prefetch_promote_81_1791459417168 due to insufficient space. Consider lowering eviction_high_watermark_ratio or mounting more segments.
+W1008 11:36:57.536852 220560 client_service.cpp:2052] Failed to start put operation for key=prefetch_promote_82_1791459417168 due to insufficient space. Consider lowering eviction_high_watermark_ratio or mounting more segments.
+W1008 11:36:57.540920 220560 client_service.cpp:2052] Failed to start put operation for key=prefetch_promote_83_1791459417168 due to insufficient space. Consider lowering eviction_high_watermark_ratio or mounting more segments.
+W1008 11:36:57.544960 220560 client_service.cpp:2052] Failed to start put operation for key=prefetch_promote_84_1791459417168 due to insufficient space. Consider lowering eviction_high_watermark_ratio or mounting more segments.
+W1008 11:36:57.549002 220560 client_service.cpp:2052] Failed to start put operation for key=prefetch_promote_85_1791459417168 due to insufficient space. Consider lowering eviction_high_watermark_ratio or mounting more segments.
+W1008 11:36:57.553079 220560 client_service.cpp:2052] Failed to start put operation for key=prefetch_promote_86_1791459417168 due to insufficient space. Consider lowering eviction_high_watermark_ratio or mounting more segments.
+W1008 11:36:57.557121 220560 client_service.cpp:2052] Failed to start put operation for key=prefetch_promote_87_1791459417168 due to insufficient space. Consider lowering eviction_high_watermark_ratio or mounting more segments.
+W1008 11:36:57.561195 220560 client_service.cpp:2052] Failed to start put operation for key=prefetch_promote_88_1791459417168 due to insufficient space. Consider lowering eviction_high_watermark_ratio or mounting more segments.
+W1008 11:36:57.565236 220560 client_service.cpp:2052] Failed to start put operation for key=prefetch_promote_89_1791459417168 due to insufficient space. Consider lowering eviction_high_watermark_ratio or mounting more segments.
+W1008 11:36:57.569270 220560 client_service.cpp:2052] Failed to start put operation for key=prefetch_promote_90_1791459417168 due to insufficient space. Consider lowering eviction_high_watermark_ratio or mounting more segments.
+W1008 11:36:57.573338 220560 client_service.cpp:2052] Failed to start put operation for key=prefetch_promote_91_1791459417168 due to insufficient space. Consider lowering eviction_high_watermark_ratio or mounting more segments.
+W1008 11:36:57.577385 220560 client_service.cpp:2052] Failed to start put operation for key=prefetch_promote_92_1791459417168 due to insufficient space. Consider lowering eviction_high_watermark_ratio or mounting more segments.
+W1008 11:36:57.581435 220560 client_service.cpp:2052] Failed to start put operation for key=prefetch_promote_93_1791459417168 due to insufficient space. Consider lowering eviction_high_watermark_ratio or mounting more segments.
+W1008 11:36:57.585496 220560 client_service.cpp:2052] Failed to start put operation for key=prefetch_promote_94_1791459417168 due to insufficient space. Consider lowering eviction_high_watermark_ratio or mounting more segments.
+W1008 11:36:57.589537 220560 client_service.cpp:2052] Failed to start put operation for key=prefetch_promote_95_1791459417168 due to insufficient space. Consider lowering eviction_high_watermark_ratio or mounting more segments.
+replica-type histogram: {'DISK,LOCAL_DISK,MEMORY': 13, 'DISK,LOCAL_DISK': 1}
+.W1008 11:37:01.752430 220560 client_service.cpp:2052] Failed to start put operation for key=prefetch_control_29_1791459421599 due to insufficient space. Consider lowering eviction_high_watermark_ratio or mounting more segments.
+W1008 11:37:01.756992 220560 client_service.cpp:2052] Failed to start put operation for key=prefetch_control_30_1791459421599 due to insufficient space. Consider lowering eviction_high_watermark_ratio or mounting more segments.
+W1008 11:37:01.761060 220560 client_service.cpp:2052] Failed to start put operation for key=prefetch_control_31_1791459421599 due to insufficient space. Consider lowering eviction_high_watermark_ratio or mounting more segments.
+W1008 11:37:01.765131 220560 client_service.cpp:2052] Failed to start put operation for key=prefetch_control_32_1791459421599 due to insufficient space. Consider lowering eviction_high_watermark_ratio or mounting more segments.
+W1008 11:37:01.769179 220560 client_service.cpp:2052] Failed to start put operation for key=prefetch_control_33_1791459421599 due to insufficient space. Consider lowering eviction_high_watermark_ratio or mounting more segments.
+W1008 11:37:01.773296 220560 client_service.cpp:2052] Failed to start put operation for key=prefetch_control_34_1791459421599 due to insufficient space. Consider lowering eviction_high_watermark_ratio or mounting more segments.
+W1008 11:37:01.777349 220560 client_service.cpp:2052] Failed to start put operation for key=prefetch_control_35_1791459421599 due to insufficient space. Consider lowering eviction_high_watermark_ratio or mounting more segments.
+W1008 11:37:01.781387 220560 client_service.cpp:2052] Failed to start put operation for key=prefetch_control_36_1791459421599 due to insufficient space. Consider lowering eviction_high_watermark_ratio or mounting more segments.
+W1008 11:37:01.785418 220560 client_service.cpp:2052] Failed to start put operation for key=prefetch_control_37_1791459421599 due to insufficient space. Consider lowering eviction_high_watermark_ratio or mounting more segments.
+W1008 11:37:01.789460 220560 client_service.cpp:2052] Failed to start put operation for key=prefetch_control_38_1791459421599 due to insufficient space. Consider lowering eviction_high_watermark_ratio or mounting more segments.
+W1008 11:37:01.793551 220560 client_service.cpp:2052] Failed to start put operation for key=prefetch_control_39_1791459421599 due to insufficient space. Consider lowering eviction_high_watermark_ratio or mounting more segments.
+W1008 11:37:01.797673 220560 client_service.cpp:2052] Failed to start put operation for key=prefetch_control_40_1791459421599 due to insufficient space. Consider lowering eviction_high_watermark_ratio or mounting more segments.
+W1008 11:37:01.801738 220560 client_service.cpp:2052] Failed to start put operation for key=prefetch_control_41_1791459421599 due to insufficient space. Consider lowering eviction_high_watermark_ratio or mounting more segments.
+W1008 11:37:01.805809 220560 client_service.cpp:2052] Failed to start put operation for key=prefetch_control_42_1791459421599 due to insufficient space. Consider lowering eviction_high_watermark_ratio or mounting more segments.
+W1008 11:37:01.809841 220560 client_service.cpp:2052] Failed to start put operation for key=prefetch_control_43_1791459421599 due to insufficient space. Consider lowering eviction_high_watermark_ratio or mounting more segments.
+W1008 11:37:01.813887 220560 client_service.cpp:2052] Failed to start put operation for key=prefetch_control_44_1791459421599 due to insufficient space. Consider lowering eviction_high_watermark_ratio or mounting more segments.
+W1008 11:37:01.817910 220560 client_service.cpp:2052] Failed to start put operation for key=prefetch_control_45_1791459421599 due to insufficient space. Consider lowering eviction_high_watermark_ratio or mounting more segments.
+W1008 11:37:01.821949 220560 client_service.cpp:2052] Failed to start put operation for key=prefetch_control_46_1791459421599 due to insufficient space. Consider lowering eviction_high_watermark_ratio or mounting more segments.
+W1008 11:37:01.825982 220560 client_service.cpp:2052] Failed to start put operation for key=prefetch_control_47_1791459421599 due to insufficient space. Consider lowering eviction_high_watermark_ratio or mounting more segments.
+W1008 11:37:01.830013 220560 client_service.cpp:2052] Failed to start put operation for key=prefetch_control_48_1791459421599 due to insufficient space. Consider lowering eviction_high_watermark_ratio or mounting more segments.
+W1008 11:37:01.834043 220560 client_service.cpp:2052] Failed to start put operation for key=prefetch_control_49_1791459421599 due to insufficient space. Consider lowering eviction_high_watermark_ratio or mounting more segments.
+W1008 11:37:01.838084 220560 client_service.cpp:2052] Failed to start put operation for key=prefetch_control_50_1791459421599 due to insufficient space. Consider lowering eviction_high_watermark_ratio or mounting more segments.
+W1008 11:37:01.842120 220560 client_service.cpp:2052] Failed to start put operation for key=prefetch_control_51_1791459421599 due to insufficient space. Consider lowering eviction_high_watermark_ratio or mounting more segments.
+W1008 11:37:01.846158 220560 client_service.cpp:2052] Failed to start put operation for key=prefetch_control_52_1791459421599 due to insufficient space. Consider lowering eviction_high_watermark_ratio or mounting more segments.
+W1008 11:37:01.850181 220560 client_service.cpp:2052] Failed to start put operation for key=prefetch_control_53_1791459421599 due to insufficient space. Consider lowering eviction_high_watermark_ratio or mounting more segments.
+W1008 11:37:01.854210 220560 client_service.cpp:2052] Failed to start put operation for key=prefetch_control_54_1791459421599 due to insufficient space. Consider lowering eviction_high_watermark_ratio or mounting more segments.
+W1008 11:37:01.858242 220560 client_service.cpp:2052] Failed to start put operation for key=prefetch_control_55_1791459421599 due to insufficient space. Consider lowering eviction_high_watermark_ratio or mounting more segments.
+W1008 11:37:01.865016 220560 client_service.cpp:2052] Failed to start put operation for key=prefetch_control_56_1791459421599 due to insufficient space. Consider lowering eviction_high_watermark_ratio or mounting more segments.
+W1008 11:37:01.869304 220560 client_service.cpp:2052] Failed to start put operation for key=prefetch_control_57_1791459421599 due to insufficient space. Consider lowering eviction_high_watermark_ratio or mounting more segments.
+W1008 11:37:01.873369 220560 client_service.cpp:2052] Failed to start put operation for key=prefetch_control_58_1791459421599 due to insufficient space. Consider lowering eviction_high_watermark_ratio or mounting more segments.
+W1008 11:37:01.877394 220560 client_service.cpp:2052] Failed to start put operation for key=prefetch_control_59_1791459421599 due to insufficient space. Consider lowering eviction_high_watermark_ratio or mounting more segments.
+W1008 11:37:01.881438 220560 client_service.cpp:2052] Failed to start put operation for key=prefetch_control_60_1791459421599 due to insufficient space. Consider lowering eviction_high_watermark_ratio or mounting more segments.
+W1008 11:37:01.885457 220560 client_service.cpp:2052] Failed to start put operation for key=prefetch_control_61_1791459421599 due to insufficient space. Consider lowering eviction_high_watermark_ratio or mounting more segments.
+W1008 11:37:01.889482 220560 client_service.cpp:2052] Failed to start put operation for key=prefetch_control_62_1791459421599 due to insufficient space. Consider lowering eviction_high_watermark_ratio or mounting more segments.
+W1008 11:37:01.893513 220560 client_service.cpp:2052] Failed to start put operation for key=prefetch_control_63_1791459421599 due to insufficient space. Consider lowering eviction_high_watermark_ratio or mounting more segments.
+W1008 11:37:01.897557 220560 client_service.cpp:2052] Failed to start put operation for key=prefetch_control_64_1791459421599 due to insufficient space. Consider lowering eviction_high_watermark_ratio or mounting more segments.
+W1008 11:37:01.901579 220560 client_service.cpp:2052] Failed to start put operation for key=prefetch_control_65_1791459421599 due to insufficient space. Consider lowering eviction_high_watermark_ratio or mounting more segments.
+W1008 11:37:01.905622 220560 client_service.cpp:2052] Failed to start put operation for key=prefetch_control_66_1791459421599 due to insufficient space. Consider lowering eviction_high_watermark_ratio or mounting more segments.
+W1008 11:37:01.909643 220560 client_service.cpp:2052] Failed to start put operation for key=prefetch_control_67_1791459421599 due to insufficient space. Consider lowering eviction_high_watermark_ratio or mounting more segments.
+W1008 11:37:01.913833 220560 client_service.cpp:2052] Failed to start put operation for key=prefetch_control_68_1791459421599 due to insufficient space. Consider lowering eviction_high_watermark_ratio or mounting more segments.
+W1008 11:37:01.917882 220560 client_service.cpp:2052] Failed to start put operation for key=prefetch_control_69_1791459421599 due to insufficient space. Consider lowering eviction_high_watermark_ratio or mounting more segments.
+W1008 11:37:01.921916 220560 client_service.cpp:2052] Failed to start put operation for key=prefetch_control_70_1791459421599 due to insufficient space. Consider lowering eviction_high_watermark_ratio or mounting more segments.
+W1008 11:37:01.925948 220560 client_service.cpp:2052] Failed to start put operation for key=prefetch_control_71_1791459421599 due to insufficient space. Consider lowering eviction_high_watermark_ratio or mounting more segments.
+W1008 11:37:01.929975 220560 client_service.cpp:2052] Failed to start put operation for key=prefetch_control_72_1791459421599 due to insufficient space. Consider lowering eviction_high_watermark_ratio or mounting more segments.
+W1008 11:37:01.934016 220560 client_service.cpp:2052] Failed to start put operation for key=prefetch_control_73_1791459421599 due to insufficient space. Consider lowering eviction_high_watermark_ratio or mounting more segments.
+W1008 11:37:01.938053 220560 client_service.cpp:2052] Failed to start put operation for key=prefetch_control_74_1791459421599 due to insufficient space. Consider lowering eviction_high_watermark_ratio or mounting more segments.
+W1008 11:37:01.942075 220560 client_service.cpp:2052] Failed to start put operation for key=prefetch_control_75_1791459421599 due to insufficient space. Consider lowering eviction_high_watermark_ratio or mounting more segments.
+W1008 11:37:01.946101 220560 client_service.cpp:2052] Failed to start put operation for key=prefetch_control_76_1791459421599 due to insufficient space. Consider lowering eviction_high_watermark_ratio or mounting more segments.
+W1008 11:37:01.950142 220560 client_service.cpp:2052] Failed to start put operation for key=prefetch_control_77_1791459421599 due to insufficient space. Consider lowering eviction_high_watermark_ratio or mounting more segments.
+W1008 11:37:01.954172 220560 client_service.cpp:2052] Failed to start put operation for key=prefetch_control_78_1791459421599 due to insufficient space. Consider lowering eviction_high_watermark_ratio or mounting more segments.
+W1008 11:37:01.958195 220560 client_service.cpp:2052] Failed to start put operation for key=prefetch_control_79_1791459421599 due to insufficient space. Consider lowering eviction_high_watermark_ratio or mounting more segments.
+W1008 11:37:01.962234 220560 client_service.cpp:2052] Failed to start put operation for key=prefetch_control_80_1791459421599 due to insufficient space. Consider lowering eviction_high_watermark_ratio or mounting more segments.
+W1008 11:37:01.966256 220560 client_service.cpp:2052] Failed to start put operation for key=prefetch_control_81_1791459421599 due to insufficient space. Consider lowering eviction_high_watermark_ratio or mounting more segments.
+W1008 11:37:01.970306 220560 client_service.cpp:2052] Failed to start put operation for key=prefetch_control_82_1791459421599 due to insufficient space. Consider lowering eviction_high_watermark_ratio or mounting more segments.
+W1008 11:37:01.974344 220560 client_service.cpp:2052] Failed to start put operation for key=prefetch_control_83_1791459421599 due to insufficient space. Consider lowering eviction_high_watermark_ratio or mounting more segments.
+W1008 11:37:01.978372 220560 client_service.cpp:2052] Failed to start put operation for key=prefetch_control_84_1791459421599 due to insufficient space. Consider lowering eviction_high_watermark_ratio or mounting more segments.
+W1008 11:37:01.982398 220560 client_service.cpp:2052] Failed to start put operation for key=prefetch_control_85_1791459421599 due to insufficient space. Consider lowering eviction_high_watermark_ratio or mounting more segments.
+W1008 11:37:01.986438 220560 client_service.cpp:2052] Failed to start put operation for key=prefetch_control_86_1791459421599 due to insufficient space. Consider lowering eviction_high_watermark_ratio or mounting more segments.
+W1008 11:37:01.990460 220560 client_service.cpp:2052] Failed to start put operation for key=prefetch_control_87_1791459421599 due to insufficient space. Consider lowering eviction_high_watermark_ratio or mounting more segments.
+W1008 11:37:01.994519 220560 client_service.cpp:2052] Failed to start put operation for key=prefetch_control_88_1791459421599 due to insufficient space. Consider lowering eviction_high_watermark_ratio or mounting more segments.
+W1008 11:37:01.998541 220560 client_service.cpp:2052] Failed to start put operation for key=prefetch_control_89_1791459421599 due to insufficient space. Consider lowering eviction_high_watermark_ratio or mounting more segments.
+W1008 11:37:02.002581 220560 client_service.cpp:2052] Failed to start put operation for key=prefetch_control_90_1791459421599 due to insufficient space. Consider lowering eviction_high_watermark_ratio or mounting more segments.
+W1008 11:37:02.006614 220560 client_service.cpp:2052] Failed to start put operation for key=prefetch_control_91_1791459421599 due to insufficient space. Consider lowering eviction_high_watermark_ratio or mounting more segments.
+W1008 11:37:02.010641 220560 client_service.cpp:2052] Failed to start put operation for key=prefetch_control_92_1791459421599 due to insufficient space. Consider lowering eviction_high_watermark_ratio or mounting more segments.
+W1008 11:37:02.014667 220560 client_service.cpp:2052] Failed to start put operation for key=prefetch_control_93_1791459421599 due to insufficient space. Consider lowering eviction_high_watermark_ratio or mounting more segments.
+W1008 11:37:02.018731 220560 client_service.cpp:2052] Failed to start put operation for key=prefetch_control_94_1791459421599 due to insufficient space. Consider lowering eviction_high_watermark_ratio or mounting more segments.
+W1008 11:37:02.022897 220560 client_service.cpp:2052] Failed to start put operation for key=prefetch_control_95_1791459421599 due to insufficient space. Consider lowering eviction_high_watermark_ratio or mounting more segments.
+replica-type histogram: {'DISK,LOCAL_DISK,MEMORY': 18, 'DISK,LOCAL_DISK': 1}
+.I1008 11:37:09.035979 220560 storage_backend.cpp:512] Successfully removed file: /tmp/mooncake_ci_prefetch/mooncake_cluster/a/e/prefetch_promote_0_1791459417168
+I1008 11:37:09.036288 220560 storage_backend.cpp:512] Successfully removed file: /tmp/mooncake_ci_prefetch/mooncake_cluster/k/e/prefetch_promote_1_1791459417168
+I1008 11:37:09.036561 220560 storage_backend.cpp:512] Successfully removed file: /tmp/mooncake_ci_prefetch/mooncake_cluster/n/i/prefetch_promote_2_1791459417168
+I1008 11:37:09.036826 220560 storage_backend.cpp:512] Successfully removed file: /tmp/mooncake_ci_prefetch/mooncake_cluster/c/l/prefetch_promote_3_1791459417168
+I1008 11:37:09.037108 220560 storage_backend.cpp:512] Successfully removed file: /tmp/mooncake_ci_prefetch/mooncake_cluster/p/f/prefetch_promote_4_1791459417168
+I1008 11:37:09.037381 220560 storage_backend.cpp:512] Successfully removed file: /tmp/mooncake_ci_prefetch/mooncake_cluster/e/b/prefetch_promote_5_1791459417168
+I1008 11:37:09.037650 220560 storage_backend.cpp:512] Successfully removed file: /tmp/mooncake_ci_prefetch/mooncake_cluster/g/b/prefetch_promote_6_1791459417168
+I1008 11:37:09.037916 220560 storage_backend.cpp:512] Successfully removed file: /tmp/mooncake_ci_prefetch/mooncake_cluster/k/d/prefetch_promote_7_1791459417168
+I1008 11:37:09.038187 220560 storage_backend.cpp:512] Successfully removed file: /tmp/mooncake_ci_prefetch/mooncake_cluster/f/b/prefetch_promote_8_1791459417168
+I1008 11:37:09.038475 220560 storage_backend.cpp:512] Successfully removed file: /tmp/mooncake_ci_prefetch/mooncake_cluster/c/d/prefetch_promote_9_1791459417168
+I1008 11:37:09.038748 220560 storage_backend.cpp:512] Successfully removed file: /tmp/mooncake_ci_prefetch/mooncake_cluster/d/g/prefetch_promote_10_1791459417168
+I1008 11:37:09.039021 220560 storage_backend.cpp:512] Successfully removed file: /tmp/mooncake_ci_prefetch/mooncake_cluster/g/o/prefetch_promote_11_1791459417168
+I1008 11:37:09.039270 220560 storage_backend.cpp:512] Successfully removed file: /tmp/mooncake_ci_prefetch/mooncake_cluster/d/a/prefetch_promote_12_1791459417168
+I1008 11:37:09.039544 220560 storage_backend.cpp:512] Successfully removed file: /tmp/mooncake_ci_prefetch/mooncake_cluster/j/e/prefetch_promote_13_1791459417168
+I1008 11:37:09.039798 220560 storage_backend.cpp:512] Successfully removed file: /tmp/mooncake_ci_prefetch/mooncake_cluster/a/d/prefetch_promote_14_1791459417168
+I1008 11:37:09.040045 220560 storage_backend.cpp:512] Successfully removed file: /tmp/mooncake_ci_prefetch/mooncake_cluster/h/c/prefetch_promote_15_1791459417168
+I1008 11:37:09.040298 220560 storage_backend.cpp:512] Successfully removed file: /tmp/mooncake_ci_prefetch/mooncake_cluster/n/f/prefetch_promote_16_1791459417168
+I1008 11:37:09.040553 220560 storage_backend.cpp:512] Successfully removed file: /tmp/mooncake_ci_prefetch/mooncake_cluster/o/d/prefetch_promote_17_1791459417168
+I1008 11:37:09.040818 220560 storage_backend.cpp:512] Successfully removed file: /tmp/mooncake_ci_prefetch/mooncake_cluster/j/k/prefetch_promote_18_1791459417168
+I1008 11:37:09.041069 220560 storage_backend.cpp:512] Successfully removed file: /tmp/mooncake_ci_prefetch/mooncake_cluster/c/n/prefetch_promote_19_1791459417168
+I1008 11:37:09.041324 220560 storage_backend.cpp:512] Successfully removed file: /tmp/mooncake_ci_prefetch/mooncake_cluster/n/c/prefetch_promote_20_1791459417168
+I1008 11:37:09.041570 220560 storage_backend.cpp:512] Successfully removed file: /tmp/mooncake_ci_prefetch/mooncake_cluster/o/d/prefetch_promote_21_1791459417168
+I1008 11:37:09.041821 220560 storage_backend.cpp:512] Successfully removed file: /tmp/mooncake_ci_prefetch/mooncake_cluster/i/k/prefetch_promote_22_1791459417168
+I1008 11:37:09.042081 220560 storage_backend.cpp:512] Successfully removed file: /tmp/mooncake_ci_prefetch/mooncake_cluster/k/o/prefetch_promote_23_1791459417168
+I1008 11:37:09.042337 220560 storage_backend.cpp:512] Successfully removed file: /tmp/mooncake_ci_prefetch/mooncake_cluster/p/e/prefetch_promote_24_1791459417168
+I1008 11:37:09.042758 220560 storage_backend.cpp:512] Successfully removed file: /tmp/mooncake_ci_prefetch/mooncake_cluster/n/e/prefetch_promote_25_1791459417168
+I1008 11:37:09.043018 220560 storage_backend.cpp:512] Successfully removed file: /tmp/mooncake_ci_prefetch/mooncake_cluster/g/n/prefetch_promote_26_1791459417168
+I1008 11:37:09.043411 220560 storage_backend.cpp:512] Successfully removed file: /tmp/mooncake_ci_prefetch/mooncake_cluster/k/c/prefetch_promote_27_1791459417168
+I1008 11:37:09.043664 220560 storage_backend.cpp:512] Successfully removed file: /tmp/mooncake_ci_prefetch/mooncake_cluster/e/p/prefetch_promote_28_1791459417168
+I1008 11:37:09.044046 220560 storage_backend.cpp:512] Successfully removed file: /tmp/mooncake_ci_prefetch/mooncake_cluster/n/e/prefetch_promote_29_1791459417168
+I1008 11:37:09.044303 220560 storage_backend.cpp:512] Successfully removed file: /tmp/mooncake_ci_prefetch/mooncake_cluster/c/p/prefetch_promote_30_1791459417168
+I1008 11:37:09.044682 220560 storage_backend.cpp:512] Successfully removed file: /tmp/mooncake_ci_prefetch/mooncake_cluster/o/j/prefetch_promote_31_1791459417168
+I1008 11:37:09.044960 220560 storage_backend.cpp:512] Successfully removed file: /tmp/mooncake_ci_prefetch/mooncake_cluster/i/b/prefetch_control_0_1791459421599
+I1008 11:37:09.045349 220560 storage_backend.cpp:512] Successfully removed file: /tmp/mooncake_ci_prefetch/mooncake_cluster/i/f/prefetch_control_1_1791459421599
+I1008 11:37:09.045622 220560 storage_backend.cpp:512] Successfully removed file: /tmp/mooncake_ci_prefetch/mooncake_cluster/j/b/prefetch_control_2_1791459421599
+I1008 11:37:09.046022 220560 storage_backend.cpp:512] Successfully removed file: /tmp/mooncake_ci_prefetch/mooncake_cluster/c/e/prefetch_control_3_1791459421599
+I1008 11:37:09.046279 220560 storage_backend.cpp:512] Successfully removed file: /tmp/mooncake_ci_prefetch/mooncake_cluster/c/n/prefetch_control_4_1791459421599
+I1008 11:37:09.046670 220560 storage_backend.cpp:512] Successfully removed file: /tmp/mooncake_ci_prefetch/mooncake_cluster/g/m/prefetch_control_5_1791459421599
+I1008 11:37:09.046945 220560 storage_backend.cpp:512] Successfully removed file: /tmp/mooncake_ci_prefetch/mooncake_cluster/i/e/prefetch_control_6_1791459421599
+I1008 11:37:09.047340 220560 storage_backend.cpp:512] Successfully removed file: /tmp/mooncake_ci_prefetch/mooncake_cluster/l/m/prefetch_control_7_1791459421599
+I1008 11:37:09.047602 220560 storage_backend.cpp:512] Successfully removed file: /tmp/mooncake_ci_prefetch/mooncake_cluster/b/j/prefetch_control_8_1791459421599
+I1008 11:37:09.047995 220560 storage_backend.cpp:512] Successfully removed file: /tmp/mooncake_ci_prefetch/mooncake_cluster/d/n/prefetch_control_9_1791459421599
+I1008 11:37:09.048383 220560 storage_backend.cpp:512] Successfully removed file: /tmp/mooncake_ci_prefetch/mooncake_cluster/n/e/prefetch_control_10_1791459421599
+I1008 11:37:09.048774 220560 storage_backend.cpp:512] Successfully removed file: /tmp/mooncake_ci_prefetch/mooncake_cluster/l/l/prefetch_control_11_1791459421599
+I1008 11:37:09.049149 220560 storage_backend.cpp:512] Successfully removed file: /tmp/mooncake_ci_prefetch/mooncake_cluster/k/f/prefetch_control_12_1791459421599
+I1008 11:37:09.049538 220560 storage_backend.cpp:512] Successfully removed file: /tmp/mooncake_ci_prefetch/mooncake_cluster/o/h/prefetch_control_13_1791459421599
+I1008 11:37:09.049922 220560 storage_backend.cpp:512] Successfully removed file: /tmp/mooncake_ci_prefetch/mooncake_cluster/p/j/prefetch_control_14_1791459421599
+I1008 11:37:09.050313 220560 storage_backend.cpp:512] Successfully removed file: /tmp/mooncake_ci_prefetch/mooncake_cluster/d/b/prefetch_control_15_1791459421599
+I1008 11:37:09.050581 220560 storage_backend.cpp:512] Successfully removed file: /tmp/mooncake_ci_prefetch/mooncake_cluster/a/a/prefetch_control_16_1791459421599
+I1008 11:37:09.050976 220560 storage_backend.cpp:512] Successfully removed file: /tmp/mooncake_ci_prefetch/mooncake_cluster/m/b/prefetch_control_17_1791459421599
+I1008 11:37:09.051235 220560 storage_backend.cpp:512] Successfully removed file: /tmp/mooncake_ci_prefetch/mooncake_cluster/f/n/prefetch_control_18_1791459421599
+I1008 11:37:09.051625 220560 storage_backend.cpp:512] Successfully removed file: /tmp/mooncake_ci_prefetch/mooncake_cluster/m/l/prefetch_control_19_1791459421599
+I1008 11:37:09.052022 220560 storage_backend.cpp:512] Successfully removed file: /tmp/mooncake_ci_prefetch/mooncake_cluster/d/g/prefetch_control_20_1791459421599
+I1008 11:37:09.052403 220560 storage_backend.cpp:512] Successfully removed file: /tmp/mooncake_ci_prefetch/mooncake_cluster/n/f/prefetch_control_21_1791459421599
+I1008 11:37:09.052780 220560 storage_backend.cpp:512] Successfully removed file: /tmp/mooncake_ci_prefetch/mooncake_cluster/m/p/prefetch_control_22_1791459421599
+I1008 11:37:09.053165 220560 storage_backend.cpp:512] Successfully removed file: /tmp/mooncake_ci_prefetch/mooncake_cluster/a/b/prefetch_control_23_1791459421599
+I1008 11:37:09.053535 220560 storage_backend.cpp:512] Successfully removed file: /tmp/mooncake_ci_prefetch/mooncake_cluster/n/i/prefetch_control_24_1791459421599
+I1008 11:37:09.053927 220560 storage_backend.cpp:512] Successfully removed file: /tmp/mooncake_ci_prefetch/mooncake_cluster/e/c/prefetch_control_25_1791459421599
+I1008 11:37:09.054307 220560 storage_backend.cpp:512] Successfully removed file: /tmp/mooncake_ci_prefetch/mooncake_cluster/n/p/prefetch_control_26_1791459421599
+I1008 11:37:09.054690 220560 storage_backend.cpp:512] Successfully removed file: /tmp/mooncake_ci_prefetch/mooncake_cluster/g/o/prefetch_control_27_1791459421599
+I1008 11:37:09.055123 220560 storage_backend.cpp:512] Successfully removed file: /tmp/mooncake_ci_prefetch/mooncake_cluster/i/j/prefetch_control_28_1791459421599
+I1008 11:37:09.296379 220796 storage_backend.cpp:3324] DeleteBucket: successfully deleted bucket_id=7337817775505, keys_removed=10
+I1008 11:37:09.298765 220796 storage_backend.cpp:3324] DeleteBucket: successfully deleted bucket_id=7337817775506, keys_removed=10
+I1008 11:37:09.301105 220796 storage_backend.cpp:3324] DeleteBucket: successfully deleted bucket_id=7337817775507, keys_removed=10
+I1008 11:37:09.303452 220796 storage_backend.cpp:3324] DeleteBucket: successfully deleted bucket_id=7337817775508, keys_removed=10
+I1008 11:37:09.305748 220796 storage_backend.cpp:3324] DeleteBucket: successfully deleted bucket_id=7337817775509, keys_removed=10
+I1008 11:37:09.308084 220796 storage_backend.cpp:3324] DeleteBucket: successfully deleted bucket_id=7337817775510, keys_removed=10
+I1008 11:37:09.308100 220796 storage_backend.cpp:3350] RemoveAll: removed 6 bucket(s)
+I1008 11:37:09.308106 220796 file_storage.cpp:826] FileStorage::RemoveAll: cleared storage backend
+W1008 11:37:10.716624 220560 client_service.cpp:2052] Failed to start put operation for key=prefetch_waitlease_24_1791459430592 due to insufficient space. Consider lowering eviction_high_watermark_ratio or mounting more segments.
+W1008 11:37:10.721107 220560 client_service.cpp:2052] Failed to start put operation for key=prefetch_waitlease_25_1791459430592 due to insufficient space. Consider lowering eviction_high_watermark_ratio or mounting more segments.
+W1008 11:37:10.725222 220560 client_service.cpp:2052] Failed to start put operation for key=prefetch_waitlease_26_1791459430592 due to insufficient space. Consider lowering eviction_high_watermark_ratio or mounting more segments.
+W1008 11:37:10.729249 220560 client_service.cpp:2052] Failed to start put operation for key=prefetch_waitlease_27_1791459430592 due to insufficient space. Consider lowering eviction_high_watermark_ratio or mounting more segments.
+W1008 11:37:10.733283 220560 client_service.cpp:2052] Failed to start put operation for key=prefetch_waitlease_28_1791459430592 due to insufficient space. Consider lowering eviction_high_watermark_ratio or mounting more segments.
+W1008 11:37:10.737327 220560 client_service.cpp:2052] Failed to start put operation for key=prefetch_waitlease_29_1791459430592 due to insufficient space. Consider lowering eviction_high_watermark_ratio or mounting more segments.
+W1008 11:37:10.741359 220560 client_service.cpp:2052] Failed to start put operation for key=prefetch_waitlease_30_1791459430592 due to insufficient space. Consider lowering eviction_high_watermark_ratio or mounting more segments.
+W1008 11:37:10.745383 220560 client_service.cpp:2052] Failed to start put operation for key=prefetch_waitlease_31_1791459430592 due to insufficient space. Consider lowering eviction_high_watermark_ratio or mounting more segments.
+W1008 11:37:10.749450 220560 client_service.cpp:2052] Failed to start put operation for key=prefetch_waitlease_32_1791459430592 due to insufficient space. Consider lowering eviction_high_watermark_ratio or mounting more segments.
+W1008 11:37:10.753468 220560 client_service.cpp:2052] Failed to start put operation for key=prefetch_waitlease_33_1791459430592 due to insufficient space. Consider lowering eviction_high_watermark_ratio or mounting more segments.
+W1008 11:37:10.757511 220560 client_service.cpp:2052] Failed to start put operation for key=prefetch_waitlease_34_1791459430592 due to insufficient space. Consider lowering eviction_high_watermark_ratio or mounting more segments.
+W1008 11:37:10.761524 220560 client_service.cpp:2052] Failed to start put operation for key=prefetch_waitlease_35_1791459430592 due to insufficient space. Consider lowering eviction_high_watermark_ratio or mounting more segments.
+W1008 11:37:10.765544 220560 client_service.cpp:2052] Failed to start put operation for key=prefetch_waitlease_36_1791459430592 due to insufficient space. Consider lowering eviction_high_watermark_ratio or mounting more segments.
+W1008 11:37:10.769582 220560 client_service.cpp:2052] Failed to start put operation for key=prefetch_waitlease_37_1791459430592 due to insufficient space. Consider lowering eviction_high_watermark_ratio or mounting more segments.
+W1008 11:37:10.773725 220560 client_service.cpp:2052] Failed to start put operation for key=prefetch_waitlease_38_1791459430592 due to insufficient space. Consider lowering eviction_high_watermark_ratio or mounting more segments.
+W1008 11:37:10.777757 220560 client_service.cpp:2052] Failed to start put operation for key=prefetch_waitlease_39_1791459430592 due to insufficient space. Consider lowering eviction_high_watermark_ratio or mounting more segments.
+W1008 11:37:10.781821 220560 client_service.cpp:2052] Failed to start put operation for key=prefetch_waitlease_40_1791459430592 due to insufficient space. Consider lowering eviction_high_watermark_ratio or mounting more segments.
+W1008 11:37:10.785835 220560 client_service.cpp:2052] Failed to start put operation for key=prefetch_waitlease_41_1791459430592 due to insufficient space. Consider lowering eviction_high_watermark_ratio or mounting more segments.
+W1008 11:37:10.789855 220560 client_service.cpp:2052] Failed to start put operation for key=prefetch_waitlease_42_1791459430592 due to insufficient space. Consider lowering eviction_high_watermark_ratio or mounting more segments.
+W1008 11:37:10.793900 220560 client_service.cpp:2052] Failed to start put operation for key=prefetch_waitlease_43_1791459430592 due to insufficient space. Consider lowering eviction_high_watermark_ratio or mounting more segments.
+W1008 11:37:10.797928 220560 client_service.cpp:2052] Failed to start put operation for key=prefetch_waitlease_44_1791459430592 due to insufficient space. Consider lowering eviction_high_watermark_ratio or mounting more segments.
+W1008 11:37:10.801941 220560 client_service.cpp:2052] Failed to start put operation for key=prefetch_waitlease_45_1791459430592 due to insufficient space. Consider lowering eviction_high_watermark_ratio or mounting more segments.
+W1008 11:37:10.805985 220560 client_service.cpp:2052] Failed to start put operation for key=prefetch_waitlease_46_1791459430592 due to insufficient space. Consider lowering eviction_high_watermark_ratio or mounting more segments.
+W1008 11:37:10.809993 220560 client_service.cpp:2052] Failed to start put operation for key=prefetch_waitlease_47_1791459430592 due to insufficient space. Consider lowering eviction_high_watermark_ratio or mounting more segments.
+W1008 11:37:10.814021 220560 client_service.cpp:2052] Failed to start put operation for key=prefetch_waitlease_48_1791459430592 due to insufficient space. Consider lowering eviction_high_watermark_ratio or mounting more segments.
+W1008 11:37:10.818060 220560 client_service.cpp:2052] Failed to start put operation for key=prefetch_waitlease_49_1791459430592 due to insufficient space. Consider lowering eviction_high_watermark_ratio or mounting more segments.
+W1008 11:37:10.822082 220560 client_service.cpp:2052] Failed to start put operation for key=prefetch_waitlease_50_1791459430592 due to insufficient space. Consider lowering eviction_high_watermark_ratio or mounting more segments.
+W1008 11:37:10.826120 220560 client_service.cpp:2052] Failed to start put operation for key=prefetch_waitlease_51_1791459430592 due to insufficient space. Consider lowering eviction_high_watermark_ratio or mounting more segments.
+W1008 11:37:10.830148 220560 client_service.cpp:2052] Failed to start put operation for key=prefetch_waitlease_52_1791459430592 due to insufficient space. Consider lowering eviction_high_watermark_ratio or mounting more segments.
+W1008 11:37:10.834161 220560 client_service.cpp:2052] Failed to start put operation for key=prefetch_waitlease_53_1791459430592 due to insufficient space. Consider lowering eviction_high_watermark_ratio or mounting more segments.
+W1008 11:37:10.838224 220560 client_service.cpp:2052] Failed to start put operation for key=prefetch_waitlease_54_1791459430592 due to insufficient space. Consider lowering eviction_high_watermark_ratio or mounting more segments.
+W1008 11:37:10.842238 220560 client_service.cpp:2052] Failed to start put operation for key=prefetch_waitlease_55_1791459430592 due to insufficient space. Consider lowering eviction_high_watermark_ratio or mounting more segments.
+W1008 11:37:10.846259 220560 client_service.cpp:2052] Failed to start put operation for key=prefetch_waitlease_56_1791459430592 due to insufficient space. Consider lowering eviction_high_watermark_ratio or mounting more segments.
+W1008 11:37:10.850286 220560 client_service.cpp:2052] Failed to start put operation for key=prefetch_waitlease_57_1791459430592 due to insufficient space. Consider lowering eviction_high_watermark_ratio or mounting more segments.
+W1008 11:37:10.854437 220560 client_service.cpp:2052] Failed to start put operation for key=prefetch_waitlease_58_1791459430592 due to insufficient space. Consider lowering eviction_high_watermark_ratio or mounting more segments.
+W1008 11:37:10.858451 220560 client_service.cpp:2052] Failed to start put operation for key=prefetch_waitlease_59_1791459430592 due to insufficient space. Consider lowering eviction_high_watermark_ratio or mounting more segments.
+W1008 11:37:10.862504 220560 client_service.cpp:2052] Failed to start put operation for key=prefetch_waitlease_60_1791459430592 due to insufficient space. Consider lowering eviction_high_watermark_ratio or mounting more segments.
+W1008 11:37:10.866518 220560 client_service.cpp:2052] Failed to start put operation for key=prefetch_waitlease_61_1791459430592 due to insufficient space. Consider lowering eviction_high_watermark_ratio or mounting more segments.
+W1008 11:37:10.870536 220560 client_service.cpp:2052] Failed to start put operation for key=prefetch_waitlease_62_1791459430592 due to insufficient space. Consider lowering eviction_high_watermark_ratio or mounting more segments.
+W1008 11:37:10.874567 220560 client_service.cpp:2052] Failed to start put operation for key=prefetch_waitlease_63_1791459430592 due to insufficient space. Consider lowering eviction_high_watermark_ratio or mounting more segments.
+W1008 11:37:10.878588 220560 client_service.cpp:2052] Failed to start put operation for key=prefetch_waitlease_64_1791459430592 due to insufficient space. Consider lowering eviction_high_watermark_ratio or mounting more segments.
+W1008 11:37:10.882604 220560 client_service.cpp:2052] Failed to start put operation for key=prefetch_waitlease_65_1791459430592 due to insufficient space. Consider lowering eviction_high_watermark_ratio or mounting more segments.
+W1008 11:37:10.886667 220560 client_service.cpp:2052] Failed to start put operation for key=prefetch_waitlease_66_1791459430592 due to insufficient space. Consider lowering eviction_high_watermark_ratio or mounting more segments.
+W1008 11:37:10.890681 220560 client_service.cpp:2052] Failed to start put operation for key=prefetch_waitlease_67_1791459430592 due to insufficient space. Consider lowering eviction_high_watermark_ratio or mounting more segments.
+W1008 11:37:10.894732 220560 client_service.cpp:2052] Failed to start put operation for key=prefetch_waitlease_68_1791459430592 due to insufficient space. Consider lowering eviction_high_watermark_ratio or mounting more segments.
+W1008 11:37:10.898754 220560 client_service.cpp:2052] Failed to start put operation for key=prefetch_waitlease_69_1791459430592 due to insufficient space. Consider lowering eviction_high_watermark_ratio or mounting more segments.
+W1008 11:37:10.902908 220560 client_service.cpp:2052] Failed to start put operation for key=prefetch_waitlease_70_1791459430592 due to insufficient space. Consider lowering eviction_high_watermark_ratio or mounting more segments.
+W1008 11:37:10.906996 220560 client_service.cpp:2052] Failed to start put operation for key=prefetch_waitlease_71_1791459430592 due to insufficient space. Consider lowering eviction_high_watermark_ratio or mounting more segments.
+W1008 11:37:10.911072 220560 client_service.cpp:2052] Failed to start put operation for key=prefetch_waitlease_72_1791459430592 due to insufficient space. Consider lowering eviction_high_watermark_ratio or mounting more segments.
+W1008 11:37:10.915133 220560 client_service.cpp:2052] Failed to start put operation for key=prefetch_waitlease_73_1791459430592 due to insufficient space. Consider lowering eviction_high_watermark_ratio or mounting more segments.
+W1008 11:37:10.919260 220560 client_service.cpp:2052] Failed to start put operation for key=prefetch_waitlease_74_1791459430592 due to insufficient space. Consider lowering eviction_high_watermark_ratio or mounting more segments.
+W1008 11:37:10.923338 220560 client_service.cpp:2052] Failed to start put operation for key=prefetch_waitlease_75_1791459430592 due to insufficient space. Consider lowering eviction_high_watermark_ratio or mounting more segments.
+W1008 11:37:10.927421 220560 client_service.cpp:2052] Failed to start put operation for key=prefetch_waitlease_76_1791459430592 due to insufficient space. Consider lowering eviction_high_watermark_ratio or mounting more segments.
+W1008 11:37:10.931469 220560 client_service.cpp:2052] Failed to start put operation for key=prefetch_waitlease_77_1791459430592 due to insufficient space. Consider lowering eviction_high_watermark_ratio or mounting more segments.
+W1008 11:37:10.935488 220560 client_service.cpp:2052] Failed to start put operation for key=prefetch_waitlease_78_1791459430592 due to insufficient space. Consider lowering eviction_high_watermark_ratio or mounting more segments.
+W1008 11:37:10.939496 220560 client_service.cpp:2052] Failed to start put operation for key=prefetch_waitlease_79_1791459430592 due to insufficient space. Consider lowering eviction_high_watermark_ratio or mounting more segments.
+W1008 11:37:10.943522 220560 client_service.cpp:2052] Failed to start put operation for key=prefetch_waitlease_80_1791459430592 due to insufficient space. Consider lowering eviction_high_watermark_ratio or mounting more segments.
+W1008 11:37:10.947525 220560 client_service.cpp:2052] Failed to start put operation for key=prefetch_waitlease_81_1791459430592 due to insufficient space. Consider lowering eviction_high_watermark_ratio or mounting more segments.
+W1008 11:37:10.951545 220560 client_service.cpp:2052] Failed to start put operation for key=prefetch_waitlease_82_1791459430592 due to insufficient space. Consider lowering eviction_high_watermark_ratio or mounting more segments.
+W1008 11:37:10.955577 220560 client_service.cpp:2052] Failed to start put operation for key=prefetch_waitlease_83_1791459430592 due to insufficient space. Consider lowering eviction_high_watermark_ratio or mounting more segments.
+W1008 11:37:10.959596 220560 client_service.cpp:2052] Failed to start put operation for key=prefetch_waitlease_84_1791459430592 due to insufficient space. Consider lowering eviction_high_watermark_ratio or mounting more segments.
+W1008 11:37:10.963632 220560 client_service.cpp:2052] Failed to start put operation for key=prefetch_waitlease_85_1791459430592 due to insufficient space. Consider lowering eviction_high_watermark_ratio or mounting more segments.
+W1008 11:37:10.967650 220560 client_service.cpp:2052] Failed to start put operation for key=prefetch_waitlease_86_1791459430592 due to insufficient space. Consider lowering eviction_high_watermark_ratio or mounting more segments.
+W1008 11:37:10.971657 220560 client_service.cpp:2052] Failed to start put operation for key=prefetch_waitlease_87_1791459430592 due to insufficient space. Consider lowering eviction_high_watermark_ratio or mounting more segments.
+W1008 11:37:10.975713 220560 client_service.cpp:2052] Failed to start put operation for key=prefetch_waitlease_88_1791459430592 due to insufficient space. Consider lowering eviction_high_watermark_ratio or mounting more segments.
+W1008 11:37:10.979723 220560 client_service.cpp:2052] Failed to start put operation for key=prefetch_waitlease_89_1791459430592 due to insufficient space. Consider lowering eviction_high_watermark_ratio or mounting more segments.
+W1008 11:37:10.983736 220560 client_service.cpp:2052] Failed to start put operation for key=prefetch_waitlease_90_1791459430592 due to insufficient space. Consider lowering eviction_high_watermark_ratio or mounting more segments.
+W1008 11:37:10.987771 220560 client_service.cpp:2052] Failed to start put operation for key=prefetch_waitlease_91_1791459430592 due to insufficient space. Consider lowering eviction_high_watermark_ratio or mounting more segments.
+W1008 11:37:10.991794 220560 client_service.cpp:2052] Failed to start put operation for key=prefetch_waitlease_92_1791459430592 due to insufficient space. Consider lowering eviction_high_watermark_ratio or mounting more segments.
+W1008 11:37:10.995796 220560 client_service.cpp:2052] Failed to start put operation for key=prefetch_waitlease_93_1791459430592 due to insufficient space. Consider lowering eviction_high_watermark_ratio or mounting more segments.
+W1008 11:37:10.999837 220560 client_service.cpp:2052] Failed to start put operation for key=prefetch_waitlease_94_1791459430592 due to insufficient space. Consider lowering eviction_high_watermark_ratio or mounting more segments.
+W1008 11:37:11.003891 220560 client_service.cpp:2052] Failed to start put operation for key=prefetch_waitlease_95_1791459430592 due to insufficient space. Consider lowering eviction_high_watermark_ratio or mounting more segments.
+waitlease probe 0: ['MEMORY', 'DISK', 'LOCAL_DISK']
+W1008 11:37:13.110858 220560 client_service.cpp:2052] Failed to start put operation for key=prefetch_waitlease_more0_20_1791459433004 due to insufficient space. Consider lowering eviction_high_watermark_ratio or mounting more segments.
+W1008 11:37:13.115306 220560 client_service.cpp:2052] Failed to start put operation for key=prefetch_waitlease_more0_21_1791459433004 due to insufficient space. Consider lowering eviction_high_watermark_ratio or mounting more segments.
+W1008 11:37:13.119421 220560 client_service.cpp:2052] Failed to start put operation for key=prefetch_waitlease_more0_22_1791459433004 due to insufficient space. Consider lowering eviction_high_watermark_ratio or mounting more segments.
+W1008 11:37:13.123497 220560 client_service.cpp:2052] Failed to start put operation for key=prefetch_waitlease_more0_23_1791459433004 due to insufficient space. Consider lowering eviction_high_watermark_ratio or mounting more segments.
+W1008 11:37:13.127562 220560 client_service.cpp:2052] Failed to start put operation for key=prefetch_waitlease_more0_24_1791459433004 due to insufficient space. Consider lowering eviction_high_watermark_ratio or mounting more segments.
+W1008 11:37:13.131629 220560 client_service.cpp:2052] Failed to start put operation for key=prefetch_waitlease_more0_25_1791459433004 due to insufficient space. Consider lowering eviction_high_watermark_ratio or mounting more segments.
+W1008 11:37:13.135710 220560 client_service.cpp:2052] Failed to start put operation for key=prefetch_waitlease_more0_26_1791459433004 due to insufficient space. Consider lowering eviction_high_watermark_ratio or mounting more segments.
+W1008 11:37:13.139775 220560 client_service.cpp:2052] Failed to start put operation for key=prefetch_waitlease_more0_27_1791459433004 due to insufficient space. Consider lowering eviction_high_watermark_ratio or mounting more segments.
+W1008 11:37:13.143867 220560 client_service.cpp:2052] Failed to start put operation for key=prefetch_waitlease_more0_28_1791459433004 due to insufficient space. Consider lowering eviction_high_watermark_ratio or mounting more segments.
+W1008 11:37:13.147923 220560 client_service.cpp:2052] Failed to start put operation for key=prefetch_waitlease_more0_29_1791459433004 due to insufficient space. Consider lowering eviction_high_watermark_ratio or mounting more segments.
+W1008 11:37:13.151984 220560 client_service.cpp:2052] Failed to start put operation for key=prefetch_waitlease_more0_30_1791459433004 due to insufficient space. Consider lowering eviction_high_watermark_ratio or mounting more segments.
+W1008 11:37:13.156059 220560 client_service.cpp:2052] Failed to start put operation for key=prefetch_waitlease_more0_31_1791459433004 due to insufficient space. Consider lowering eviction_high_watermark_ratio or mounting more segments.
+W1008 11:37:13.160123 220560 client_service.cpp:2052] Failed to start put operation for key=prefetch_waitlease_more0_32_1791459433004 due to insufficient space. Consider lowering eviction_high_watermark_ratio or mounting more segments.
+W1008 11:37:13.164186 220560 client_service.cpp:2052] Failed to start put operation for key=prefetch_waitlease_more0_33_1791459433004 due to insufficient space. Consider lowering eviction_high_watermark_ratio or mounting more segments.
+W1008 11:37:13.168272 220560 client_service.cpp:2052] Failed to start put operation for key=prefetch_waitlease_more0_34_1791459433004 due to insufficient space. Consider lowering eviction_high_watermark_ratio or mounting more segments.
+W1008 11:37:13.172325 220560 client_service.cpp:2052] Failed to start put operation for key=prefetch_waitlease_more0_35_1791459433004 due to insufficient space. Consider lowering eviction_high_watermark_ratio or mounting more segments.
+W1008 11:37:13.176388 220560 client_service.cpp:2052] Failed to start put operation for key=prefetch_waitlease_more0_36_1791459433004 due to insufficient space. Consider lowering eviction_high_watermark_ratio or mounting more segments.
+W1008 11:37:13.180456 220560 client_service.cpp:2052] Failed to start put operation for key=prefetch_waitlease_more0_37_1791459433004 due to insufficient space. Consider lowering eviction_high_watermark_ratio or mounting more segments.
+W1008 11:37:13.184518 220560 client_service.cpp:2052] Failed to start put operation for key=prefetch_waitlease_more0_38_1791459433004 due to insufficient space. Consider lowering eviction_high_watermark_ratio or mounting more segments.
+W1008 11:37:13.188583 220560 client_service.cpp:2052] Failed to start put operation for key=prefetch_waitlease_more0_39_1791459433004 due to insufficient space. Consider lowering eviction_high_watermark_ratio or mounting more segments.
+waitlease probe 1: ['LOCAL_DISK', 'DISK']
+replica-type histogram: ['LOCAL_DISK', 'DISK']
+batch_get results [8388608]
+.I1008 11:37:15.220305 220560 file_storage.cpp:118] Shutdown FileStorage...
+I1008 11:37:16.169817 220797 file_storage.cpp:1295] action=client_buffer_gc_thread_stopped
+I1008 11:37:16.169883 220560 aligned_client_buffer.cpp:161] AlignedClientBufferAllocator: freeing aligned memory at 0xfffb7bfff000 (1342177280 bytes)
+
+----------------------------------------------------------------------
+Ran 3 tests in 21.526s
+
+OK
+SMOKE_RC=0

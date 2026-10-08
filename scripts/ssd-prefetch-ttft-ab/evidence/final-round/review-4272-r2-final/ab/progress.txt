@@ -1,0 +1,32 @@
+2026-10-08T11:55:47Z PHASE=arm_a_start ARM=a suc=- fail=- start
+2026-10-08T11:55:48Z PHASE=arm_a_serve ARM=a suc=- fail=- serve start glog0
+2026-10-08T12:03:13Z PHASE=arm_a_fill ARM=a suc=- fail=- fill c=1
+2026-10-08T12:08:13Z PHASE=arm_a_fill ARM=a suc=48 fail=0 fill 48/0
+2026-10-08T12:08:14Z PHASE=arm_a_overflow ARM=a suc=48 fail=0 overflow c=1 n=48 no enlarge
+2026-10-08T12:13:10Z PHASE=arm_a_overflow ARM=a suc=48 fail=0 overflow 48/0
+2026-10-08T12:13:11Z PHASE=arm_a_settle ARM=a suc=48 fail=0 settle 700s
+2026-10-08T12:24:53Z PHASE=arm_a_local_disk ARM=a suc=48 fail=0 LOCAL_DISK list+probe
+2026-10-08T12:25:19Z PHASE=arm_a_frf ARM=a suc=48 fail=0 FILE_READ_FAIL gate
+2026-10-08T12:25:20Z PHASE=arm_a_r1 ARM=a suc=48 fail=0 measure r1 c=2
+2026-10-08T12:27:34Z PHASE=arm_a_r1 ARM=a suc=48 fail=0 r1 done
+2026-10-08T12:27:35Z PHASE=arm_a_frf_r2 ARM=a suc=48 fail=0 FILE_READ_FAIL before r2
+2026-10-08T12:27:37Z PHASE=arm_a_r2 ARM=a suc=48 fail=0 measure r2 c=2
+2026-10-08T12:29:50Z PHASE=arm_a_r2 ARM=a suc=48 fail=0 r2 done
+2026-10-08T12:29:54Z PHASE=arm_a_stop ARM=a suc=48 fail=0 arm stop
+2026-10-08T12:29:56Z PHASE=arm_b_start ARM=b suc=- fail=- start
+2026-10-08T12:29:57Z PHASE=arm_b_serve ARM=b suc=- fail=- serve start glog0
+2026-10-08T12:37:01Z PHASE=arm_b_fill ARM=b suc=- fail=- fill c=1
+2026-10-08T12:42:02Z PHASE=arm_b_fill ARM=b suc=48 fail=0 fill 48/0
+2026-10-08T12:42:03Z PHASE=arm_b_overflow ARM=b suc=48 fail=0 overflow c=1 n=48 no enlarge
+2026-10-08T12:46:59Z PHASE=arm_b_overflow ARM=b suc=48 fail=0 overflow 48/0
+2026-10-08T12:47:00Z PHASE=arm_b_settle ARM=b suc=48 fail=0 settle 700s
+2026-10-08T12:58:41Z PHASE=arm_b_local_disk ARM=b suc=48 fail=0 LOCAL_DISK list+probe
+2026-10-08T12:59:08Z PHASE=arm_b_frf ARM=b suc=48 fail=0 FILE_READ_FAIL gate
+2026-10-08T12:59:09Z PHASE=arm_b_r1 ARM=b suc=48 fail=0 measure r1 c=2
+2026-10-08T13:01:18Z PHASE=arm_b_r1 ARM=b suc=48 fail=0 r1 done
+2026-10-08T13:01:19Z PHASE=arm_b_frf_r2 ARM=b suc=48 fail=0 FILE_READ_FAIL before r2
+2026-10-08T13:01:21Z PHASE=arm_b_r2 ARM=b suc=48 fail=0 measure r2 c=2
+2026-10-08T13:03:29Z PHASE=arm_b_r2 ARM=b suc=48 fail=0 r2 done
+2026-10-08T13:03:31Z PHASE=arm_b_r2 ARM=b suc=48 fail=0 vlog probe skipped
+2026-10-08T13:03:34Z PHASE=arm_b_stop ARM=b suc=48 fail=0 arm stop
+2026-10-08T13:03:42Z PHASE=done ARM=b suc=48 fail=0 both arms finished

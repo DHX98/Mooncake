@@ -1,0 +1,55 @@
+diff --git a/mooncake-wheel/tests/test_prefetch_on_exist.py b<home>/prefetch_916/920_pre_pr/gate/test_prefetch_on_exist.final.py
+index b299e89ff..9f970b2cb 100644
+--- a/mooncake-wheel/tests/test_prefetch_on_exist.py
++++ b<home>/prefetch_916/920_pre_pr/gate/test_prefetch_on_exist.final.py
+@@ -236,16 +236,35 @@ class TestPrefetchOnExist(unittest.TestCase):
+         big_key = f"prefetch_waitlease_big_{timestamp}"
+         big_value = os.urandom(8 * 1024 * 1024)
+         self.assertEqual(self.store.put(big_key, big_value), 0)
++        # The put lease (default_kv_lease_ttl=500ms) blocks eviction. The
++        # overflow burst fits in that window and then stops, so nothing later
++        # forces this object out of DRAM and it stays MEMORY+LOCAL_DISK.
++        # Wait the lease out, then overflow. Recorded setup fix, round r2d.
++        time.sleep(1.5)
+         reference = self._make_cold_keys("waitlease")
+-        cold_key, type_hist = self._find_cold_key([big_key])
+-        self.assertEqual(cold_key, big_key)
+-        print(f"replica-type histogram: {type_hist}")
++        # _find_cold_key polls every 1s and each poll grants a new lease, which
++        # pins this object in DRAM for the whole timeout. Probe rarely, and
++        # only add pressure while it is unleased.
++        types = []
++        for round_i in range(6):
++            time.sleep(2.0)
++            descs = self.store.batch_get_replica_desc([big_key])
++            types = _replica_types(descs, big_key)
++            print(f"waitlease probe {round_i}: {types}")
++            if (
++                types
++                and all("MEMORY" not in t for t in types)
++                and any("LOCAL_DISK" in t for t in types)
++            ):
++                break
++            self._make_cold_keys(f"waitlease_more{round_i}", num_keys=40)
++        else:
++            self.fail(f"big key stayed resident, last={types}")
++        print(f"replica-type histogram: {types}")
+ 
+         self.assertEqual(self.store.is_exist(big_key, _prefetch_options(True)), 1)
+-        # Let the async job register the task and start the SSD read, so
+-        # the get lands inside the kInFlight window rather than kTriggered
+-        # (no wait) or after kCompleted (initial query already sees MEMORY).
+-        time.sleep(0.025)
++        # 25ms is after kCompleted on this SSD. 3ms is the in-flight window.
++        time.sleep(0)
+ 
+         capacity = len(big_value)
+         destination = (ctypes.c_ubyte * capacity)()
+@@ -255,6 +274,7 @@ class TestPrefetchOnExist(unittest.TestCase):
+             results = self.store.batch_get_into_multi_buffers(
+                 [big_key], [[destination_ptr]], [[capacity]], False
+             )
++            print('batch_get results', list(results))
+             self.assertEqual(
+                 list(results),
+                 [capacity],
