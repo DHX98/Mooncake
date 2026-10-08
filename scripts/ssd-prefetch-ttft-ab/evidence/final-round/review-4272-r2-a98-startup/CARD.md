@@ -15,3 +15,5 @@
 ## 判读
 
 同一套当前环境里，`98d9002f` 的构建能把 A 臂服务拉起来。启动失败在 `98d9002f` 之后合进去的代码里，不是这两周的容器、驱动或打包方式。没有做 commit 级二分。
+
+日志：`a98_serve.log`、`a_vllm.log`、`a_master.log`、`deploy_98probe.log`。对照上轮失败的是 `95b24456_vllm_fail.log`。

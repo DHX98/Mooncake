@@ -49,3 +49,5 @@ CTEST_RC=0
 ## 判读
 
 红轮没有复现「get 成功路径把 lease_ttl_ms=0 交给传输」。绿轮也没有把这条用例跑到 lease 检查。两边都在 `remove_all` 的返回值上退出。
+
+日志：`red_smoke.log`、`green_smoke.log`、`green_ctest.log`、`red_build.log`、`green_build.log`、`verify.log`。
