@@ -224,6 +224,9 @@ class TestPrefetchOnExist(unittest.TestCase):
         a live lease. A QueryReadOnly result (lease_ttl_ms forced to 0)
         would turn every successful wait into LEASE_EXPIRED at BatchGet's
         post-transfer lease check."""
+        # The class shares one store across test methods; earlier tests
+        # already filled the 32MB segment, so reset it first.
+        self.assertEqual(self.store.remove_all(True), 0)
         # Put the big key FIRST (empty segment has room for it), then
         # overflow with small keys to evict it. After _make_cold_keys the
         # segment is full and this put would fail with NO_AVAILABLE_HANDLE.
