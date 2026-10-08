@@ -224,11 +224,15 @@ class TestPrefetchOnExist(unittest.TestCase):
         a live lease. A QueryReadOnly result (lease_ttl_ms forced to 0)
         would turn every successful wait into LEASE_EXPIRED at BatchGet's
         post-transfer lease check."""
-        reference = self._make_cold_keys("waitlease")
+        # Put the big key FIRST (empty segment has room for it), then
+        # overflow with small keys to evict it. After _make_cold_keys the
+        # segment is full and this put would fail with NO_AVAILABLE_HANDLE.
+        # 8MB stays under the offload bucket size limit (10MB in CI).
         timestamp = int(time.time() * 1000)
         big_key = f"prefetch_waitlease_big_{timestamp}"
-        big_value = os.urandom(16 * 1024 * 1024)
+        big_value = os.urandom(8 * 1024 * 1024)
         self.assertEqual(self.store.put(big_key, big_value), 0)
+        reference = self._make_cold_keys("waitlease")
         cold_key, type_hist = self._find_cold_key([big_key])
         self.assertEqual(cold_key, big_key)
         print(f"replica-type histogram: {type_hist}")
