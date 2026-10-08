@@ -1,0 +1,354 @@
+DATE=2026-10-08T08:03:34Z
+HEAD=98d9002face6aaf6dbda9df493a27710146347bd
+DIRTY=0
+BUILD_JOBS=32
+-- glog version '0.4.0' (< 0.6.0 or unknown): IsGoogleLoggingInitialized() unavailable
+CMAKE_BUILD_TYPE: Release
+-- [limit_jobs] Available memory: 2021197 MB, CPU cores: 192
+-- [limit_jobs] Compile jobs: 192 (1500 MB/job), Link jobs: 192 (4000 MB/job)
+-- [limit_jobs] Ninja job pools: compile=192, link=192
+-- Event-driven completion is disabled
+-- Use env ASCEND_HOME_PATH
+-- Http as metadata server support is enabled
+-- metrics is enabled
+CMake Warning (author) at /usr/local/python3.12.13/lib/python3.12/site-packages/cmake/data/share/cmake-4.4/Modules/FetchContent.cmake:1968 (message):
+  Calling FetchContent_Populate(yalantinglibs) is deprecated, call
+  FetchContent_MakeAvailable(yalantinglibs) instead.  Policy CMP0169 can be
+  set to OLD to allow FetchContent_Populate(yalantinglibs) to be called
+  directly for now, but the ability to call it with declared details will be
+  removed completely in a future version.
+Call Stack (most recent call first):
+  mooncake-common/FindYLT.cmake:20 (FetchContent_Populate)
+  mooncake-common/common.cmake:725 (include)
+  CMakeLists.txt:13 (include)
+This warning is for project developers.  Use -Wno-author to suppress it.
+
+-- -------------YLT INSTALL SETTING------------
+-- INSTALL_THIRDPARTY: ON
+-- INSTALL_STANDALONE: ON
+-- INSTALL_INDEPENDENT_THIRDPARTY: ON
+-- INSTALL_INDEPENDENT_STANDALONE: ON
+-- --------------------------------------------
+YLT is imported by fetchContent or add_subdirectory
+-- -------------YLT CONFIG SETTING-------------
+-- YLT_ENABLE_DL: ON
+-- YLT_ENABLE_SSL: OFF
+-- YLT_ENABLE_NTLS: OFF
+-- Enable ibverbs support
+-- YLT_ENABLE_ND: OFF
+-- YLT_ENABLE_PMR: OFF
+-- YLT_ENABLE_IO_URING: OFF
+-- YLT_ENABLE_STRUCT_PACK_UNPORTABLE_TYPE: OFF
+-- YLT_ENABLE_STRUCT_PACK_OPTIMIZE: OFF
+-- --------------------------------------------
+CMake Warning (deprecated) at extern/pybind11/CMakeLists.txt:13 (cmake_minimum_required):
+  Compatibility with CMake < 3.10 will be removed from a future version of
+  CMake.
+
+  Update the VERSION argument <min> value.  Or, use the <min>...<max> syntax
+  to tell CMake that the project requires at least <min> but has been updated
+  to work with policies introduced by <max> or earlier.
+This warning is for project developers.  Use -Wno-author or -Wno-deprecated
+to suppress it.
+
+-- pybind11 v2.13.6 
+-- USE_NOF=OFF, NoF SSD pool support is disabled
+-- Ascend support fabric mem.
+-- Found library: /usr/local/Ascend/cann-9.0.1/aarch64-linux/lib64/libmetadef.so
+-- Mooncake Store will be built
+-- io_uring: Enabled for mooncake_store
+-- Store HA backends are disabled
+-- Alibaba Cloud OSS adapter: Enabled
+-- AWS SDK not found, S3 functionality will be disabled
+-- io_uring: NVMe uring command support unavailable, NVMe KV io_uring executor disabled
+-- Mooncake Python install directory: /usr/local/Ascend/cann-9.0.1/python/site-packages/mooncake
+-- Configuring done (0.6s)
+-- Generating done (0.1s)
+-- Build files have been written to: <work>/build-deploy
+CMAKE_RC=0
+[1/208] Building CXX object mooncake-transfer-engine/src/common/base/CMakeFiles/base.dir/status.cpp.o
+[2/208] Linking CXX static library mooncake-transfer-engine/src/common/base/libbase.a
+[3/208] Building CXX object mooncake-transfer-engine/src/transport/ascend_transport/CMakeFiles/ascend_transport.dir/ascend_allocator.cpp.o
+[4/208] Building CXX object mooncake-transfer-engine/src/CMakeFiles/transfer_engine.dir/shared_segment/mmap_shared_segment.cpp.o
+[5/208] Building CXX object mooncake-transfer-engine/src/CMakeFiles/transfer_engine.dir/shared_segment/shared_segment.cpp.o
+[6/208] Building CXX object mooncake-common/src/CMakeFiles/mooncake_common.dir/environ.cpp.o
+[7/208] Building CXX object mooncake-transfer-engine/src/transport/ascend_transport/CMakeFiles/ascend_transport.dir/ascend_direct_transport/sync_transfer_executor.cpp.o
+[8/208] Building CXX object mooncake-transfer-engine/src/CMakeFiles/transfer_engine.dir/memory_location.cpp.o
+[9/208] Linking CXX shared library mooncake-common/src/libmooncake_common.so
+[10/208] Building CXX object mooncake-transfer-engine/src/CMakeFiles/transfer_engine.dir/shared_segment/ascend_shared_segment.cpp.o
+[11/208] Building CXX object mooncake-transfer-engine/src/transport/CMakeFiles/transport.dir/transport.cpp.o
+[12/208] Building CXX object mooncake-transfer-engine/src/CMakeFiles/transfer_engine.dir/transfer_metadata_dump.cpp.o
+[13/208] Building CXX object mooncake-transfer-engine/src/transport/ascend_transport/CMakeFiles/ascend_transport.dir/ascend_direct_transport/utils.cpp.o
+[14/208] Building CXX object mooncake-transfer-engine/src/transport/ascend_transport/CMakeFiles/ascend_transport.dir/ascend_direct_transport/local_copy_engine.cpp.o
+[15/208] Building CXX object mooncake-transfer-engine/src/CMakeFiles/transfer_metadata_plugin.dir/config.cpp.o
+[16/208] Building CXX object mooncake-transfer-engine/src/CMakeFiles/transfer_engine.dir/transfer_engine_c.cpp.o
+[17/208] Building CXX object mooncake-transfer-engine/src/transport/ascend_transport/CMakeFiles/ascend_transport.dir/ascend_direct_transport/async_transfer_executor.cpp.o
+[18/208] Building CXX object mooncake-transfer-engine/src/transport/ascend_transport/CMakeFiles/ascend_transport.dir/ascend_direct_transport/slice_dispatcher.cpp.o
+[19/208] Building CXX object mooncake-transfer-engine/src/CMakeFiles/transfer_engine.dir/graceful_shutdown.cpp.o
+[20/208] Building CXX object mooncake-transfer-engine/src/transport/ascend_transport/CMakeFiles/ascend_transport.dir/ascend_direct_transport/ascend_direct_transport.cpp.o
+[21/208] Building CXX object mooncake-transfer-engine/src/transport/rdma_twosided/CMakeFiles/rdma_twosided.dir/rdma_twosided_transport.cpp.o
+[22/208] Building CXX object mooncake-transfer-engine/src/transport/rdma_transport/CMakeFiles/rdma_transport.dir/endpoint_store.cpp.o
+[23/208] Building CXX object mooncake-transfer-engine/src/transport/rdma_twosided/CMakeFiles/rdma_twosided.dir/ctrl_frame.cpp.o
+In file included from /usr/include/c++/11/bits/char_traits.h:39,
+                 from /usr/include/c++/11/string:40,
+                 from <work>/src/Mooncake-pr3/mooncake-transfer-engine/include/transport/rdma_twosided/ctrl_frame.h:19,
+                 from <work>/src/Mooncake-pr3/mooncake-transfer-engine/src/transport/rdma_twosided/ctrl_frame.cpp:15:
+In static member function ‘static constexpr _Tp* std::__copy_move<_IsMove, true, std::random_access_iterator_tag>::__copy_m(const _Tp*, const _Tp*, _Tp*) [with _Tp = unsigned char; bool _IsMove = true]’,
+    inlined from ‘constexpr _OI std::__copy_move_a2(_II, _II, _OI) [with bool _IsMove = true; _II = unsigned char*; _OI = unsigned char*]’ at /usr/include/c++/11/bits/stl_algobase.h:495:30,
+    inlined from ‘constexpr _OI std::__copy_move_a1(_II, _II, _OI) [with bool _IsMove = true; _II = unsigned char*; _OI = unsigned char*]’ at /usr/include/c++/11/bits/stl_algobase.h:522:42,
+    inlined from ‘constexpr _OI std::__copy_move_a(_II, _II, _OI) [with bool _IsMove = true; _II = unsigned char*; _OI = unsigned char*]’ at /usr/include/c++/11/bits/stl_algobase.h:529:31,
+    inlined from ‘constexpr _OI std::copy(_II, _II, _OI) [with _II = std::move_iterator<unsigned char*>; _OI = unsigned char*]’ at /usr/include/c++/11/bits/stl_algobase.h:620:7,
+    inlined from ‘static _ForwardIterator std::__uninitialized_copy<true>::__uninit_copy(_InputIterator, _InputIterator, _ForwardIterator) [with _InputIterator = std::move_iterator<unsigned char*>; _ForwardIterator = unsigned char*]’ at /usr/include/c++/11/bits/stl_uninitialized.h:110:27,
+    inlined from ‘_ForwardIterator std::uninitialized_copy(_InputIterator, _InputIterator, _ForwardIterator) [with _InputIterator = std::move_iterator<unsigned char*>; _ForwardIterator = unsigned char*]’ at /usr/include/c++/11/bits/stl_uninitialized.h:151:15,
+    inlined from ‘_ForwardIterator std::__uninitialized_copy_a(_InputIterator, _InputIterator, _ForwardIterator, std::allocator<_Tp>&) [with _InputIterator = std::move_iterator<unsigned char*>; _ForwardIterator = unsigned char*; _Tp = unsigned char]’ at /usr/include/c++/11/bits/stl_uninitialized.h:333:37,
+    inlined from ‘_ForwardIterator std::__uninitialized_move_if_noexcept_a(_InputIterator, _InputIterator, _ForwardIterator, _Allocator&) [with _InputIterator = unsigned char*; _ForwardIterator = unsigned char*; _Allocator = std::allocator<unsigned char>]’ at /usr/include/c++/11/bits/stl_uninitialized.h:355:2,
+    inlined from ‘void std::vector<_Tp, _Alloc>::_M_range_insert(std::vector<_Tp, _Alloc>::iterator, _ForwardIterator, _ForwardIterator, std::forward_iterator_tag) [with _ForwardIterator = const unsigned char*; _Tp = unsigned char; _Alloc = std::allocator<unsigned char>]’ at /usr/include/c++/11/bits/vector.tcc:783:9,
+    inlined from ‘void std::vector<_Tp, _Alloc>::_M_insert_dispatch(std::vector<_Tp, _Alloc>::iterator, _InputIterator, _InputIterator, std::__false_type) [with _InputIterator = const unsigned char*; _Tp = unsigned char; _Alloc = std::allocator<unsigned char>]’ at /usr/include/c++/11/bits/stl_vector.h:1665:19,
+    inlined from ‘std::vector<_Tp, _Alloc>::iterator std::vector<_Tp, _Alloc>::insert(std::vector<_Tp, _Alloc>::const_iterator, _InputIterator, _InputIterator) [with _InputIterator = const unsigned char*; <template-parameter-2-2> = void; _Tp = unsigned char; _Alloc = std::allocator<unsigned char>]’ at /usr/include/c++/11/bits/stl_vector.h:1383:22,
+    inlined from ‘void mooncake::{anonymous}::appendPod(std::vector<unsigned char>&, const T&) [with T = unsigned int]’ at <work>/src/Mooncake-pr3/mooncake-transfer-engine/src/transport/rdma_twosided/ctrl_frame.cpp:28:15,
+    inlined from ‘int mooncake::encodeSessionOpenPayload(uint32_t, uint32_t, std::vector<unsigned char>&)’ at <work>/src/Mooncake-pr3/mooncake-transfer-engine/src/transport/rdma_twosided/ctrl_frame.cpp:166:14:
+/usr/include/c++/11/bits/stl_algobase.h:431:30: warning: ‘void* __builtin_memmove(void*, const void*, long unsigned int)’ writing 1 or more bytes into a region of size 0 overflows the destination [-Wstringop-overflow=]
+  431 |             __builtin_memmove(__result, __first, sizeof(_Tp) * _Num);
+      |             ~~~~~~~~~~~~~~~~~^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+In file included from /usr/include/aarch64-linux-gnu/c++/11/bits/c++allocator.h:33,
+                 from /usr/include/c++/11/bits/allocator.h:46,
+                 from /usr/include/c++/11/string:41,
+                 from <work>/src/Mooncake-pr3/mooncake-transfer-engine/include/transport/rdma_twosided/ctrl_frame.h:19,
+                 from <work>/src/Mooncake-pr3/mooncake-transfer-engine/src/transport/rdma_twosided/ctrl_frame.cpp:15:
+/usr/include/c++/11/ext/new_allocator.h: In function ‘int mooncake::encodeSessionOpenPayload(uint32_t, uint32_t, std::vector<unsigned char>&)’:
+/usr/include/c++/11/ext/new_allocator.h:127:48: note: at offset 4 into destination object of size 4 allocated by ‘operator new’
+  127 |         return static_cast<_Tp*>(::operator new(__n * sizeof(_Tp)));
+      |                                  ~~~~~~~~~~~~~~^~~~~~~~~~~~~~~~~~~
+[24/208] Building CXX object mooncake-transfer-engine/src/transport/rdma_twosided/CMakeFiles/rdma_twosided.dir/sender_credit.cpp.o
+[25/208] Building CXX object mooncake-transfer-engine/src/CMakeFiles/transfer_engine.dir/show_links.cpp.o
+[26/208] Building CXX object mooncake-transfer-engine/src/CMakeFiles/transfer_metadata_plugin.dir/transfer_metadata_plugin.cpp.o
+[27/208] Building CXX object mooncake-store/src/cachelib_memory_allocator/CMakeFiles/cachelib_memory_allocator.dir/SlabAllocator.cpp.o
+[28/208] Building CXX object mooncake-transfer-engine/src/transport/ascend_transport/CMakeFiles/ascend_transport.dir/ascend_direct_transport/transfer_executor_base.cpp.o
+[29/208] Building CXX object mooncake-transfer-engine/src/transport/rdma_twosided/CMakeFiles/rdma_twosided.dir/ctrl_plane.cpp.o
+[30/208] Linking CXX shared library mooncake-transfer-engine/src/transport/ascend_transport/ascend_transport.so
+[31/208] Building CXX object mooncake-transfer-engine/src/CMakeFiles/transfer_engine.dir/topology.cpp.o
+[32/208] Building CXX object mooncake-store/src/CMakeFiles/mooncake_store_shared_objects.dir/config/rpc_protocol_config.cpp.o
+[33/208] Building CXX object mooncake-store/src/CMakeFiles/mooncake_store_shared_objects.dir/thread_pool.cpp.o
+[34/208] Building CXX object mooncake-store/src/cachelib_memory_allocator/CMakeFiles/cachelib_memory_allocator.dir/MemoryPool.cpp.o
+[35/208] Building CXX object mooncake-store/src/cachelib_memory_allocator/CMakeFiles/cachelib_memory_allocator.dir/MemoryPoolManager.cpp.o
+[36/208] Building CXX object mooncake-transfer-engine/src/transport/rdma_twosided/CMakeFiles/rdma_twosided.dir/ctrl_channel.cpp.o
+[37/208] Building CXX object mooncake-store/src/CMakeFiles/mooncake_store_master_objects.dir/config/local_file_snapshot_config.cpp.o
+[38/208] Building CXX object mooncake-store/src/cachelib_memory_allocator/CMakeFiles/cachelib_memory_allocator.dir/MemoryAllocator.cpp.o
+[39/208] Building CXX object mooncake-store/src/CMakeFiles/mooncake_store_shared_objects.dir/config/distributed_storage_config.cpp.o
+[40/208] Building CXX object mooncake-store/src/CMakeFiles/mooncake_store_shared_objects.dir/uds_transport.cpp.o
+[41/208] Building CXX object mooncake-transfer-engine/src/CMakeFiles/transfer_engine.dir/transfer_engine_impl.cpp.o
+<work>/src/Mooncake-pr3/mooncake-transfer-engine/src/transfer_engine_impl.cpp:96:20: warning: ‘std::string mooncake::loadTopologyJsonFile(const string&)’ defined but not used [-Wunused-function]
+   96 | static std::string loadTopologyJsonFile(const std::string& path) {
+      |                    ^~~~~~~~~~~~~~~~~~~~
+[42/208] Building CXX object mooncake-store/src/CMakeFiles/mooncake_store_shared_objects.dir/common/file_util.cpp.o
+[43/208] Building CXX object mooncake-store/src/CMakeFiles/mooncake_store_master_objects.dir/config/s3_client_config.cpp.o
+[44/208] Building CXX object mooncake-store/src/cachelib_memory_allocator/CMakeFiles/cachelib_memory_allocator.dir/AllocationClass.cpp.o
+[45/208] Building CXX object mooncake-transfer-engine/src/CMakeFiles/transfer_engine.dir/transfer_engine.cpp.o
+[46/208] Linking CXX static library mooncake-store/src/cachelib_memory_allocator/libcachelib_memory_allocator.a
+[47/208] Building CXX object mooncake-store/src/CMakeFiles/mooncake_store_shared_objects.dir/etcd_helper.cpp.o
+[48/208] Building CXX object mooncake-transfer-engine/src/transport/rdma_transport/CMakeFiles/rdma_transport.dir/rdma_endpoint.cpp.o
+[49/208] Building CXX object mooncake-transfer-engine/src/transport/rdma_transport/CMakeFiles/rdma_transport.dir/rdma_context.cpp.o
+[50/208] Building CXX object mooncake-store/src/CMakeFiles/mooncake_store_shared_objects.dir/types.cpp.o
+[51/208] Building CXX object mooncake-transfer-engine/src/CMakeFiles/transfer_engine.dir/multi_transport.cpp.o
+[52/208] Building CXX object mooncake-store/src/CMakeFiles/mooncake_store_master_objects.dir/config/redis_connection_config.cpp.o
+[53/208] Building CXX object mooncake-store/src/CMakeFiles/mooncake_store_master_objects.dir/config/ha_cluster_namespace_config.cpp.o
+[54/208] Building CXX object mooncake-store/src/CMakeFiles/mooncake_store_shared_objects.dir/storage/distributed/posix_fs_adapter.cpp.o
+[55/208] Building CXX object mooncake-store/src/local_ssd/CMakeFiles/mooncake_local_ssd.dir/manager.cpp.o
+[56/208] Building CXX object mooncake-store/src/CMakeFiles/mooncake_store_shared_objects.dir/allocator_metric.cpp.o
+[57/208] Building CXX object mooncake-transfer-engine/src/transport/shm_transport/CMakeFiles/shm_transport.dir/shm_transport.cpp.o
+<work>/src/Mooncake-pr3/mooncake-transfer-engine/src/transport/shm_transport/shm_transport.cpp:162:6: warning: ‘bool mooncake::{anonymous}::protocolListContains(const string&, const string&)’ defined but not used [-Wunused-function]
+  162 | bool protocolListContains(const std::string& protocol,
+      |      ^~~~~~~~~~~~~~~~~~~~
+[58/208] Building CXX object mooncake-store/src/CMakeFiles/mooncake_store_master_objects.dir/segment_allocator_registration.cpp.o
+[59/208] Building CXX object mooncake-store/src/CMakeFiles/mooncake_store_master_objects.dir/tenant_quota_ledger.cpp.o
+[60/208] Building CXX object mooncake-transfer-engine/src/transport/rdma_transport/CMakeFiles/rdma_transport.dir/rdma_transport.cpp.o
+[61/208] Building CXX object mooncake-transfer-engine/src/CMakeFiles/transfer_engine.dir/transfer_metadata.cpp.o
+[62/208] Building CXX object mooncake-store/src/CMakeFiles/mooncake_store_master_objects.dir/segment/catalog.cpp.o
+[63/208] Building CXX object mooncake-store/src/CMakeFiles/mooncake_store_master_objects.dir/tenant_quota.cpp.o
+[64/208] Building CXX object mooncake-transfer-engine/src/transport/rdma_transport/CMakeFiles/rdma_transport.dir/worker_pool.cpp.o
+[65/208] Building CXX object mooncake-store/src/CMakeFiles/mooncake_store_master_objects.dir/segment/region_driver.cpp.o
+[66/208] Building CXX object mooncake-store/src/CMakeFiles/mooncake_store_shared_objects.dir/storage/distributed/distributed_storage_backend.cpp.o
+[67/208] Building CXX object mooncake-store/src/CMakeFiles/mooncake_store_master_objects.dir/master_snapshot_repository.cpp.o
+[68/208] Building CXX object mooncake-store/src/CMakeFiles/mooncake_store_master_objects.dir/allocation_strategy.cpp.o
+[69/208] Building CXX object mooncake-store/src/CMakeFiles/mooncake_store_master_objects.dir/segment/pool_mount.cpp.o
+[70/208] Building CXX object mooncake-store/src/CMakeFiles/mooncake_store_master_objects.dir/offset_allocator.cpp.o
+[71/208] Building CXX object mooncake-store/src/CMakeFiles/mooncake_store_master_objects.dir/segment/pool.cpp.o
+[72/208] Building CXX object mooncake-store/src/CMakeFiles/mooncake_store_master_objects.dir/ha/leadership/leader_coordinator_factory.cpp.o
+[73/208] Building CXX object mooncake-store/src/CMakeFiles/mooncake_store_master_objects.dir/placement/replica_allocator.cpp.o
+[74/208] Building CXX object mooncake-store/src/CMakeFiles/mooncake_store_master_objects.dir/tenant_quota_policy_store.cpp.o
+[75/208] Building CXX object mooncake-store/src/CMakeFiles/mooncake_store_master_objects.dir/segment/pool_read_access.cpp.o
+[76/208] Building CXX object mooncake-store/src/CMakeFiles/mooncake_store_master_objects.dir/ha/common/redis/redis_connection.cpp.o
+[77/208] Building CXX object mooncake-store/src/CMakeFiles/mooncake_store_master_objects.dir/segment/pool_write_access.cpp.o
+[78/208] Building CXX object mooncake-store/src/CMakeFiles/mooncake_store_master_objects.dir/allocator.cpp.o
+[79/208] Building CXX object mooncake-store/src/CMakeFiles/mooncake_store_master_objects.dir/ha/snapshot/allocator_snapshot_codec.cpp.o
+[80/208] Building CXX object mooncake-store/src/CMakeFiles/mooncake_store_master_objects.dir/client_offboarding.cpp.o
+[81/208] Building CXX object mooncake-store/src/CMakeFiles/mooncake_store_master_objects.dir/placement/index.cpp.o
+[82/208] Building CXX object mooncake-store/src/CMakeFiles/mooncake_store_master_objects.dir/ha/leadership/backends/redis/redis_leader_coordinator.cpp.o
+[83/208] Building CXX object mooncake-store/src/CMakeFiles/mooncake_store_master_objects.dir/ha/snapshot/store_resource_snapshot_codec.cpp.o
+[84/208] Building CXX object mooncake-store/src/CMakeFiles/mooncake_store_master_objects.dir/segment/snapshot.cpp.o
+[85/208] Building CXX object mooncake-store/src/CMakeFiles/mooncake_store_master_objects.dir/ha/leadership/backends/etcd/etcd_leader_coordinator.cpp.o
+[86/208] Building CXX object mooncake-store/src/CMakeFiles/mooncake_store_master_objects.dir/ha/kv/etcd_ha_kv_backend.cpp.o
+[87/208] Building CXX object mooncake-store/src/CMakeFiles/mooncake_store_master_objects.dir/weight_metadata_store.cpp.o
+[88/208] Building CXX object mooncake-store/src/CMakeFiles/mooncake_store_master_objects.dir/ha/snapshot/object/backends/s3/s3_snapshot_object_store.cpp.o
+[89/208] Building CXX object mooncake-store/src/CMakeFiles/mooncake_store_master_objects.dir/ha/snapshot/object/snapshot_object_store.cpp.o
+[90/208] Building CXX object mooncake-store/src/CMakeFiles/mooncake_store_master_objects.dir/ha/snapshot/batch_oplog/batch_oplog_snapshot_publisher.cpp.o
+[91/208] Building CXX object mooncake-store/src/CMakeFiles/mooncake_store_master_objects.dir/ha/snapshot/snapshot_maintenance_lease.cpp.o
+[92/208] Building CXX object mooncake-store/src/CMakeFiles/mooncake_store_master_objects.dir/storage/distributed/dfs_global_allocator.cpp.o
+[93/208] Building CXX object mooncake-store/src/CMakeFiles/mooncake_store_master_objects.dir/ha/snapshot/batch_oplog/metadata.cpp.o
+[94/208] Building CXX object mooncake-store/src/CMakeFiles/mooncake_store_master_objects.dir/ha/snapshot/object/backends/local/local_file_snapshot_object_store.cpp.o
+[95/208] Building CXX object mooncake-store/src/CMakeFiles/mooncake_store_master_objects.dir/ha/snapshot/batch_oplog/batch_oplog_snapshot_gc.cpp.o
+[96/208] Building CXX object mooncake-store/src/CMakeFiles/mooncake_store_master_objects.dir/ha/snapshot/batch_oplog/batch_oplog_pruning_coordinator.cpp.o
+[97/208] Building CXX object mooncake-store/src/CMakeFiles/mooncake_store_master_objects.dir/ha/oplog/oplog_test_failpoint.cpp.o
+[98/208] Building CXX object mooncake-store/src/CMakeFiles/mooncake_store_master_objects.dir/master_snapshot_manager.cpp.o
+[99/208] Building CXX object mooncake-store/src/CMakeFiles/mooncake_store_master_objects.dir/ha/snapshot/catalog/backends/redis/redis_snapshot_catalog_store.cpp.o
+[100/208] Building CXX object mooncake-transfer-engine/src/transport/tcp_transport/CMakeFiles/tcp_transport.dir/tcp_transport.cpp.o
+[101/208] Building CXX object mooncake-store/src/CMakeFiles/mooncake_store_master_objects.dir/ha/oplog/oplog_types.cpp.o
+[102/208] Building CXX object mooncake-store/src/CMakeFiles/mooncake_store_master_objects.dir/ha/snapshot/catalog/backends/embedded/embedded_snapshot_catalog_store.cpp.o
+[103/208] Building CXX object mooncake-store/src/CMakeFiles/mooncake_store_master_objects.dir/ha/standby_metadata_store.cpp.o
+[104/208] Building CXX object mooncake-store/src/CMakeFiles/mooncake_store_master_objects.dir/standby_state_machine.cpp.o
+[105/208] Building CXX object mooncake-store/src/CMakeFiles/mooncake_store_master_objects.dir/ha/snapshot/local_ssd_codec.cpp.o
+[106/208] Building CXX object mooncake-store/src/CMakeFiles/mooncake_store_master_objects.dir/ha/snapshot/batch_oplog/batch_oplog_snapshot_coordinator.cpp.o
+[107/208] Building CXX object mooncake-store/src/CMakeFiles/mooncake_store_master_objects.dir/ha/oplog/oplog_batch_codec.cpp.o
+[108/208] Building CXX object mooncake-store/src/CMakeFiles/mooncake_store_master_objects.dir/ha/snapshot/batch_oplog/batch_oplog_snapshot_provider.cpp.o
+[109/208] Building CXX object mooncake-store/src/CMakeFiles/mooncake_store_master_objects.dir/ha/standby_controller.cpp.o
+[110/208] Building CXX object mooncake-store/src/CMakeFiles/mooncake_store_master_objects.dir/ha/oplog/oplog_batch_types.cpp.o
+[111/208] Building CXX object mooncake-store/src/CMakeFiles/mooncake_store_client_objects.dir/common/client_buffer_allocation.cpp.o
+[112/208] Building CXX object mooncake-store/src/CMakeFiles/mooncake_store_client_objects.dir/mmap_arena.cpp.o
+[113/208] Building CXX object mooncake-store/src/CMakeFiles/mooncake_store_master_objects.dir/ha/oplog/oplog_batch_storage.cpp.o
+[114/208] Building CXX object mooncake-store/src/CMakeFiles/mooncake_store_client_objects.dir/config/hugepage_config.cpp.o
+[115/208] Building CXX object mooncake-store/src/CMakeFiles/mooncake_store_master_objects.dir/ha/snapshot/batch_oplog/writer.cpp.o
+[116/208] Building CXX object mooncake-store/src/CMakeFiles/mooncake_store_client_objects.dir/config/mmap_arena_config.cpp.o
+[117/208] Building CXX object mooncake-store/src/CMakeFiles/mooncake_store_master_objects.dir/k8s_lease_helper.cpp.o
+[118/208] Building CXX object mooncake-store/src/CMakeFiles/mooncake_store_client_objects.dir/common/mmap_buffer.cpp.o
+[119/208] Building CXX object mooncake-store/src/CMakeFiles/mooncake_store_client_objects.dir/nvme_kv/config/io_concurrency_config.cpp.o
+[120/208] Building CXX object mooncake-store/src/CMakeFiles/mooncake_store_master_objects.dir/ha/snapshot/batch_oplog/codec.cpp.o
+[121/208] Building CXX object mooncake-store/src/CMakeFiles/mooncake_store_master_objects.dir/ha/oplog/oplog_batch_standby_reader.cpp.o
+[122/208] Building CXX object mooncake-store/src/CMakeFiles/mooncake_store_master_objects.dir/task_manager.cpp.o
+[123/208] Building CXX object mooncake-store/src/CMakeFiles/mooncake_store_client_objects.dir/config/fileread_worker_pool_config.cpp.o
+[124/208] Building CXX object mooncake-store/src/CMakeFiles/mooncake_store_client_objects.dir/nvme_kv/config/connector_config.cpp.o
+[125/208] Building CXX object mooncake-store/src/CMakeFiles/mooncake_store_master_objects.dir/ha/oplog/ordered_oplog_writer.cpp.o
+[126/208] Building CXX object mooncake-store/src/CMakeFiles/mooncake_store_master_objects.dir/ha/snapshot/catalog_backed_snapshot_provider.cpp.o
+[127/208] Building CXX object mooncake-store/src/CMakeFiles/mooncake_store_master_objects.dir/ha_metric_manager.cpp.o
+[128/208] Building CXX object mooncake-store/src/CMakeFiles/mooncake_store_client_objects.dir/nvme_kv/executor_io_uring.cpp.o
+[129/208] Building CXX object mooncake-store/src/CMakeFiles/mooncake_store_master_objects.dir/ha/snapshot/master_snapshot_codec.cpp.o
+[130/208] Building CXX object mooncake-store/src/CMakeFiles/mooncake_store_master_objects.dir/segment.cpp.o
+[131/208] Building CXX object mooncake-store/src/CMakeFiles/mooncake_store_master_objects.dir/metadata_store.cpp.o
+[132/208] Building CXX object mooncake-store/src/CMakeFiles/mooncake_store_client_objects.dir/config/registered_pinned_memory_config.cpp.o
+[133/208] Building CXX object mooncake-store/src/CMakeFiles/mooncake_store_client_objects.dir/nvme_kv/executor_util.cpp.o
+[134/208] Building CXX object mooncake-store/src/CMakeFiles/mooncake_store_master_objects.dir/master_metric_manager.cpp.o
+[135/208] Building CXX object mooncake-store/src/CMakeFiles/mooncake_store_client_objects.dir/nvme_kv/key_conflict_policy.cpp.o
+[136/208] Building CXX object mooncake-store/src/CMakeFiles/mooncake_store_client_objects.dir/nvme_kv/executor_ioctl.cpp.o
+[137/208] Building CXX object mooncake-store/src/CMakeFiles/mooncake_store_client_objects.dir/shm_helper.cpp.o
+[138/208] Building CXX object mooncake-store/src/CMakeFiles/mooncake_store_client_objects.dir/config/client_host_identity_config.cpp.o
+[139/208] Building CXX object mooncake-store/src/CMakeFiles/mooncake_store_client_objects.dir/nvme_kv/connector.cpp.o
+[140/208] Building CXX object mooncake-store/src/CMakeFiles/mooncake_store_client_objects.dir/posix_file.cpp.o
+[141/208] Building CXX object mooncake-store/src/CMakeFiles/mooncake_store_master_objects.dir/serialize/serializer.cpp.o
+[142/208] Building CXX object mooncake-store/src/CMakeFiles/mooncake_store_shared_objects.dir/common/network.cpp.o
+[143/208] Building CXX object mooncake-store/src/CMakeFiles/mooncake_store_client_objects.dir/config/bucket_backend_config.cpp.o
+[144/208] Building CXX object mooncake-transfer-engine/src/transport/rpc_communicator/CMakeFiles/rpc_communicator.dir/rpc_interface.cpp.o
+[145/208] Building CXX object mooncake-store/src/CMakeFiles/mooncake_store_client_objects.dir/config/file_per_key_config.cpp.o
+[146/208] Building CXX object mooncake-store/src/CMakeFiles/mooncake_store_client_objects.dir/config/cxl_segment_config.cpp.o
+[147/208] Building CXX object mooncake-store/src/CMakeFiles/mooncake_store_client_objects.dir/config/client_auto_port_config.cpp.o
+[148/208] Building CXX object mooncake-store/src/CMakeFiles/mooncake_store_client_objects.dir/config/client_numa_config.cpp.o
+[149/208] Building CXX object mooncake-store/src/CMakeFiles/mooncake_store_master_objects.dir/hot_standby_service.cpp.o
+[150/208] Building CXX object mooncake-store/src/CMakeFiles/mooncake_store_master_objects.dir/ha/oplog/oplog_applier.cpp.o
+[151/208] Building CXX object mooncake-store/src/CMakeFiles/mooncake_store_client_objects.dir/config/replica_selection_config.cpp.o
+[152/208] Building CXX object mooncake-store/src/CMakeFiles/mooncake_store_client_objects.dir/config/rpc_timeout_config.cpp.o
+[153/208] Building CXX object mooncake-store/src/CMakeFiles/mooncake_store_client_objects.dir/config/nof_register_config.cpp.o
+[154/208] Building CXX object mooncake-store/src/CMakeFiles/mooncake_store_client_objects.dir/device/accelerator_device.cpp.o
+[155/208] Building CXX object mooncake-store/src/CMakeFiles/mooncake_store_client_objects.dir/config/offset_allocator_backend_config.cpp.o
+[156/208] Building CXX object mooncake-store/src/CMakeFiles/mooncake_store_client_objects.dir/device/cuda_like_accelerator_device.cpp.o
+[157/208] Building CXX object mooncake-store/src/CMakeFiles/mooncake_store_client_objects.dir/config/spdk_controller_config.cpp.o
+[158/208] Building CXX object mooncake-store/src/CMakeFiles/mooncake_store_client_objects.dir/device/runtime_accelerator.cpp.o
+[159/208] Building CXX object mooncake-store/src/CMakeFiles/mooncake_store_client_objects.dir/config/transfer_submitter_config.cpp.o
+[160/208] Building CXX object mooncake-store/src/CMakeFiles/mooncake_store_client_objects.dir/device/hip_accelerator_device.cpp.o
+[161/208] Building CXX object mooncake-store/src/CMakeFiles/mooncake_store_client_objects.dir/device/ascend_accelerator_device.cpp.o
+[162/208] Building CXX object mooncake-store/src/CMakeFiles/mooncake_store_client_objects.dir/device/sunrise_accelerator_device.cpp.o
+[163/208] Linking CXX static library mooncake-store/src/local_ssd/libmooncake_local_ssd.a
+[164/208] Building CXX object mooncake-store/src/CMakeFiles/mooncake_store_client_objects.dir/device/accelerator_registry.cpp.o
+[165/208] Building CXX object mooncake-store/src/CMakeFiles/mooncake_store_client_objects.dir/config/client_auto_discovery_config.cpp.o
+[166/208] Building CXX object mooncake-store/src/CMakeFiles/mooncake_store_client_objects.dir/aligned_client_buffer.cpp.o
+[167/208] Building CXX object mooncake-store/src/CMakeFiles/mooncake_store_client_objects.dir/device/cuda_ipc_buffer.cpp.o
+[168/208] Building CXX object mooncake-store/src/CMakeFiles/mooncake_store_client_objects.dir/config/client_metric_config.cpp.o
+[169/208] Building CXX object mooncake-store/src/CMakeFiles/mooncake_store_client_objects.dir/client_buffer.cpp.o
+[170/208] Building CXX object mooncake-store/src/CMakeFiles/mooncake_store_client_objects.dir/config/local_hot_cache_config.cpp.o
+[171/208] Building CXX object mooncake-store/src/CMakeFiles/mooncake_store_client_objects.dir/config/file_storage_config.cpp.o
+[172/208] Building CXX object mooncake-store/src/CMakeFiles/mooncake_store_client_objects.dir/config/oss_adapter_config.cpp.o
+[173/208] Building CXX object mooncake-store/src/CMakeFiles/mooncake_store_client_objects.dir/uring_file.cpp.o
+[174/208] Building CXX object mooncake-store/src/CMakeFiles/mooncake_store_client_objects.dir/client_metric.cpp.o
+[175/208] Building CXX object mooncake-store/src/CMakeFiles/mooncake_store_client_objects.dir/nvme_kv/backend.cpp.o
+[176/208] Building CXX object mooncake-store/src/CMakeFiles/mooncake_store_client_objects.dir/transfer_task.cpp.o
+[177/208] Building CXX object mooncake-integration/CMakeFiles/engine.dir/transfer_engine/shared_segment_py.cpp.o
+[178/208] Building CXX object mooncake-store/src/CMakeFiles/mooncake_store_client_objects.dir/storage/distributed/oss_adapter.cpp.o
+[179/208] Building CXX object mooncake-integration/CMakeFiles/engine.dir/transfer_engine/transfer_engine_py.cpp.o
+[180/208] Building CXX object mooncake-store/src/CMakeFiles/mooncake_store_client_objects.dir/local_hot_cache.cpp.o
+[181/208] Building CXX object mooncake-store/src/CMakeFiles/mooncake_store_client_objects.dir/ssd_prefetcher.cpp.o
+[182/208] Building CXX object mooncake-store/src/CMakeFiles/mooncake_store_client_objects.dir/ssd_register_client.cpp.o
+[183/208] Building CXX object mooncake-store/src/CMakeFiles/mooncake_store_client_objects.dir/file_storage.cpp.o
+[184/208] Building CXX object mooncake-store/src/CMakeFiles/mooncake_store_client_objects.dir/engram/engram_store.cpp.o
+[185/208] Building CXX object mooncake-store/src/CMakeFiles/mooncake_store_master_objects.dir/http_metadata_server.cpp.o
+[186/208] Building CXX object mooncake-store/src/CMakeFiles/mooncake_store_client_objects.dir/storage_backend.cpp.o
+[187/208] Building CXX object mooncake-integration/CMakeFiles/store.dir/store/engram_store_py.cpp.o
+[188/208] Building CXX object mooncake-store/src/CMakeFiles/mooncake_store_master_objects.dir/rpc_service.cpp.o
+[189/208] Building CXX object mooncake-store/src/CMakeFiles/mooncake_store_client_objects.dir/store_c.cpp.o
+[190/208] Building CXX object mooncake-integration/CMakeFiles/store.dir/store/buffer_pool.cpp.o
+[191/208] Building CXX object mooncake-store/src/CMakeFiles/mooncake_store_client_objects.dir/client_service.cpp.o
+[192/208] Building CXX object mooncake-integration/CMakeFiles/store.dir/store/store_py.cpp.o
+In file included from <work>/src/Mooncake-pr3/mooncake-integration/store/store_py.cpp:494:
+<work>/src/Mooncake-pr3/mooncake-integration/store/store_py_internal.h:1416:40: warning: ‘std::optional<mooncake::{anonymous}::RawTensorShardWritePlan> mooncake::{anonymous}::build_raw_tensor_shard_write_plan(const mooncake::ParsedTensorMetadata&, int, int, int, const char*)’ defined but not used [-Wunused-function]
+ 1416 | std::optional<RawTensorShardWritePlan> build_raw_tensor_shard_write_plan(
+      |                                        ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+<work>/src/Mooncake-pr3/mooncake-integration/store/store_py_internal.h:1083:35: warning: ‘std::optional<mooncake::{anonymous}::ResolvedTensorRead> mooncake::{anonymous}::resolve_parallelism_shard_read(const std::function<std::optional<mooncake::ParsedTensorMetadata>(const std::__cxx11::basic_string<char>&, std::shared_ptr<mooncake::BufferHandle>*)>&, const string&, const mooncake::{anonymous}::TensorParallelismSpec&)’ defined but not used [-Wunused-function]
+ 1083 | std::optional<ResolvedTensorRead> resolve_parallelism_shard_read(
+      |                                   ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+<work>/src/Mooncake-pr3/mooncake-integration/store/store_py_internal.h:1011:31: warning: ‘std::optional<mooncake::{anonymous}::ReadTargetSpec> mooncake::{anonymous}::parse_read_target_spec(const pybind11::object&)’ defined but not used [-Wunused-function]
+ 1011 | std::optional<ReadTargetSpec> parse_read_target_spec(const py::object &obj) {
+      |                               ^~~~~~~~~~~~~~~~~~~~~~
+<work>/src/Mooncake-pr3/mooncake-integration/store/store_py_internal.h:974:38: warning: ‘std::optional<mooncake::{anonymous}::WriterShardTensorInfo> mooncake::{anonymous}::build_writer_shard_tensor_info(const string&, const pybind11::object&, const mooncake::{anonymous}::WriterPartitionSpec&, const string&)’ defined but not used [-Wunused-function]
+  974 | std::optional<WriterShardTensorInfo> build_writer_shard_tensor_info(
+      |                                      ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+<work>/src/Mooncake-pr3/mooncake-integration/store/store_py_internal.h:863:6: warning: ‘bool mooncake::{anonymous}::is_default_replicate_config(const mooncake::ReplicateConfig&)’ defined but not used [-Wunused-function]
+  863 | bool is_default_replicate_config(const ReplicateConfig &config) {
+      |      ^~~~~~~~~~~~~~~~~~~~~~~~~~~
+<work>/src/Mooncake-pr3/mooncake-integration/store/store_py_internal.h:831:6: warning: ‘bool mooncake::{anonymous}::parallelism_specs_equal_by_kind(const mooncake::{anonymous}::TensorParallelismSpec&, const mooncake::{anonymous}::TensorParallelismSpec&, bool)’ defined but not used [-Wunused-function]
+  831 | bool parallelism_specs_equal_by_kind(const TensorParallelismSpec &lhs,
+      |      ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+<work>/src/Mooncake-pr3/mooncake-integration/store/store_py_internal.h:768:25: warning: ‘std::optional<pybind11::list> mooncake::{anonymous}::validate_batch_writer_partition_list(const pybind11::object&, size_t, const string&)’ defined but not used [-Wunused-function]
+  768 | std::optional<py::list> validate_batch_writer_partition_list(
+      |                         ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+<work>/src/Mooncake-pr3/mooncake-integration/store/store_py_internal.h:761:25: warning: ‘std::optional<pybind11::list> mooncake::{anonymous}::validate_batch_parallelism_list(const pybind11::object&, size_t, const string&)’ defined but not used [-Wunused-function]
+  761 | std::optional<py::list> validate_batch_parallelism_list(
+      |                         ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+<work>/src/Mooncake-pr3/mooncake-integration/store/store_py_internal.h:685:1: warning: ‘std::optional<mooncake::{anonymous}::ResolvedParallelismWriteRequest> mooncake::{anonymous}::resolve_parallelism_write_request(const pybind11::object&, const pybind11::object&, const string&)’ defined but not used [-Wunused-function]
+  685 | resolve_parallelism_write_request(const py::object &parallelism_obj,
+      | ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+<work>/src/Mooncake-pr3/mooncake-integration/store/store_py_internal.h:459:1: warning: ‘std::optional<mooncake::{anonymous}::ParallelismShardTensorInfo> mooncake::{anonymous}::build_requested_parallelism_shard_info(const pybind11::handle&, const mooncake::{anonymous}::TensorParallelismSpec&, const string&, const string&)’ defined but not used [-Wunused-function]
+  459 | build_requested_parallelism_shard_info(const py::handle &tensor,
+      | ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+<work>/src/Mooncake-pr3/mooncake-integration/store/store_py_internal.h:403:43: warning: ‘std::optional<mooncake::{anonymous}::ParallelismShardTensorInfo> mooncake::{anonymous}::build_direct_parallelism_shard_info(const pybind11::handle&, const std::vector<mooncake::{anonymous}::ParallelAxisSpec>&, const string&, bool)’ defined but not used [-Wunused-function]
+  403 | std::optional<ParallelismShardTensorInfo> build_direct_parallelism_shard_info(
+      |                                           ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+<work>/src/Mooncake-pr3/mooncake-integration/store/store_py_internal.h:381:29: warning: ‘std::optional<mooncake::{anonymous}::PyTensorInfo> mooncake::{anonymous}::build_direct_parallelism_shard_info(const pybind11::handle&, const std::vector<mooncake::{anonymous}::ParallelAxisSpec>&, const string&)’ defined but not used [-Wunused-function]
+  381 | std::optional<PyTensorInfo> build_direct_parallelism_shard_info(
+      |                             ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+[193/208] Building CXX object mooncake-store/src/CMakeFiles/mooncake_master.dir/master.cpp.o
+[194/208] Building CXX object mooncake-store/src/CMakeFiles/mooncake_store_master_objects.dir/master_admin_service.cpp.o
+[195/208] Building CXX object mooncake-store/src/CMakeFiles/mooncake_store_master_objects.dir/ha/leadership/master_service_supervisor.cpp.o
+[196/208] Building CXX object mooncake-transfer-engine/src/transport/rpc_communicator/CMakeFiles/rpc_communicator.dir/rpc_communicator.cpp.o
+[197/208] Linking CXX shared library mooncake-transfer-engine/src/libtransfer_engine.so
+[198/208] Linking CXX shared module mooncake-integration/engine.cpython-312-aarch64-linux-gnu.so
+lto-wrapper: warning: using serial compilation of 7 LTRANS jobs
+[199/208] Building CXX object mooncake-store/src/CMakeFiles/mooncake_client.dir/real_client_main.cpp.o
+[200/208] Building CXX object mooncake-store/src/CMakeFiles/mooncake_store_master_objects.dir/master_service.cpp.o
+[201/208] Linking CXX static library mooncake-store/src/libmooncake_store_master.a
+[202/208] Linking CXX executable mooncake-store/src/mooncake_master
+[203/208] Building CXX object mooncake-store/src/CMakeFiles/mooncake_store_client_objects.dir/real_client.cpp.o
+[204/208] Building CXX object mooncake-store/src/CMakeFiles/mooncake_store_client_objects.dir/dummy_client.cpp.o
+[205/208] Building CXX object mooncake-store/src/CMakeFiles/mooncake_store_client_objects.dir/master_client.cpp.o
+[206/208] Linking CXX shared library mooncake-store/src/libmooncake_store.so
+[207/208] Linking CXX executable mooncake-store/src/mooncake_client
+[208/208] Linking CXX shared module mooncake-integration/store.cpython-312-aarch64-linux-gnu.so
+lto-wrapper: warning: using serial compilation of 20 LTRANS jobs
+BUILD_RC=0
+USE_ASCEND_DIRECT:BOOL=ON
+DEPLOY_BUILD_DONE

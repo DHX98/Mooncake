@@ -1,0 +1,44 @@
+SERVE_START_SCRIPT 2026-10-08T08:19:14Z
+LIB=<work>/build-deploy/mooncake-store/src/libmooncake_store.so
+PY=<work>/build-deploy/mooncake-integration/store.cpython-312-aarch64-linux-gnu.so
+ENG=<work>/build-deploy/mooncake-integration/engine.cpython-312-aarch64-linux-gnu.so
+BIN=<work>/build-deploy/mooncake-store/src/mooncake_master
+TE=<work>/build-deploy/mooncake-transfer-engine/src/libtransfer_engine.so
+COMMON=<work>/build-deploy/mooncake-common/src/libmooncake_common.so
+ARTIFACT_RC=0
+MD5=33130c318dc1647ce3ef0c056514daf9
+PROMOTION_FLAG=1
+INSTALL_OK
+===== FREE NPU =====
+PIDS=2853583 2856516 3549327
+PID 2853583
+NPU occupier stopped
+KILLED_2853583
+PID 2856516
+NPU occupier stopped
+KILLED_2856516
+PID 3549327
+NPU occupier stopped
+KILLED_3549327
+IDLE NPU0
+IDLE NPU1
+IDLE NPU2
+IDLE NPU3
+IDLE NPU4
+IDLE NPU5
+IDLE NPU6
+IDLE NPU7
+NPU_BUSY=0
+===== SERVE A =====
+json <work>/ttft-ab/mooncake_a.json prefetch False seg 256MB wait 2000
+master pid=26596 rpc=:50111
+vllm pid=26631 http=:8271 arm=a platform=ascend
+SERVE_START_RC=0
+MODELS_HTTP=200
+VERDICT=START_OK
+===== MARKERS =====
+(APIServer pid=26631) INFO:     Application startup complete.
+
+OLD_CTX=160
+OLD_READY=0
+A98_SERVE_DONE

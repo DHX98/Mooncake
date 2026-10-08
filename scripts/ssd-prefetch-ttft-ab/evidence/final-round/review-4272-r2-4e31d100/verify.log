@@ -1,0 +1,98 @@
+PHASE=objects 2026-10-08T08:03:31Z
+commit
+CAT_RED=0
+commit
+CAT_GREEN=0
+GREEN_PARENT=95b24456a347267d257b1e3644e4aaf5d65668af
+PHASE=red_checkout 2026-10-08T08:03:31Z
+Warning: you are leaving 1 commit behind, not connected to
+any of your branches:
+
+  95b24456a [Store][Test] Fix wait-lease test setup: put before overflow
+
+If you want to keep it by creating a new branch, this may be a good time
+to do so with:
+
+ git branch <new-branch-name> 95b24456a
+
+HEAD is now at af797e8e9 [Store][Test] Cover the get-side wait success path end to end
+RED_CHECKOUT_RC=0
+RED_FILE_RC=0
+RED_HEAD=af797e8e9338ac830d056a05b7c38a84c58a5c21
+RED_DIRTY=1
+M  mooncake-wheel/tests/test_prefetch_on_exist.py
+RED_BLOB_WANT=26bd9331d3408e31085e3bf71d323f4d6cda1366
+RED_BLOB_HAVE=26bd9331d3408e31085e3bf71d323f4d6cda1366
+PHASE=red_build 2026-10-08T08:03:31Z
+HEAD=af797e8e9338ac830d056a05b7c38a84c58a5c21
+DIRTY=1
+DATE=2026-10-08T08:03:32Z
+PYBIND11_CMAKEDIR=/usr/local/python3.12.13/lib/python3.12/site-packages/pybind11/share/cmake/pybind11
+CMAKE_RC=0
+BUILD_JOBS=32
+BUILD_RC=0
+INNER_BUILD_DONE
+INNER_RC=0
+HEAD=af797e8e9338ac830d056a05b7c38a84c58a5c21
+CMAKE_RC=0
+BUILD_RC=0
+RED_CMAKE=0 RED_BUILD=0
+PHASE=red_smoke 2026-10-08T08:13:44Z
+SMOKE_HOST_RC=0
+Ran 3 tests in 69.116s
+OK
+Ran 3 tests in 41.006s
+OK (skipped=1)
+FAIL: test_get_wait_success_carries_live_lease (__main__.TestPrefetchOnExist.test_get_wait_success_carries_live_lease)
+  File "<work>/src/Mooncake-r2/mooncake-wheel/tests/test_prefetch_on_exist.py", line 229, in test_get_wait_success_carries_live_lease
+AssertionError: 61 != 0
+Ran 3 tests in 15.374s
+FAILED (failures=1)
+SMOKE_RC=1
+PHASE=green_checkout 2026-10-08T08:15:56Z
+Previous HEAD position was af797e8e9 [Store][Test] Cover the get-side wait success path end to end
+HEAD is now at 4e31d1002 [Store][Test] Reset shared store at wait-lease test start
+GREEN_CHECKOUT_RC=0
+GREEN_HEAD=4e31d1002d6cf409c6d1bcc39d718a2db2221b1d
+GREEN_DIRTY=0
+PHASE=green_build 2026-10-08T08:15:56Z
+HEAD=4e31d1002d6cf409c6d1bcc39d718a2db2221b1d
+DIRTY=0
+DATE=2026-10-08T08:15:56Z
+PYBIND11_CMAKEDIR=/usr/local/python3.12.13/lib/python3.12/site-packages/pybind11/share/cmake/pybind11
+CMAKE_RC=0
+BUILD_JOBS=32
+BUILD_RC=0
+INNER_BUILD_DONE
+INNER_RC=0
+HEAD=4e31d1002d6cf409c6d1bcc39d718a2db2221b1d
+CMAKE_RC=0
+BUILD_RC=0
+GREEN_CMAKE=0 GREEN_BUILD=0
+PHASE=green_ctest 2026-10-08T08:26:02Z
+GREEN_CTEST_HOST_RC=0
+1/9 Test  #36: rdma_gid_probe_test ..............   Passed    0.00 sec
+2/9 Test  #38: rdma_context_reprobe_test ........   Passed    0.02 sec
+3/9 Test  #97: promotion_on_hit_test ............   Passed   76.19 sec
+4/9 Test  #99: file_storage_promotion_test ......   Passed    0.10 sec
+5/9 Test #154: client_readonly_query_test .......   Passed   12.04 sec
+6/9 Test #155: prefetch_throttle_test ...........   Passed    0.03 sec
+7/9 Test #156: prefetch_task_master_test ........   Passed    7.01 sec
+8/9 Test #202: file_storage_test ................   Passed   40.69 sec
+9/9 Test #212: dummy_client_probe_key_test ......   Passed    8.05 sec
+100% tests passed out of 9
+CTEST_RC=0
+PHASE=green_smoke 2026-10-08T08:28:27Z
+SMOKE_HOST_RC=0
+Ran 3 tests in 67.675s
+OK
+Ran 3 tests in 41.011s
+OK (skipped=1)
+FAIL: test_get_wait_success_carries_live_lease (__main__.TestPrefetchOnExist.test_get_wait_success_carries_live_lease)
+  File "<work>/src/Mooncake-r2/mooncake-wheel/tests/test_prefetch_on_exist.py", line 229, in test_get_wait_success_carries_live_lease
+AssertionError: 61 != 0
+Ran 3 tests in 15.375s
+FAILED (failures=1)
+SMOKE_RC=1
+PHASE=done 2026-10-08T08:30:37Z
+VERIFY_DONE

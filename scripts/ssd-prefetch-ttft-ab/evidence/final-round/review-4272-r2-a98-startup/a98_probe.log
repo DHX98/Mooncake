@@ -1,0 +1,29 @@
+A98_START 2026-10-08T08:03:33Z
+===== WAIT RED BUILD =====
+POLL 1 PHASE=red_build
+===== CHECKOUT 98 =====
+Warning: you are leaving 1 commit behind, not connected to
+any of your branches:
+
+  95b24456a [Store][Test] Fix wait-lease test setup: put before overflow
+
+If you want to keep it by creating a new branch, this may be a good time
+to do so with:
+
+ git branch <new-branch-name> 95b24456a
+
+HEAD is now at 98d9002fa [Store] Apply clang-format to review fixes
+CHECKOUT_RC=0
+PR3_HEAD=98d9002face6aaf6dbda9df493a27710146347bd
+PR3_DIRTY=0
+DATE=2026-10-08T08:03:34Z
+HEAD=98d9002face6aaf6dbda9df493a27710146347bd
+DIRTY=0
+BUILD_JOBS=32
+CMAKE_RC=0
+BUILD_RC=0
+USE_ASCEND_DIRECT:BOOL=ON
+DEPLOY_BUILD_DONE
+DEPLOY_HOST_RC=0
+===== INSTALL =====
+A98_FAIL install
