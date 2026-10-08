@@ -226,7 +226,8 @@ class TestPrefetchOnExist(unittest.TestCase):
         post-transfer lease check."""
         # The class shares one store across test methods; earlier tests
         # already filled the 32MB segment, so reset it first.
-        self.assertEqual(self.store.remove_all(True), 0)
+        # remove_all returns the number of removed objects (>= 0 on success).
+        self.assertGreaterEqual(self.store.remove_all(True), 0)
         # Put the big key FIRST (empty segment has room for it), then
         # overflow with small keys to evict it. After _make_cold_keys the
         # segment is full and this put would fail with NO_AVAILABLE_HANDLE.
