@@ -1,0 +1,17 @@
+HEAD=52ece1ea271de6cea2501166536fd4848442bd12
+PARENT=176bd62b1143dab18f36e814173cf7ef7c18ee53
+DIRTY=0
+CMAKE_RC=0
+BUILD_RC=0
+USE_ASCEND_DIRECT=OFF
+BUILD_UNIT_TESTS=ON
+CLIENT_SERVICE_BUILT=yes
+CLIENT_SERVICE_ERROR=no
+CTEST_RC=0
+9/9 tests passed
+GetWaitDeadlineCappedByBatchLeaseFloor PASSED
+PrefetchKeysForwardsTenantToPromotion PASSED
+SMOKE_RC=0
+ssd offload Ran 3 OK 67.252s
+promotion Ran 3 OK skipped=1 39.982s
+prefetch Ran 3 OK 21.525s
