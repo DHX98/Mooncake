@@ -1,0 +1,18 @@
+HEAD=e10efdadc034ec0a8c598fca7daad2eecacb4505
+DIRTY=0
+CMAKE_RC=0
+BUILD_UNIT_TESTS:BOOL=ON
+USE_ASCEND_DIRECT:BOOL=ON
+BUILD_SHARED_LIBS:UNINITIALIZED=ON
+BUILD_JOBS=32
+BUILD_RC=1
+
+FAILED: mooncake-store/src/CMakeFiles/mooncake_store_client_objects.dir/client_service.cpp.o
+client_service.cpp: In member function 'virtual tl::expected<void, mooncake::ErrorCode> mooncake::Client::RegisterPrefetchTask(const string&, const string&)':
+client_service.cpp:4308:56: error: 'const string' {aka 'const class std::__cxx11::basic_string<char>'} has no member named 'value'
+        tenant_id.empty() ? master_client_.tenant_id().value() : tenant_id);
+
+ASCEND_SO_SAME_BUILD=yes
+ASCEND_SO_MD5=077a07b97af2b1a8dbb31997cf806d2c
+CTEST=not_run
+SMOKE=not_run
