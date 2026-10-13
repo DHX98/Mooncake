@@ -1,0 +1,7 @@
+CLANG=clang-format version 20.1.8
+/usr/bin/git
+/usr/local/python3.12.13/bin/git-clang-format
+===== check commit vs parent =====
+FORMAT_COMMIT_RC=0
+===== check branch vs merge base =====
+FORMAT_BASE_RC=0

@@ -1,0 +1,348 @@
+PHASE=checkout 2026-10-13T03:35:23Z
+Previous HEAD position was 731f75c Fix two compile breaks found while building the prefetch review tree.
+HEAD is now at 7127493 Drop the unused read-only GetState accessor.
+CHECKOUT_RC=0
+HEAD=71274930a6d3324302fa3c96a736cb3a8ab03e4e
+===== merge parents =====
+8c30ea8ac82800ba204b1cd9d4ed1604720bcc16
+96af10edf16ce3034a226b6d58f1e9b10dd8f5bf
+P1 8c30ea8ac82800ba204b1cd9d4ed1604720bcc16 [Store] Refresh waited keys with one batch query after the wait loop
+P2 96af10edf16ce3034a226b6d58f1e9b10dd8f5bf [Store] Keep an object's in-flight tasks on its own record (#4562)
+PHASE=build 2026-10-13T03:35:23Z
+BUILD_JOBS=32
+[1/288] Building CXX object mooncake-store/CMakeFiles/master_service_test_peer.dir/tests/master_service/master_service_test_peer.cpp.o
+[2/288] Building CXX object mooncake-store/src/CMakeFiles/mooncake_store_master_objects.dir/master_store_backend.cpp.o
+[3/288] Building CXX object mooncake-store/src/CMakeFiles/mooncake_store_master_objects.dir/ha/snapshot/master_snapshot_codec.cpp.o
+[4/288] Building CXX object mooncake-store/src/CMakeFiles/mooncake_store_master_objects.dir/client_offboarding.cpp.o
+[5/288] Building CXX object mooncake-store/tests/CMakeFiles/master_service_processing_key_double_erase_test.dir/master_service_processing_key_double_erase_test.cpp.o
+[6/288] Building CXX object mooncake-store/tests/CMakeFiles/master_service_task_scenario_test.dir/master_service_task_scenario_test.cpp.o
+[7/288] Building CXX object mooncake-store/tests/CMakeFiles/master_service_concurrent_scenario_test.dir/master_service_concurrent_scenario_test.cpp.o
+[8/288] Building CXX object mooncake-store/tests/CMakeFiles/master_service_placement_scenario_test.dir/master_service_placement_scenario_test.cpp.o
+[9/288] Building CXX object mooncake-store/tests/CMakeFiles/master_service_group_scenario_test.dir/master_service_group_scenario_test.cpp.o
+[10/288] Building CXX object mooncake-store/tests/CMakeFiles/master_service_ssd_scenario_test.dir/master_service_ssd_scenario_test.cpp.o
+[11/288] Building CXX object mooncake-store/tests/CMakeFiles/master_service_segment_scenario_test.dir/master_service_segment_scenario_test.cpp.o
+[12/288] Building CXX object mooncake-store/tests/CMakeFiles/master_service_dfs_scenario_test.dir/master_service_dfs_scenario_test.cpp.o
+[13/288] Building CXX object mooncake-store/src/CMakeFiles/mooncake_store_master_objects.dir/master_snapshot_manager.cpp.o
+[14/288] Building CXX object mooncake-store/tests/CMakeFiles/master_service_tenant_scenario_test.dir/master_service_tenant_scenario_test.cpp.o
+[15/288] Building CXX object mooncake-store/src/CMakeFiles/mooncake_store_master_objects.dir/serialize/serializer.cpp.o
+[16/288] Building CXX object mooncake-store/tests/CMakeFiles/master_service_replication_scenario_test.dir/master_service_replication_scenario_test.cpp.o
+[17/288] Building CXX object mooncake-store/tests/CMakeFiles/master_service_offload_scenario_test.dir/master_service_offload_scenario_test.cpp.o
+[18/288] Building CXX object mooncake-store/tests/CMakeFiles/master_service_weight_management_test.dir/master_service_weight_management_test.cpp.o
+[19/288] Building CXX object mooncake-store/tests/CMakeFiles/master_service_evict_scenario_test.dir/master_service_evict_scenario_test.cpp.o
+[20/288] Building CXX object mooncake-store/tests/CMakeFiles/master_service_scenario_test.dir/master_service_scenario_test.cpp.o
+[21/288] Building CXX object mooncake-store/tests/CMakeFiles/offload_on_evict_test.dir/offload_on_evict_test.cpp.o
+[22/288] Building CXX object mooncake-store/tests/CMakeFiles/master_service_group_test.dir/master_service_group_test.cpp.o
+[23/288] Building CXX object mooncake-store/tests/CMakeFiles/master_service_ssd_test.dir/master_service_ssd_test.cpp.o
+[24/288] Building CXX object mooncake-store/tests/master_service/dsl/CMakeFiles/master_service_test_dsl.dir/scenario.cpp.o
+/home/d00883276/prefetch_916/src/Mooncake-r3review/mooncake-store/tests/master_service/dsl/scenario.cpp: In function ‘mooncake::test::RacePutStartAction mooncake::test::RacePutStart(std::string, uint64_t)’:
+/home/d00883276/prefetch_916/src/Mooncake-r3review/mooncake-store/tests/master_service/dsl/scenario.cpp:290:48: warning: missing initializer for member ‘mooncake::test::RacePutStartAction::group_ids’ [-Wmissing-field-initializers]
+  290 |     return {.key = std::move(key), .size = size};
+      |                                                ^
+[25/288] Building CXX object mooncake-store/tests/CMakeFiles/master_service_tenant_quota_test.dir/master_service_tenant_quota_test.cpp.o
+[26/288] Building CXX object mooncake-store/tests/CMakeFiles/master_service_promotion_test_for_snapshot.dir/ha/snapshot/master_service_promotion_test_for_snapshot.cpp.o
+[27/288] Building CXX object mooncake-store/tests/CMakeFiles/master_service_ssd_test_for_snapshot.dir/ha/snapshot/master_service_ssd_test_for_snapshot.cpp.o
+[28/288] Building CXX object mooncake-store/tests/CMakeFiles/dynamic_replication_test.dir/dynamic_replication_test.cpp.o
+[29/288] Building CXX object mooncake-store/tests/CMakeFiles/prefetch_task_master_test.dir/prefetch_task_master_test.cpp.o
+[30/288] Building CXX object mooncake-store/tests/CMakeFiles/promotion_on_hit_test.dir/promotion_on_hit_test.cpp.o
+[31/288] Building CXX object mooncake-store/tests/CMakeFiles/master_snapshot_codec_test.dir/ha/snapshot/master_snapshot_codec_test.cpp.o
+[32/288] Building CXX object mooncake-store/src/CMakeFiles/mooncake_master.dir/master.cpp.o
+[33/288] Building CXX object mooncake-store/tests/CMakeFiles/batch_oplog_snapshot_promotion_test.dir/ha/snapshot/batch_oplog/promotion_test.cpp.o
+[34/288] Building CXX object mooncake-store/tests/CMakeFiles/batch_remove_test.dir/batch_remove_test.cpp.o
+[35/288] Building CXX object mooncake-store/tests/CMakeFiles/rpc_timeout_test.dir/rpc_timeout_test.cpp.o
+[36/288] Building CXX object mooncake-store/tests/CMakeFiles/embedded_master_test.dir/embedded_master_test.cpp.o
+[37/288] Building CXX object mooncake-store/tests/CMakeFiles/client_tcp_local_memcpy_test.dir/client_tcp_local_memcpy_test.cpp.o
+[38/288] Building CXX object mooncake-store/src/CMakeFiles/mooncake_store_master_objects.dir/rpc_service.cpp.o
+[39/288] Building CXX object mooncake-store/tests/CMakeFiles/master_service_test.dir/master_service_test.cpp.o
+[40/288] Building CXX object mooncake-store/src/CMakeFiles/mooncake_store_master_objects.dir/embedded_master.cpp.o
+[41/288] Building CXX object mooncake-store/tests/CMakeFiles/real_client_hugepage_register_test.dir/real_client_hugepage_register_test.cpp.o
+[42/288] Building CXX object mooncake-store/tests/CMakeFiles/real_client_regular_page_register_test.dir/real_client_regular_page_register_test.cpp.o
+[43/288] Building CXX object mooncake-store/tests/CMakeFiles/ipv6_client_test.dir/ipv6_client_test.cpp.o
+[44/288] Building CXX object mooncake-store/tests/CMakeFiles/snapshot_child_process_test.dir/ha/snapshot/snapshot_child_process_test.cpp.o
+/home/d00883276/prefetch_916/src/Mooncake-r3review/mooncake-store/tests/ha/snapshot/snapshot_child_process_test.cpp: In member function ‘virtual void mooncake::test::SnapshotChildProcessTest_AutoSnapshot_CompletesAfterConcurrentWeightLists_Test::TestBody()’:
+/home/d00883276/prefetch_916/src/Mooncake-r3review/mooncake-store/tests/ha/snapshot/snapshot_child_process_test.cpp:972:76: warning: missing initializer for member ‘mooncake::ListWeightRevisionsRequest::page_token’ [-Wmissing-field-initializers]
+  972 |         .name_space = "snapshot-concurrency", .resource_id = "absent-model"};
+      |                                                                            ^
+[45/288] Building CXX object mooncake-store/tests/CMakeFiles/standalone_client_test.dir/standalone_client_test.cpp.o
+/home/d00883276/prefetch_916/src/Mooncake-r3review/mooncake-store/tests/standalone_client_test.cpp: In member function ‘virtual void mooncake::testing::ReusedTransferEngineTest_PreservesMetadataModeWithoutConnectionString_Test::TestBody()’:
+/home/d00883276/prefetch_916/src/Mooncake-r3review/mooncake-store/tests/standalone_client_test.cpp:165:8: warning: suggest explicit braces to avoid ambiguous ‘else’ [-Wdangling-else]
+  165 |     if (p2p) ASSERT_NE(logical_hostname, endpoint);
+      |        ^
+[46/288] Building CXX object mooncake-store/src/CMakeFiles/mooncake_store_master_objects.dir/ha/leadership/master_service_supervisor.cpp.o
+[47/288] Building CXX object mooncake-store/tests/CMakeFiles/client_integration_test.dir/client_integration_test.cpp.o
+[48/288] Building CXX object mooncake-store/tests/CMakeFiles/client_local_hot_cache_test.dir/client_local_hot_cache_test.cpp.o
+[49/288] Building CXX object mooncake-store/tests/CMakeFiles/dfs_immutable_bucket_client_test.dir/dfs_immutable_bucket_client_test.cpp.o
+[50/288] Building CXX object mooncake-store/src/CMakeFiles/mooncake_store_master_objects.dir/master_admin_service.cpp.o
+[51/288] Building CXX object mooncake-store/tests/CMakeFiles/object_data_type_test.dir/object_data_type_test.cpp.o
+[52/288] Building CXX object mooncake-store/tests/CMakeFiles/batch_replica_clear_tenant_rpc_test.dir/batch_replica_clear_tenant_rpc_test.cpp.o
+[53/288] Building CXX object mooncake-store/tests/CMakeFiles/client_readonly_query_test.dir/client_readonly_query_test.cpp.o
+[54/288] Building CXX object mooncake-store/benchmarks/CMakeFiles/batch_evict_bench.dir/batch_evict_bench.cpp.o
+[55/288] Building CXX object mooncake-store/benchmarks/CMakeFiles/batch_oplog_promotion_bench.dir/batch_oplog_promotion_bench.cpp.o
+[56/288] Building CXX object mooncake-store/tests/CMakeFiles/master_metrics_test.dir/master_metrics_test.cpp.o
+[57/288] Building CXX object mooncake-store/tests/CMakeFiles/dfs_sync_client_test.dir/dfs_sync_client_test.cpp.o
+[58/288] Building CXX object mooncake-store/tests/master_service/dsl/CMakeFiles/master_scenario_test.dir/scenario_contract_test.cpp.o
+[59/288] Building CXX object mooncake-store/tests/CMakeFiles/high_availability_test.dir/ha/leadership/high_availability_test.cpp.o
+/home/d00883276/prefetch_916/src/Mooncake-r3review/mooncake-store/tests/ha/leadership/high_availability_test.cpp:247:6: warning: ‘bool mooncake::testing::{anonymous}::WaitForServing(mooncake::testing::{anonymous}::SupervisorChildProcess&, int, std::chrono::seconds)’ defined but not used [-Wunused-function]
+  247 | bool WaitForServing(SupervisorChildProcess& child, int admin_port,
+      |      ^~~~~~~~~~~~~~
+[60/288] Building CXX object mooncake-store/tests/CMakeFiles/non_ha_reconnect_test.dir/non_ha_reconnect_test.cpp.o
+[61/288] Building CXX object mooncake-store/tests/CMakeFiles/master_service_test_for_snapshot.dir/ha/snapshot/master_service_test_for_snapshot.cpp.o
+[62/288] Building CXX object mooncake-store/tests/CMakeFiles/client_metrics_test.dir/client_metrics_test.cpp.o
+[63/288] Building CXX object mooncake-store/tests/CMakeFiles/hot_standby_service_test.dir/ha/standby/hot_standby_service_test.cpp.o
+[64/288] Building CXX object mooncake-store/tests/CMakeFiles/pybind_client_test.dir/pybind_client_test.cpp.o
+[65/288] Building CXX object mooncake-store/tests/CMakeFiles/master_admin_server_test.dir/master_admin_server_test.cpp.o
+[66/288] Building CXX object mooncake-store/tests/CMakeFiles/file_storage_test.dir/file_storage_test.cpp.o
+[67/288] Building CXX object mooncake-store/tests/e2e/CMakeFiles/storage_backend_e2e_test.dir/storage_backend_e2e_test.cpp.o
+[68/288] Building CXX object mooncake-store/src/CMakeFiles/mooncake_store_master_objects.dir/master_service.cpp.o
+/home/d00883276/prefetch_916/src/Mooncake-r3review/mooncake-store/src/master_service.cpp: In member function ‘mooncake::TieredStorageUsageSnapshot mooncake::MasterService::GetStorageUsageSnapshot() const’:
+/home/d00883276/prefetch_916/src/Mooncake-r3review/mooncake-store/src/master_service.cpp:777:5: warning: missing initializer for member ‘mooncake::TieredStorageUsageSnapshot::dfs’ [-Wmissing-field-initializers]
+  777 |     };
+      |     ^
+/home/d00883276/prefetch_916/src/Mooncake-r3review/mooncake-store/src/master_service.cpp: In member function ‘tl::expected<void, mooncake::ErrorCode> mooncake::MasterService::RestoreFromStandbyState(const std::vector<mooncake::StandbyObjectEntry>*, std::unique_ptr<mooncake::StandbyMetadataStore>, uint64_t, const std::vector<mooncake::StandbySegmentInfo>&, size_t, std::optional<long unsigned int>, const mooncake::WeightMetadataSnapshot*)’:
+/home/d00883276/prefetch_916/src/Mooncake-r3review/mooncake-store/src/master_service.cpp:4236:57: warning: missing initializer for member ‘mooncake::MasterService::LegacyRestoreContext::accepted’ [-Wmissing-field-initializers]
+ 4236 |             installed_keys,      new_known_owner_records};
+      |                                                         ^
+/home/d00883276/prefetch_916/src/Mooncake-r3review/mooncake-store/src/master_service.cpp:4236:57: warning: missing initializer for member ‘mooncake::MasterService::LegacyRestoreContext::object_ids’ [-Wmissing-field-initializers]
+/home/d00883276/prefetch_916/src/Mooncake-r3review/mooncake-store/src/master_service.cpp:4236:57: warning: missing initializer for member ‘mooncake::MasterService::LegacyRestoreContext::pending_ranges’ [-Wmissing-field-initializers]
+/home/d00883276/prefetch_916/src/Mooncake-r3review/mooncake-store/src/master_service.cpp:4236:57: warning: missing initializer for member ‘mooncake::MasterService::LegacyRestoreContext::discarded_replicas’ [-Wmissing-field-initializers]
+/home/d00883276/prefetch_916/src/Mooncake-r3review/mooncake-store/src/master_service.cpp:4236:57: warning: missing initializer for member ‘mooncake::MasterService::LegacyRestoreContext::objects_by_shard’ [-Wmissing-field-initializers]
+[69/288] Building CXX object mooncake-store/tests/CMakeFiles/task_integration_test.dir/task_integration_test.cpp.o
+[70/288] Building CXX object mooncake-store/tests/CMakeFiles/health_check_test.dir/health_check_test.cpp.o
+[71/288] Linking CXX static library mooncake-store/src/libmooncake_store_master.a
+[72/288] Linking CXX executable mooncake-store/src/mooncake_master
+[73/288] Building CXX object mooncake-store/tests/CMakeFiles/dummy_client_probe_key_test.dir/dummy_client_probe_key_test.cpp.o
+[74/288] Building CXX object mooncake-store/src/CMakeFiles/mooncake_store_client_objects.dir/real_client.cpp.o
+[75/288] Building CXX object mooncake-store/tests/CMakeFiles/dummy_client_get_buffer_test.dir/dummy_client_get_buffer_test.cpp.o
+[76/288] Building CXX object mooncake-store/tests/CMakeFiles/master_service_ha_test.dir/ha/master_service_ha_test.cpp.o
+/home/d00883276/prefetch_916/src/Mooncake-r3review/mooncake-store/tests/ha/master_service_ha_test.cpp: In member function ‘virtual void mooncake::test::MasterServiceHATest_WeightMutationsRequireCapabilityConfirmationBeforeAppend_Test::TestBody()’:
+/home/d00883276/prefetch_916/src/Mooncake-r3review/mooncake-store/tests/ha/master_service_ha_test.cpp:3425:5: warning: missing initializer for member ‘mooncake::WeightMetadataSnapshot::leases’ [-Wmissing-field-initializers]
+ 3425 |     };
+      |     ^
+/home/d00883276/prefetch_916/src/Mooncake-r3review/mooncake-store/tests/ha/master_service_ha_test.cpp:3425:5: warning: missing initializer for member ‘mooncake::WeightMetadataSnapshot::operations’ [-Wmissing-field-initializers]
+/home/d00883276/prefetch_916/src/Mooncake-r3review/mooncake-store/tests/ha/master_service_ha_test.cpp:3436:5: warning: missing initializer for member ‘mooncake::BeginWeightImportRequest::payload_group_id’ [-Wmissing-field-initializers]
+ 3436 |     });
+      |     ^
+/home/d00883276/prefetch_916/src/Mooncake-r3review/mooncake-store/tests/ha/master_service_ha_test.cpp: In lambda function:
+/home/d00883276/prefetch_916/src/Mooncake-r3review/mooncake-store/tests/ha/master_service_ha_test.cpp:3586:9: warning: missing initializer for member ‘mooncake::BeginWeightImportRequest::payload_group_id’ [-Wmissing-field-initializers]
+ 3586 |         });
+      |         ^
+/home/d00883276/prefetch_916/src/Mooncake-r3review/mooncake-store/tests/ha/master_service_ha_test.cpp: In lambda function:
+/home/d00883276/prefetch_916/src/Mooncake-r3review/mooncake-store/tests/ha/master_service_ha_test.cpp:3630:9: warning: missing initializer for member ‘mooncake::BeginWeightImportRequest::payload_group_id’ [-Wmissing-field-initializers]
+ 3630 |         });
+      |         ^
+[77/288] Building CXX object mooncake-store/src/CMakeFiles/mooncake_store_client_objects.dir/master_client.cpp.o
+[78/288] Linking CXX shared library mooncake-store/src/libmooncake_store.so
+[79/288] Linking CXX executable mooncake-store/benchmarks/uring_batch_read_bench
+[80/288] Linking CXX executable mooncake-store/benchmarks/group_index_contention_bench
+[81/288] Linking CXX static library mooncake-store/libmaster_service_test_peer.a
+[82/288] Linking CXX executable mooncake-store/benchmarks/allocator_bench
+[83/288] Linking CXX executable mooncake-store/tests/client_liveness_test
+[84/288] Linking CXX executable mooncake-store/benchmarks/file_interface_bench
+[85/288] Linking CXX executable mooncake-store/benchmarks/offset_allocator_concurrency_bench
+[86/288] Linking CXX executable mooncake-store/benchmarks/storage_backend_bench
+[87/288] Linking CXX executable mooncake-store/benchmarks/allocation_strategy_bench
+[88/288] Linking CXX executable mooncake-store/tests/master_config_test
+[89/288] Linking CXX executable mooncake-store/src/mooncake_client
+[90/288] Linking CXX executable mooncake-store/benchmarks/batch_get_replica_bench
+[91/288] Linking CXX executable mooncake-store/benchmarks/master_bench
+[92/288] Linking CXX executable mooncake-store/tests/high_availability_test
+[93/288] Linking CXX executable mooncake-store/tests/e2e/oplog_ha_client
+[94/288] Linking CXX executable mooncake-store/tests/deadline_scheduler_test
+[95/288] Linking CXX executable mooncake-store/tests/background_worker_test
+[96/288] Linking CXX executable mooncake-store/tests/kv_event_publisher_test
+[97/288] Linking CXX executable mooncake-store/tests/e2e/clientctl
+[98/288] Linking CXX executable mooncake-store/tests/e2e/client_runner
+[99/288] Linking CXX executable mooncake-store/tests/weight_management_contract_test
+[100/288] Linking CXX executable mooncake-store/tests/weight_metadata_store_test
+[101/288] Linking CXX executable mooncake-store/tests/batch_read_fanout_test
+[102/288] Linking CXX executable mooncake-store/tests/e2e/e2e_rand_test
+[103/288] Linking CXX static library mooncake-store/tests/master_service/dsl/libmaster_service_test_dsl.a
+[104/288] Linking CXX executable mooncake-store/tests/e2e/chaos_rand_test
+[105/288] Linking CXX executable mooncake-store/benchmarks/batch_oplog_promotion_bench
+[106/288] Linking CXX executable mooncake-store/tests/stress_workload_test
+[107/288] Linking CXX executable mooncake-store/tests/e2e/chaosctl
+[108/288] Linking CXX executable mooncake-store/tests/region_driver_test
+[109/288] Linking CXX executable mooncake-store/tests/e2e/chaos_test
+[110/288] Linking CXX executable mooncake-store/tests/config_helper_test
+[111/288] Linking CXX executable mooncake-store/tests/runtime_accelerator_test
+[112/288] Linking CXX executable mooncake-store/tests/registered_pinned_memory_test
+[113/288] Linking CXX executable mooncake-store/tests/allocation_strategy_test
+[114/288] Linking CXX executable mooncake-store/tests/buffer_allocator_test
+[115/288] Linking CXX executable mooncake-store/tests/segment_pool_test
+[116/288] Linking CXX executable mooncake-store/tests/weight_revision_lease_test
+[117/288] Linking CXX executable mooncake-store/tests/replica_allocator_test
+[118/288] Linking CXX executable mooncake-store/tests/replica_selection_config_test
+[119/288] Linking CXX executable mooncake-store/tests/e2e/storage_backend_e2e_test
+[120/288] Linking CXX executable mooncake-store/tests/eviction_strategy_test
+[121/288] Linking CXX executable mooncake-store/tests/replica_selection_test
+[122/288] Linking CXX executable mooncake-store/tests/master_metadata_config_test
+[123/288] Linking CXX executable mooncake-store/tests/dfs_enablement_config_test
+[124/288] Linking CXX executable mooncake-store/tests/master_service_config_test
+[125/288] Linking CXX executable mooncake-store/tests/master_service_weight_management_test
+[126/288] Linking CXX executable mooncake-store/tests/master_service_processing_key_double_erase_test
+[127/288] Linking CXX executable mooncake-store/tests/master_service_ssd_test
+[128/288] Linking CXX executable mooncake-store/tests/master_service_group_test
+[129/288] Linking CXX executable mooncake-store/tests/offload_on_evict_test
+[130/288] Linking CXX executable mooncake-store/tests/nof_register_config_test
+[131/288] Linking CXX executable mooncake-store/tests/master_service_tenant_quota_test
+[132/288] Linking CXX executable mooncake-store/tests/promotion_on_hit_test
+[133/288] Linking CXX executable mooncake-store/tests/master_service_test
+[134/288] Linking CXX executable mooncake-store/tests/spdk_controller_config_test
+[135/288] Linking CXX executable mooncake-store/tests/master_service_evict_scenario_test
+[136/288] Linking CXX executable mooncake-store/tests/dynamic_replication_test
+[137/288] Linking CXX executable mooncake-store/tests/file_storage_promotion_test
+[138/288] Linking CXX executable mooncake-store/tests/master_service_placement_scenario_test
+[139/288] Linking CXX executable mooncake-store/tests/master_service_replication_scenario_test
+[140/288] Linking CXX executable mooncake-store/tests/master_service_group_scenario_test
+[141/288] Linking CXX executable mooncake-store/tests/master_service_segment_scenario_test
+[142/288] Linking CXX executable mooncake-store/tests/rpc_timeout_config_test
+[143/288] Linking CXX executable mooncake-store/tests/master_service_ssd_test_for_snapshot
+[144/288] Linking CXX executable mooncake-store/tests/master_service_scenario_test
+[145/288] Linking CXX executable mooncake-store/tests/master_service_dfs_scenario_test
+[146/288] Linking CXX executable mooncake-store/tests/master_service_ssd_scenario_test
+[147/288] Linking CXX executable mooncake-store/tests/rpc_protocol_config_test
+[148/288] Linking CXX executable mooncake-store/tests/tenant_id_test
+[149/288] Linking CXX executable mooncake-store/tests/master_service_promotion_test_for_snapshot
+[150/288] Linking CXX executable mooncake-store/tests/heap_optional_test
+[151/288] Linking CXX executable mooncake-store/tests/master_service_concurrent_scenario_test
+[152/288] Linking CXX executable mooncake-store/tests/dynamic_replication_lease_table_test
+[153/288] Linking CXX executable mooncake-store/tests/group_index_test
+[154/288] Linking CXX executable mooncake-store/tests/master_service_offload_scenario_test
+[155/288] Linking CXX executable mooncake-store/tests/master_service_tenant_scenario_test
+[156/288] Linking CXX executable mooncake-store/tests/posix_file_test
+[157/288] Linking CXX executable mooncake-store/tests/batch_remove_test
+[158/288] Linking CXX executable mooncake-store/tests/thread_pool_test
+[159/288] Linking CXX executable mooncake-store/tests/byte_size_test
+[160/288] Linking CXX executable mooncake-store/tests/master_service_task_scenario_test
+[161/288] Linking CXX executable mooncake-store/tests/transfer_task_test
+[162/288] Linking CXX executable mooncake-store/tests/transfer_submitter_config_test
+[163/288] Linking CXX executable mooncake-store/tests/random_test
+[164/288] Linking CXX executable mooncake-store/tests/rpc_timeout_test
+[165/288] Linking CXX executable mooncake-store/tests/batch_replica_clear_tenant_rpc_test
+[166/288] Linking CXX executable mooncake-store/tests/tenant_quota_test
+[167/288] Linking CXX executable mooncake-store/tests/tenant_quota_ledger_test
+[168/288] Linking CXX executable mooncake-store/tests/object_index_test
+[169/288] Linking CXX executable mooncake-store/tests/object_entry_test
+[170/288] Linking CXX executable mooncake-store/tests/metadata_tenant_test
+[171/288] Linking CXX executable mooncake-store/tests/client_integration_test
+[172/288] Linking CXX executable mooncake-store/tests/tenant_quota_manager_test
+[173/288] Linking CXX executable mooncake-store/tests/master_metrics_test
+[174/288] Linking CXX executable mooncake-store/tests/local_ssd_codec_test
+[175/288] Linking CXX executable mooncake-store/tests/hugepage_config_test
+[176/288] Linking CXX executable mooncake-store/tests/network_test
+[177/288] Linking CXX executable mooncake-store/tests/segment_test
+[178/288] Linking CXX executable mooncake-store/tests/store_resource_snapshot_codec_test
+[179/288] Linking CXX executable mooncake-store/tests/client_object_checksum_config_test
+[180/288] Linking CXX executable mooncake-store/tests/master_admin_server_test
+[181/288] Linking CXX executable mooncake-store/tests/hugepage_size_env_test
+[182/288] Linking CXX executable mooncake-store/tests/client_auto_discovery_config_test
+[183/288] Linking CXX executable mooncake-store/tests/shm_spdk_registration_config_test
+[184/288] Linking CXX executable mooncake-store/tests/client_numa_config_test
+[185/288] Linking CXX executable mooncake-store/tests/metadata_tenant_registry_test
+[186/288] Linking CXX executable mooncake-store/tests/cxl_segment_config_test
+[187/288] Linking CXX executable mooncake-store/tests/offset_allocator_test
+[188/288] Linking CXX executable mooncake-store/tests/local_hot_cache_config_test
+[189/288] Linking CXX executable mooncake-store/tests/client_buffer_test
+[190/288] Linking CXX executable mooncake-store/tests/client_auto_port_config_test
+[191/288] Linking CXX executable mooncake-store/tests/zstd_util_test
+[192/288] Linking CXX executable mooncake-store/tests/prefetch_task_master_test
+[193/288] Linking CXX executable mooncake-store/tests/allocator_metric_test
+[194/288] Linking CXX executable mooncake-store/tests/client_metric_config_test
+[195/288] Linking CXX executable mooncake-store/tests/ssd_metrics_test
+[196/288] Linking CXX executable mooncake-store/tests/prefetch_throttle_test
+[197/288] Linking CXX executable mooncake-store/tests/client_host_identity_config_test
+[198/288] Linking CXX executable mooncake-store/tests/distributed_storage_config_test
+[199/288] Linking CXX executable mooncake-store/tests/serializer_test
+[200/288] Linking CXX executable mooncake-store/tests/dfs_immutable_bucket_allocator_test
+[201/288] Linking CXX executable mooncake-store/tests/embedded_snapshot_catalog_store_test
+[202/288] Linking CXX executable mooncake-store/tests/local_file_snapshot_config_test
+[203/288] Linking CXX executable mooncake-store/tests/s3_client_config_test
+[204/288] Linking CXX executable mooncake-store/tests/dfs_immutable_bucket_backend_test
+[205/288] Linking CXX executable mooncake-store/tests/real_client_regular_page_register_test
+[206/288] Linking CXX executable mooncake-store/tests/file_util_test
+[207/288] Linking CXX executable mooncake-store/tests/client_tcp_local_memcpy_test
+[208/288] Linking CXX executable mooncake-store/tests/host_port_fix_test
+[209/288] Linking CXX executable mooncake-store/tests/embedded_master_test
+[210/288] Linking CXX executable mooncake-store/tests/local_file_snapshot_object_store_test
+[211/288] Linking CXX executable mooncake-store/tests/dfs_posix_test
+[212/288] Linking CXX executable mooncake-store/tests/real_client_hugepage_register_test
+[213/288] Linking CXX executable mooncake-store/tests/ipv6_client_test
+[214/288] Linking CXX executable mooncake-store/tests/client_local_hot_cache_test
+[215/288] Linking CXX executable mooncake-store/tests/standalone_client_test
+[216/288] Linking CXX executable mooncake-store/tests/snapshot_child_process_test
+[217/288] Linking CXX executable mooncake-store/tests/dfs_immutable_bucket_client_test
+[218/288] Linking CXX executable mooncake-store/tests/batch_oplog_snapshot_codec_test
+[219/288] Linking CXX executable mooncake-store/tests/batch_oplog_snapshot_types_test
+[220/288] Linking CXX executable mooncake-store/tests/batch_oplog_snapshot_provider_test
+[221/288] Linking CXX executable mooncake-store/tests/client_readonly_query_test
+[222/288] Linking CXX executable mooncake-store/tests/master_snapshot_codec_test
+[223/288] Linking CXX executable mooncake-store/tests/pybind_client_test
+[224/288] Linking CXX executable mooncake-store/tests/batch_oplog_pruning_coordinator_test
+[225/288] Linking CXX executable mooncake-store/tests/mutex_test
+[226/288] Linking CXX executable mooncake-store/tests/batch_oplog_snapshot_publisher_test
+[227/288] Linking CXX executable mooncake-store/tests/batch_oplog_snapshot_gc_test
+[228/288] Linking CXX executable mooncake-store/tests/nvme_kv_executor_config_test
+[229/288] Linking CXX executable mooncake-store/tests/dfs_sync_client_test
+[230/288] Linking CXX executable mooncake-store/tests/batch_oplog_snapshot_writer_test
+[231/288] Linking CXX executable mooncake-store/tests/nvme_kv_connector_config_test
+[232/288] Linking CXX executable mooncake-store/tests/client_metrics_test
+[233/288] Linking CXX executable mooncake-store/tests/ha_cluster_namespace_config_test
+[234/288] Linking CXX executable mooncake-store/tests/batch_oplog_snapshot_coordinator_test
+[235/288] Linking CXX executable mooncake-store/tests/nvme_kv_io_concurrency_config_test
+[236/288] Linking CXX executable mooncake-store/tests/batch_oplog_snapshot_rebootstrap_test
+[237/288] Linking CXX executable mooncake-store/tests/nvme_kv_storage_backend_test
+[238/288] Linking CXX executable mooncake-store/tests/batch_oplog_snapshot_promotion_test
+[239/288] Linking CXX executable mooncake-store/tests/file_per_key_config_test
+[240/288] Linking CXX executable mooncake-store/tests/bucket_backend_config_test
+[241/288] Linking CXX executable mooncake-store/tests/task_executor_test
+[242/288] Linking CXX executable mooncake-store/tests/redis_connection_config_test
+[243/288] Linking CXX executable mooncake-store/tests/offset_allocator_backend_config_test
+[244/288] Linking CXX executable mooncake-store/tests/client_storage_backend_test
+[245/288] Linking CXX executable mooncake-store/tests/object_storage_adapter_test
+[246/288] Linking CXX executable mooncake-store/tests/file_storage_config_test
+[247/288] Linking CXX executable mooncake-store/tests/storage_backend_test
+[248/288] Linking CXX executable mooncake-store/tests/nof_worker_pool_config_test
+[249/288] Linking CXX executable mooncake-store/tests/fileread_worker_pool_config_test
+[250/288] Linking CXX executable mooncake-store/tests/non_ha_reconnect_test
+[251/288] Linking CXX executable mooncake-store/tests/fileread_worker_pool_test
+[252/288] Linking CXX executable mooncake-store/tests/master_service_test_for_snapshot
+[253/288] Linking CXX executable mooncake-store/tests/oss_adapter_config_test
+[254/288] Linking CXX executable mooncake-store/tests/nof_debug_config_test
+[255/288] Linking CXX executable mooncake-store/tests/uds_transport_test
+[256/288] Linking CXX executable mooncake-store/tests/mmap_arena_fallback_test
+[257/288] Linking CXX executable mooncake-store/tests/mmap_arena_config_test
+[258/288] Linking CXX executable mooncake-store/tests/mmap_arena_test
+[259/288] Linking CXX executable mooncake-store/tests/ha_backend_availability_test
+[260/288] Linking CXX executable mooncake-store/tests/leader_label_reconciler_test
+[261/288] Linking CXX executable mooncake-store/tests/redis_ha_kv_backend_test
+[262/288] Linking CXX executable mooncake-store/tests/oss_adapter_test
+[263/288] Linking CXX executable mooncake-store/tests/oplog_batch_auditor_test
+[264/288] Linking CXX executable mooncake-store/tests/task_manager_test
+[265/288] Linking CXX executable mooncake-store/tests/oplog_batch_storage_test
+[266/288] Linking CXX executable mooncake-store/tests/ha_metric_manager_test
+[267/288] Linking CXX executable mooncake-store/tests/object_data_type_test
+[268/288] Linking CXX executable mooncake-store/tests/standby_state_machine_test
+[269/288] Linking CXX executable mooncake-store/tests/http_metadata_server_test
+[270/288] Linking CXX executable mooncake-store/tests/file_storage_test
+[271/288] Linking CXX executable mooncake-store/tests/standby_metadata_store_test
+[272/288] Linking CXX executable mooncake-store/tests/oplog_types_test
+[273/288] Linking CXX executable mooncake-store/tests/oplog_batch_codec_test
+[274/288] Linking CXX executable mooncake-store/tests/hot_standby_service_test
+[275/288] Linking CXX executable mooncake-store/tests/hot_standby_snapshot_bootstrap_test
+[276/288] Linking CXX executable mooncake-store/tests/oplog_applier_test
+[277/288] Linking CXX executable mooncake-store/tests/oplog_batch_standby_reader_test
+[278/288] Linking CXX executable mooncake-store/tests/ordered_oplog_writer_test
+[279/288] Linking CXX executable mooncake-store/tests/health_check_test
+[280/288] Linking CXX executable mooncake-store/tests/master_heartbeat_metric_test
+[281/288] Linking CXX executable mooncake-store/tests/catalog_backed_snapshot_provider_test
+[282/288] Linking CXX executable mooncake-store/tests/task_integration_test
+[283/288] Linking CXX executable mooncake-store/tests/dummy_client_probe_key_test
+[284/288] Linking CXX executable mooncake-store/benchmarks/batch_evict_bench
+[285/288] Linking CXX executable mooncake-store/tests/dummy_client_get_buffer_test
+[286/288] Linking CXX executable mooncake-store/tests/master_service/dsl/master_scenario_test
+[287/288] Linking CXX executable mooncake-store/tests/master_service_ha_test
+[288/288] Linking CXX shared module mooncake-integration/store.cpython-312-aarch64-linux-gnu.so
+lto-wrapper: warning: using serial compilation of 20 LTRANS jobs
+BUILD_RC=0
+ASCEND_SO=/home/d00883276/prefetch_916/src/Mooncake-r3review/build/mooncake-transfer-engine/src/transport/ascend_transport/ascend_transport.so
+782536a7d8c86570c41070a50e218081  /home/d00883276/prefetch_916/src/Mooncake-r3review/build/mooncake-transfer-engine/src/transport/ascend_transport/ascend_transport.so
+PHASE=build_done 2026-10-13T03:45:22Z
