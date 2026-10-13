@@ -1,0 +1,49 @@
+INFO 10-13 06:45:02 [__init__.py:44] Available plugins for group vllm.platform_plugins:
+INFO 10-13 06:45:02 [__init__.py:46] - ascend -> vllm_ascend:register
+INFO 10-13 06:45:02 [__init__.py:49] All plugins in this group will be loaded. Set `VLLM_PLUGINS` to control which plugins to load.
+INFO 10-13 06:45:02 [__init__.py:238] Platform plugin ascend is activated
+INFO 10-13 06:45:02 [platform.py:62] Breakable cudagraph is force disabled on Ascend because DeepSeek V4 PIECEWISE cudagraph is not supported yet.
+2026-10-13 06:45:12,512 - 238502 - ServiceProfiler - INFO - VLLM_USE_V1 not set, auto-detected via vLLM 0.23.0+empty: default 1
+INFO 10-13 06:45:13 [__init__.py:115] Registered model loader `<class 'vllm_ascend.model_loader.netloader.netloader.ModelNetLoaderElastic'>` with load format `netloader`
+INFO 10-13 06:45:13 [__init__.py:115] Registered model loader `<class 'vllm_ascend.model_loader.rfork.rfork_loader.RForkModelLoader'>` with load format `rfork`
+Namespace(subparser='bench', bench_type='serve', dispatch_function=<function BenchmarkServingSubcommand.cmd at 0xffff22982fc0>, trust_remote_code=True, seed=1042, num_prompts=48, dataset_name='custom', no_stream=False, dataset_path='/home/d00883276/prefetch_916/920_pre_pr/perf/data_r4272/overflow.jsonl', no_oversample=False, skip_chat_template=True, enable_multimodal_chat=False, disable_shuffle=False, custom_output_len=8, custom_ensure_client_side_data=False, spec_bench_output_len=256, spec_bench_category=None, sonnet_input_len=550, sonnet_output_len=150, sonnet_prefix_len=200, sharegpt_output_len=None, timed_trace_chunk_hash_size=16, timed_trace_sec_multiplier=1, timed_trace_label_timestamp='timestamp', timed_trace_label_input_length='input_length', timed_trace_label_output_length='output_length', timed_trace_label_hash_ids='hash_ids', blazedit_min_distance=0.0, blazedit_max_distance=1.0, asr_max_audio_len_sec=inf, asr_min_audio_len_sec=0.0, random_input_len=1024, random_output_len=128, random_range_ratio='0.0', random_prefix_len=0, random_batch_size=1, no_reranker=False, random_mm_base_items_per_request=1, random_mm_num_mm_items_range_ratio=0.0, random_mm_limit_mm_per_prompt={'image': 255, 'video': 1}, random_mm_bucket_config={(256, 256, 1): 0.5, (720, 1280, 1): 0.5, (720, 1280, 16): 0.0}, hf_subset=None, hf_split=None, hf_name=None, hf_output_len=None, prefix_repetition_prefix_len=256, prefix_repetition_suffix_len=256, prefix_repetition_num_prefixes=10, prefix_repetition_output_len=128, speed_bench_dataset_subset='qualitative', speed_bench_output_len=4096, speed_bench_category=None, label=None, backend='openai', base_url='http://127.0.0.1:8271', host='127.0.0.1', port=8000, endpoint='/v1/completions', header=None, max_concurrency=1, model='dsv4-flash', input_len=None, output_len=None, tokenizer='/data/weights/DeepSeek-V4-Flash-0731-w8a8', tokenizer_mode='auto', use_beam_search=False, logprobs=None, request_rate=inf, burstiness=1.0, disable_tqdm=False, num_warmups=0, profile=False, save_result=True, save_detailed=False, append_result=False, metadata=None, result_dir='/home/d00883276/prefetch_916/920_pre_pr/perf/results_conn_v2', result_filename='a_overflow.json', ignore_eos=False, self_timed=None, percentile_metrics='ttft', metric_percentiles='50,90,99', goodput=None, request_id_prefix='bench-c7db217a-', top_p=None, top_k=None, min_p=None, temperature=None, frequency_penalty=None, presence_penalty=None, repetition_penalty=None, served_model_name=None, lora_modules=None, lora_assignment='random', ramp_up_strategy=None, ramp_up_start_rps=None, ramp_up_end_rps=None, ready_check_timeout_sec=0, chat_template_kwargs=None, extra_body=None, skip_tokenizer_init=False, insecure=False, plot_timeline=False, timeline_itl_thresholds='25,50', plot_dataset_stats=False)
+`rope_parameters`'s factor field must be a float >= 1, got 16
+`rope_parameters`'s beta_fast field must be a float, got 32
+`rope_parameters`'s beta_slow field must be a float, got 1
+`rope_parameters`'s factor field must be a float >= 1, got 16
+`rope_parameters`'s beta_fast field must be a float, got 32
+`rope_parameters`'s beta_slow field must be a float, got 1
+`rope_parameters`'s factor field must be a float >= 1, got 16
+`rope_parameters`'s beta_fast field must be a float, got 32
+`rope_parameters`'s beta_slow field must be a float, got 1
+`rope_parameters`'s factor field must be a float >= 1, got 16
+`rope_parameters`'s beta_fast field must be a float, got 32
+`rope_parameters`'s beta_slow field must be a float, got 1
+WARNING: vllm bench serve no longer sets temperature==0 (greedy) in requests by default. The default will be determined on the server side and can be model/API specific. For the old behavior, include --temperature=0.
+Starting initial single prompt test run...
+Skipping endpoint ready check.
+Starting main benchmark run...
+Traffic request rate: inf
+Burstiness factor: 1.0 (Poisson process)
+Maximum request concurrency: 1
+  0%|          | 0/48 [00:00<?, ?it/s]  2%|▏         | 1/48 [00:05<04:24,  5.62s/it]  4%|▍         | 2/48 [00:11<04:17,  5.59s/it]  6%|▋         | 3/48 [00:16<04:11,  5.58s/it]  8%|▊         | 4/48 [00:22<04:04,  5.57s/it] 10%|█         | 5/48 [00:27<04:00,  5.59s/it] 12%|█▎        | 6/48 [00:33<03:54,  5.58s/it] 15%|█▍        | 7/48 [00:39<03:48,  5.58s/it] 17%|█▋        | 8/48 [00:44<03:42,  5.57s/it] 19%|█▉        | 9/48 [00:50<03:37,  5.57s/it] 21%|██        | 10/48 [00:55<03:31,  5.56s/it] 23%|██▎       | 11/48 [01:01<03:25,  5.56s/it] 25%|██▌       | 12/48 [01:06<03:20,  5.56s/it] 27%|██▋       | 13/48 [01:12<03:14,  5.56s/it] 29%|██▉       | 14/48 [01:18<03:09,  5.57s/it] 31%|███▏      | 15/48 [01:23<03:04,  5.58s/it] 33%|███▎      | 16/48 [01:29<02:58,  5.59s/it] 35%|███▌      | 17/48 [01:34<02:52,  5.58s/it] 38%|███▊      | 18/48 [01:40<02:47,  5.57s/it] 40%|███▉      | 19/48 [01:45<02:41,  5.56s/it] 42%|████▏     | 20/48 [01:51<02:35,  5.55s/it] 44%|████▍     | 21/48 [01:56<02:30,  5.56s/it] 46%|████▌     | 22/48 [02:02<02:24,  5.55s/it] 48%|████▊     | 23/48 [02:08<02:18,  5.55s/it] 50%|█████     | 24/48 [02:13<02:12,  5.54s/it] 52%|█████▏    | 25/48 [02:19<02:07,  5.53s/it] 54%|█████▍    | 26/48 [02:24<02:01,  5.54s/it] 56%|█████▋    | 27/48 [02:30<01:56,  5.56s/it] 58%|█████▊    | 28/48 [02:35<01:51,  5.57s/it] 60%|██████    | 29/48 [02:41<01:46,  5.59s/it] 62%|██████▎   | 30/48 [02:47<01:40,  5.58s/it] 65%|██████▍   | 31/48 [02:52<01:34,  5.57s/it] 67%|██████▋   | 32/48 [02:58<01:29,  5.59s/it] 69%|██████▉   | 33/48 [03:03<01:23,  5.58s/it] 71%|███████   | 34/48 [03:09<01:17,  5.57s/it] 73%|███████▎  | 35/48 [03:14<01:12,  5.57s/it] 75%|███████▌  | 36/48 [03:20<01:06,  5.56s/it] 77%|███████▋  | 37/48 [03:25<01:01,  5.55s/it] 79%|███████▉  | 38/48 [03:31<00:55,  5.54s/it] 81%|████████▏ | 39/48 [03:35<00:46,  5.11s/it] 83%|████████▎ | 40/48 [03:41<00:42,  5.32s/it] 85%|████████▌ | 41/48 [03:46<00:37,  5.38s/it] 88%|████████▊ | 42/48 [03:52<00:32,  5.43s/it] 90%|████████▉ | 43/48 [03:58<00:27,  5.49s/it] 92%|█████████▏| 44/48 [04:03<00:22,  5.52s/it] 94%|█████████▍| 45/48 [04:09<00:16,  5.53s/it] 96%|█████████▌| 46/48 [04:14<00:11,  5.55s/it] 98%|█████████▊| 47/48 [04:20<00:05,  5.55s/it]100%|██████████| 48/48 [04:26<00:00,  5.57s/it]100%|██████████| 48/48 [04:26<00:00,  5.54s/it]
+tip: install termplotlib and gnuplot to plot the metrics
+============ Serving Benchmark Result ============
+Successful requests:                     48        
+Failed requests:                         0         
+Maximum request concurrency:             1         
+Benchmark duration (s):                  266.01    
+Total input tokens:                      786929    
+Total generated tokens:                  380       
+Request throughput (req/s):              0.18      
+Output token throughput (tok/s):         1.43      
+Peak output token throughput (tok/s):    3.00      
+Peak concurrent requests:                2.00      
+Total token throughput (tok/s):          2959.65   
+---------------Time to First Token----------------
+Mean TTFT (ms):                          3052.02   
+Median TTFT (ms):                        3050.24   
+P50 TTFT (ms):                           3050.24   
+P90 TTFT (ms):                           3066.00   
+P99 TTFT (ms):                           3207.25   
+==================================================
