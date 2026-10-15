@@ -57,7 +57,9 @@ arm_cfg() { # sets PREFETCH / WAIT / ONHIT for arm $1
 }
 
 apply_overlay() { # OVERLAY_DIR_<n> -> $PKG, recorded with md5
-  local arm="$1" var="OVERLAY_DIR_$1" dir="${!var:-}"
+  local arm="$1"
+  local var="OVERLAY_DIR_${arm}"
+  local dir="${!var:-}"
   if [ "$arm" = 3 ] && [ -z "$dir" ]; then
     echo "ARM3_NEEDS_OVERLAY: set OVERLAY_DIR_3 to the kick-decoupled build's"
     echo "store libs, or arm 3 silently duplicates arm 2 (the exact coupling"
