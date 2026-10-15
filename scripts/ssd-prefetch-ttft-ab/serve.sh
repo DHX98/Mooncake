@@ -13,13 +13,18 @@ unset http_proxy https_proxy HTTP_PROXY HTTPS_PROXY ALL_PROXY all_proxy
 unset MOONCAKE_GLOBAL_SEGMENT_SIZE
 
 write_json() {
-  python3 - "$MOONCAKE_JSON" "$SSD" "$ARM" "$SEGMENT_SIZE" "$SSD_GET_WAIT_MS" <<'PY'
+  python3 - "$MOONCAKE_JSON" "$SSD" "$ARM" "$SEGMENT_SIZE" "$SSD_GET_WAIT_MS" \
+      "${PREFETCH_OVERRIDE:-}" <<'PY'
 import json, sys
-path, ssd, arm, seg, wait = sys.argv[1:6]
+path, ssd, arm, seg, wait, prefetch_ov = sys.argv[1:7]
 with open(path, encoding="utf-8") as fh:
     cfg = json.load(fh)
 cfg["ssd_offload_path"] = ssd
-cfg["enable_ssd_prefetch"] = arm == "b"
+# Matrix arms pass PREFETCH_OVERRIDE ("true"/"false"); the original a/b
+# harness leaves it unset and keeps the arm == "b" rule.
+cfg["enable_ssd_prefetch"] = (
+    prefetch_ov.lower() == "true" if prefetch_ov else arm == "b"
+)
 cfg["ssd_get_wait_ms"] = int(wait)
 cfg["global_segment_size"] = seg
 with open(path, "w", encoding="utf-8") as fh:
@@ -38,7 +43,7 @@ start_master() {
     --metrics_port="$METRICS_PORT" \
     --enable_offload=true \
     --offload_on_evict=true \
-    --promotion_on_hit=false \
+    --promotion_on_hit="${PROMOTION_ON_HIT:-false}" \
     --default_kv_lease_ttl=${KV_LEASE_TTL_MS:-2000} \
     --root_fs_dir="$SSD" \
     --eviction_high_watermark_ratio=0.6 \

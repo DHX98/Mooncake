@@ -1,0 +1,32 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+From: DHX98 <haox.dai@gmail.com>
+Date: Thu, 15 Oct 2026 16:00:00 +0800
+Subject: [PATCH] MEASUREMENT ONLY: decouple the get-side kick from the wait
+ knob
+
+Throwaway variant for the decomposition matrix. On current main-line
+behavior the demand-side kick fires only when ssd_get_wait_ms > 0, so a
+zero/nonzero wait comparison cannot isolate the wait's benefit. This
+variant fires the kick whenever prefetch is enabled, letting arm 3
+(kick on, wait off) be measured. Do NOT merge this anywhere.
+---
+ mooncake-store/src/real_client.cpp | 5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
+
+diff --git a/mooncake-store/src/real_client.cpp b/mooncake-store/src/real_client.cpp
+--- a/mooncake-store/src/real_client.cpp
++++ b/mooncake-store/src/real_client.cpp
+@@ -7867,7 +7867,10 @@ RealClient::batch_get_into_multi_buffers_internal(
+                 now_ms, ssd_get_wait_ms_, lease_floor_ms);
+         }
+     }
+-    if (get_wait) {
++    // MEASUREMENT-ONLY VARIANT (kick_decouple.patch): fire the kick whenever
++    // prefetch is on, not only when the wait is enabled, so the matrix can
++    // isolate the wait's benefit from the kick's. Not for the PR.
++    if (enable_ssd_prefetch_ && prefetcher_) {
+         // Demand-side kick: a batch headed for SSD gets one promotion
+         // attempt for its disk keys. ignore_cooldown bypasses only the
+         // client-side throttle's backoff, never a master-side gate (the
+--
+2.43.0
