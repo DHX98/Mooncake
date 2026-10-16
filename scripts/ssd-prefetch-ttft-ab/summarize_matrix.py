@@ -91,7 +91,8 @@ def main():
                 print(f"{arm:>4} {shape:>6} {'(no logs)':>28}")
 
     def median_of(arm, shape):
-        vals = [med for _, _, med, _ in data[(arm, shape)] if med is not None]
+        vals = [med for _, _, med, _ in data.get((arm, shape), [])
+                if med is not None]
         return sorted(vals)[len(vals) // 2] if vals else None
 
     print("\n=== Pairwise reads (median TTFT, pure shape) ===")

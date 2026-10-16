@@ -81,3 +81,44 @@ a skip means the lease pin did not hold) and bisects the one newly failing
 `client_tcp_local_memcpy_test` across `35199bd5` (post-merge, pre
 restructure) and `986f385c` (pre-merge). Env: `MC_SRC`, `BUILD_DIR`,
 `BISECT_ROOT`, `CMAKE_FLAGS` (defaults match the 208 card).
+
+## Two-tier redesign (after the 6h/arm pace proved infeasible)
+
+The engine matrix at 48 prefixes / c=2 costs ~6h per arm AND cannot resolve
+the mechanisms: 16k-token prefills are compute-dominated there (baseline and
+prefetch arms both median ~123s), so get-side differences drown in queueing
+noise. The matrix is therefore split into a cheap, precise store tier and a
+small engine anchor tier.
+
+### Tier 1 — store level (primary evidence): `store_matrix.sh`
+
+Drives store_py directly (no vLLM/NPU): 100MB objects, 256MB segment, 15
+trials per arm, minutes per arm. Measurement granularity = get() latency,
+which is exactly the granularity the review asks about. Every trial logs
+pre/post replica types (traceable store state) into
+`store_matrix_<arm>.jsonl`; build md5 recorded per arm.
+
+| arm | config | answers |
+|---|---|---|
+| e0 | offload only | raw SSD-read reference |
+| e1a | prefetch, wait=0 | get arrives mid-promotion → SSD fallback |
+| e1b | prefetch, wait=500 | get waits out promotion → DRAM read |
+| e1c | e1b + mixed batch [resident A + cold K] | mixed-batch emphasis |
+| e2a | prefetch+kick | cold-key touches 1/2/3 |
+| e2b | on_hit only (threshold=2) | admission-gated touches |
+| e2c | both | coexistence |
+| e1d | optional, needs decouple overlay | kick rescues a cooldown-dropped probe |
+
+Pairwise: **E1a vs E1b = the wait's isolated benefit (point 1)**; E0 vs E1b
+= get path as a whole; E2 touch series + "first DRAM after touch #N" =
+kick's first-touch promotion vs on_hit's gated admission (point 2).
+
+### Tier 2 — engine anchor: `run_engine_pair.sh`
+
+Only the one comparison that must also hold at vLLM TTFT level:
+**arm 3 (kick, no wait) vs arm 4 (kick+wait)**, plus arm 1 as reference.
+Mini protocol: `NUM_PREFIXES=12`, measure at **c=4** (the queue window is
+where TTFT differences live — the stopped c=2 arms at ~123s median on both
+sides are the counter-evidence), ~1h per arm, pure shape only. Everything
+else is answered at the store tier; the aggregate TTFT claim remains the
+PR's original A/B (c=4, DRAM-constrained, median 85.2%).
