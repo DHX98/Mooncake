@@ -92,7 +92,12 @@ PY
 
 echo
 echo "########## PART 2: bisect client_tcp_local_memcpy_test ##########"
-for c in ${BISECT_COMMITS:-"35199bd5 986f385c"}; do
+if [ -z "${BISECT_COMMITS:-}" ]; then
+  BISECT_COMMITS="35199bd5 986f385c"
+fi
+# A quoted default is not word-split by this bash, so the two commits
+# were passed to git as one invalid revision.
+for c in $BISECT_COMMITS; do
   wt="$BISECT_ROOT/$c"
   echo "----- $c -----"
   progress_state "part2: bisect building $c"
