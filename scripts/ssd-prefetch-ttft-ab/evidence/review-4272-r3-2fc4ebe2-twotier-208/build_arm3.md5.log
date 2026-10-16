@@ -1,0 +1,24 @@
+DATE=2026-10-16T07:39:36Z
+BASE=2fc4ebe2a10807aa8b5cc20069d804ccbe8be2c0
+UNPATCHED_SO=/home/d00883276/prefetch_916/src/Mooncake-2fc4ebe2/build/mooncake-store/src/libmooncake_store.so
+a588165909244cc3c52d73b075514454  /home/d00883276/prefetch_916/src/Mooncake-2fc4ebe2/build/mooncake-store/src/libmooncake_store.so
+528a28355330b23d67c4539b207728ab  /home/d00883276/prefetch_916/920_pre_pr/gate/twotier-208/overlay-arm3/libmooncake_store.so
+--- overlay ---
+086e6158a76ee01d250ff53ec4fd8c8f  /home/d00883276/prefetch_916/920_pre_pr/gate/twotier-208/overlay-arm3/ascend_transport.so
+dc2d71b5075eb5f8e10f608826bae8f2  /home/d00883276/prefetch_916/920_pre_pr/gate/twotier-208/overlay-arm3/engine.so
+399c3815ac5d67af1948c0846aeef03d  /home/d00883276/prefetch_916/920_pre_pr/gate/twotier-208/overlay-arm3/libasio.so
+a98858c57feecb7dbf70b4e080939ae5  /home/d00883276/prefetch_916/920_pre_pr/gate/twotier-208/overlay-arm3/libmooncake_common.so
+528a28355330b23d67c4539b207728ab  /home/d00883276/prefetch_916/920_pre_pr/gate/twotier-208/overlay-arm3/libmooncake_store.so
+34fdb878a881c8c1da30a53d4a5704d3  /home/d00883276/prefetch_916/920_pre_pr/gate/twotier-208/overlay-arm3/libtransfer_engine.so
+4b3b08c923fe7e6d55a0ca8df579ddb2  /home/d00883276/prefetch_916/920_pre_pr/gate/twotier-208/overlay-arm3/mooncake_master
+a441117d9cd07d6b044273ac11e1cb18  /home/d00883276/prefetch_916/920_pre_pr/gate/twotier-208/overlay-arm3/store.so
+--- sizes ---
+267120 /home/d00883276/prefetch_916/920_pre_pr/gate/twotier-208/overlay-arm3/ascend_transport.so
+1845368 /home/d00883276/prefetch_916/920_pre_pr/gate/twotier-208/overlay-arm3/engine.so
+1833272 /home/d00883276/prefetch_916/920_pre_pr/gate/twotier-208/overlay-arm3/libasio.so
+7199360 /home/d00883276/prefetch_916/920_pre_pr/gate/twotier-208/overlay-arm3/libmooncake_common.so
+509187840 /home/d00883276/prefetch_916/920_pre_pr/gate/twotier-208/overlay-arm3/libmooncake_store.so
+38823128 /home/d00883276/prefetch_916/920_pre_pr/gate/twotier-208/overlay-arm3/libtransfer_engine.so
+4600808 /home/d00883276/prefetch_916/920_pre_pr/gate/twotier-208/overlay-arm3/mooncake_master
+922920 /home/d00883276/prefetch_916/920_pre_pr/gate/twotier-208/overlay-arm3/store.so
+509200024 /home/d00883276/prefetch_916/src/Mooncake-2fc4ebe2/build/mooncake-store/src/libmooncake_store.so
