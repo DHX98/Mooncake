@@ -40,9 +40,12 @@ duplicate arm 2, so the script refuses to run it.
   revisited). This stays the primary shape for all pairwise reads.
 - **mixed**: each measured request reads ~45% of its blocks from DRAM and
   the rest from SSD. Mechanics per rep: mini-overflow (rep≥2) → warm pass
-  over a small subset (`MIXED_PREFIXES=6`) with prompts truncated to 45%
-  (the warmed text tokenizes to a prefix of the full prompt, so head blocks
-  hit exactly) → immediate measure of the same 6 full prompts. The subset is
+  over a small subset (`MIXED_PREFIXES=6`) whose prompts splice the original
+  45% head onto an alien tail at FULL length (a truncated ~7k prompt can
+  fall under the connector's external-cache length threshold and never
+  reach the store; at full length head blocks are cached token-identically,
+  the alien tail misses by content) → immediate measure of the same 6 full
+  prompts. The subset is
   small on purpose: the churned DRAM (~256MB) can only hold a few prefixes'
   heads, so warming all 48 would re-evict the early ones. Sample size is
   small (6/rep × `MIXED_REPS=2`); treat mixed medians as directional, pure

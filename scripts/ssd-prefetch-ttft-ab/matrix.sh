@@ -113,22 +113,33 @@ CHK
 }
 
 gen_mixed_data() {
-  python3 - "$DATADIR/prompts.jsonl" "$MIXED_PREFIXES" "$WARM_FRAC" \
+  python3 - "$DATADIR/prompts.jsonl" "$DATADIR/overflow.jsonl" \
+      "$MIXED_PREFIXES" "$WARM_FRAC" \
       "$DATADIR/mixed_prompts.jsonl" "$DATADIR/mixed_warm.jsonl" <<'PY'
 import json, sys
-src, n, frac, outp, outw = sys.argv[1], int(sys.argv[2]), float(sys.argv[3]), sys.argv[4], sys.argv[5]
+src, ovf = sys.argv[1], sys.argv[2]
+n, frac = int(sys.argv[3]), float(sys.argv[4])
+outp, outw = sys.argv[5], sys.argv[6]
 lines = [json.loads(l) for l in open(src, encoding='utf-8')][:n]
+tails = [json.loads(l)["prompt"] for l in open(ovf, encoding='utf-8')]
 with open(outp, 'w', encoding='utf-8') as f:
     for row in lines:
         f.write(json.dumps({"prompt": row["prompt"]}) + "\n")
 with open(outw, 'w', encoding='utf-8') as f:
-    for row in lines:
+    for i, row in enumerate(lines):
         p = row["prompt"]
-        # Character truncation: the warmed text tokenizes to a prefix of the
-        # full prompt (tokenizer is sequential), so head blocks hit exactly;
-        # a mid-word cut only loses the one boundary token.
-        f.write(json.dumps({"prompt": p[: int(len(p) * frac)]}) + "\n")
-print(f"mixed data: {len(lines)} prefixes, warm frac {frac}")
+        cut = int(len(p) * frac)
+        tail = tails[i % len(tails)]
+        # Warm = original head + ALIEN tail spliced back to FULL length.
+        # A truncated (~7k-token) warm prompt can fall under the connector's
+        # external-cache length threshold and never reach the store, which
+        # silently breaks the mixed precondition. At full length the warm
+        # pass caches head blocks (token-identical to the measured prompt
+        # except one boundary token), while the alien tail's blocks differ
+        # by content, so the measured prompt is head-DRAM / tail-SSD-only.
+        warm = (p[:cut] + tail[cut:])[: len(p)]
+        f.write(json.dumps({"prompt": warm}) + "\n")
+print(f"mixed data: {len(lines)} prefixes, warm head frac {frac}, full length")
 PY
 }
 
