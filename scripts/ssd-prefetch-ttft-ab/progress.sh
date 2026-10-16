@@ -62,12 +62,15 @@ _progress_push() {
   # Command-line proxy overrides the machine gitconfig. The run itself
   # stays proxy-free; only this push uses PROGRESS_HTTP_PROXY.
   proxy="${PROGRESS_HTTP_PROXY:-}"
-  if [ -n "$proxy" ]; then
-    git -C "$PROGRESS_REPO_DIR" -c "http.proxy=$proxy" -c "https.proxy=$proxy" \
-      push -f origin "HEAD:$PROGRESS_BRANCH" >/dev/null 2>&1 || true
-  else
-    git -C "$PROGRESS_REPO_DIR" push -f origin "HEAD:$PROGRESS_BRANCH" >/dev/null 2>&1 || true
+  cred="${PROGRESS_CRED_FILE:-}"
+  args=(-C "$PROGRESS_REPO_DIR")
+  if [ -n "$cred" ]; then
+    args+=(-c "credential.helper=store --file $cred")
   fi
+  if [ -n "$proxy" ]; then
+    args+=(-c "http.proxy=$proxy" -c "https.proxy=$proxy")
+  fi
+  git "${args[@]}" push -f origin "HEAD:$PROGRESS_BRANCH" >/dev/null 2>&1 || true
 }
 
 progress_start() {
