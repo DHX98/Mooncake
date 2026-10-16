@@ -43,6 +43,39 @@ else
 fi
 
 echo "########## PART 1: smoke re-run (mixed-batch case must execute) ##########"
+# The pip mooncake_master entry point subprocesses the real binary and
+# exits when signaled, leaving the child holding metrics port 9003.
+# Exec through a wrapper whose TERM trap kills that child.
+master_bin="$(python3 -c 'import mooncake,os; print(os.path.join(os.path.dirname(mooncake.__file__), "mooncake_master"))')"
+wrap="$OUT/bin"
+mkdir -p "$wrap"
+cat >"$wrap/mooncake_master" <<'WRAP'
+#!/bin/bash
+"${MC_MASTER_BIN:?}" "$@" &
+child=$!
+cleanup() {
+  kill -TERM "$child" 2>/dev/null || true
+  i=0
+  while [ "$i" -lt 10 ]; do
+    kill -0 "$child" 2>/dev/null || exit 0
+    sleep 0.2
+    i=$((i + 1))
+  done
+  kill -KILL "$child" 2>/dev/null || true
+  wait "$child" 2>/dev/null || true
+  exit 0
+}
+trap cleanup TERM INT HUP
+wait "$child"
+exit $?
+WRAP
+chmod 755 "$wrap/mooncake_master"
+export MC_MASTER_BIN="$master_bin"
+export PATH="$wrap:$PATH"
+# Drop a master left behind by an earlier smoke run. Match only the CI root.
+pkill -f 'mooncake_master --default_kv_lease_ttl=500 --root_fs_dir=/tmp/mooncake_ci_' >/dev/null 2>&1 || true
+sleep 0.5
+pkill -9 -f 'mooncake_master --default_kv_lease_ttl=500 --root_fs_dir=/tmp/mooncake_ci_' >/dev/null 2>&1 || true
 progress_state "part1: smoke re-run"
 # A mixed-case skip must not halt the memcpy bisect. Unittest prints a
 # blank line before OK, so count groups on the status word.
