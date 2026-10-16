@@ -47,7 +47,8 @@ MAX_EVICT_ROUNDS = int(os.getenv("MAX_EVICT_ROUNDS", "14"))
 
 # Probe cadence must exceed the master's lease TTL or every probe re-leases
 # the target and eviction livelocks (see test_prefetch_on_exist.py NOTE).
-PROBE_INTERVAL = LEASE_TTL_MS / 1000.0 + 0.5
+PROBE_GAP_SEC = float(os.getenv("PROBE_GAP_SEC", "0.5"))
+PROBE_INTERVAL = LEASE_TTL_MS / 1000.0 + PROBE_GAP_SEC
 
 
 def log(msg):
