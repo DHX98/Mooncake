@@ -59,7 +59,15 @@ _progress_push() {
   if ! git -C "$PROGRESS_REPO_DIR" commit -q --amend --no-edit >/dev/null 2>&1; then
     git -C "$PROGRESS_REPO_DIR" commit -q -m "live progress" >/dev/null 2>&1 || return 0
   fi
-  git -C "$PROGRESS_REPO_DIR" push -f origin "HEAD:$PROGRESS_BRANCH" >/dev/null 2>&1 || true
+  # Command-line proxy overrides the machine gitconfig. The run itself
+  # stays proxy-free; only this push uses PROGRESS_HTTP_PROXY.
+  proxy="${PROGRESS_HTTP_PROXY:-}"
+  if [ -n "$proxy" ]; then
+    git -C "$PROGRESS_REPO_DIR" -c "http.proxy=$proxy" -c "https.proxy=$proxy" \
+      push -f origin "HEAD:$PROGRESS_BRANCH" >/dev/null 2>&1 || true
+  else
+    git -C "$PROGRESS_REPO_DIR" push -f origin "HEAD:$PROGRESS_BRANCH" >/dev/null 2>&1 || true
+  fi
 }
 
 progress_start() {
