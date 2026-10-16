@@ -44,27 +44,50 @@ fi
 
 echo "########## PART 1: smoke re-run (mixed-batch case must execute) ##########"
 progress_state "part1: smoke re-run"
+# A mixed-case skip must not halt the memcpy bisect. Unittest prints a
+# blank line before OK, so count groups on the status word.
+set +e
 ( cd "$MC_SRC" && bash scripts/ci/run_ssd_offload_smoke.sh ) \
   2>&1 | tee "$OUT/smoke-followup.log" | tail -n 20
-python3 - "$OUT/smoke-followup.log" <<'PY'
+smoke_rc=${PIPESTATUS[0]}
+set -e
+python3 - "$OUT/smoke-followup.log" "$smoke_rc" <<'PY'
 import re, sys
-t = open(sys.argv[1], encoding='utf-8', errors='replace').read()
-ran = t.count('waitmix probe')
-got = re.findall(r'mixed batch_get results \[(\d+), (\d+)\]', t)
-ok_groups = len(re.findall(r'Ran \d+ tests.*\nOK', t))
-fail = 'FAILED' in t
-print(f'MIXED_CASE_PROBE_LINES={ran}')
-print(f'MIXED_CASE_RESULTS={got}')
-print(f'SMOKE_GROUPS_OK={ok_groups} FAILED_SEEN={fail}')
-if fail:
-    print('VERDICT=FAIL'); raise SystemExit(1)
-if ran == 0:
-    print('VERDICT=MIXED_SKIPPED — lease pin did not hold; report probe lines')
-    raise SystemExit(1)
-if not got:
-    print('VERDICT=MIXED_INCONCLUSIVE — probes ran but no results line')
-    raise SystemExit(1)
-print('VERDICT=PASS')
+t = open(sys.argv[1], encoding="utf-8", errors="replace").read()
+smoke_rc = int(sys.argv[2])
+ran = t.count("waitmix probe")
+got = re.findall(r"mixed batch_get results \[(\d+), (\d+)\]", t)
+groups = re.findall(
+    r"Ran (\d+) tests in [0-9.]+s\s+(OK(?: \(skipped=\d+\))?|FAILED(?: \([^)]*\))?)",
+    t,
+)
+print(f"SMOKE_SCRIPT_RC={smoke_rc}")
+print(f"MIXED_CASE_PROBE_LINES={ran}")
+print(f"MIXED_CASE_RESULTS={got}")
+ok = 0
+failed = 0
+for i, (n, status) in enumerate(groups, 1):
+    print(f"SMOKE_GROUP_{i} tests={n} status={status}")
+    if status.startswith("OK"):
+        ok += 1
+    else:
+        failed += 1
+print(f"SMOKE_GROUPS_OK={ok} FAILED_SEEN={str(failed > 0)}")
+for line in t.splitlines():
+    if (
+        "waitmix probe" in line
+        or "replica-type" in line
+        or "mixed batch_get results" in line
+    ):
+        print("PROBE_LINE", line)
+if failed or len(groups) < 3:
+    print("VERDICT=FAIL")
+elif ran == 0:
+    print("VERDICT=MIXED_SKIPPED")
+elif not got:
+    print("VERDICT=MIXED_INCONCLUSIVE")
+else:
+    print("VERDICT=PASS")
 PY
 
 echo
