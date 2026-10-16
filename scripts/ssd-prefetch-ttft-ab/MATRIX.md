@@ -125,3 +125,14 @@ where TTFT differences live — the stopped c=2 arms at ~123s median on both
 sides are the counter-evidence), ~1h per arm, pure shape only. Everything
 else is answered at the store tier; the aggregate TTFT claim remains the
 PR's original A/B (c=4, DRAM-constrained, median 85.2%).
+
+## Live progress (every 10 min)
+
+All orchestrators source `progress.sh`: a heartbeat writes a rolling
+`PROGRESS.md` in the run's result dir every `PROGRESS_INTERVAL` seconds
+(default 600 — timestamp, current arm/phase from the state file, last
+meaningful log lines). With `PROGRESS_REMOTE_SRC` set to a local clone of
+the fork, the file is also amended + force-pushed to branch
+`ssd-prefetch/v3-progress` every `PROGRESS_PUSH_EVERY` seconds (default
+1800, best-effort; network failures never break the run). Watch either the
+local file or that branch; evidence history on v3-verify stays clean.

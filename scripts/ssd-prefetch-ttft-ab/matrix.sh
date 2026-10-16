@@ -44,6 +44,17 @@ MIXED_REPS="${MIXED_REPS:-2}"
 SETTLE_SEC="${MATRIX_SETTLE_SEC:-$SETTLE_SEC}"
 export SETTLE_SEC
 
+# Progress heartbeat (optional; no-op if progress.sh is absent).
+if [ -f "$HERE/progress.sh" ]; then
+  # shellcheck disable=SC1091
+  . "$HERE/progress.sh"
+  progress_init "engine-matrix" "$RESULTDIR"
+  progress_start
+  trap 'progress_stop 2>/dev/null || true' EXIT
+else
+  progress_state() { :; }
+fi
+
 arm_cfg() { # sets PREFETCH / WAIT / ONHIT for arm $1
   case "$1" in
     1) PREFETCH=false; WAIT=0;                ONHIT=false ;;
@@ -90,6 +101,7 @@ collect_counters() { # $1=out file; greps master+vllm logs of the arm just run
 }
 
 fill_overflow_settle() {
+  progress_state "arm $tag: fill"
   echo "----- fill -----"
   DATASET="$DATADIR/prompts.jsonl" CONC="$FILL_CONCURRENCY" \
     "$HERE/bench.sh" "${tag}_fill.json"
@@ -105,10 +117,12 @@ if n <= 0:
     print('FILL_ZERO_ABORT'); raise SystemExit(1)
 CHK
   echo "----- overflow -----"
+  progress_state "arm $tag: overflow"
   DATASET="$DATADIR/overflow.jsonl" CONC="$FILL_CONCURRENCY" \
     NPROMPTS="$OVERFLOW_PREFIXES" BSEED="$OVERFLOW_SEED" \
     "$HERE/bench.sh" "${tag}_overflow.json"
   echo "----- settle ${SETTLE_SEC}s -----"
+  progress_state "arm $tag: settle ${SETTLE_SEC}s"
   sleep "$SETTLE_SEC"
 }
 
@@ -158,9 +172,11 @@ one_arm() {
 
   if [ "$shape" = pure ]; then
     echo "----- measure r1 c=$MEASURE_CONCURRENCY (PRIMARY) -----"
+    progress_state "arm $tag: measure r1 (PRIMARY)"
     DATASET="$DATADIR/prompts.jsonl" CONC="$MEASURE_CONCURRENCY" \
       "$HERE/bench.sh" "${tag}_r1.json"
     echo "----- measure r2 (contamination check) -----"
+    progress_state "arm $tag: measure r2"
     DATASET="$DATADIR/prompts.jsonl" CONC="$MEASURE_CONCURRENCY" \
       "$HERE/bench.sh" "${tag}_r2.json"
   else
@@ -169,14 +185,17 @@ one_arm() {
     for rep in $(seq 1 "$MIXED_REPS"); do
       if [ "$rep" -gt 1 ]; then
         echo "----- mini-overflow between reps (re-evict the subset) -----"
+        progress_state "arm $tag: mini-overflow rep $rep"
         DATASET="$DATADIR/overflow.jsonl" CONC="$FILL_CONCURRENCY" \
           NPROMPTS="$OVERFLOW_PREFIXES" BSEED="$OVERFLOW_SEED" \
           "$HERE/bench.sh" "${tag}_rep${rep}_ovf.json"
       fi
       echo "----- warm heads (rep $rep, c=1, NOT measured) -----"
+      progress_state "arm $tag: warm rep $rep"
       DATASET="$DATADIR/mixed_warm.jsonl" CONC=1 NPROMPTS="$MIXED_PREFIXES" \
         "$HERE/bench.sh" "${tag}_rep${rep}_warm.json"
       echo "----- measure mixed r1 (rep $rep, c=$MEASURE_CONCURRENCY) -----"
+      progress_state "arm $tag: measure mixed r1 rep $rep"
       DATASET="$DATADIR/mixed_prompts.jsonl" CONC="$MEASURE_CONCURRENCY" \
         NPROMPTS="$MIXED_PREFIXES" \
         "$HERE/bench.sh" "${tag}_rep${rep}_r1.json"

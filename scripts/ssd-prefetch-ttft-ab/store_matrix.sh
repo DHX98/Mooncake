@@ -21,6 +21,17 @@ RESULTDIR="${RESULTDIR:-$HERE/results-store}"
 RPC_PORT="${RPC_PORT:-50211}"
 mkdir -p "$ROOT" "$RESULTDIR"
 
+# Progress heartbeat (optional; no-op if progress.sh is absent).
+if [ -f "$HERE/progress.sh" ]; then
+  # shellcheck disable=SC1091
+  . "$HERE/progress.sh"
+  progress_init "store-matrix" "$RESULTDIR"
+  progress_start
+  trap 'progress_stop 2>/dev/null || true' EXIT
+else
+  progress_state() { :; }
+fi
+
 arm_cfg() { # sets PREFETCH / WAIT / ONHIT / THRESH for arm $1
   case "$1" in
     e0)  PREFETCH=false; WAIT=0;   ONHIT=false; THRESH=2 ;;
@@ -79,6 +90,7 @@ for arm in $ARMS; do
   sleep 2
 
   echo "########## ARM $arm prefetch=$PREFETCH wait=$WAIT on_hit=$ONHIT ##########"
+  progress_state "arm $arm: running (prefetch=$PREFETCH wait=$WAIT on_hit=$ONHIT)"
   ARM="$arm" \
     MASTER_SERVER="127.0.0.1:$RPC_PORT" \
     MC_METADATA_SERVER="${MC_METADATA_SERVER:-P2PHANDSHAKE}" \

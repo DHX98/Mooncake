@@ -30,7 +30,20 @@ CMAKE_FLAGS="${CMAKE_FLAGS:--DUSE_ASCEND_DIRECT=ON -DBUILD_UNIT_TESTS=ON -DBUILD
 OUT="${OUT:-$BISECT_ROOT/out}"
 mkdir -p "$OUT"
 
+# Progress heartbeat (optional; no-op if progress.sh is absent).
+HERE="$(cd "$(dirname "$0")" && pwd)"
+if [ -f "$HERE/progress.sh" ]; then
+  # shellcheck disable=SC1091
+  . "$HERE/progress.sh"
+  progress_init "followup-verify" "$OUT"
+  progress_start
+  trap 'progress_stop 2>/dev/null || true' EXIT
+else
+  progress_state() { :; }
+fi
+
 echo "########## PART 1: smoke re-run (mixed-batch case must execute) ##########"
+progress_state "part1: smoke re-run"
 ( cd "$MC_SRC" && bash scripts/ci/run_ssd_offload_smoke.sh ) \
   2>&1 | tee "$OUT/smoke-followup.log" | tail -n 20
 python3 - "$OUT/smoke-followup.log" <<'PY'
@@ -59,6 +72,7 @@ echo "########## PART 2: bisect client_tcp_local_memcpy_test ##########"
 for c in ${BISECT_COMMITS:-"35199bd5 986f385c"}; do
   wt="$BISECT_ROOT/$c"
   echo "----- $c -----"
+  progress_state "part2: bisect building $c"
   if [ ! -d "$wt" ]; then
     git -C "$MC_SRC" worktree add --detach "$wt" "$c"
     ( cd "$wt" && git submodule update --init --recursive )
