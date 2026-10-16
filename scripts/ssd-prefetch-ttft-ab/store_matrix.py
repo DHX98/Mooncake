@@ -140,8 +140,12 @@ def evict_to_ssd_only(store, target, flood_prefix, put_value):
                 log(f"overflow put rc={rc} round={round_i}")
         time.sleep(PROBE_INTERVAL)
         types = replica_types(store, target)
+        log(f"evict round {round_i} types={types}")
         if types and "MEMORY" not in types and "LOCAL_DISK" in types:
             return types, round_i + 1
+        # The probe just granted a read lease. Flooding immediately makes
+        # eviction skip this key and only offload the overflow objects.
+        time.sleep(LEASE_TTL_MS / 1000.0 + 0.5)
     raise RuntimeError(
         f"target not evicted after {MAX_EVICT_ROUNDS} rounds "
         f"(last={replica_types(store, target)})"
