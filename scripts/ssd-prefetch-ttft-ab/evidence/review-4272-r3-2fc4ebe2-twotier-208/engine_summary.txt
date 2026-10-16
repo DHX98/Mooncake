@@ -1,0 +1,26 @@
+########## matrix done — summary ##########
+
+=== TTFT by arm/shape (ms; mixed rows are per-rep) ===
+ arm  shape                          run       mean     median        p90        p99
+   1   pure         m1_pure_r1.bench.log   264784.4   269700.1   368991.1   460456.6
+   3   pure         m3_pure_r1.bench.log   211472.0   215893.2   302765.4   387231.7
+   4   pure         m4_pure_r1.bench.log   251761.7   277124.0   364416.5   406659.1
+
+=== Pairwise reads (median TTFT, pure shape) ===
+  3 vs 4  isolated WAIT benefit                215893.2 ->  277124.0  gain -28.4%
+  2 vs 3  isolated KICK benefit               (missing data)
+  5 vs 4  kick path vs promotion_on_hit       (missing data)
+  5 vs 6  both enabled vs on_hit only         (missing data)
+  1 vs 2  exist-side prefetch base            (missing data)
+
+=== Pairwise reads (median TTFT, mixed shape) ===
+  3 vs 4  isolated WAIT benefit               (missing data)
+  2 vs 3  isolated KICK benefit               (missing data)
+  5 vs 4  kick path vs promotion_on_hit       (missing data)
+  5 vs 6  both enabled vs on_hit only         (missing data)
+  1 vs 2  exist-side prefetch base            (missing data)
+
+=== Counters (LEASE_EXPIRED must be 0 everywhere) ===
+  m1_pure.counters.log               LEASE_EXPIRED=['0', '0'] [OK]
+  m3_pure.counters.log               LEASE_EXPIRED=['0', '0'] [OK]
+  m4_pure.counters.log               LEASE_EXPIRED=['0', '0'] [OK]

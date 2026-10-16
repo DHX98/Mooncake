@@ -1,0 +1,29 @@
+########## store matrix done — summary ##########
+
+=== get1 latency by arm (ms) ===
+  arm   n    median       p90       p99  get2 med  note
+   e0  15     110.2     132.7     132.8     110.9  get1_ok=15/15
+  e1a  15     109.5     150.1     151.5      24.6  get1_ok=15/15
+  e1b  15     123.6     162.8     175.3      25.1  get1_ok=15/15
+  e1c  15     107.2     120.3     123.6         —  batch_ok=15/15
+  e2a  15         —         —         —         —  get1_ok=0/15
+  e2b  15         —         —         —         —  get1_ok=0/15
+  e2c  15         —         —         —         —  get1_ok=0/15
+
+=== Pairwise reads ===
+  E0 vs E1b  raw SSD read -> kick+wait get: 110.2 -> 123.6 ms  (-12.2%)  = benefit of the get path as a whole
+  E1a vs E1b kick-no-wait -> kick+wait:   109.5 -> 123.6 ms  (-12.9%)  = ISOLATED WAIT BENEFIT (point 1)
+
+=== Touch analysis (kick vs promotion_on_hit, point 2) ===
+  e2a  t1=     94.7ms  t2=     24.6ms  t3=     24.4ms  | first DRAM after touch #1
+  e2b  t1=     81.4ms  t2=    101.1ms  t3=     79.8ms  | first DRAM after touch #1
+  e2c  t1=    114.0ms  t2=    119.4ms  t3=    116.6ms  | first DRAM after touch #2
+
+=== Traceability ===
+  e0: build md5 in build_e0.md5.log, object=67108864B segment=536870912B trials=15 ts=2026-10-16T08:14:19+0000
+  e1a: build md5 in build_e1a.md5.log, object=67108864B segment=536870912B trials=15 ts=2026-10-16T08:20:44+0000
+  e1b: build md5 in build_e1b.md5.log, object=67108864B segment=536870912B trials=15 ts=2026-10-16T08:27:18+0000
+  e1c: build md5 in build_e1c.md5.log, object=67108864B segment=536870912B trials=15 ts=2026-10-16T08:33:47+0000
+  e2a: build md5 in build_e2a.md5.log, object=67108864B segment=536870912B trials=15 ts=2026-10-16T08:39:32+0000
+  e2b: build md5 in build_e2b.md5.log, object=67108864B segment=536870912B trials=15 ts=2026-10-16T08:45:49+0000
+  e2c: build md5 in build_e2c.md5.log, object=67108864B segment=536870912B trials=15 ts=2026-10-16T08:52:43+0000
