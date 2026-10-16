@@ -66,6 +66,7 @@ _gen_cfg() {
       -e "s|@WAIT_MS@|$SSD_GET_WAIT_MS|g" \
       "$HERE/mooncake.json.tmpl" >"$out"
 }
+mkdir -p "$LOGDIR" "$DATADIR" "$RESULTDIR" "$SSD" "$(dirname "$CFG_A")" "$(dirname "$CFG_B")"
 _gen_cfg false "$CFG_A"
 _gen_cfg true "$CFG_B"
 
