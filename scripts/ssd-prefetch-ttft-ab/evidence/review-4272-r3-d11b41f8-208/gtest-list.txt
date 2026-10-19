@@ -1,6 +1,37 @@
-=== throttle ===
-/home/d00883276/prefetch_916/src/Mooncake-d11b41f8/build/mooncake-store/tests/prefetch_throttle_test: error while loading shared libraries: libglog.so.1: cannot open shared object file: No such file or directory
-=== master ===
-/home/d00883276/prefetch_916/src/Mooncake-d11b41f8/build/mooncake-store/tests/prefetch_task_master_test: error while loading shared libraries: libglog.so.1: cannot open shared object file: No such file or directory
-=== promotion ===
-/home/d00883276/prefetch_916/src/Mooncake-d11b41f8/build/mooncake-store/tests/file_storage_promotion_test: error while loading shared libraries: libglog.so.1: cannot open shared object file: No such file or directory
+# prefetch_throttle_test.cpp 11
+TEST(PrefetchThrottleTest, ReserveDedupsWithinTtl)
+TEST(PrefetchThrottleTest, ReserveAllowsNewKeysOnly)
+TEST(PrefetchThrottleTest, ZeroTtlDisablesDedup)
+TEST(PrefetchThrottleTest, ZeroTtlKeepsNoPerKeyState)
+TEST(PrefetchThrottleTest, FailedKeyRetriesAfterBackoffNotFullTtl)
+TEST(PrefetchThrottleTest, CooldownBlocksUntilWindowExpires)
+TEST(PrefetchThrottleTest, ZeroCooldownDisablesBackoff)
+TEST(PrefetchThrottleTest, CompletionLifecycle)
+TEST(PrefetchThrottleTest, AlreadyResidentClearsPromoteAttempted)
+TEST(PrefetchThrottleTest, DelegatedKeysBlockRetrigger)
+TEST(PrefetchThrottleTest, ConcurrentReserveGrantsEachKeyOnce)
+
+# prefetch_task_master_test.cpp 7
+TEST_F(PrefetchTaskMasterTest, RegisterSuccessThenDuplicateSkips)
+TEST_F(PrefetchTaskMasterTest, MissingKeyNotFound)
+TEST_F(PrefetchTaskMasterTest, NonHolderRejected)
+TEST_F(PrefetchTaskMasterTest, MemoryReplicaPresentSkips)
+TEST_F(PrefetchTaskMasterTest, NotifyPromotionSuccessGrantsLeaseForPrefetch)
+TEST_F(PrefetchTaskMasterTest, PrefetchFailureDoesNotRecordCandidate)
+TEST_F(PrefetchTaskMasterTest, RegisterPropagatesCandidateFailureCount)
+
+# file_storage_promotion_test.cpp 13
+TEST_F(FileStoragePromotionTest, EmptyQueueIsNoOp)
+TEST_F(FileStoragePromotionTest, HeartbeatSegmentNotFoundIsBenign)
+TEST_F(FileStoragePromotionTest, HeartbeatHardErrorPropagates)
+TEST_F(FileStoragePromotionTest, NonPositiveSizeSkipped)
+TEST_F(FileStoragePromotionTest, AllocStartFailureSkipsKey)
+TEST_F(FileStoragePromotionTest, BatchLoadFailureLeavesNoNotify)
+TEST_F(FileStoragePromotionTest, TransferWriteFailureLeavesNoNotify)
+TEST_F(FileStoragePromotionTest, NotifyFailureDoesNotAbortBatch)
+TEST_F(FileStoragePromotionTest, PerKeyFailuresAreIndependent)
+TEST_F(FileStoragePromotionTest, AllocStartFailureNotifiesMaster)
+TEST_F(FileStoragePromotionTest, PostAllocFailuresAllNotifyMaster)
+TEST_F(FileStoragePromotionTest, PrefetchKeysForwardsTenantToPromotion)
+TEST_F(FileStoragePromotionTest, PrefetchKeysStopsBatchOnDramPressure)
+
