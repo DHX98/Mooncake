@@ -6,4 +6,4 @@ state:
 ---------------Time to First Token----------------
 ----- overflow (evict fill keys out of DRAM onto SSD) -----
 Skipping endpoint ready check.
-updated: 2026-10-19T14:48:22Z
+updated: 2026-10-19T15:18:25Z
