@@ -6,4 +6,4 @@ state:
 ----- settle 90s (leases / offload) -----
 ----- measure r1 c=4  (PRIMARY) -----
 Skipping endpoint ready check.
-updated: 2026-10-19T16:48:35Z
+updated: 2026-10-19T17:18:37Z
