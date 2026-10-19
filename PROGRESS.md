@@ -1,4 +1,3 @@
-# live progress — ee62d6ae verify
+# live progress — 58217a71 verify
 
-state: full build of ee62d6ae in mc-r3-208
-heartbeat refspec check
+state: full build of 58217a71
