@@ -3,5 +3,7 @@
 host: 208
 tree: ae8fcaf3
 state:
-########## ARM a  prefetch=OFF ##########
-updated: 2026-10-19T12:48:10Z
+ready :8271 dsv4-flash
+----- fill (write prefixes into the store) -----
+Skipping endpoint ready check.
+updated: 2026-10-19T13:18:13Z
