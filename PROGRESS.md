@@ -3,7 +3,7 @@
 host: 208
 tree: ae8fcaf3
 state:
+----- TTFT from screen log -----
 ---------------Time to First Token----------------
------ measure r2 c=4  (contamination check) -----
-Skipping endpoint ready check.
-updated: 2026-10-19T18:48:46Z
+########## ARM b  prefetch=ON ##########
+updated: 2026-10-19T19:18:49Z
