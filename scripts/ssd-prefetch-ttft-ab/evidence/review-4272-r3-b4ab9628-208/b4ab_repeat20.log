@@ -1,0 +1,49 @@
+DATE=2026-10-19T12:03:18Z
+MODE=until-fail:20
+Test project /home/d00883276/prefetch_916/src/Mooncake-b4ab9628/build
+    Start 167: prefetch_teardown_test
+    Test #167: prefetch_teardown_test ...........   Passed    6.51 sec
+    Start 167: prefetch_teardown_test
+    Test #167: prefetch_teardown_test ...........   Passed    6.53 sec
+    Start 167: prefetch_teardown_test
+    Test #167: prefetch_teardown_test ...........   Passed    6.51 sec
+    Start 167: prefetch_teardown_test
+    Test #167: prefetch_teardown_test ...........   Passed    6.51 sec
+    Start 167: prefetch_teardown_test
+    Test #167: prefetch_teardown_test ...........   Passed    6.53 sec
+    Start 167: prefetch_teardown_test
+    Test #167: prefetch_teardown_test ...........   Passed    6.51 sec
+    Start 167: prefetch_teardown_test
+    Test #167: prefetch_teardown_test ...........   Passed    6.51 sec
+    Start 167: prefetch_teardown_test
+    Test #167: prefetch_teardown_test ...........   Passed    6.52 sec
+    Start 167: prefetch_teardown_test
+    Test #167: prefetch_teardown_test ...........   Passed    6.51 sec
+    Start 167: prefetch_teardown_test
+    Test #167: prefetch_teardown_test ...........   Passed    6.51 sec
+    Start 167: prefetch_teardown_test
+    Test #167: prefetch_teardown_test ...........   Passed    6.51 sec
+    Start 167: prefetch_teardown_test
+    Test #167: prefetch_teardown_test ...........   Passed    6.53 sec
+    Start 167: prefetch_teardown_test
+    Test #167: prefetch_teardown_test ...........   Passed    6.51 sec
+    Start 167: prefetch_teardown_test
+    Test #167: prefetch_teardown_test ...........   Passed    6.51 sec
+    Start 167: prefetch_teardown_test
+    Test #167: prefetch_teardown_test ...........   Passed    6.51 sec
+    Start 167: prefetch_teardown_test
+    Test #167: prefetch_teardown_test ...........   Passed    6.50 sec
+    Start 167: prefetch_teardown_test
+    Test #167: prefetch_teardown_test ...........   Passed    6.50 sec
+    Start 167: prefetch_teardown_test
+    Test #167: prefetch_teardown_test ...........   Passed    6.51 sec
+    Start 167: prefetch_teardown_test
+    Test #167: prefetch_teardown_test ...........   Passed    6.51 sec
+    Start 167: prefetch_teardown_test
+1/1 Test #167: prefetch_teardown_test ...........   Passed    6.50 sec
+
+100% tests passed out of 1
+
+Total Test time (real) = 130.25 sec
+REPEAT_RC=0
+REPEAT_DONE

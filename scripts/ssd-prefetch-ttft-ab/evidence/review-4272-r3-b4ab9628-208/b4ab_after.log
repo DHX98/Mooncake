@@ -1,0 +1,10 @@
+BUILD_OK 2026-10-19T11:24:00Z
+CTEST_RC=8
+FOCUS_RC_prefetch_teardown_test=0
+FOCUS_RC_prefetch_task_master_test=0
+FOCUS_RC_prefetch_throttle_test=0
+FOCUS_RC_file_storage_promotion_test=0
+REPEAT_RC=0
+STORE_MOD=/home/d00883276/prefetch_916/src/Mooncake-b4ab9628/build/mooncake-integration/_store.cpython-312-aarch64-linux-gnu.so
+SMOKE_RC=1
+AFTER_DONE

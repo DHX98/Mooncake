@@ -1,0 +1,28 @@
+DATE=2026-10-19T12:05:31Z
+HEAD=b4ab9628da2aa0f0e4e38202a69e7584d5fac7c5
+STORE_MOD=/home/d00883276/prefetch_916/src/Mooncake-b4ab9628/build/mooncake-integration/_store.cpython-312-aarch64-linux-gnu.so
+d57da8a797f44dbfeb191864962af827  /home/d00883276/prefetch_916/920_pre_pr/gate/twotier-208/b4ab-pylib/mooncake/store.so
+bb3fa1943b01478f7919e4da1cf760ca  /home/d00883276/prefetch_916/920_pre_pr/gate/twotier-208/b4ab-pylib/mooncake/libmooncake_store.so
+2a54e0442eaf6aa4035174fcdc6672b0  /home/d00883276/prefetch_916/920_pre_pr/gate/twotier-208/b4ab-pylib/mooncake/mooncake_master
+9e4f073cdaacfc55d1e0b85aa249ce18  /home/d00883276/prefetch_916/920_pre_pr/gate/twotier-208/b4ab-pylib/mooncake/ascend_transport.so
+Traceback (most recent call last):
+  File "/home/d00883276/prefetch_916/src/Mooncake-b4ab9628/mooncake-wheel/tests/test_ssd_offload_in_evict.py", line 5, in <module>
+    from mooncake.store import MooncakeDistributedStore
+ImportError: dynamic module does not define module export function (PyInit_store)
+=== metadata ===
+2026-10-19 12:05:33,476 - root - INFO - HTTP Metadata Server started on 0.0.0.0:8080
+2026-10-19 12:05:34,616 - root - INFO - Shutting down...
+2026-10-19 12:05:34,617 - root - INFO - Stopping server loop...
+2026-10-19 12:05:34,617 - root - INFO - Server thread stopped
+=== ssd ===
+WARNING: Logging before InitGoogleLogging() is written to STDERR
+I20261019 12:05:33.611749 1752859 master.cpp:1403] Mooncake master version: 0.3.13 (git: b4ab9628)
+I20261019 12:05:33.612000 1752859 master.cpp:1539] Master service started on port 50051, max_threads=16, enable_metric_reporting=1, metrics_port=9003, metrics_host=0.0.0.0, default_kv_lease_ttl=500, default_kv_soft_pin_ttl=1800000, max_kv_soft_pin_ttl=86400000, allow_evict_soft_pinned_objects=1, eviction_ratio=0.05, eviction_high_watermark_ratio=0.9, tenant_eviction_high_watermark_ratio=0.9, enable_ha=0, enable_oplog=0, weight_management_oplog_capability_confirmed=0, enable_oplog_snapshot=0, snapshot_chunk_object_count=1000000, enable_offload=0, enable_kv_events=0, kv_events_bind_endpoint=, kv_events_backend_id=, offload_on_evict=0, offload_force_evict=0, offloading_queue_limit=50000, offload_cap_ratio=0.5, ha_backend_type=etcd, ha_backend_connstring=, etcd_endpoints=, client_active_ttl_sec=10, client_suspicion_ttl_sec=20, rpc_thread_num=16, handler_worker_thread_num=16, rpc_port=50051, rpc_address=0.0.0.0, rpc_interface=, rpc_conn_timeout_seconds=0, rpc_enable_tcp_no_delay=1, rpc protocol=tcp, cluster_id=mooncake_cluster, root_fs_dir=/tmp/mooncake_ci_ssd_offload, global_file_segment_size=9223372036854775807, memory_allocator=offset, enable_http_metadata_server=0, http_metadata_server_port=8080, http_metadata_server_host=0.0.0.0, enable_metadata_cleanup_on_timeout=0, put_start_discard_timeout_sec=30, put_start_release_timeout_sec=600, max_total_finished_tasks=10000, max_total_pending_tasks=10000, max_total_processing_tasks=10000, pending_task_timeout_sec=300, processing_task_timeout_sec=300, max_retry_attempts=10, enable_cxl=0, cxl_path=/dev/dax0.0, cxl_size=8589934592
+I20261019 12:05:33.612720 1752863 client_offboarding.cpp:94] Client offboarding worker started
+I20261019 12:05:33.612950 1752866 master_service.cpp:2807] Task cleanup thread started
+I20261019 12:05:33.615492 1752859 master_admin_service.cpp:324] Master admin server started on port 9003
+I20261019 12:05:33.615989 1752872 master_admin_service.cpp:315] Master Admin Metrics: role=leader, state=serving, service_ready=false, master={Mem Storage: 0 B / 0 B | NVMe-oF SSD: 0 B / 0 B | SSD Storage: 0 B / infinite | Keys: 0 (soft-pinned: 0) | Clients: 0 | Requests (Success/Total per sec): PutStart=0.00/0.00, PutEnd=0.00/0.00, PutRevoke=0.00/0.00, Get=0.00/0.00, Exist=0.00/0.00, Del=0.00/0.00, DelAll=0.00/0.00, Ping=0.00/0.00, CopyStart=0.00/0.00, CopyEnd=0.00/0.00, CopyRevoke=0.00/0.00, MoveStart=0.00/0.00, MoveEnd=0.00/0.00, MoveRevoke=0.00/0.00, EvictDiskReplica=0.00/0.00 | Batch Requests (per sec, Req=Success/PartialSuccess/Total, Item=Success/Total): PutStart:(Req=0.00/0.00/0.00, Item=0.00/0.00), PutEnd:(Req=0.00/0.00/0.00, Item=0.00/0.00), PutRevoke:(Req=0.00/0.00/0.00, Item=0.00/0.00), Get:(Req=0.00/0.00/0.00, Item=0.00/0.00), ExistKey:(Req=0.00/0.00/0.00, Item=0.00/0.00), QueryIp:(Req=0.00/0.00/0.00, Item=0.00/0.00), Clear:(Req=0.00/0.00/0.00, Item=0.00/0.00), CreateMoveTask:(Req=0.00/0.00), CreateCopyTask:(Req=0.00/0.00), QueryTask:(Req=0.00/0.00), FetchTasks:(Req=0.00/0.00), MarkTaskToComplete:(Req=0.00/0.00) | Eviction: Success/Attempts=0/0, AllocFail=0, PartialAlloc=0, keys=0, size=0 B | Mem Eviction: Success/Attempts=0/0, keys=0, size=0 B | NoF Eviction: Success/Attempts=0/0, keys=0, size=0 B | Discard: Released/Total=0/0, StagingSize=0 B | Promotion: in_flight=0, admitted=0, completed=0, failed=0, cancelled=0, expired=0, bytes=0 B, rejected(freq/wm/cap)=0/0/0}, ha={HA Metrics Summary: last_seq=0, applied_seq=0, lag=0, pending=0, mutation_queue=0, batch_commits=0, sync_commits=0, skipped=0, checksum_fail=0, etcd_fail=0, watch_disconn=0, state=0, writer_accepting=false, writer_retry_count=0, writer_retry_delay_ms=0, writer_waiting_slots=0, writer_committed_queue=0, writer_callback_queue=0, writer_durable_batch=0, writer_durable_seq=0, writer_last_error=0}
+I20261019 12:05:34.218086 1752859 master.cpp:1709] Shutdown signal received, exiting gracefully
+I20261019 12:05:34.219249 1752866 master_service.cpp:2830] Task cleanup thread stopped
+I20261019 12:05:34.613463 1752863 client_offboarding.cpp:163] Client offboarding worker stopped
+SMOKE_RC=1

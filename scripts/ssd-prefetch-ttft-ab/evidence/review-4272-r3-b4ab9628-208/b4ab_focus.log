@@ -1,0 +1,257 @@
+DATE=2026-10-19T12:03:04Z
+BIN prefetch_teardown_test /home/d00883276/prefetch_916/src/Mooncake-b4ab9628/build/mooncake-store/tests/prefetch_teardown_test
+WARNING: Logging before InitGoogleLogging() is written to STDERR
+I20261019 12:03:04.369380 1750296 master_admin_service.cpp:324] Master admin server started on port 37501
+I20261019 12:03:04.369971 1750305 client_offboarding.cpp:94] Client offboarding worker started
+I20261019 12:03:04.370272 1750308 master_service.cpp:2807] Task cleanup thread started
+I20261019 12:03:04.572642 1750296 embedded_master.cpp:150] Embedded master started on 127.0.0.1:35861, metrics_port=37501, metadata_port=0
+I20261019 12:03:04.594110 1750296 client_metric.cpp:83] Client metrics enabled (default enabled)
+I20261019 12:03:04.594152 1750296 client_metric.cpp:84] Client bandwidth summary enabled via MC_STORE_CLIENT_METRIC_BANDWIDTH
+I20261019 12:03:04.597205 1750296 client_service.cpp:458] client_id=11621414616739932328-8529851288381378211
+I20261019 12:03:04.597236 1750296 client_service.cpp:472] Client metrics enabled but reporting disabled (interval=0)
+I20261019 12:03:04.598459 1750314 master_service.cpp:8897] Storage root directory or cluster ID is not set. persisting data is disabled.
+I20261019 12:03:04.598553 1750296 client_service.cpp:1104] Storage root directory is not set. persisting data is disabled.
+I20261019 12:03:04.598658 1750296 transfer_engine_impl.cpp:1169] Metrics reporting is disabled (set MC_TE_METRIC=1 to enable)
+I20261019 12:03:04.598752 1750296 transfer_engine_impl.cpp:140] Transfer Engine parseHostNameWithPortAscend. server_name: 127.0.0.1 port: 14213 devicePhyId: -1
+I20261019 12:03:04.598799 1750296 transfer_engine_impl.cpp:213] Transfer Engine RPC using P2P handshake, listening on 127.0.0.1:15085
+I20261019 12:03:04.598953 1750296 transfer_engine_impl.cpp:290] protocol=tcp, skipping Ascend Direct for the host transports
+I20261019 12:03:04.598968 1750296 client_service.cpp:891] Transfer engine auto discovery is disabled for protocol: tcp
+E20261019 12:03:04.599013 1750296 transfer_metadata.cpp:1349] Local segment descriptor not found
+I20261019 12:03:04.599103 1750296 tcp_transport.cpp:432] TcpTransport: listen on port 16491
+I20261019 12:03:04.599319 1750296 tcp_transport.cpp:448] TcpTransport: I/O pool started with 1 thread(s)
+I20261019 12:03:04.600186 1750296 transfer_task.cpp:1067] MC_STORE_MEMCPY not set, auto-detected: TCP-only environment, memcpy enabled
+I20261019 12:03:04.600211 1750296 real_client.cpp:1105] Successfully created client on port 14213 after 1 attempt(s)
+I20261019 12:03:04.602118 1750296 real_client.cpp:1146] Registering local memory: 16777216 bytes
+I20261019 12:03:04.602326 1750296 real_client.cpp:1356] Mounting segment: 16777216 bytes, 16777216 of 16777216
+I20261019 12:03:04.602514 1750314 master_service.cpp:694] client_id=11621414616739932328-8529851288381378211, action=mount_segment, segment_name=127.0.0.1:14213
+I20261019 12:03:04.603408 1750296 ssd_prefetcher.cpp:149] SSD prefetch runtime: pool_size=4
+I20261019 12:03:04.603438 1750296 real_client.cpp:1532] SSD prefetch enabled: ssd_prefetch_cooldown_sec=5s, ssd_prefetch_dedup_ttl_sec=30s
+W20261019 12:03:04.603473 1750314 segment.cpp:333] segment_name=127.0.0.1:14213, warn=segment_already_exists
+I20261019 12:03:06.605342 1750362 transfer_metadata.cpp:815] removeSegmentDesc 127.0.0.1:15085 finish
+I20261019 12:03:06.630434 1750308 master_service.cpp:2830] Task cleanup thread stopped
+I20261019 12:03:07.370617 1750305 client_offboarding.cpp:163] Client offboarding worker stopped
+I20261019 12:03:07.389072 1750296 master_admin_service.cpp:324] Master admin server started on port 46253
+I20261019 12:03:07.389360 1750368 client_offboarding.cpp:94] Client offboarding worker started
+I20261019 12:03:07.389564 1750371 master_service.cpp:2807] Task cleanup thread started
+I20261019 12:03:07.590062 1750296 embedded_master.cpp:150] Embedded master started on 127.0.0.1:44167, metrics_port=46253, metadata_port=0
+I20261019 12:03:07.613867 1750296 client_metric.cpp:83] Client metrics enabled (default enabled)
+I20261019 12:03:07.613912 1750296 client_metric.cpp:84] Client bandwidth summary enabled via MC_STORE_CLIENT_METRIC_BANDWIDTH
+I20261019 12:03:07.616706 1750296 client_service.cpp:458] client_id=7443804588911080216-8130678110432025503
+I20261019 12:03:07.616739 1750296 client_service.cpp:472] Client metrics enabled but reporting disabled (interval=0)
+I20261019 12:03:07.617398 1750377 master_service.cpp:8897] Storage root directory or cluster ID is not set. persisting data is disabled.
+I20261019 12:03:07.617486 1750296 client_service.cpp:1104] Storage root directory is not set. persisting data is disabled.
+I20261019 12:03:07.617547 1750296 transfer_engine_impl.cpp:1169] Metrics reporting is disabled (set MC_TE_METRIC=1 to enable)
+I20261019 12:03:07.617574 1750296 transfer_engine_impl.cpp:140] Transfer Engine parseHostNameWithPortAscend. server_name: 127.0.0.1 port: 13272 devicePhyId: -1
+I20261019 12:03:07.617599 1750296 transfer_engine_impl.cpp:213] Transfer Engine RPC using P2P handshake, listening on 127.0.0.1:16659
+I20261019 12:03:07.617765 1750296 transfer_engine_impl.cpp:290] protocol=tcp, skipping Ascend Direct for the host transports
+I20261019 12:03:07.617779 1750296 client_service.cpp:891] Transfer engine auto discovery is disabled for protocol: tcp
+E20261019 12:03:07.617812 1750296 transfer_metadata.cpp:1349] Local segment descriptor not found
+I20261019 12:03:07.617838 1750296 tcp_transport.cpp:432] TcpTransport: listen on port 15764
+I20261019 12:03:07.617952 1750296 tcp_transport.cpp:448] TcpTransport: I/O pool started with 1 thread(s)
+I20261019 12:03:07.618750 1750296 transfer_task.cpp:1067] MC_STORE_MEMCPY not set, auto-detected: TCP-only environment, memcpy enabled
+I20261019 12:03:07.618773 1750296 real_client.cpp:1105] Successfully created client on port 13272 after 1 attempt(s)
+I20261019 12:03:07.620677 1750296 real_client.cpp:1146] Registering local memory: 16777216 bytes
+I20261019 12:03:07.620761 1750296 real_client.cpp:1356] Mounting segment: 16777216 bytes, 16777216 of 16777216
+I20261019 12:03:07.620893 1750377 master_service.cpp:694] client_id=7443804588911080216-8130678110432025503, action=mount_segment, segment_name=127.0.0.1:13272
+W20261019 12:03:07.621587 1750377 segment.cpp:333] segment_name=127.0.0.1:13272, warn=segment_already_exists
+I20261019 12:03:07.621606 1750296 ssd_prefetcher.cpp:149] SSD prefetch runtime: pool_size=4
+I20261019 12:03:07.621628 1750296 real_client.cpp:1532] SSD prefetch enabled: ssd_prefetch_cooldown_sec=5s, ssd_prefetch_dedup_ttl_sec=30s
+I20261019 12:03:09.623078 1750296 transfer_metadata.cpp:815] removeSegmentDesc 127.0.0.1:16659 finish
+I20261019 12:03:09.670017 1750371 master_service.cpp:2830] Task cleanup thread stopped
+I20261019 12:03:10.389943 1750368 client_offboarding.cpp:163] Client offboarding worker stopped
+Running main() from /home/d00883276/prefetch_916/920_pre_pr/vendor/googletest-1.17.0/googletest/src/gtest_main.cc
+[==========] 2 tests from 1 test suite ran. (6032 ms total)
+[  PASSED  ] 2 tests.
+FOCUS_RC_prefetch_teardown_test=0
+BIN prefetch_task_master_test /home/d00883276/prefetch_916/src/Mooncake-b4ab9628/build/mooncake-store/tests/prefetch_task_master_test
+I20261019 12:03:10.888556 1750418 client_offboarding.cpp:94] Client offboarding worker started
+I20261019 12:03:10.888844 1750421 master_service.cpp:2807] Task cleanup thread started
+I20261019 12:03:10.890599 1750414 master_service.cpp:694] client_id=1535164106959812562-1376890365399903927, action=mount_segment, segment_name=prefetch_seg_1
+I20261019 12:03:10.891423 1750421 master_service.cpp:2830] Task cleanup thread stopped
+I20261019 12:03:11.889139 1750418 client_offboarding.cpp:163] Client offboarding worker stopped
+I20261019 12:03:11.889825 1750425 client_offboarding.cpp:94] Client offboarding worker started
+I20261019 12:03:11.889971 1750428 master_service.cpp:2807] Task cleanup thread started
+I20261019 12:03:11.890276 1750414 master_service.cpp:694] client_id=11043322222308795747-3916052279641651125, action=mount_segment, segment_name=prefetch_seg_2
+I20261019 12:03:11.890519 1750428 master_service.cpp:2830] Task cleanup thread stopped
+I20261019 12:03:12.890241 1750425 client_offboarding.cpp:163] Client offboarding worker stopped
+I20261019 12:03:12.890508 1750432 client_offboarding.cpp:94] Client offboarding worker started
+I20261019 12:03:12.890622 1750435 master_service.cpp:2807] Task cleanup thread started
+I20261019 12:03:12.890806 1750414 master_service.cpp:694] client_id=18394554481996282237-13299739461442773165, action=mount_segment, segment_name=prefetch_seg_3
+I20261019 12:03:12.890865 1750414 master_service.cpp:694] client_id=17169164922769350015-12911464043439079821, action=mount_segment, segment_name=prefetch_seg_3b
+I20261019 12:03:12.891103 1750435 master_service.cpp:2830] Task cleanup thread stopped
+I20261019 12:03:13.890810 1750432 client_offboarding.cpp:163] Client offboarding worker stopped
+I20261019 12:03:13.891189 1750439 client_offboarding.cpp:94] Client offboarding worker started
+I20261019 12:03:13.891376 1750442 master_service.cpp:2807] Task cleanup thread started
+I20261019 12:03:13.891678 1750414 master_service.cpp:694] client_id=3262969436930954044-16498282504272410752, action=mount_segment, segment_name=prefetch_seg_4
+I20261019 12:03:13.892161 1750442 master_service.cpp:2830] Task cleanup thread stopped
+I20261019 12:03:14.891650 1750439 client_offboarding.cpp:163] Client offboarding worker stopped
+I20261019 12:03:14.891921 1750446 client_offboarding.cpp:94] Client offboarding worker started
+I20261019 12:03:14.892041 1750449 master_service.cpp:2807] Task cleanup thread started
+I20261019 12:03:14.892225 1750414 master_service.cpp:694] client_id=17675992844803769618-14100336118332434843, action=mount_segment, segment_name=prefetch_seg_5
+I20261019 12:03:14.892732 1750449 master_service.cpp:2830] Task cleanup thread stopped
+I20261019 12:03:15.892252 1750446 client_offboarding.cpp:163] Client offboarding worker stopped
+I20261019 12:03:15.892658 1750453 client_offboarding.cpp:94] Client offboarding worker started
+I20261019 12:03:15.892803 1750456 master_service.cpp:2807] Task cleanup thread started
+I20261019 12:03:15.893114 1750414 master_service.cpp:694] client_id=9242655418219104564-16605430274924895407, action=mount_segment, segment_name=prefetch_seg_leak
+I20261019 12:03:15.893376 1750456 master_service.cpp:2830] Task cleanup thread stopped
+I20261019 12:03:16.893101 1750453 client_offboarding.cpp:163] Client offboarding worker stopped
+I20261019 12:03:16.893450 1750460 client_offboarding.cpp:94] Client offboarding worker started
+I20261019 12:03:16.893587 1750463 master_service.cpp:2807] Task cleanup thread started
+I20261019 12:03:16.893791 1750414 master_service.cpp:694] client_id=16883142402761268484-6087645765723516588, action=mount_segment, segment_name=prefetch_seg_prop
+I20261019 12:03:16.894053 1750463 master_service.cpp:2830] Task cleanup thread stopped
+I20261019 12:03:17.893751 1750460 client_offboarding.cpp:163] Client offboarding worker stopped
+Running main() from /home/d00883276/prefetch_916/920_pre_pr/vendor/googletest-1.17.0/googletest/src/gtest_main.cc
+[==========] 7 tests from 1 test suite ran. (7005 ms total)
+[  PASSED  ] 7 tests.
+FOCUS_RC_prefetch_task_master_test=0
+BIN prefetch_throttle_test /home/d00883276/prefetch_916/src/Mooncake-b4ab9628/build/mooncake-store/tests/prefetch_throttle_test
+Running main() from /home/d00883276/prefetch_916/920_pre_pr/vendor/googletest-1.17.0/googletest/src/gtest_main.cc
+[==========] 11 tests from 1 test suite ran. (1 ms total)
+[  PASSED  ] 11 tests.
+FOCUS_RC_prefetch_throttle_test=0
+BIN file_storage_promotion_test /home/d00883276/prefetch_916/src/Mooncake-b4ab9628/build/mooncake-store/tests/file_storage_promotion_test
+I20261019 12:03:18.664906 1750493 client_metric.cpp:83] Client metrics enabled (default enabled)
+I20261019 12:03:18.664948 1750493 client_metric.cpp:84] Client bandwidth summary enabled via MC_STORE_CLIENT_METRIC_BANDWIDTH
+I20261019 12:03:18.668089 1750493 client_service.cpp:458] client_id=8091450895920980651-10367977133506440873
+I20261019 12:03:18.668123 1750493 client_service.cpp:472] Client metrics enabled but reporting disabled (interval=0)
+I20261019 12:03:18.669313 1750493 aligned_client_buffer.cpp:127] AlignedClientBufferAllocator: allocated 4194304 bytes at address 0xffff9409a000 (aligned to 4096 bytes)
+I20261019 12:03:18.671430 1750493 storage_backend.cpp:1514] BucketStorageBackend: Allocated 33554432 bytes aligned buffer at 0xffff80e9d000
+I20261019 12:03:18.671482 1750493 file_storage.cpp:118] Shutdown FileStorage...
+I20261019 12:03:18.671494 1750493 aligned_client_buffer.cpp:161] AlignedClientBufferAllocator: freeing aligned memory at 0xffff9409a000 (4194304 bytes)
+I20261019 12:03:18.674019 1750493 client_metric.cpp:83] Client metrics enabled (default enabled)
+I20261019 12:03:18.674039 1750493 client_metric.cpp:84] Client bandwidth summary enabled via MC_STORE_CLIENT_METRIC_BANDWIDTH
+I20261019 12:03:18.676363 1750493 client_service.cpp:458] client_id=6504791206079043820-11242116854587193493
+I20261019 12:03:18.676390 1750493 client_service.cpp:472] Client metrics enabled but reporting disabled (interval=0)
+I20261019 12:03:18.677372 1750493 aligned_client_buffer.cpp:127] AlignedClientBufferAllocator: allocated 4194304 bytes at address 0x102be000 (aligned to 4096 bytes)
+I20261019 12:03:18.679207 1750493 storage_backend.cpp:1514] BucketStorageBackend: Allocated 33554432 bytes aligned buffer at 0xffff7dfff000
+I20261019 12:03:18.679236 1750493 file_storage.cpp:118] Shutdown FileStorage...
+I20261019 12:03:18.679245 1750493 aligned_client_buffer.cpp:161] AlignedClientBufferAllocator: freeing aligned memory at 0x102be000 (4194304 bytes)
+I20261019 12:03:18.680760 1750493 client_metric.cpp:83] Client metrics enabled (default enabled)
+I20261019 12:03:18.680787 1750493 client_metric.cpp:84] Client bandwidth summary enabled via MC_STORE_CLIENT_METRIC_BANDWIDTH
+I20261019 12:03:18.683123 1750493 client_service.cpp:458] client_id=5855540764416313847-820250581247605899
+I20261019 12:03:18.683144 1750493 client_service.cpp:472] Client metrics enabled but reporting disabled (interval=0)
+I20261019 12:03:18.683481 1750493 aligned_client_buffer.cpp:127] AlignedClientBufferAllocator: allocated 4194304 bytes at address 0x102be000 (aligned to 4096 bytes)
+I20261019 12:03:18.684533 1750493 storage_backend.cpp:1514] BucketStorageBackend: Allocated 33554432 bytes aligned buffer at 0xffff7dfff000
+W20261019 12:03:18.684566 1750493 file_storage.cpp:1104] PromotionObjectHeartbeat failed: INTERNAL_ERROR
+I20261019 12:03:18.684608 1750493 file_storage.cpp:118] Shutdown FileStorage...
+I20261019 12:03:18.684616 1750493 aligned_client_buffer.cpp:161] AlignedClientBufferAllocator: freeing aligned memory at 0x102be000 (4194304 bytes)
+I20261019 12:03:18.686923 1750493 client_metric.cpp:83] Client metrics enabled (default enabled)
+I20261019 12:03:18.686945 1750493 client_metric.cpp:84] Client bandwidth summary enabled via MC_STORE_CLIENT_METRIC_BANDWIDTH
+I20261019 12:03:18.689190 1750493 client_service.cpp:458] client_id=1892055095514838265-5870248054221273273
+I20261019 12:03:18.689219 1750493 client_service.cpp:472] Client metrics enabled but reporting disabled (interval=0)
+I20261019 12:03:18.689515 1750493 aligned_client_buffer.cpp:127] AlignedClientBufferAllocator: allocated 4194304 bytes at address 0x102be000 (aligned to 4096 bytes)
+I20261019 12:03:18.690474 1750493 storage_backend.cpp:1514] BucketStorageBackend: Allocated 33554432 bytes aligned buffer at 0xffff7dfff000
+E20261019 12:03:18.690557 1750493 storage_backend.cpp:1744] Key not found: default k_good
+E20261019 12:03:18.690570 1750493 file_storage.cpp:1140] Batch load object failed,err_code = INVALID_KEY
+W20261019 12:03:18.690578 1750493 file_storage.cpp:973] Promotion: BatchLoad failed for key=k_good, error=INVALID_KEY
+I20261019 12:03:18.690599 1750493 file_storage.cpp:118] Shutdown FileStorage...
+I20261019 12:03:18.690606 1750493 aligned_client_buffer.cpp:161] AlignedClientBufferAllocator: freeing aligned memory at 0x102be000 (4194304 bytes)
+I20261019 12:03:18.692091 1750493 client_metric.cpp:83] Client metrics enabled (default enabled)
+I20261019 12:03:18.692117 1750493 client_metric.cpp:84] Client bandwidth summary enabled via MC_STORE_CLIENT_METRIC_BANDWIDTH
+I20261019 12:03:18.694325 1750493 client_service.cpp:458] client_id=17456441913987955465-2838120837228699058
+I20261019 12:03:18.694345 1750493 client_service.cpp:472] Client metrics enabled but reporting disabled (interval=0)
+I20261019 12:03:18.694624 1750493 aligned_client_buffer.cpp:127] AlignedClientBufferAllocator: allocated 4194304 bytes at address 0x102be000 (aligned to 4096 bytes)
+I20261019 12:03:18.695712 1750493 storage_backend.cpp:1514] BucketStorageBackend: Allocated 33554432 bytes aligned buffer at 0xffff7dfff000
+E20261019 12:03:18.695771 1750493 storage_backend.cpp:1744] Key not found: default k2
+E20261019 12:03:18.695781 1750493 file_storage.cpp:1140] Batch load object failed,err_code = INVALID_KEY
+W20261019 12:03:18.695789 1750493 file_storage.cpp:973] Promotion: BatchLoad failed for key=k2, error=INVALID_KEY
+I20261019 12:03:18.695799 1750493 file_storage.cpp:118] Shutdown FileStorage...
+I20261019 12:03:18.695806 1750493 aligned_client_buffer.cpp:161] AlignedClientBufferAllocator: freeing aligned memory at 0x102be000 (4194304 bytes)
+I20261019 12:03:18.697252 1750493 client_metric.cpp:83] Client metrics enabled (default enabled)
+I20261019 12:03:18.697271 1750493 client_metric.cpp:84] Client bandwidth summary enabled via MC_STORE_CLIENT_METRIC_BANDWIDTH
+I20261019 12:03:18.699594 1750493 client_service.cpp:458] client_id=5712386929916539035-4210386222104872861
+I20261019 12:03:18.699621 1750493 client_service.cpp:472] Client metrics enabled but reporting disabled (interval=0)
+I20261019 12:03:18.699922 1750493 aligned_client_buffer.cpp:127] AlignedClientBufferAllocator: allocated 4194304 bytes at address 0x102be000 (aligned to 4096 bytes)
+I20261019 12:03:18.700901 1750493 storage_backend.cpp:1514] BucketStorageBackend: Allocated 33554432 bytes aligned buffer at 0xffff7dfff000
+E20261019 12:03:18.700941 1750493 storage_backend.cpp:1744] Key not found: default k_missing
+E20261019 12:03:18.700950 1750493 file_storage.cpp:1140] Batch load object failed,err_code = INVALID_KEY
+W20261019 12:03:18.700958 1750493 file_storage.cpp:973] Promotion: BatchLoad failed for key=k_missing, error=INVALID_KEY
+I20261019 12:03:18.700968 1750493 file_storage.cpp:118] Shutdown FileStorage...
+I20261019 12:03:18.700975 1750493 aligned_client_buffer.cpp:161] AlignedClientBufferAllocator: freeing aligned memory at 0x102be000 (4194304 bytes)
+I20261019 12:03:18.702450 1750493 client_metric.cpp:83] Client metrics enabled (default enabled)
+I20261019 12:03:18.702471 1750493 client_metric.cpp:84] Client bandwidth summary enabled via MC_STORE_CLIENT_METRIC_BANDWIDTH
+I20261019 12:03:18.704733 1750493 client_service.cpp:458] client_id=6217933814569411724-12652702089139636128
+I20261019 12:03:18.704761 1750493 client_service.cpp:472] Client metrics enabled but reporting disabled (interval=0)
+I20261019 12:03:18.705049 1750493 aligned_client_buffer.cpp:127] AlignedClientBufferAllocator: allocated 4194304 bytes at address 0x102be000 (aligned to 4096 bytes)
+I20261019 12:03:18.705976 1750493 storage_backend.cpp:1514] BucketStorageBackend: Allocated 33554432 bytes aligned buffer at 0xffff7dfff000
+E20261019 12:03:18.706013 1750493 storage_backend.cpp:1744] Key not found: default k_te_fail
+E20261019 12:03:18.706023 1750493 file_storage.cpp:1140] Batch load object failed,err_code = INVALID_KEY
+W20261019 12:03:18.706030 1750493 file_storage.cpp:973] Promotion: BatchLoad failed for key=k_te_fail, error=INVALID_KEY
+I20261019 12:03:18.706041 1750493 file_storage.cpp:118] Shutdown FileStorage...
+I20261019 12:03:18.706048 1750493 aligned_client_buffer.cpp:161] AlignedClientBufferAllocator: freeing aligned memory at 0x102be000 (4194304 bytes)
+I20261019 12:03:18.707518 1750493 client_metric.cpp:83] Client metrics enabled (default enabled)
+I20261019 12:03:18.707546 1750493 client_metric.cpp:84] Client bandwidth summary enabled via MC_STORE_CLIENT_METRIC_BANDWIDTH
+I20261019 12:03:18.709775 1750493 client_service.cpp:458] client_id=11763738391238637702-1649550403566061995
+I20261019 12:03:18.709795 1750493 client_service.cpp:472] Client metrics enabled but reporting disabled (interval=0)
+I20261019 12:03:18.710088 1750493 aligned_client_buffer.cpp:127] AlignedClientBufferAllocator: allocated 4194304 bytes at address 0x102be000 (aligned to 4096 bytes)
+I20261019 12:03:18.710992 1750493 storage_backend.cpp:1514] BucketStorageBackend: Allocated 33554432 bytes aligned buffer at 0xffff7dfff000
+E20261019 12:03:18.711032 1750493 storage_backend.cpp:1744] Key not found: default k1
+E20261019 12:03:18.711041 1750493 file_storage.cpp:1140] Batch load object failed,err_code = INVALID_KEY
+W20261019 12:03:18.711050 1750493 file_storage.cpp:973] Promotion: BatchLoad failed for key=k1, error=INVALID_KEY
+E20261019 12:03:18.711061 1750493 storage_backend.cpp:1744] Key not found: default k2
+E20261019 12:03:18.711067 1750493 file_storage.cpp:1140] Batch load object failed,err_code = INVALID_KEY
+W20261019 12:03:18.711073 1750493 file_storage.cpp:973] Promotion: BatchLoad failed for key=k2, error=INVALID_KEY
+I20261019 12:03:18.711081 1750493 file_storage.cpp:118] Shutdown FileStorage...
+I20261019 12:03:18.711088 1750493 aligned_client_buffer.cpp:161] AlignedClientBufferAllocator: freeing aligned memory at 0x102be000 (4194304 bytes)
+I20261019 12:03:18.712515 1750493 client_metric.cpp:83] Client metrics enabled (default enabled)
+I20261019 12:03:18.712544 1750493 client_metric.cpp:84] Client bandwidth summary enabled via MC_STORE_CLIENT_METRIC_BANDWIDTH
+I20261019 12:03:18.714805 1750493 client_service.cpp:458] client_id=15654604051864144645-4548840305970714257
+I20261019 12:03:18.714825 1750493 client_service.cpp:472] Client metrics enabled but reporting disabled (interval=0)
+I20261019 12:03:18.715102 1750493 aligned_client_buffer.cpp:127] AlignedClientBufferAllocator: allocated 4194304 bytes at address 0x102be000 (aligned to 4096 bytes)
+I20261019 12:03:18.716051 1750493 storage_backend.cpp:1514] BucketStorageBackend: Allocated 33554432 bytes aligned buffer at 0xffff7dfff000
+E20261019 12:03:18.716101 1750493 storage_backend.cpp:1744] Key not found: default k_write_fail
+E20261019 12:03:18.716110 1750493 file_storage.cpp:1140] Batch load object failed,err_code = INVALID_KEY
+W20261019 12:03:18.716118 1750493 file_storage.cpp:973] Promotion: BatchLoad failed for key=k_write_fail, error=INVALID_KEY
+E20261019 12:03:18.716130 1750493 storage_backend.cpp:1744] Key not found: default k_normal
+E20261019 12:03:18.716137 1750493 file_storage.cpp:1140] Batch load object failed,err_code = INVALID_KEY
+W20261019 12:03:18.716143 1750493 file_storage.cpp:973] Promotion: BatchLoad failed for key=k_normal, error=INVALID_KEY
+I20261019 12:03:18.716152 1750493 file_storage.cpp:118] Shutdown FileStorage...
+I20261019 12:03:18.716159 1750493 aligned_client_buffer.cpp:161] AlignedClientBufferAllocator: freeing aligned memory at 0x102be000 (4194304 bytes)
+I20261019 12:03:18.717615 1750493 client_metric.cpp:83] Client metrics enabled (default enabled)
+I20261019 12:03:18.717635 1750493 client_metric.cpp:84] Client bandwidth summary enabled via MC_STORE_CLIENT_METRIC_BANDWIDTH
+I20261019 12:03:18.719862 1750493 client_service.cpp:458] client_id=13637446832360440296-3786523774276259263
+I20261019 12:03:18.719890 1750493 client_service.cpp:472] Client metrics enabled but reporting disabled (interval=0)
+I20261019 12:03:18.720170 1750493 aligned_client_buffer.cpp:127] AlignedClientBufferAllocator: allocated 4194304 bytes at address 0x102be000 (aligned to 4096 bytes)
+I20261019 12:03:18.721086 1750493 storage_backend.cpp:1514] BucketStorageBackend: Allocated 33554432 bytes aligned buffer at 0xffff7dfff000
+I20261019 12:03:18.721122 1750493 file_storage.cpp:118] Shutdown FileStorage...
+I20261019 12:03:18.721130 1750493 aligned_client_buffer.cpp:161] AlignedClientBufferAllocator: freeing aligned memory at 0x102be000 (4194304 bytes)
+I20261019 12:03:18.722522 1750493 client_metric.cpp:83] Client metrics enabled (default enabled)
+I20261019 12:03:18.722541 1750493 client_metric.cpp:84] Client bandwidth summary enabled via MC_STORE_CLIENT_METRIC_BANDWIDTH
+I20261019 12:03:18.724783 1750493 client_service.cpp:458] client_id=14577757368561172262-12484522513106272952
+I20261019 12:03:18.724824 1750493 client_service.cpp:472] Client metrics enabled but reporting disabled (interval=0)
+I20261019 12:03:18.725103 1750493 aligned_client_buffer.cpp:127] AlignedClientBufferAllocator: allocated 4194304 bytes at address 0x102be000 (aligned to 4096 bytes)
+I20261019 12:03:18.726009 1750493 storage_backend.cpp:1514] BucketStorageBackend: Allocated 33554432 bytes aligned buffer at 0xffff7dfff000
+E20261019 12:03:18.726051 1750493 storage_backend.cpp:1744] Key not found: default k_load_fail
+E20261019 12:03:18.726061 1750493 file_storage.cpp:1140] Batch load object failed,err_code = INVALID_KEY
+W20261019 12:03:18.726069 1750493 file_storage.cpp:973] Promotion: BatchLoad failed for key=k_load_fail, error=INVALID_KEY
+E20261019 12:03:18.726080 1750493 storage_backend.cpp:1744] Key not found: default k_notify_fail
+E20261019 12:03:18.726087 1750493 file_storage.cpp:1140] Batch load object failed,err_code = INVALID_KEY
+W20261019 12:03:18.726094 1750493 file_storage.cpp:973] Promotion: BatchLoad failed for key=k_notify_fail, error=INVALID_KEY
+I20261019 12:03:18.726110 1750493 file_storage.cpp:118] Shutdown FileStorage...
+I20261019 12:03:18.726118 1750493 aligned_client_buffer.cpp:161] AlignedClientBufferAllocator: freeing aligned memory at 0x102be000 (4194304 bytes)
+I20261019 12:03:18.727504 1750493 client_metric.cpp:83] Client metrics enabled (default enabled)
+I20261019 12:03:18.727530 1750493 client_metric.cpp:84] Client bandwidth summary enabled via MC_STORE_CLIENT_METRIC_BANDWIDTH
+I20261019 12:03:18.729723 1750493 client_service.cpp:458] client_id=17241219331228417040-11844598095619826075
+I20261019 12:03:18.729743 1750493 client_service.cpp:472] Client metrics enabled but reporting disabled (interval=0)
+I20261019 12:03:18.730019 1750493 aligned_client_buffer.cpp:127] AlignedClientBufferAllocator: allocated 4194304 bytes at address 0x102be000 (aligned to 4096 bytes)
+I20261019 12:03:18.730930 1750493 storage_backend.cpp:1514] BucketStorageBackend: Allocated 33554432 bytes aligned buffer at 0xffff7dfff000
+E20261019 12:03:18.730971 1750493 storage_backend.cpp:1744] Key not found: tenantA tk1
+E20261019 12:03:18.730980 1750493 file_storage.cpp:1140] Batch load object failed,err_code = INVALID_KEY
+W20261019 12:03:18.730988 1750493 file_storage.cpp:973] Promotion: BatchLoad failed for key=tk1, error=INVALID_KEY
+E20261019 12:03:18.731000 1750493 storage_backend.cpp:1744] Key not found: default tk2
+E20261019 12:03:18.731009 1750493 file_storage.cpp:1140] Batch load object failed,err_code = INVALID_KEY
+W20261019 12:03:18.731014 1750493 file_storage.cpp:973] Promotion: BatchLoad failed for key=tk2, error=INVALID_KEY
+I20261019 12:03:18.731022 1750493 file_storage.cpp:118] Shutdown FileStorage...
+I20261019 12:03:18.731029 1750493 aligned_client_buffer.cpp:161] AlignedClientBufferAllocator: freeing aligned memory at 0x102be000 (4194304 bytes)
+I20261019 12:03:18.732460 1750493 client_metric.cpp:83] Client metrics enabled (default enabled)
+I20261019 12:03:18.732488 1750493 client_metric.cpp:84] Client bandwidth summary enabled via MC_STORE_CLIENT_METRIC_BANDWIDTH
+I20261019 12:03:18.734707 1750493 client_service.cpp:458] client_id=5208343821588642114-11796493188263124622
+I20261019 12:03:18.734728 1750493 client_service.cpp:472] Client metrics enabled but reporting disabled (interval=0)
+I20261019 12:03:18.735005 1750493 aligned_client_buffer.cpp:127] AlignedClientBufferAllocator: allocated 4194304 bytes at address 0x102be000 (aligned to 4096 bytes)
+I20261019 12:03:18.735915 1750493 storage_backend.cpp:1514] BucketStorageBackend: Allocated 33554432 bytes aligned buffer at 0xffff7dfff000
+I20261019 12:03:18.735963 1750493 file_storage.cpp:118] Shutdown FileStorage...
+I20261019 12:03:18.735972 1750493 aligned_client_buffer.cpp:161] AlignedClientBufferAllocator: freeing aligned memory at 0x102be000 (4194304 bytes)
+[==========] 13 tests from 1 test suite ran. (73 ms total)
+[  PASSED  ] 13 tests.
+FOCUS_RC_file_storage_promotion_test=0
+FOCUS_DONE
