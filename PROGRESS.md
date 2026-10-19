@@ -3,7 +3,7 @@
 host: 208
 tree: ae8fcaf3
 state:
-ready :8271 dsv4-flash
------ fill (write prefixes into the store) -----
+---------------Time to First Token----------------
+----- overflow (evict fill keys out of DRAM onto SSD) -----
 Skipping endpoint ready check.
-updated: 2026-10-19T20:48:58Z
+updated: 2026-10-19T21:19:00Z
