@@ -1,3 +1,4 @@
-# live progress — 58217a71 verify
+# live progress — b4ab9628 verify
 
-state: full build of 58217a71
+state: full build passed, ctest starting in mc-r3-208
+heartbeat refspec check
