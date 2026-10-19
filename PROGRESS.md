@@ -3,7 +3,7 @@
 host: 208
 tree: ae8fcaf3
 state:
----------------Time to First Token----------------
------ overflow (evict fill keys out of DRAM onto SSD) -----
+----- settle 90s (leases / offload) -----
+----- measure r1 c=4  (PRIMARY) -----
 Skipping endpoint ready check.
-updated: 2026-10-19T22:19:06Z
+updated: 2026-10-19T22:49:09Z
