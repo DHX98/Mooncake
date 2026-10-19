@@ -1,0 +1,41 @@
+I20261019 01:50:42.298007 1291892 scoped_vlog_timer.h:46] BatchGetReplicaList request: keys_count=1
+I20261019 01:50:42.298116 1291892 scoped_vlog_timer.h:63] BatchGetReplicaList response: total=1, success=1, failures=0, latency=112us
+I20261019 01:50:46.317587 1291892 scoped_vlog_timer.h:46] BatchGetReplicaList request: keys_count=4
+I20261019 01:50:46.317641 1291892 scoped_vlog_timer.h:63] BatchGetReplicaList response: total=4, success=4, failures=0, latency=54us
+I20261019 01:50:49.970988 1291892 scoped_vlog_timer.h:46] BatchGetReplicaList request: keys_count=1
+I20261019 01:50:49.971061 1291892 scoped_vlog_timer.h:63] BatchGetReplicaList response: total=1, success=1, failures=0, latency=78us
+I20261019 01:50:57.629711 1291892 scoped_vlog_timer.h:46] BatchGetReplicaList request: keys_count=1
+I20261019 01:50:57.629777 1291892 scoped_vlog_timer.h:63] BatchGetReplicaList response: total=1, success=1, failures=0, latency=67us
+I20261019 01:51:00.659062 1291892 scoped_vlog_timer.h:46] BatchGetReplicaList request: keys_count=4
+I20261019 01:51:00.659117 1291892 scoped_vlog_timer.h:63] BatchGetReplicaList response: total=4, success=4, failures=0, latency=54us
+I20261019 01:51:05.289037 1291892 scoped_vlog_timer.h:46] BatchGetReplicaList request: keys_count=1
+I20261019 01:51:05.289103 1291892 scoped_vlog_timer.h:63] BatchGetReplicaList response: total=1, success=1, failures=0, latency=67us
+I20261019 01:51:05.289489 1291892 scoped_vlog_timer.h:46] BatchGetReplicaList request: keys_count=1
+I20261019 01:51:05.289534 1291892 master_service.cpp:9975] promotion_queued key=e2c_t0_target size=67108864
+I20261019 01:51:05.289548 1291892 scoped_vlog_timer.h:63] BatchGetReplicaList response: total=1, success=1, failures=0, latency=58us
+I20261019 01:51:05.289974 1291892 scoped_vlog_timer.h:46] RegisterPrefetchTask request: action=register_prefetch_task
+I20261019 01:51:05.290028 1291892 scoped_vlog_timer.h:90] RegisterPrefetchTask response: status=failed, error=PROMOTION_ALREADY_EXISTS, latency=21us
+I20261019 01:51:05.382905 1291892 scoped_vlog_timer.h:46] BatchGetReplicaList request: keys_count=1
+I20261019 01:51:05.382997 1291892 scoped_vlog_timer.h:63] BatchGetReplicaList response: total=1, success=1, failures=0, latency=95us
+I20261019 01:51:05.383313 1291892 scoped_vlog_timer.h:46] BatchGetReplicaList request: keys_count=1
+I20261019 01:51:05.383345 1291892 scoped_vlog_timer.h:63] BatchGetReplicaList response: total=1, success=1, failures=0, latency=32us
+I20261019 01:51:05.463667 1291892 scoped_vlog_timer.h:46] BatchGetReplicaList request: keys_count=1
+I20261019 01:51:05.463742 1291892 scoped_vlog_timer.h:63] BatchGetReplicaList response: total=1, success=1, failures=0, latency=76us
+I20261019 01:51:05.464021 1291892 scoped_vlog_timer.h:46] BatchGetReplicaList request: keys_count=1
+I20261019 01:51:05.464046 1291892 scoped_vlog_timer.h:63] BatchGetReplicaList response: total=1, success=1, failures=0, latency=24us
+I20261019 01:51:05.541373 1291892 scoped_vlog_timer.h:46] BatchGetReplicaList request: keys_count=1
+I20261019 01:51:05.541448 1291892 scoped_vlog_timer.h:63] BatchGetReplicaList response: total=1, success=1, failures=0, latency=77us
+I20261019 01:51:13.429342 1291892 scoped_vlog_timer.h:46] BatchGetReplicaList request: keys_count=1
+I20261019 01:51:13.429404 1291892 scoped_vlog_timer.h:63] BatchGetReplicaList response: total=1, success=1, failures=0, latency=64us
+I20261019 01:51:17.127051 1291893 scoped_vlog_timer.h:46] BatchGetReplicaList request: keys_count=3
+I20261019 01:51:17.127151 1291893 scoped_vlog_timer.h:63] BatchGetReplicaList response: total=3, success=3, failures=0, latency=100us
+I20261019 01:51:21.088376 1291893 scoped_vlog_timer.h:46] BatchGetReplicaList request: keys_count=1
+I20261019 01:51:21.088444 1291893 scoped_vlog_timer.h:63] BatchGetReplicaList response: total=1, success=1, failures=0, latency=71us
+I20261019 01:51:21.088788 1291893 scoped_vlog_timer.h:46] BatchGetReplicaList request: keys_count=1
+I20261019 01:51:21.088826 1291893 master_service.cpp:9975] promotion_queued key=e2c_t1_target size=67108864
+I20261019 01:51:21.088843 1291893 scoped_vlog_timer.h:63] BatchGetReplicaList response: total=1, success=1, failures=0, latency=55us
+I20261019 01:51:21.089239 1291893 scoped_vlog_timer.h:46] RegisterPrefetchTask request: action=register_prefetch_task
+I20261019 01:51:21.089262 1291893 scoped_vlog_timer.h:90] RegisterPrefetchTask response: status=failed, error=PROMOTION_ALREADY_EXISTS, latency=21us
+I20261019 01:51:21.168120 1291893 scoped_vlog_timer.h:46] BatchGetReplicaList request: keys_count=1
+I20261019 01:51:21.168192 1291893 scoped_vlog_timer.h:63] BatchGetReplicaList response: total=1, success=1, failures=0, latency=73us
+I20261019 01:51:21.168465 1291893 scoped_vlog_timer.h:46] BatchGetReplicaList request: keys_count=1

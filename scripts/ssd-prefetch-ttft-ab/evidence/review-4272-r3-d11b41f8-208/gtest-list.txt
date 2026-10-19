@@ -1,0 +1,6 @@
+=== throttle ===
+/home/d00883276/prefetch_916/src/Mooncake-d11b41f8/build/mooncake-store/tests/prefetch_throttle_test: error while loading shared libraries: libglog.so.1: cannot open shared object file: No such file or directory
+=== master ===
+/home/d00883276/prefetch_916/src/Mooncake-d11b41f8/build/mooncake-store/tests/prefetch_task_master_test: error while loading shared libraries: libglog.so.1: cannot open shared object file: No such file or directory
+=== promotion ===
+/home/d00883276/prefetch_916/src/Mooncake-d11b41f8/build/mooncake-store/tests/file_storage_promotion_test: error while loading shared libraries: libglog.so.1: cannot open shared object file: No such file or directory

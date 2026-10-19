@@ -70,7 +70,7 @@ _progress_push() {
   if [ -n "$proxy" ]; then
     args+=(-c "http.proxy=$proxy" -c "https.proxy=$proxy")
   fi
-  git "${args[@]}" push -f origin "HEAD:$PROGRESS_BRANCH" >/dev/null 2>&1 || true
+  git "${args[@]}" push -f origin "HEAD:refs/heads/$PROGRESS_BRANCH" >/dev/null 2>&1 || true
 }
 
 progress_start() {
