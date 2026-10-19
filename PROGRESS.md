@@ -3,7 +3,7 @@
 host: 208
 tree: ae8fcaf3
 state:
------ settle 90s (leases / offload) -----
------ measure r1 c=4  (PRIMARY) -----
+---------------Time to First Token----------------
+----- measure r2 c=4  (contamination check) -----
 Skipping endpoint ready check.
-updated: 2026-10-19T23:19:12Z
+updated: 2026-10-19T23:49:15Z
