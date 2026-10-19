@@ -1,0 +1,124 @@
+DATE=2026-10-19T09:33:02Z
+HEAD=58217a71e183003a56eb260ee875f3ed016df79b
+a588165909244cc3c52d73b075514454  /home/d00883276/prefetch_916/920_pre_pr/gate/twotier-208/58217-pylib/mooncake/libmooncake_store.so
+a7a1a594c13122999673dc9f48681260  /home/d00883276/prefetch_916/920_pre_pr/gate/twotier-208/58217-pylib/mooncake/ascend_transport.so
+39925058361d29601134f3841a5fab7d  /home/d00883276/prefetch_916/920_pre_pr/gate/twotier-208/58217-pylib/mooncake/mooncake_master
+WARNING: Logging before InitGoogleLogging() is written to STDERR
+I20261019 09:33:05.113189 1607328 client_metric.cpp:83] Client metrics enabled (default enabled)
+I20261019 09:33:05.113255 1607328 client_metric.cpp:84] Client bandwidth summary enabled via MC_STORE_CLIENT_METRIC_BANDWIDTH
+I20261019 09:33:05.116125 1607328 client_service.cpp:458] client_id=12775308044869124333-13005166523259149492
+I20261019 09:33:05.116160 1607328 client_service.cpp:472] Client metrics enabled but reporting disabled (interval=0)
+I20261019 09:33:05.117815 1607328 client_service.cpp:1112] Storage root directory is: /tmp/mooncake_ci_ssd_offload
+I20261019 09:33:05.117834 1607328 client_service.cpp:1113] Fs subdir is: mooncake_cluster
+I20261019 09:33:05.117842 1607328 client_service.cpp:1114] Disk eviction enabled: 1
+I20261019 09:33:05.117849 1607328 client_service.cpp:1116] Quota bytes: 0
+I20261019 09:33:05.121759 1607328 storage_backend.cpp:122] Reconstructing storage state from disk at: "/tmp/mooncake_ci_ssd_offload/mooncake_cluster"
+I20261019 09:33:05.121863 1607328 storage_backend.cpp:212] Init: Quota: 2834310574080, Used: 0, Available: 2834310574080
+I20261019 09:33:05.122002 1607328 transfer_engine_impl.cpp:1169] Metrics reporting is disabled (set MC_TE_METRIC=1 to enable)
+I20261019 09:33:05.122057 1607328 transfer_engine_impl.cpp:140] Transfer Engine parseHostNameWithPortAscend. server_name: localhost port: 12492 devicePhyId: -1
+I20261019 09:33:05.124017 1607328 transfer_metadata_plugin.cpp:1469] Found active interface enp189s0f0 with IP 80.48.37.208
+I20261019 09:33:05.124039 1607328 transfer_metadata_plugin.cpp:1458] Skipping interface virbr0 (not UP or not RUNNING)
+I20261019 09:33:05.124047 1607328 transfer_metadata_plugin.cpp:1469] Found active interface docker0 with IP 172.17.0.1
+I20261019 09:33:05.124066 1607328 transfer_engine_impl.cpp:213] Transfer Engine RPC using new RPC mapping, listening on 80.48.37.208:15028
+E20261019 09:33:05.126466 1607328 transfer_metadata_plugin.cpp:355] GET http://127.0.0.1:8080/metadata?key=mooncake%2Frpc_meta%2Flocalhost%3A12492 http=404 body: metadata not found
+I20261019 09:33:05.127121 1607328 transfer_engine_impl.cpp:290] protocol=tcp, skipping Ascend Direct for the host transports
+I20261019 09:33:05.127139 1607328 client_service.cpp:891] Transfer engine auto discovery is disabled for protocol: tcp
+W20261019 09:33:05.127148 1607328 client_service.cpp:926] TCP protocol does not use device names, ignoring
+W20261019 09:33:05.127518 1607328 transfer_metadata.cpp:1371] Failed to retrieve segment descriptor, name localhost:12492
+E20261019 09:33:05.127930 1607328 transfer_metadata_plugin.cpp:355] GET http://127.0.0.1:8080/metadata?key=mooncake%2Fram%2Flocalhost%3A12492 http=404 body: metadata not found
+I20261019 09:33:05.128360 1607328 tcp_transport.cpp:432] TcpTransport: listen on port 15893
+I20261019 09:33:05.128460 1607328 tcp_transport.cpp:448] TcpTransport: I/O pool started with 1 thread(s)
+I20261019 09:33:05.129048 1607328 transfer_task.cpp:1067] MC_STORE_MEMCPY not set, auto-detected: TCP-only environment, memcpy enabled
+I20261019 09:33:05.129069 1607328 real_client.cpp:1052] Successfully created client on port 12492 after 1 attempt(s)
+I20261019 09:33:05.130815 1607328 real_client.cpp:1087] Registering local memory: 536870912 bytes
+I20261019 09:33:05.131717 1607328 real_client.cpp:1229] Mounting segment: 536870912 bytes, 536870912 of 536870912
+...
+----------------------------------------------------------------------
+Ran 3 tests in 71.732s
+
+OK
+completed 500 entries
+completed 1000 entries
+completed 500 entries
+completed 1000 entries
+
+=== Put Operations STATISTICS ===
+Operations: 1000 (Success: 1000, Failure: 0)
+Success Rate: 100.00%
+Duration: 4.33 seconds
+Data Transferred: 1000.00 MB
+Latency (ms): Min=0.81, Max=7.84, Avg=0.93
+Percentiles (ms): P90=1.08, P99=1.18, P999=1.18
+==================================================
+
+=== Batch Get Operations STATISTICS ===
+Operations: 1000 (Success: 1000, Failure: 0)
+Success Rate: 100.00%
+Duration: 36.31 seconds
+Data Transferred: 1000.00 MB
+Latency (ms): Min=1.66, Max=2.45, Avg=1.83
+Percentiles (ms): P90=1.95, P99=2.15, P999=2.15
+==================================================
+Cleanup completed
+Thread 0 started
+Thread 1 started
+Thread 2 started
+Thread 3 started
+Thread 1 completed
+Thread 2 completed
+Thread 0 completed
+Thread 3 completed
+Cleanup completed
+
+=== Concurrent Put Operations STATISTICS ===
+Operations: 4000 (Success: 4000, Failure: 0)
+Success Rate: 100.00%
+Duration: 0.00 seconds
+Data Transferred: 4000.00 MB
+Latency (ms): Min=0.25, Max=1.96, Avg=0.61
+Percentiles (ms): P90=1.14, P99=1.32, P999=1.60
+==================================================
+
+=== Concurrent Get Operations STATISTICS ===
+Operations: 4000 (Success: 4000, Failure: 0)
+Success Rate: 100.00%
+Duration: 0.00 seconds
+Data Transferred: 4000.00 MB
+Latency (ms): Min=0.59, Max=132.35, Avg=3.40
+Percentiles (ms): P90=5.92, P99=13.40, P999=35.33
+==================================================
+
+=== Concurrent overall STATISTICS ===
+Concurrent Throughput: 808.39 ops/sec, 808.39 MB/s
+Total Operations: 8000, Duration: 9.90 seconds
+Put Concurrency Efficiency: 400.00%
+  • Average Thread Time: 0.6224s
+  • Slowest Thread Time: 0.6228s
+  • Efficiency Ratio: 1.00
+Get Concurrency Efficiency: 400.00%
+  • Average Thread Time: 4.1198s
+  • Slowest Thread Time: 4.2723s
+  • Efficiency Ratio: 0.96
+completed 500 entries
+completed 1000 entries
+completed 500 entries
+completed 1000 entries
+
+=== Put Operations STATISTICS ===
+Operations: 1000 (Success: 1000, Failure: 0)
+Success Rate: 100.00%
+Duration: 4.25 seconds
+Data Transferred: 1000.00 MB
+Latency (ms): Min=0.80, Max=1.40, Avg=0.86
+Percentiles (ms): P90=0.88, P99=1.04, P999=1.04
+==================================================
+
+=== Get Operations STATISTICS ===
+Operations: 1000 (Success: 1000, Failure: 0)
+Success Rate: 100.00%
+Duration: 1.55 seconds
+Data Transferred: 1000.00 MB
+Latency (ms): Min=0.68, Max=2.04, Avg=0.85
+Percentiles (ms): P90=1.03, P99=1.93, P999=1.93
+==================================================
+Cleanup completed

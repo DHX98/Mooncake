@@ -1,0 +1,46 @@
+DATE=2026-10-19T09:33:01Z
+MODE=until-fail:20
+Test project /home/d00883276/prefetch_916/src/Mooncake-58217a71/build
+    Start 167: prefetch_teardown_test
+Could not find executable /home/d00883276/prefetch_916/src/Mooncake-58217a71/build/mooncake-store/tests/prefetch_teardown_test
+Looked in the following places:
+/home/d00883276/prefetch_916/src/Mooncake-58217a71/build/mooncake-store/tests/prefetch_teardown_test
+/home/d00883276/prefetch_916/src/Mooncake-58217a71/build/mooncake-store/tests/prefetch_teardown_test
+/home/d00883276/prefetch_916/src/Mooncake-58217a71/build/mooncake-store/tests/Release/prefetch_teardown_test
+/home/d00883276/prefetch_916/src/Mooncake-58217a71/build/mooncake-store/tests/Release/prefetch_teardown_test
+/home/d00883276/prefetch_916/src/Mooncake-58217a71/build/mooncake-store/tests/Debug/prefetch_teardown_test
+/home/d00883276/prefetch_916/src/Mooncake-58217a71/build/mooncake-store/tests/Debug/prefetch_teardown_test
+/home/d00883276/prefetch_916/src/Mooncake-58217a71/build/mooncake-store/tests/MinSizeRel/prefetch_teardown_test
+/home/d00883276/prefetch_916/src/Mooncake-58217a71/build/mooncake-store/tests/MinSizeRel/prefetch_teardown_test
+/home/d00883276/prefetch_916/src/Mooncake-58217a71/build/mooncake-store/tests/RelWithDebInfo/prefetch_teardown_test
+/home/d00883276/prefetch_916/src/Mooncake-58217a71/build/mooncake-store/tests/RelWithDebInfo/prefetch_teardown_test
+/home/d00883276/prefetch_916/src/Mooncake-58217a71/build/mooncake-store/tests/Deployment/prefetch_teardown_test
+/home/d00883276/prefetch_916/src/Mooncake-58217a71/build/mooncake-store/tests/Deployment/prefetch_teardown_test
+/home/d00883276/prefetch_916/src/Mooncake-58217a71/build/mooncake-store/tests/Development/prefetch_teardown_test
+/home/d00883276/prefetch_916/src/Mooncake-58217a71/build/mooncake-store/tests/Development/prefetch_teardown_test
+home/d00883276/prefetch_916/src/Mooncake-58217a71/build/mooncake-store/tests/prefetch_teardown_test
+home/d00883276/prefetch_916/src/Mooncake-58217a71/build/mooncake-store/tests/prefetch_teardown_test
+home/d00883276/prefetch_916/src/Mooncake-58217a71/build/mooncake-store/tests/Release/prefetch_teardown_test
+home/d00883276/prefetch_916/src/Mooncake-58217a71/build/mooncake-store/tests/Release/prefetch_teardown_test
+home/d00883276/prefetch_916/src/Mooncake-58217a71/build/mooncake-store/tests/Debug/prefetch_teardown_test
+home/d00883276/prefetch_916/src/Mooncake-58217a71/build/mooncake-store/tests/Debug/prefetch_teardown_test
+home/d00883276/prefetch_916/src/Mooncake-58217a71/build/mooncake-store/tests/MinSizeRel/prefetch_teardown_test
+home/d00883276/prefetch_916/src/Mooncake-58217a71/build/mooncake-store/tests/MinSizeRel/prefetch_teardown_test
+home/d00883276/prefetch_916/src/Mooncake-58217a71/build/mooncake-store/tests/RelWithDebInfo/prefetch_teardown_test
+home/d00883276/prefetch_916/src/Mooncake-58217a71/build/mooncake-store/tests/RelWithDebInfo/prefetch_teardown_test
+home/d00883276/prefetch_916/src/Mooncake-58217a71/build/mooncake-store/tests/Deployment/prefetch_teardown_test
+home/d00883276/prefetch_916/src/Mooncake-58217a71/build/mooncake-store/tests/Deployment/prefetch_teardown_test
+home/d00883276/prefetch_916/src/Mooncake-58217a71/build/mooncake-store/tests/Development/prefetch_teardown_test
+home/d00883276/prefetch_916/src/Mooncake-58217a71/build/mooncake-store/tests/Development/prefetch_teardown_test
+Unable to find executable: /home/d00883276/prefetch_916/src/Mooncake-58217a71/build/mooncake-store/tests/prefetch_teardown_test
+    Test #167: prefetch_teardown_test ...........***Not Run   0.00 sec
+
+0% tests passed, 1 tests failed out of 1
+
+Total Test time (real) =   0.01 sec
+
+The following tests FAILED:
+	167 - prefetch_teardown_test (Not Run)
+Errors while running CTest
+REPEAT_RC=8
+REPEAT_DONE
