@@ -1,4 +1,7 @@
-# live progress — b4ab9628 verify
+# live progress — ae8fcaf3 A/B
 
-state: full build passed, ctest starting in mc-r3-208
-heartbeat refspec check
+host: 208
+tree: ae8fcaf3
+state:
+########## ARM a  prefetch=OFF ##########
+updated: 2026-10-19T12:48:10Z
