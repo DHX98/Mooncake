@@ -6,4 +6,4 @@ state:
 ---------------Time to First Token----------------
 ----- measure r2 c=4  (contamination check) -----
 Skipping endpoint ready check.
-updated: 2026-10-20T04:49:44Z
+updated: 2026-10-20T05:19:47Z
