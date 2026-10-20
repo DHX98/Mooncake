@@ -3,7 +3,7 @@
 host: 208
 tree: ae8fcaf3
 state:
----------------Time to First Token----------------
 ----- measure r2 c=4  (contamination check) -----
 Skipping endpoint ready check.
-updated: 2026-10-20T05:49:50Z
+---------------Time to First Token----------------
+updated: 2026-10-20T06:19:53Z
