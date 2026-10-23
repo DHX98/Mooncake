@@ -1,0 +1,6 @@
+OS                                              0.0  B/s |   0  B     00:07    
+OS                                              0.0  B/s |   0  B     00:06    
+Errors during downloading metadata for repository 'OS':
+  - Curl error (60): SSL peer certificate or SSH remote key was not OK for https://repo.openeuler.org/openEuler-24.03-LTS-SP3/OS/aarch64/repodata/repomd.xml [SSL certificate problem: self-signed certificate in certificate chain]
+  - Curl error (60): SSL peer certificate or SSH remote key was not OK for https://mirrors.openeuler.org/metalink?repo=24.03LTS_SP3/OS&arch=aarch64 [SSL certificate problem: self-signed certificate in certificate chain]
+Error: Failed to download metadata for repo 'OS': Cannot download repomd.xml: Cannot download repodata/repomd.xml: All mirrors were tried

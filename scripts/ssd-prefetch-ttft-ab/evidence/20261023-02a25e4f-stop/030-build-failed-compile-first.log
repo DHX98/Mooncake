@@ -1,0 +1,649 @@
+DATE=2026-10-23T02:35:46+00:00
+CONTAINER=mc-verify-030-20261023
+HEAD=02a25e4fb7adf1a5750bcee857e7b4f300ed7996
+BUILD_JOBS=32
+ldd (Ubuntu GLIBC 2.35-0ubuntu3.15) 2.35
+g++-12 (Ubuntu 12.3.0-1ubuntu1~22.04.3) 12.3.0
+Python 3.12.13
+-- The CXX compiler identification is GNU 12.3.0
+-- The C compiler identification is GNU 12.3.0
+-- Detecting CXX compiler ABI info
+-- Detecting CXX compiler ABI info - done
+-- Check for working CXX compiler: /usr/bin/g++-12 - skipped
+-- Detecting CXX compile features
+-- Detecting CXX compile features - done
+-- Detecting C compiler ABI info
+-- Detecting C compiler ABI info - done
+-- Check for working C compiler: /usr/bin/gcc-12 - skipped
+-- Detecting C compile features
+-- Detecting C compile features - done
+-- Found JsonCpp: JsonCpp::JsonCpp
+-- glog version '0.4.0' (< 0.6.0 or unknown): IsGoogleLoggingInitialized() unavailable
+-- Found GLOG: glog::glog
+CMAKE_BUILD_TYPE: Release
+-- [limit_jobs] Available memory: 1153782 MB, CPU cores: 192
+-- [limit_jobs] Compile jobs: 192 (1500 MB/job), Link jobs: 192 (4000 MB/job)
+-- [limit_jobs] Ninja job pools: compile=192, link=192
+-- Performing Test CMAKE_HAVE_LIBC_PTHREAD
+-- Performing Test CMAKE_HAVE_LIBC_PTHREAD - Success
+-- Found Threads: TRUE
+-- Event-driven completion is disabled
+-- Use env ASCEND_HOME_PATH
+-- Http as metadata server support is enabled
+-- metrics is enabled
+CMake Warning (author) at /usr/local/python3.12.13/lib/python3.12/site-packages/cmake/data/share/cmake-4.4/Modules/FetchContent.cmake:1968 (message):
+  Calling FetchContent_Populate(yalantinglibs) is deprecated, call
+  FetchContent_MakeAvailable(yalantinglibs) instead.  Policy CMP0169 can be
+  set to OLD to allow FetchContent_Populate(yalantinglibs) to be called
+  directly for now, but the ability to call it with declared details will be
+  removed completely in a future version.
+Call Stack (most recent call first):
+  mooncake-common/FindYLT.cmake:29 (FetchContent_Populate)
+  mooncake-common/common.cmake:758 (include)
+  CMakeLists.txt:13 (include)
+This warning is for project developers.  Use -Wno-author to suppress it.
+
+-- -------------YLT INSTALL SETTING------------
+-- INSTALL_THIRDPARTY: ON
+-- INSTALL_STANDALONE: ON
+-- INSTALL_INDEPENDENT_THIRDPARTY: ON
+-- INSTALL_INDEPENDENT_STANDALONE: ON
+-- --------------------------------------------
+YLT is imported by fetchContent or add_subdirectory
+-- -------------YLT CONFIG SETTING-------------
+-- YLT_ENABLE_DL: ON
+-- YLT_ENABLE_SSL: OFF
+-- YLT_ENABLE_NTLS: OFF
+-- Enable ibverbs support
+-- YLT_ENABLE_PMR: OFF
+-- YLT_ENABLE_IO_URING: OFF
+-- YLT_ENABLE_STRUCT_PACK_UNPORTABLE_TYPE: OFF
+-- YLT_ENABLE_STRUCT_PACK_OPTIMIZE: OFF
+-- --------------------------------------------
+CMake Warning (deprecated) at extern/pybind11/CMakeLists.txt:13 (cmake_minimum_required):
+  Compatibility with CMake < 3.10 will be removed from a future version of
+  CMake.
+
+  Update the VERSION argument <min> value.  Or, use the <min>...<max> syntax
+  to tell CMake that the project requires at least <min> but has been updated
+  to work with policies introduced by <max> or earlier.
+This warning is for project developers.  Use -Wno-author or -Wno-deprecated
+to suppress it.
+
+-- pybind11 v2.13.6 
+CMake Warning (deprecated) at extern/pybind11/tools/FindPythonLibsNew.cmake:110 (cmake_policy):
+  The OLD behavior for policy CMP0148 will be removed from a future version
+  of CMake.
+
+  The cmake-policies(7) manual explains that the OLD behaviors of all
+  policies are deprecated and that a policy should be set to OLD only under
+  specific short-term circumstances.  Projects should be ported to the NEW
+  behavior and not rely on setting a policy to OLD.
+Call Stack (most recent call first):
+  extern/pybind11/tools/pybind11Tools.cmake:50 (find_package)
+  extern/pybind11/tools/pybind11Common.cmake:228 (include)
+  extern/pybind11/CMakeLists.txt:251 (include)
+This warning is for project developers.  Use -Wno-author or -Wno-deprecated
+to suppress it.
+
+-- Found PythonInterp: /usr/local/python3.12.13/bin/python3.12 (found suitable version "3.12.13", minimum required is "3.7")
+-- Found PythonLibs: /usr/local/python3.12.13/lib/libpython3.12.so
+-- Performing Test HAS_FLTO
+-- Performing Test HAS_FLTO - Success
+-- USE_NOF=OFF, NoF SSD pool support is disabled
+-- Performing Test HAVE_IBV_ACTIVE_SPEED_EX
+-- Performing Test HAVE_IBV_ACTIVE_SPEED_EX - Failed
+-- Found Python3: /usr/local/python3.12.13/bin/python3.12 (found version "3.12.13") found components: Interpreter Development.Module
+-- Ascend support fabric mem.
+-- Found library: /usr/local/Ascend/cann-9.2.0/aarch64-linux/lib64/libmetadef.so
+-- Found CURL: /usr/lib/aarch64-linux-gnu/libcurl.so (found version "7.81.0")
+-- CUDA: Disabled
+-- ROCm/HIP: Disabled
+-- Sunrise/Tang: Disabled
+-- Mooncake Store will be built
+-- io_uring: Enabled for mooncake_store
+-- Store HA backends are disabled
+-- Found OpenSSL: /usr/lib/aarch64-linux-gnu/libcrypto.so (found version "3.0.2") found components: Crypto
+-- Alibaba Cloud OSS adapter: Enabled
+-- S3-compatible adapter: Enabled
+-- AWS SDK not found, S3 functionality will be disabled
+-- Performing Test MOONCAKE_NVME_URING_CMD_COMPILES
+-- Performing Test MOONCAKE_NVME_URING_CMD_COMPILES - Failed
+-- io_uring: NVMe uring command support unavailable, NVMe KV io_uring executor disabled
+-- Mooncake Python install directory: /usr/local/Ascend/ascend-toolkit/latest/python/site-packages/mooncake
+-- Configuring done (3.5s)
+-- Generating done (1.5s)
+-- Build files have been written to: /home/d00883276/prefetch_916/920_pre_pr/gate/twotier-208/verify-20261023-02a25e4f/build-030
+CMAKE_RC=0
+[1/849] Building CXX object mooncake-common/src/CMakeFiles/mooncake_common.dir/crc_checksum.cpp.o
+[2/849] Building CXX object mooncake-store/src/cachelib_memory_allocator/CMakeFiles/cachelib_memory_allocator.dir/Slab.cpp.o
+[3/849] Building CXX object mooncake-transfer-engine/src/common/base/CMakeFiles/base.dir/status.cpp.o
+[4/849] Building CXX object mooncake-transfer-engine/src/transport/ascend_transport/CMakeFiles/ascend_transport.dir/ascend_direct_transport/context_manager.cpp.o
+[5/849] Building CXX object mooncake-common/src/CMakeFiles/mooncake_common.dir/environ.cpp.o
+[6/849] Building CXX object mooncake-transfer-engine/src/transport/ascend_transport/CMakeFiles/ascend_transport.dir/ascend_allocator.cpp.o
+[7/849] Linking CXX static library mooncake-transfer-engine/src/common/base/libbase.a
+[8/849] Building CXX object mooncake-transfer-engine/src/CMakeFiles/transfer_engine.dir/shared_segment/mmap_shared_segment.cpp.o
+[9/849] Building CXX object mooncake-transfer-engine/src/CMakeFiles/transfer_engine.dir/shared_segment/shared_segment.cpp.o
+[10/849] Building CXX object mooncake-transfer-engine/src/CMakeFiles/transfer_engine.dir/shared_segment/ascend_shared_segment.cpp.o
+[11/849] Building CXX object mooncake-transfer-engine/src/transport/ascend_transport/CMakeFiles/ascend_transport.dir/ascend_direct_transport/sync_transfer_executor.cpp.o
+[12/849] Building CXX object mooncake-transfer-engine/src/CMakeFiles/transfer_engine.dir/memory_location.cpp.o
+[13/849] Building CXX object mooncake-transfer-engine/src/transport/ascend_transport/CMakeFiles/ascend_transport.dir/ascend_direct_transport/utils.cpp.o
+[14/849] Building CXX object mooncake-transfer-engine/src/transport/ascend_transport/CMakeFiles/ascend_transport.dir/ascend_direct_transport/local_copy_engine.cpp.o
+[15/849] Building CXX object mooncake-transfer-engine/src/CMakeFiles/transfer_engine.dir/transfer_engine_c.cpp.o
+[16/849] Building CXX object mooncake-transfer-engine/src/transport/rdma_transport/CMakeFiles/rdma_transport.dir/data_direct_topology.cpp.o
+[17/849] Building CXX object mooncake-transfer-engine/src/transport/ascend_transport/CMakeFiles/ascend_transport.dir/ascend_direct_transport/async_transfer_executor.cpp.o
+[18/849] Building CXX object mooncake-transfer-engine/src/CMakeFiles/transfer_metadata_plugin.dir/config.cpp.o
+[19/849] Building CXX object mooncake-transfer-engine/src/CMakeFiles/transfer_engine.dir/graceful_shutdown.cpp.o
+[20/849] Building CXX object mooncake-transfer-engine/src/CMakeFiles/transfer_engine.dir/transfer_metadata_dump.cpp.o
+[21/849] Building CXX object mooncake-transfer-engine/src/transport/ascend_transport/CMakeFiles/ascend_transport.dir/ascend_direct_transport/slice_dispatcher.cpp.o
+[22/849] Building CXX object mooncake-transfer-engine/src/transport/CMakeFiles/transport.dir/transport.cpp.o
+[23/849] Building CXX object mooncake-transfer-engine/src/CMakeFiles/transfer_metadata_plugin.dir/transfer_metadata_plugin.cpp.o
+[24/849] Building CXX object mooncake-store/src/local_ssd/CMakeFiles/mooncake_local_ssd.dir/manager.cpp.o
+FAILED: [code=1] mooncake-store/src/local_ssd/CMakeFiles/mooncake_local_ssd.dir/manager.cpp.o 
+/usr/bin/g++-12 -DASIO_DYN_LINK -DASIO_SEPARATE_COMPILATION -DCONFIG_ERDMA -DGLOG_USE_GLOG_EXPORT -DUSE_ASCEND_DIRECT -DUSE_HTTP -DUSE_TCP -DWITH_METRICS -DYLT_ENABLE_DL -DYLT_ENABLE_IBV -I/usr/local/Ascend/cann-9.2.0/aarch64-linux/include -I/home/d00883276/prefetch_916/src/Mooncake-02a25e4f/mooncake-common/etcd -I/home/d00883276/prefetch_916/src/Mooncake-02a25e4f/mooncake-common/k8s-lease -I/home/d00883276/prefetch_916/src/Mooncake-02a25e4f/mooncake-common/include -I/home/d00883276/prefetch_916/src/Mooncake-02a25e4f/mooncake-transfer-engine/include -I/home/d00883276/prefetch_916/src/Mooncake-02a25e4f/mooncake-store/include -I/home/d00883276/prefetch_916/920_pre_pr/gate/twotier-208/verify-20261023-02a25e4f/build-030/mooncake-store/include -I/home/d00883276/prefetch_916/src/Mooncake-02a25e4f/mooncake-store/include/cachelib_memory_allocator -I/home/d00883276/prefetch_916/src/Mooncake-02a25e4f/mooncake-store/include/cachelib_memory_allocator/include -I/home/d00883276/prefetch_916/src/Mooncake-02a25e4f/mooncake-store/include/cachelib_memory_allocator/fake_include -isystem /home/d00883276/prefetch_916/920_pre_pr/vendor/yalantinglibs/cmake/../include -isystem /home/d00883276/prefetch_916/920_pre_pr/vendor/yalantinglibs/cmake/../include/ylt/thirdparty -isystem /home/d00883276/prefetch_916/920_pre_pr/vendor/yalantinglibs/cmake/../include/ylt/standalone -Wall -Wextra -Wno-unused-parameter -fPIC -g -fcoroutines -DOPEN_BUILD_PROJECT  -O3 -std=gnu++20 -fno-tree-slp-vectorize -Wno-ignored-qualifiers -MD -MT mooncake-store/src/local_ssd/CMakeFiles/mooncake_local_ssd.dir/manager.cpp.o -MF mooncake-store/src/local_ssd/CMakeFiles/mooncake_local_ssd.dir/manager.cpp.o.d -o mooncake-store/src/local_ssd/CMakeFiles/mooncake_local_ssd.dir/manager.cpp.o -c /home/d00883276/prefetch_916/src/Mooncake-02a25e4f/mooncake-store/src/local_ssd/manager.cpp
+In file included from /home/d00883276/prefetch_916/src/Mooncake-02a25e4f/mooncake-store/src/local_ssd/manager.cpp:1:
+/home/d00883276/prefetch_916/src/Mooncake-02a25e4f/mooncake-store/include/local_ssd/manager.h:4:10: fatal error: boost/functional/hash.hpp: No such file or directory
+    4 | #include <boost/functional/hash.hpp>
+      |          ^~~~~~~~~~~~~~~~~~~~~~~~~~~
+compilation terminated.
+[25/849] Building CXX object mooncake-transfer-engine/src/transport/ascend_transport/CMakeFiles/ascend_transport.dir/ascend_direct_transport/ascend_direct_transport.cpp.o
+[26/849] Building CXX object mooncake-transfer-engine/src/CMakeFiles/transfer_engine.dir/show_links.cpp.o
+[27/849] Building CXX object mooncake-store/src/cachelib_memory_allocator/CMakeFiles/cachelib_memory_allocator.dir/SlabAllocator.cpp.o
+[28/849] Building CXX object mooncake-transfer-engine/src/transport/ascend_transport/CMakeFiles/ascend_transport.dir/ascend_direct_transport/transfer_executor_base.cpp.o
+[29/849] Building CXX object mooncake-transfer-engine/src/transport/rdma_twosided/CMakeFiles/rdma_twosided.dir/sender_credit.cpp.o
+[30/849] Building CXX object mooncake-transfer-engine/src/transport/rdma_twosided/CMakeFiles/rdma_twosided.dir/rdma_twosided_transport.cpp.o
+[31/849] Building CXX object mooncake-transfer-engine/src/transport/rdma_twosided/CMakeFiles/rdma_twosided.dir/ctrl_frame.cpp.o
+[32/849] Building CXX object mooncake-store/src/cachelib_memory_allocator/CMakeFiles/cachelib_memory_allocator.dir/MemoryPool.cpp.o
+[33/849] Building CXX object mooncake-transfer-engine/src/transport/rdma_twosided/CMakeFiles/rdma_twosided.dir/ctrl_channel.cpp.o
+[34/849] Building CXX object mooncake-store/src/cachelib_memory_allocator/CMakeFiles/cachelib_memory_allocator.dir/MemoryPoolManager.cpp.o
+[35/849] Building CXX object mooncake-transfer-engine/src/transport/rdma_twosided/CMakeFiles/rdma_twosided.dir/ctrl_plane.cpp.o
+[36/849] Building CXX object mooncake-transfer-engine/src/transport/rdma_transport/CMakeFiles/rdma_transport.dir/endpoint_store.cpp.o
+[37/849] Building CXX object mooncake-store/src/cachelib_memory_allocator/CMakeFiles/cachelib_memory_allocator.dir/MemoryAllocator.cpp.o
+[38/849] Building CXX object mooncake-common/src/CMakeFiles/mooncake_common.dir/default_config.cpp.o
+[39/849] Building CXX object mooncake-common/src/CMakeFiles/asio_shared.dir/asio_impl.cpp.o
+[40/849] Building CXX object mooncake-transfer-engine/src/CMakeFiles/transfer_engine.dir/topology.cpp.o
+[41/849] Building CXX object mooncake-store/src/cachelib_memory_allocator/CMakeFiles/cachelib_memory_allocator.dir/AllocationClass.cpp.o
+[42/849] Building CXX object mooncake-transfer-engine/src/CMakeFiles/transfer_engine.dir/transfer_engine_impl.cpp.o
+[43/849] Building CXX object mooncake-transfer-engine/src/CMakeFiles/transfer_engine.dir/transfer_engine.cpp.o
+/home/d00883276/prefetch_916/src/Mooncake-02a25e4f/mooncake-transfer-engine/src/transfer_engine.cpp:28:6: warning: ‘bool mooncake::{anonymous}::isTransferEngineEnvEnabled(const char*)’ defined but not used [-Wunused-function]
+   28 | bool isTransferEngineEnvEnabled(const char* name) {
+      |      ^~~~~~~~~~~~~~~~~~~~~~~~~~
+[44/849] Building CXX object mooncake-transfer-engine/src/CMakeFiles/transfer_engine.dir/multi_transport.cpp.o
+[45/849] Building CXX object mooncake-transfer-engine/src/transport/rdma_transport/CMakeFiles/rdma_transport.dir/rdma_endpoint.cpp.o
+[46/849] Building CXX object mooncake-transfer-engine/src/transport/rdma_transport/CMakeFiles/rdma_transport.dir/rdma_context.cpp.o
+[47/849] Building CXX object mooncake-transfer-engine/src/CMakeFiles/transfer_engine.dir/transfer_metadata.cpp.o
+[48/849] Building CXX object mooncake-transfer-engine/src/transport/shm_transport/CMakeFiles/shm_transport.dir/shm_transport.cpp.o
+/home/d00883276/prefetch_916/src/Mooncake-02a25e4f/mooncake-transfer-engine/src/transport/shm_transport/shm_transport.cpp:162:6: warning: ‘bool mooncake::{anonymous}::protocolListContains(const std::string&, const std::string&)’ defined but not used [-Wunused-function]
+  162 | bool protocolListContains(const std::string& protocol,
+      |      ^~~~~~~~~~~~~~~~~~~~
+[49/849] Building CXX object mooncake-transfer-engine/src/transport/rdma_transport/CMakeFiles/rdma_transport.dir/rdma_transport.cpp.o
+[50/849] Building CXX object mooncake-transfer-engine/src/transport/rdma_transport/CMakeFiles/rdma_transport.dir/worker_pool.cpp.o
+[51/849] Building CXX object _deps/googletest-build/googletest/CMakeFiles/gtest.dir/src/gtest-all.cc.o
+[52/849] Building CXX object mooncake-common/src/CMakeFiles/mooncake_common.dir/rpc_client_io_context.cpp.o
+[53/849] Building CXX object mooncake-transfer-engine/src/transport/tcp_transport/CMakeFiles/tcp_transport.dir/tcp_transport.cpp.o
+[54/849] Building CXX object mooncake-transfer-engine/src/transport/rpc_communicator/CMakeFiles/rpc_communicator.dir/rpc_interface.cpp.o
+[55/849] Building CXX object mooncake-transfer-engine/src/transport/rpc_communicator/CMakeFiles/rpc_communicator.dir/rpc_communicator.cpp.o
+In file included from /usr/include/c++/12/bits/new_allocator.h:36,
+                 from /usr/include/aarch64-linux-gnu/c++/12/bits/c++allocator.h:33,
+                 from /usr/include/c++/12/bits/allocator.h:46,
+                 from /usr/include/c++/12/memory:63,
+                 from /home/d00883276/prefetch_916/src/Mooncake-02a25e4f/mooncake-transfer-engine/include/transport/rpc_communicator/rpc_communicator.h:4,
+                 from /home/d00883276/prefetch_916/src/Mooncake-02a25e4f/mooncake-transfer-engine/src/transport/rpc_communicator/rpc_communicator.cpp:1:
+In function ‘constexpr std::_Require<std::__not_<std::__is_tuple_like<_Tp> >, std::is_move_constructible<_Tp>, std::is_move_assignable<_Tp> > std::swap(_Tp&, _Tp&) [with _Tp = async_simple::util::detail::_any_data]’,
+    inlined from ‘void async_simple::util::move_only_function<RetType(ArgTypes ...)>::swap(async_simple::util::move_only_function<RetType(ArgTypes ...)>&) [with RetType = void; ArgTypes = {std::pair<std::error_code, long unsigned int>}]’ at /home/d00883276/prefetch_916/920_pre_pr/vendor/yalantinglibs/include/ylt/thirdparty/async_simple/util/move_only_function.h:347:18,
+    inlined from ‘async_simple::util::move_only_function<RetType(ArgTypes ...)>::move_only_function(async_simple::util::move_only_function<RetType(ArgTypes ...)>&&) [with RetType = void; ArgTypes = {std::pair<std::error_code, long unsigned int>}]’ at /home/d00883276/prefetch_916/920_pre_pr/vendor/yalantinglibs/include/ylt/thirdparty/async_simple/util/move_only_function.h:286:19,
+    inlined from ‘static void coro_io::detail::ib_socket_shared_state_t::resume(std::pair<std::error_code, long unsigned int>&&, callback_t&&)’ at /home/d00883276/prefetch_916/920_pre_pr/vendor/yalantinglibs/include/ylt/coro_io/ibverbs/ib_socket.hpp:107:41:
+/usr/include/c++/12/bits/move.h:205:7: warning: ‘handle_tmp.async_simple::util::move_only_function<void(std::pair<std::error_code, long unsigned int>)>::<unnamed>.async_simple::util::detail::_function_base::_m_functor’ may be used uninitialized [-Wmaybe-uninitialized]
+  205 |       __a = _GLIBCXX_MOVE(__b);
+      |       ^~~
+In file included from /home/d00883276/prefetch_916/920_pre_pr/vendor/yalantinglibs/include/ylt/coro_io/ibverbs/ib_io.hpp:43,
+                 from /home/d00883276/prefetch_916/920_pre_pr/vendor/yalantinglibs/include/ylt/coro_io/socket_wrapper.hpp:20,
+                 from /home/d00883276/prefetch_916/920_pre_pr/vendor/yalantinglibs/include/ylt/coro_rpc/impl/coro_connection.hpp:41,
+                 from /home/d00883276/prefetch_916/920_pre_pr/vendor/yalantinglibs/include/ylt/coro_rpc/impl/context.hpp:30,
+                 from /home/d00883276/prefetch_916/920_pre_pr/vendor/yalantinglibs/include/ylt/coro_rpc/impl/coro_rpc_client.hpp:55,
+                 from /home/d00883276/prefetch_916/920_pre_pr/vendor/yalantinglibs/include/ylt/coro_rpc/coro_rpc_client.hpp:17,
+                 from /home/d00883276/prefetch_916/src/Mooncake-02a25e4f/mooncake-transfer-engine/include/transport/rpc_communicator/rpc_communicator.h:12:
+/home/d00883276/prefetch_916/920_pre_pr/vendor/yalantinglibs/include/ylt/coro_io/ibverbs/ib_socket.hpp: In static member function ‘static void coro_io::detail::ib_socket_shared_state_t::resume(std::pair<std::error_code, long unsigned int>&&, callback_t&&)’:
+/home/d00883276/prefetch_916/920_pre_pr/vendor/yalantinglibs/include/ylt/coro_io/ibverbs/ib_socket.hpp:107:12: note: ‘handle_tmp’ declared here
+  107 |       auto handle_tmp = std::move(handle);
+      |            ^~~~~~~~~~
+In function ‘constexpr std::_Require<std::__not_<std::__is_tuple_like<_Tp> >, std::is_move_constructible<_Tp>, std::is_move_assignable<_Tp> > std::swap(_Tp&, _Tp&) [with _Tp = void (*)(const async_simple::util::detail::_any_data&, pair<error_code, long unsigned int>&&)]’,
+    inlined from ‘void async_simple::util::move_only_function<RetType(ArgTypes ...)>::swap(async_simple::util::move_only_function<RetType(ArgTypes ...)>&) [with RetType = void; ArgTypes = {std::pair<std::error_code, long unsigned int>}]’ at /home/d00883276/prefetch_916/920_pre_pr/vendor/yalantinglibs/include/ylt/thirdparty/async_simple/util/move_only_function.h:349:18,
+    inlined from ‘async_simple::util::move_only_function<RetType(ArgTypes ...)>::move_only_function(async_simple::util::move_only_function<RetType(ArgTypes ...)>&&) [with RetType = void; ArgTypes = {std::pair<std::error_code, long unsigned int>}]’ at /home/d00883276/prefetch_916/920_pre_pr/vendor/yalantinglibs/include/ylt/thirdparty/async_simple/util/move_only_function.h:286:19,
+    inlined from ‘static void coro_io::detail::ib_socket_shared_state_t::resume(std::pair<std::error_code, long unsigned int>&&, callback_t&&)’ at /home/d00883276/prefetch_916/920_pre_pr/vendor/yalantinglibs/include/ylt/coro_io/ibverbs/ib_socket.hpp:107:41:
+/usr/include/c++/12/bits/move.h:205:11: warning: ‘handle_tmp.async_simple::util::move_only_function<void(std::pair<std::error_code, long unsigned int>)>::_m_invoker’ may be used uninitialized [-Wmaybe-uninitialized]
+  205 |       __a = _GLIBCXX_MOVE(__b);
+      |           ^
+/home/d00883276/prefetch_916/920_pre_pr/vendor/yalantinglibs/include/ylt/coro_io/ibverbs/ib_socket.hpp: In static member function ‘static void coro_io::detail::ib_socket_shared_state_t::resume(std::pair<std::error_code, long unsigned int>&&, callback_t&&)’:
+/home/d00883276/prefetch_916/920_pre_pr/vendor/yalantinglibs/include/ylt/coro_io/ibverbs/ib_socket.hpp:107:12: note: ‘handle_tmp’ declared here
+  107 |       auto handle_tmp = std::move(handle);
+      |            ^~~~~~~~~~
+In function ‘constexpr std::_Require<std::__not_<std::__is_tuple_like<_Tp> >, std::is_move_constructible<_Tp>, std::is_move_assignable<_Tp> > std::swap(_Tp&, _Tp&) [with _Tp = async_simple::util::detail::_any_data]’,
+    inlined from ‘void async_simple::util::move_only_function<RetType(ArgTypes ...)>::swap(async_simple::util::move_only_function<RetType(ArgTypes ...)>&) [with RetType = void; ArgTypes = {std::pair<std::error_code, long unsigned int>}]’ at /home/d00883276/prefetch_916/920_pre_pr/vendor/yalantinglibs/include/ylt/thirdparty/async_simple/util/move_only_function.h:347:18,
+    inlined from ‘async_simple::util::move_only_function<RetType(ArgTypes ...)>::move_only_function(async_simple::util::move_only_function<RetType(ArgTypes ...)>&&) [with RetType = void; ArgTypes = {std::pair<std::error_code, long unsigned int>}]’ at /home/d00883276/prefetch_916/920_pre_pr/vendor/yalantinglibs/include/ylt/thirdparty/async_simple/util/move_only_function.h:286:19,
+    inlined from ‘async_simple::util::move_only_function<RetType(ArgTypes ...)>& async_simple::util::move_only_function<RetType(ArgTypes ...)>::operator=(async_simple::util::move_only_function<RetType(ArgTypes ...)>&&) [with RetType = void; ArgTypes = {std::pair<std::error_code, long unsigned int>}]’ at /home/d00883276/prefetch_916/920_pre_pr/vendor/yalantinglibs/include/ylt/thirdparty/async_simple/util/move_only_function.h:324:9,
+    inlined from ‘void coro_io::detail::circle_buffer<T>::push(T&&) [with T = async_simple::util::move_only_function<void(std::pair<std::error_code, long unsigned int>)>]’ at /home/d00883276/prefetch_916/920_pre_pr/vendor/yalantinglibs/include/ylt/coro_io/ibverbs/ib_socket.hpp:69:17,
+    inlined from ‘void coro_io::detail::ib_socket_shared_state_t::post_send_impl(ibv_sge, callback_t&&, bool)’ at /home/d00883276/prefetch_916/920_pre_pr/vendor/yalantinglibs/include/ylt/coro_io/ibverbs/ib_socket.hpp:319:22:
+/usr/include/c++/12/bits/move.h:205:7: warning: ‘<unnamed>.async_simple::util::move_only_function<void(std::pair<std::error_code, long unsigned int>)>::<unnamed>.async_simple::util::detail::_function_base::_m_functor’ may be used uninitialized [-Wmaybe-uninitialized]
+  205 |       __a = _GLIBCXX_MOVE(__b);
+      |       ^~~
+In file included from /home/d00883276/prefetch_916/920_pre_pr/vendor/yalantinglibs/include/ylt/thirdparty/async_simple/Signal.h:34,
+                 from /home/d00883276/prefetch_916/920_pre_pr/vendor/yalantinglibs/include/ylt/thirdparty/async_simple/Executor.h:29,
+                 from /home/d00883276/prefetch_916/920_pre_pr/vendor/yalantinglibs/include/ylt/thirdparty/async_simple/Future.h:24,
+                 from /home/d00883276/prefetch_916/920_pre_pr/vendor/yalantinglibs/include/ylt/coro_rpc/impl/coro_rpc_client.hpp:17:
+/home/d00883276/prefetch_916/920_pre_pr/vendor/yalantinglibs/include/ylt/thirdparty/async_simple/util/move_only_function.h: In member function ‘void coro_io::detail::ib_socket_shared_state_t::post_send_impl(ibv_sge, callback_t&&, bool)’:
+/home/d00883276/prefetch_916/920_pre_pr/vendor/yalantinglibs/include/ylt/thirdparty/async_simple/util/move_only_function.h:324:9: note: ‘<anonymous>’ declared here
+  324 |         move_only_function(std::move(other)).swap(*this);
+      |         ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+In function ‘constexpr std::_Require<std::__not_<std::__is_tuple_like<_Tp> >, std::is_move_constructible<_Tp>, std::is_move_assignable<_Tp> > std::swap(_Tp&, _Tp&) [with _Tp = void (*)(const async_simple::util::detail::_any_data&, pair<error_code, long unsigned int>&&)]’,
+    inlined from ‘void async_simple::util::move_only_function<RetType(ArgTypes ...)>::swap(async_simple::util::move_only_function<RetType(ArgTypes ...)>&) [with RetType = void; ArgTypes = {std::pair<std::error_code, long unsigned int>}]’ at /home/d00883276/prefetch_916/920_pre_pr/vendor/yalantinglibs/include/ylt/thirdparty/async_simple/util/move_only_function.h:349:18,
+    inlined from ‘async_simple::util::move_only_function<RetType(ArgTypes ...)>::move_only_function(async_simple::util::move_only_function<RetType(ArgTypes ...)>&&) [with RetType = void; ArgTypes = {std::pair<std::error_code, long unsigned int>}]’ at /home/d00883276/prefetch_916/920_pre_pr/vendor/yalantinglibs/include/ylt/thirdparty/async_simple/util/move_only_function.h:286:19,
+    inlined from ‘async_simple::util::move_only_function<RetType(ArgTypes ...)>& async_simple::util::move_only_function<RetType(ArgTypes ...)>::operator=(async_simple::util::move_only_function<RetType(ArgTypes ...)>&&) [with RetType = void; ArgTypes = {std::pair<std::error_code, long unsigned int>}]’ at /home/d00883276/prefetch_916/920_pre_pr/vendor/yalantinglibs/include/ylt/thirdparty/async_simple/util/move_only_function.h:324:9,
+    inlined from ‘void coro_io::detail::circle_buffer<T>::push(T&&) [with T = async_simple::util::move_only_function<void(std::pair<std::error_code, long unsigned int>)>]’ at /home/d00883276/prefetch_916/920_pre_pr/vendor/yalantinglibs/include/ylt/coro_io/ibverbs/ib_socket.hpp:69:17,
+    inlined from ‘void coro_io::detail::ib_socket_shared_state_t::post_send_impl(ibv_sge, callback_t&&, bool)’ at /home/d00883276/prefetch_916/920_pre_pr/vendor/yalantinglibs/include/ylt/coro_io/ibverbs/ib_socket.hpp:319:22:
+/usr/include/c++/12/bits/move.h:205:11: warning: ‘<unnamed>.async_simple::util::move_only_function<void(std::pair<std::error_code, long unsigned int>)>::_m_invoker’ may be used uninitialized [-Wmaybe-uninitialized]
+  205 |       __a = _GLIBCXX_MOVE(__b);
+      |           ^
+/home/d00883276/prefetch_916/920_pre_pr/vendor/yalantinglibs/include/ylt/thirdparty/async_simple/util/move_only_function.h: In member function ‘void coro_io::detail::ib_socket_shared_state_t::post_send_impl(ibv_sge, callback_t&&, bool)’:
+/home/d00883276/prefetch_916/920_pre_pr/vendor/yalantinglibs/include/ylt/thirdparty/async_simple/util/move_only_function.h:324:9: note: ‘<anonymous>’ declared here
+  324 |         move_only_function(std::move(other)).swap(*this);
+      |         ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+In function ‘constexpr std::_Require<std::__not_<std::__is_tuple_like<_Tp> >, std::is_move_constructible<_Tp>, std::is_move_assignable<_Tp> > std::swap(_Tp&, _Tp&) [with _Tp = async_simple::util::detail::_any_data]’,
+    inlined from ‘void async_simple::util::move_only_function<RetType(ArgTypes ...)>::swap(async_simple::util::move_only_function<RetType(ArgTypes ...)>&) [with RetType = void; ArgTypes = {std::pair<std::error_code, long unsigned int>}]’ at /home/d00883276/prefetch_916/920_pre_pr/vendor/yalantinglibs/include/ylt/thirdparty/async_simple/util/move_only_function.h:347:18,
+    inlined from ‘async_simple::util::move_only_function<RetType(ArgTypes ...)>::move_only_function(async_simple::util::move_only_function<RetType(ArgTypes ...)>&&) [with RetType = void; ArgTypes = {std::pair<std::error_code, long unsigned int>}]’ at /home/d00883276/prefetch_916/920_pre_pr/vendor/yalantinglibs/include/ylt/thirdparty/async_simple/util/move_only_function.h:286:19,
+    inlined from ‘async_simple::util::move_only_function<RetType(ArgTypes ...)>& async_simple::util::move_only_function<RetType(ArgTypes ...)>::operator=(async_simple::util::move_only_function<RetType(ArgTypes ...)>&&) [with RetType = void; ArgTypes = {std::pair<std::error_code, long unsigned int>}]’ at /home/d00883276/prefetch_916/920_pre_pr/vendor/yalantinglibs/include/ylt/thirdparty/async_simple/util/move_only_function.h:324:9,
+    inlined from ‘std::error_code coro_io::detail::ib_socket_shared_state_t::poll_completion()’ at /home/d00883276/prefetch_916/920_pre_pr/vendor/yalantinglibs/include/ylt/coro_io/ibverbs/ib_socket.hpp:399:51:
+/usr/include/c++/12/bits/move.h:205:7: warning: ‘<unnamed>.async_simple::util::move_only_function<void(std::pair<std::error_code, long unsigned int>)>::<unnamed>.async_simple::util::detail::_function_base::_m_functor’ may be used uninitialized [-Wmaybe-uninitialized]
+  205 |       __a = _GLIBCXX_MOVE(__b);
+      |       ^~~
+/home/d00883276/prefetch_916/920_pre_pr/vendor/yalantinglibs/include/ylt/thirdparty/async_simple/util/move_only_function.h: In member function ‘std::error_code coro_io::detail::ib_socket_shared_state_t::poll_completion()’:
+/home/d00883276/prefetch_916/920_pre_pr/vendor/yalantinglibs/include/ylt/thirdparty/async_simple/util/move_only_function.h:324:9: note: ‘<anonymous>’ declared here
+  324 |         move_only_function(std::move(other)).swap(*this);
+      |         ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+In function ‘constexpr std::_Require<std::__not_<std::__is_tuple_like<_Tp> >, std::is_move_constructible<_Tp>, std::is_move_assignable<_Tp> > std::swap(_Tp&, _Tp&) [with _Tp = void (*)(const async_simple::util::detail::_any_data&, pair<error_code, long unsigned int>&&)]’,
+    inlined from ‘void async_simple::util::move_only_function<RetType(ArgTypes ...)>::swap(async_simple::util::move_only_function<RetType(ArgTypes ...)>&) [with RetType = void; ArgTypes = {std::pair<std::error_code, long unsigned int>}]’ at /home/d00883276/prefetch_916/920_pre_pr/vendor/yalantinglibs/include/ylt/thirdparty/async_simple/util/move_only_function.h:349:18,
+    inlined from ‘async_simple::util::move_only_function<RetType(ArgTypes ...)>::move_only_function(async_simple::util::move_only_function<RetType(ArgTypes ...)>&&) [with RetType = void; ArgTypes = {std::pair<std::error_code, long unsigned int>}]’ at /home/d00883276/prefetch_916/920_pre_pr/vendor/yalantinglibs/include/ylt/thirdparty/async_simple/util/move_only_function.h:286:19,
+    inlined from ‘async_simple::util::move_only_function<RetType(ArgTypes ...)>& async_simple::util::move_only_function<RetType(ArgTypes ...)>::operator=(async_simple::util::move_only_function<RetType(ArgTypes ...)>&&) [with RetType = void; ArgTypes = {std::pair<std::error_code, long unsigned int>}]’ at /home/d00883276/prefetch_916/920_pre_pr/vendor/yalantinglibs/include/ylt/thirdparty/async_simple/util/move_only_function.h:324:9,
+    inlined from ‘std::error_code coro_io::detail::ib_socket_shared_state_t::poll_completion()’ at /home/d00883276/prefetch_916/920_pre_pr/vendor/yalantinglibs/include/ylt/coro_io/ibverbs/ib_socket.hpp:399:51:
+/usr/include/c++/12/bits/move.h:205:11: warning: ‘<unnamed>.async_simple::util::move_only_function<void(std::pair<std::error_code, long unsigned int>)>::_m_invoker’ may be used uninitialized [-Wmaybe-uninitialized]
+  205 |       __a = _GLIBCXX_MOVE(__b);
+      |           ^
+/home/d00883276/prefetch_916/920_pre_pr/vendor/yalantinglibs/include/ylt/thirdparty/async_simple/util/move_only_function.h: In member function ‘std::error_code coro_io::detail::ib_socket_shared_state_t::poll_completion()’:
+/home/d00883276/prefetch_916/920_pre_pr/vendor/yalantinglibs/include/ylt/thirdparty/async_simple/util/move_only_function.h:324:9: note: ‘<anonymous>’ declared here
+  324 |         move_only_function(std::move(other)).swap(*this);
+      |         ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+In function ‘constexpr std::_Require<std::__not_<std::__is_tuple_like<_Tp> >, std::is_move_constructible<_Tp>, std::is_move_assignable<_Tp> > std::swap(_Tp&, _Tp&) [with _Tp = async_simple::util::detail::_any_data]’,
+    inlined from ‘void async_simple::util::move_only_function<RetType(ArgTypes ...)>::swap(async_simple::util::move_only_function<RetType(ArgTypes ...)>&) [with RetType = void; ArgTypes = {std::pair<std::error_code, long unsigned int>}]’ at /home/d00883276/prefetch_916/920_pre_pr/vendor/yalantinglibs/include/ylt/thirdparty/async_simple/util/move_only_function.h:347:18,
+    inlined from ‘async_simple::util::move_only_function<RetType(ArgTypes ...)>::move_only_function(async_simple::util::move_only_function<RetType(ArgTypes ...)>&&) [with RetType = void; ArgTypes = {std::pair<std::error_code, long unsigned int>}]’ at /home/d00883276/prefetch_916/920_pre_pr/vendor/yalantinglibs/include/ylt/thirdparty/async_simple/util/move_only_function.h:286:19,
+    inlined from ‘static void coro_io::detail::ib_socket_shared_state_t::resume(std::pair<std::error_code, long unsigned int>&&, callback_t&&)’ at /home/d00883276/prefetch_916/920_pre_pr/vendor/yalantinglibs/include/ylt/coro_io/ibverbs/ib_socket.hpp:107:41,
+    inlined from ‘void coro_io::detail::ib_socket_shared_state_t::post_recv_impl(callback_t&&)’ at /home/d00883276/prefetch_916/920_pre_pr/vendor/yalantinglibs/include/ylt/coro_io/ibverbs/ib_socket.hpp:330:39:
+/usr/include/c++/12/bits/move.h:205:7: warning: ‘handle_tmp.async_simple::util::move_only_function<void(std::pair<std::error_code, long unsigned int>)>::<unnamed>.async_simple::util::detail::_function_base::_m_functor’ may be used uninitialized [-Wmaybe-uninitialized]
+  205 |       __a = _GLIBCXX_MOVE(__b);
+      |       ^~~
+/home/d00883276/prefetch_916/920_pre_pr/vendor/yalantinglibs/include/ylt/coro_io/ibverbs/ib_socket.hpp: In member function ‘void coro_io::detail::ib_socket_shared_state_t::post_recv_impl(callback_t&&)’:
+/home/d00883276/prefetch_916/920_pre_pr/vendor/yalantinglibs/include/ylt/coro_io/ibverbs/ib_socket.hpp:107:12: note: ‘handle_tmp’ declared here
+  107 |       auto handle_tmp = std::move(handle);
+      |            ^~~~~~~~~~
+In function ‘constexpr std::_Require<std::__not_<std::__is_tuple_like<_Tp> >, std::is_move_constructible<_Tp>, std::is_move_assignable<_Tp> > std::swap(_Tp&, _Tp&) [with _Tp = void (*)(const async_simple::util::detail::_any_data&, pair<error_code, long unsigned int>&&)]’,
+    inlined from ‘void async_simple::util::move_only_function<RetType(ArgTypes ...)>::swap(async_simple::util::move_only_function<RetType(ArgTypes ...)>&) [with RetType = void; ArgTypes = {std::pair<std::error_code, long unsigned int>}]’ at /home/d00883276/prefetch_916/920_pre_pr/vendor/yalantinglibs/include/ylt/thirdparty/async_simple/util/move_only_function.h:349:18,
+    inlined from ‘async_simple::util::move_only_function<RetType(ArgTypes ...)>::move_only_function(async_simple::util::move_only_function<RetType(ArgTypes ...)>&&) [with RetType = void; ArgTypes = {std::pair<std::error_code, long unsigned int>}]’ at /home/d00883276/prefetch_916/920_pre_pr/vendor/yalantinglibs/include/ylt/thirdparty/async_simple/util/move_only_function.h:286:19,
+    inlined from ‘static void coro_io::detail::ib_socket_shared_state_t::resume(std::pair<std::error_code, long unsigned int>&&, callback_t&&)’ at /home/d00883276/prefetch_916/920_pre_pr/vendor/yalantinglibs/include/ylt/coro_io/ibverbs/ib_socket.hpp:107:41,
+    inlined from ‘void coro_io::detail::ib_socket_shared_state_t::post_recv_impl(callback_t&&)’ at /home/d00883276/prefetch_916/920_pre_pr/vendor/yalantinglibs/include/ylt/coro_io/ibverbs/ib_socket.hpp:330:39:
+/usr/include/c++/12/bits/move.h:205:11: warning: ‘handle_tmp.async_simple::util::move_only_function<void(std::pair<std::error_code, long unsigned int>)>::_m_invoker’ may be used uninitialized [-Wmaybe-uninitialized]
+  205 |       __a = _GLIBCXX_MOVE(__b);
+      |           ^
+/home/d00883276/prefetch_916/920_pre_pr/vendor/yalantinglibs/include/ylt/coro_io/ibverbs/ib_socket.hpp: In member function ‘void coro_io::detail::ib_socket_shared_state_t::post_recv_impl(callback_t&&)’:
+/home/d00883276/prefetch_916/920_pre_pr/vendor/yalantinglibs/include/ylt/coro_io/ibverbs/ib_socket.hpp:107:12: note: ‘handle_tmp’ declared here
+  107 |       auto handle_tmp = std::move(handle);
+      |            ^~~~~~~~~~
+In function ‘constexpr std::_Require<std::__not_<std::__is_tuple_like<_Tp> >, std::is_move_constructible<_Tp>, std::is_move_assignable<_Tp> > std::swap(_Tp&, _Tp&) [with _Tp = async_simple::util::detail::_any_data]’,
+    inlined from ‘void async_simple::util::move_only_function<RetType(ArgTypes ...)>::swap(async_simple::util::move_only_function<RetType(ArgTypes ...)>&) [with RetType = void; ArgTypes = {std::pair<std::error_code, long unsigned int>}]’ at /home/d00883276/prefetch_916/920_pre_pr/vendor/yalantinglibs/include/ylt/thirdparty/async_simple/util/move_only_function.h:347:18,
+    inlined from ‘async_simple::util::move_only_function<RetType(ArgTypes ...)>::move_only_function(async_simple::util::move_only_function<RetType(ArgTypes ...)>&&) [with RetType = void; ArgTypes = {std::pair<std::error_code, long unsigned int>}]’ at /home/d00883276/prefetch_916/920_pre_pr/vendor/yalantinglibs/include/ylt/thirdparty/async_simple/util/move_only_function.h:286:19,
+    inlined from ‘async_simple::util::move_only_function<RetType(ArgTypes ...)>& async_simple::util::move_only_function<RetType(ArgTypes ...)>::operator=(async_simple::util::move_only_function<RetType(ArgTypes ...)>&&) [with RetType = void; ArgTypes = {std::pair<std::error_code, long unsigned int>}]’ at /home/d00883276/prefetch_916/920_pre_pr/vendor/yalantinglibs/include/ylt/thirdparty/async_simple/util/move_only_function.h:324:9,
+    inlined from ‘void coro_io::detail::ib_socket_shared_state_t::post_recv_impl(callback_t&&)’ at /home/d00883276/prefetch_916/920_pre_pr/vendor/yalantinglibs/include/ylt/coro_io/ibverbs/ib_socket.hpp:339:33:
+/usr/include/c++/12/bits/move.h:205:7: warning: ‘<unnamed>.async_simple::util::move_only_function<void(std::pair<std::error_code, long unsigned int>)>::<unnamed>.async_simple::util::detail::_function_base::_m_functor’ may be used uninitialized [-Wmaybe-uninitialized]
+  205 |       __a = _GLIBCXX_MOVE(__b);
+      |       ^~~
+/home/d00883276/prefetch_916/920_pre_pr/vendor/yalantinglibs/include/ylt/thirdparty/async_simple/util/move_only_function.h: In member function ‘void coro_io::detail::ib_socket_shared_state_t::post_recv_impl(callback_t&&)’:
+/home/d00883276/prefetch_916/920_pre_pr/vendor/yalantinglibs/include/ylt/thirdparty/async_simple/util/move_only_function.h:324:9: note: ‘<anonymous>’ declared here
+  324 |         move_only_function(std::move(other)).swap(*this);
+      |         ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+In function ‘constexpr std::_Require<std::__not_<std::__is_tuple_like<_Tp> >, std::is_move_constructible<_Tp>, std::is_move_assignable<_Tp> > std::swap(_Tp&, _Tp&) [with _Tp = void (*)(const async_simple::util::detail::_any_data&, pair<error_code, long unsigned int>&&)]’,
+    inlined from ‘void async_simple::util::move_only_function<RetType(ArgTypes ...)>::swap(async_simple::util::move_only_function<RetType(ArgTypes ...)>&) [with RetType = void; ArgTypes = {std::pair<std::error_code, long unsigned int>}]’ at /home/d00883276/prefetch_916/920_pre_pr/vendor/yalantinglibs/include/ylt/thirdparty/async_simple/util/move_only_function.h:349:18,
+    inlined from ‘async_simple::util::move_only_function<RetType(ArgTypes ...)>::move_only_function(async_simple::util::move_only_function<RetType(ArgTypes ...)>&&) [with RetType = void; ArgTypes = {std::pair<std::error_code, long unsigned int>}]’ at /home/d00883276/prefetch_916/920_pre_pr/vendor/yalantinglibs/include/ylt/thirdparty/async_simple/util/move_only_function.h:286:19,
+    inlined from ‘async_simple::util::move_only_function<RetType(ArgTypes ...)>& async_simple::util::move_only_function<RetType(ArgTypes ...)>::operator=(async_simple::util::move_only_function<RetType(ArgTypes ...)>&&) [with RetType = void; ArgTypes = {std::pair<std::error_code, long unsigned int>}]’ at /home/d00883276/prefetch_916/920_pre_pr/vendor/yalantinglibs/include/ylt/thirdparty/async_simple/util/move_only_function.h:324:9,
+    inlined from ‘void coro_io::detail::ib_socket_shared_state_t::post_recv_impl(callback_t&&)’ at /home/d00883276/prefetch_916/920_pre_pr/vendor/yalantinglibs/include/ylt/coro_io/ibverbs/ib_socket.hpp:339:33:
+/usr/include/c++/12/bits/move.h:205:11: warning: ‘<unnamed>.async_simple::util::move_only_function<void(std::pair<std::error_code, long unsigned int>)>::_m_invoker’ may be used uninitialized [-Wmaybe-uninitialized]
+  205 |       __a = _GLIBCXX_MOVE(__b);
+      |           ^
+/home/d00883276/prefetch_916/920_pre_pr/vendor/yalantinglibs/include/ylt/thirdparty/async_simple/util/move_only_function.h: In member function ‘void coro_io::detail::ib_socket_shared_state_t::post_recv_impl(callback_t&&)’:
+/home/d00883276/prefetch_916/920_pre_pr/vendor/yalantinglibs/include/ylt/thirdparty/async_simple/util/move_only_function.h:324:9: note: ‘<anonymous>’ declared here
+  324 |         move_only_function(std::move(other)).swap(*this);
+      |         ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+In function ‘constexpr std::_Require<std::__not_<std::__is_tuple_like<_Tp> >, std::is_move_constructible<_Tp>, std::is_move_assignable<_Tp> > std::swap(_Tp&, _Tp&) [with _Tp = async_simple::util::detail::_any_data]’,
+    inlined from ‘void async_simple::util::move_only_function<RetType(ArgTypes ...)>::swap(async_simple::util::move_only_function<RetType(ArgTypes ...)>&) [with RetType = void; ArgTypes = {std::pair<std::error_code, long unsigned int>}]’ at /home/d00883276/prefetch_916/920_pre_pr/vendor/yalantinglibs/include/ylt/thirdparty/async_simple/util/move_only_function.h:347:18,
+    inlined from ‘async_simple::util::move_only_function<RetType(ArgTypes ...)>::move_only_function(async_simple::util::move_only_function<RetType(ArgTypes ...)>&&) [with RetType = void; ArgTypes = {std::pair<std::error_code, long unsigned int>}]’ at /home/d00883276/prefetch_916/920_pre_pr/vendor/yalantinglibs/include/ylt/thirdparty/async_simple/util/move_only_function.h:286:19,
+    inlined from ‘static void coro_io::detail::ib_socket_shared_state_t::resume(std::pair<std::error_code, long unsigned int>&&, callback_t&&)’ at /home/d00883276/prefetch_916/920_pre_pr/vendor/yalantinglibs/include/ylt/coro_io/ibverbs/ib_socket.hpp:107:41,
+    inlined from ‘void coro_io::ib_socket_t::init_fd()::<lambda(std::shared_ptr<coro_io::detail::ib_socket_shared_state_t>)>::operator()(coro_io::ib_socket_t::init_fd()::<lambda(std::shared_ptr<coro_io::detail::ib_socket_shared_state_t>)>::_ZZN7coro_io11ib_socket_t7init_fdEvENKUlSt10shared_ptrINS_6detail24ib_socket_shared_state_tEEE0_clES4_.Frame*)’ at /home/d00883276/prefetch_916/920_pre_pr/vendor/yalantinglibs/include/ylt/coro_io/ibverbs/ib_socket.hpp:1098:53:
+/usr/include/c++/12/bits/move.h:205:7: warning: ‘handle_tmp.async_simple::util::move_only_function<void(std::pair<std::error_code, long unsigned int>)>::<unnamed>.async_simple::util::detail::_function_base::_m_functor’ may be used uninitialized [-Wmaybe-uninitialized]
+  205 |       __a = _GLIBCXX_MOVE(__b);
+      |       ^~~
+/home/d00883276/prefetch_916/920_pre_pr/vendor/yalantinglibs/include/ylt/coro_io/ibverbs/ib_socket.hpp: In function ‘void coro_io::ib_socket_t::init_fd()::<lambda(std::shared_ptr<coro_io::detail::ib_socket_shared_state_t>)>::operator()(coro_io::ib_socket_t::init_fd()::<lambda(std::shared_ptr<coro_io::detail::ib_socket_shared_state_t>)>::_ZZN7coro_io11ib_socket_t7init_fdEvENKUlSt10shared_ptrINS_6detail24ib_socket_shared_state_tEEE0_clES4_.Frame*)’:
+/home/d00883276/prefetch_916/920_pre_pr/vendor/yalantinglibs/include/ylt/coro_io/ibverbs/ib_socket.hpp:107:12: note: ‘handle_tmp’ declared here
+  107 |       auto handle_tmp = std::move(handle);
+      |            ^~~~~~~~~~
+In function ‘constexpr std::_Require<std::__not_<std::__is_tuple_like<_Tp> >, std::is_move_constructible<_Tp>, std::is_move_assignable<_Tp> > std::swap(_Tp&, _Tp&) [with _Tp = void (*)(const async_simple::util::detail::_any_data&, pair<error_code, long unsigned int>&&)]’,
+    inlined from ‘void async_simple::util::move_only_function<RetType(ArgTypes ...)>::swap(async_simple::util::move_only_function<RetType(ArgTypes ...)>&) [with RetType = void; ArgTypes = {std::pair<std::error_code, long unsigned int>}]’ at /home/d00883276/prefetch_916/920_pre_pr/vendor/yalantinglibs/include/ylt/thirdparty/async_simple/util/move_only_function.h:349:18,
+    inlined from ‘async_simple::util::move_only_function<RetType(ArgTypes ...)>::move_only_function(async_simple::util::move_only_function<RetType(ArgTypes ...)>&&) [with RetType = void; ArgTypes = {std::pair<std::error_code, long unsigned int>}]’ at /home/d00883276/prefetch_916/920_pre_pr/vendor/yalantinglibs/include/ylt/thirdparty/async_simple/util/move_only_function.h:286:19,
+    inlined from ‘static void coro_io::detail::ib_socket_shared_state_t::resume(std::pair<std::error_code, long unsigned int>&&, callback_t&&)’ at /home/d00883276/prefetch_916/920_pre_pr/vendor/yalantinglibs/include/ylt/coro_io/ibverbs/ib_socket.hpp:107:41,
+    inlined from ‘void coro_io::ib_socket_t::init_fd()::<lambda(std::shared_ptr<coro_io::detail::ib_socket_shared_state_t>)>::operator()(coro_io::ib_socket_t::init_fd()::<lambda(std::shared_ptr<coro_io::detail::ib_socket_shared_state_t>)>::_ZZN7coro_io11ib_socket_t7init_fdEvENKUlSt10shared_ptrINS_6detail24ib_socket_shared_state_tEEE0_clES4_.Frame*)’ at /home/d00883276/prefetch_916/920_pre_pr/vendor/yalantinglibs/include/ylt/coro_io/ibverbs/ib_socket.hpp:1098:53:
+/usr/include/c++/12/bits/move.h:205:11: warning: ‘handle_tmp.async_simple::util::move_only_function<void(std::pair<std::error_code, long unsigned int>)>::_m_invoker’ may be used uninitialized [-Wmaybe-uninitialized]
+  205 |       __a = _GLIBCXX_MOVE(__b);
+      |           ^
+/home/d00883276/prefetch_916/920_pre_pr/vendor/yalantinglibs/include/ylt/coro_io/ibverbs/ib_socket.hpp: In function ‘void coro_io::ib_socket_t::init_fd()::<lambda(std::shared_ptr<coro_io::detail::ib_socket_shared_state_t>)>::operator()(coro_io::ib_socket_t::init_fd()::<lambda(std::shared_ptr<coro_io::detail::ib_socket_shared_state_t>)>::_ZZN7coro_io11ib_socket_t7init_fdEvENKUlSt10shared_ptrINS_6detail24ib_socket_shared_state_tEEE0_clES4_.Frame*)’:
+/home/d00883276/prefetch_916/920_pre_pr/vendor/yalantinglibs/include/ylt/coro_io/ibverbs/ib_socket.hpp:107:12: note: ‘handle_tmp’ declared here
+  107 |       auto handle_tmp = std::move(handle);
+      |            ^~~~~~~~~~
+In file included from /home/d00883276/prefetch_916/920_pre_pr/vendor/yalantinglibs/include/ylt/thirdparty/async_simple/Try.h:24,
+                 from /home/d00883276/prefetch_916/920_pre_pr/vendor/yalantinglibs/include/ylt/thirdparty/async_simple/FutureState.h:27,
+                 from /home/d00883276/prefetch_916/920_pre_pr/vendor/yalantinglibs/include/ylt/thirdparty/async_simple/Future.h:25:
+In member function ‘constexpr bool std::__detail::__variant::_Variant_storage<false, _Types ...>::_M_valid() const [with _Types = {std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >, memory_owner_t}]’,
+    inlined from ‘constexpr void std::__detail::__variant::_Variant_storage<false, _Types ...>::_M_reset() [with _Types = {std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >, memory_owner_t}]’ at /usr/include/c++/12/variant:467:15,
+    inlined from ‘constexpr std::__detail::__variant::_Variant_storage<false, _Types ...>::~_Variant_storage() [with _Types = {std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >, memory_owner_t}]’ at /usr/include/c++/12/variant:480:17,
+    inlined from ‘constexpr std::__detail::__variant::_Copy_ctor_base<false, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >, memory_owner_t>::~_Copy_ctor_base()’ at /usr/include/c++/12/variant:554:12,
+    inlined from ‘constexpr std::__detail::__variant::_Move_ctor_base<false, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >, memory_owner_t>::~_Move_ctor_base()’ at /usr/include/c++/12/variant:591:12,
+    inlined from ‘constexpr std::__detail::__variant::_Copy_assign_base<false, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >, memory_owner_t>::~_Copy_assign_base()’ at /usr/include/c++/12/variant:629:12,
+    inlined from ‘constexpr std::__detail::__variant::_Move_assign_base<false, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >, memory_owner_t>::~_Move_assign_base()’ at /usr/include/c++/12/variant:681:12,
+    inlined from ‘constexpr std::__detail::__variant::_Variant_base<std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >, memory_owner_t>::~_Variant_base()’ at /usr/include/c++/12/variant:735:12,
+    inlined from ‘constexpr std::variant<_Types>::~variant() [with _Types = {std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >, memory_owner_t}]’ at /usr/include/c++/12/variant:1407:28,
+    inlined from ‘constexpr coro_io::heterogeneous_buffer::~heterogeneous_buffer()’ at /home/d00883276/prefetch_916/920_pre_pr/vendor/yalantinglibs/include/ylt/coro_io/heterogeneous_buffer.hpp:29:7,
+    inlined from ‘constexpr coro_rpc::resp_body::~resp_body()’ at /home/d00883276/prefetch_916/920_pre_pr/vendor/yalantinglibs/include/ylt/coro_rpc/impl/coro_rpc_client.hpp:116:8,
+    inlined from ‘constexpr coro_rpc::coro_rpc_client::async_rpc_raw_result_value_type::~async_rpc_raw_result_value_type()’ at /home/d00883276/prefetch_916/920_pre_pr/vendor/yalantinglibs/include/ylt/coro_rpc/impl/coro_rpc_client.hpp:1393:10,
+    inlined from ‘constexpr void std::destroy_at(_Tp*) [with _Tp = coro_rpc::coro_rpc_client::async_rpc_raw_result_value_type]’ at /usr/include/c++/12/bits/stl_construct.h:88:18,
+    inlined from ‘constexpr void std::_Destroy(_Tp*) [with _Tp = coro_rpc::coro_rpc_client::async_rpc_raw_result_value_type]’ at /usr/include/c++/12/bits/stl_construct.h:149:22,
+    inlined from ‘std::__detail::__variant::_Variant_storage<false, coro_rpc::coro_rpc_client::async_rpc_raw_result_value_type, std::error_code>::_M_reset()::<lambda(auto:20&&)> mutable [with auto:20 = coro_rpc::coro_rpc_client::async_rpc_raw_result_value_type&]’ at /usr/include/c++/12/variant:472:19,
+    inlined from ‘constexpr _Res std::__invoke_impl(__invoke_other, _Fn&&, _Args&& ...) [with _Res = void; _Fn = __detail::__variant::_Variant_storage<false, coro_rpc::coro_rpc_client::async_rpc_raw_result_value_type, error_code>::_M_reset()::<lambda(auto:20&&)>; _Args = {coro_rpc::coro_rpc_client::async_rpc_raw_result_value_type&}]’ at /usr/include/c++/12/bits/invoke.h:61:36,
+    inlined from ‘constexpr std::enable_if_t<is_invocable_r_v<_Res, _Callable, _Args ...>, _Res> std::__invoke_r(_Callable&&, _Args&& ...) [with _Res = void; _Callable = __detail::__variant::_Variant_storage<false, coro_rpc::coro_rpc_client::async_rpc_raw_result_value_type, error_code>::_M_reset()::<lambda(auto:20&&)>; _Args = {coro_rpc::coro_rpc_client::async_rpc_raw_result_value_type&}]’ at /usr/include/c++/12/bits/invoke.h:111:28,
+    inlined from ‘static constexpr decltype(auto) std::__detail::__variant::__gen_vtable_impl<std::__detail::__variant::_Multi_array<_Result_type (*)(_Visitor, _Variants ...)>, std::integer_sequence<long unsigned int, __indices ...> >::__visit_invoke(_Visitor&&, _Variants ...) [with _Result_type = void; _Visitor = std::__detail::__variant::_Variant_storage<false, coro_rpc::coro_rpc_client::async_rpc_raw_result_value_type, std::error_code>::_M_reset()::<lambda(auto:20&&)>&&; _Variants = {std::variant<coro_rpc::coro_rpc_client::async_rpc_raw_result_value_type, std::error_code>&}; long unsigned int ...__indices = {0}]’ at /usr/include/c++/12/variant:1035:40,
+    inlined from ‘constexpr decltype(auto) std::__do_visit(_Visitor&&, _Variants&& ...) [with _Result_type = void; _Visitor = __detail::__variant::_Variant_storage<false, coro_rpc::coro_rpc_client::async_rpc_raw_result_value_type, error_code>::_M_reset()::<lambda(auto:20&&)>; _Variants = {variant<coro_rpc::coro_rpc_client::async_rpc_raw_result_value_type, error_code>&}]’ at /usr/include/c++/12/variant:1790:5,
+    inlined from ‘constexpr void std::__detail::__variant::_Variant_storage<false, _Types ...>::_M_reset() [with _Types = {coro_rpc::coro_rpc_client::async_rpc_raw_result_value_type, std::error_code}]’ at /usr/include/c++/12/variant:470:23,
+    inlined from ‘constexpr std::__detail::__variant::_Variant_storage<false, _Types ...>::~_Variant_storage() [with _Types = {coro_rpc::coro_rpc_client::async_rpc_raw_result_value_type, std::error_code}]’ at /usr/include/c++/12/variant:480:17,
+    inlined from ‘constexpr std::__detail::__variant::_Copy_ctor_base<false, coro_rpc::coro_rpc_client::async_rpc_raw_result_value_type, std::error_code>::~_Copy_ctor_base()’ at /usr/include/c++/12/variant:554:12,
+    inlined from ‘constexpr std::__detail::__variant::_Move_ctor_base<false, coro_rpc::coro_rpc_client::async_rpc_raw_result_value_type, std::error_code>::~_Move_ctor_base()’ at /usr/include/c++/12/variant:591:12,
+    inlined from ‘constexpr std::__detail::__variant::_Copy_assign_base<false, coro_rpc::coro_rpc_client::async_rpc_raw_result_value_type, std::error_code>::~_Copy_assign_base()’ at /usr/include/c++/12/variant:629:12,
+    inlined from ‘constexpr std::__detail::__variant::_Move_assign_base<false, coro_rpc::coro_rpc_client::async_rpc_raw_result_value_type, std::error_code>::~_Move_assign_base()’ at /usr/include/c++/12/variant:681:12,
+    inlined from ‘constexpr std::__detail::__variant::_Variant_base<coro_rpc::coro_rpc_client::async_rpc_raw_result_value_type, std::error_code>::~_Variant_base()’ at /usr/include/c++/12/variant:735:12,
+    inlined from ‘constexpr std::variant<_Types>::~variant() [with _Types = {coro_rpc::coro_rpc_client::async_rpc_raw_result_value_type, std::error_code}]’ at /usr/include/c++/12/variant:1407:28,
+    inlined from ‘void coro_rpc::coro_rpc_client::handler_t::local_error(std::error_code&)’ at /home/d00883276/prefetch_916/920_pre_pr/vendor/yalantinglibs/include/ylt/coro_rpc/impl/coro_rpc_client.hpp:1422:25,
+    inlined from ‘static void coro_rpc::coro_rpc_client::send_err_response(control_t*, std::error_code&)’ at /home/d00883276/prefetch_916/920_pre_pr/vendor/yalantinglibs/include/ylt/coro_rpc/impl/coro_rpc_client.hpp:1530:27:
+/usr/include/c++/12/variant:487:22: warning: ‘*(const std::__detail::__variant::_Variant_storage<false, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >, memory_owner_t>*)((char*)&<unnamed> + offsetof(std::async_rpc_raw_result, std::variant<coro_rpc::coro_rpc_client::async_rpc_raw_result_value_type, std::error_code>::<unnamed>.std::__detail::__variant::_Variant_base<coro_rpc::coro_rpc_client::async_rpc_raw_result_value_type, std::error_code>::<unnamed>.std::__detail::__variant::_Move_assign_base<false, coro_rpc::coro_rpc_client::async_rpc_raw_result_value_type, std::error_code>::<unnamed>.std::__detail::__variant::_Copy_assign_base<false, coro_rpc::coro_rpc_client::async_rpc_raw_result_value_type, std::error_code>::<unnamed>.std::__detail::__variant::_Move_ctor_base<false, coro_rpc::coro_rpc_client::async_rpc_raw_result_value_type, std::error_code>::<unnamed>.std::__detail::__variant::_Copy_ctor_base<false, coro_rpc::coro_rpc_client::async_rpc_raw_result_value_type, std::error_code>::<unnamed>.std::__detail::__variant::_Variant_storage<false, coro_rpc::coro_rpc_client::async_rpc_raw_result_value_type, std::error_code>::_M_u) + 32).std::__detail::__variant::_Variant_storage<false, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >, memory_owner_t>::_M_index’ may be used uninitialized [-Wmaybe-uninitialized]
+  487 |         return this->_M_index != __index_type(variant_npos);
+      |                ~~~~~~^~~~~~~~
+/home/d00883276/prefetch_916/920_pre_pr/vendor/yalantinglibs/include/ylt/coro_rpc/impl/coro_rpc_client.hpp: In static member function ‘static void coro_rpc::coro_rpc_client::send_err_response(control_t*, std::error_code&)’:
+/home/d00883276/prefetch_916/920_pre_pr/vendor/yalantinglibs/include/ylt/coro_rpc/impl/coro_rpc_client.hpp:1422:48: note: ‘<anonymous>’ declared here
+ 1422 |       promise_.setValue(async_rpc_raw_result{ec});
+      |                                                ^
+In file included from /usr/include/c++/12/string:53,
+                 from /usr/include/c++/12/bits/locale_classes.h:40,
+                 from /usr/include/c++/12/bits/ios_base.h:41,
+                 from /usr/include/c++/12/ios:42,
+                 from /usr/include/c++/12/ostream:38,
+                 from /usr/include/c++/12/bits/unique_ptr.h:41,
+                 from /usr/include/c++/12/memory:75:
+In member function ‘constexpr std::__cxx11::basic_string<_CharT, _Traits, _Alloc>::pointer std::__cxx11::basic_string<_CharT, _Traits, _Alloc>::_M_data() const [with _CharT = char; _Traits = std::char_traits<char>; _Alloc = std::allocator<char>]’,
+    inlined from ‘constexpr bool std::__cxx11::basic_string<_CharT, _Traits, _Alloc>::_M_is_local() const [with _CharT = char; _Traits = std::char_traits<char>; _Alloc = std::allocator<char>]’ at /usr/include/c++/12/bits/basic_string.h:275:13,
+    inlined from ‘constexpr void std::__cxx11::basic_string<_CharT, _Traits, _Alloc>::_M_dispose() [with _CharT = char; _Traits = std::char_traits<char>; _Alloc = std::allocator<char>]’ at /usr/include/c++/12/bits/basic_string.h:293:18,
+    inlined from ‘constexpr std::__cxx11::basic_string<_CharT, _Traits, _Alloc>::~basic_string() [with _CharT = char; _Traits = std::char_traits<char>; _Alloc = std::allocator<char>]’ at /usr/include/c++/12/bits/basic_string.h:803:19,
+    inlined from ‘constexpr void std::destroy_at(_Tp*) [with _Tp = __cxx11::basic_string<char>]’ at /usr/include/c++/12/bits/stl_construct.h:88:18,
+    inlined from ‘constexpr void std::_Destroy(_Tp*) [with _Tp = __cxx11::basic_string<char>]’ at /usr/include/c++/12/bits/stl_construct.h:149:22,
+    inlined from ‘std::__detail::__variant::_Variant_storage<false, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >, memory_owner_t>::_M_reset()::<lambda(auto:20&&)> mutable [with auto:20 = std::__cxx11::basic_string<char>&]’ at /usr/include/c++/12/variant:472:19,
+    inlined from ‘constexpr _Res std::__invoke_impl(__invoke_other, _Fn&&, _Args&& ...) [with _Res = void; _Fn = __detail::__variant::_Variant_storage<false, __cxx11::basic_string<char, char_traits<char>, allocator<char> >, memory_owner_t>::_M_reset()::<lambda(auto:20&&)>; _Args = {__cxx11::basic_string<char, char_traits<char>, allocator<char> >&}]’ at /usr/include/c++/12/bits/invoke.h:61:36,
+    inlined from ‘constexpr std::enable_if_t<is_invocable_r_v<_Res, _Callable, _Args ...>, _Res> std::__invoke_r(_Callable&&, _Args&& ...) [with _Res = void; _Callable = __detail::__variant::_Variant_storage<false, __cxx11::basic_string<char, char_traits<char>, allocator<char> >, memory_owner_t>::_M_reset()::<lambda(auto:20&&)>; _Args = {__cxx11::basic_string<char, char_traits<char>, allocator<char> >&}]’ at /usr/include/c++/12/bits/invoke.h:111:28,
+    inlined from ‘static constexpr decltype(auto) std::__detail::__variant::__gen_vtable_impl<std::__detail::__variant::_Multi_array<_Result_type (*)(_Visitor, _Variants ...)>, std::integer_sequence<long unsigned int, __indices ...> >::__visit_invoke(_Visitor&&, _Variants ...) [with _Result_type = void; _Visitor = std::__detail::__variant::_Variant_storage<false, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >, memory_owner_t>::_M_reset()::<lambda(auto:20&&)>&&; _Variants = {std::variant<std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >, memory_owner_t>&}; long unsigned int ...__indices = {0}]’ at /usr/include/c++/12/variant:1035:40,
+    inlined from ‘constexpr decltype(auto) std::__do_visit(_Visitor&&, _Variants&& ...) [with _Result_type = void; _Visitor = __detail::__variant::_Variant_storage<false, __cxx11::basic_string<char, char_traits<char>, allocator<char> >, memory_owner_t>::_M_reset()::<lambda(auto:20&&)>; _Variants = {variant<__cxx11::basic_string<char, char_traits<char>, allocator<char> >, memory_owner_t>&}]’ at /usr/include/c++/12/variant:1790:5,
+    inlined from ‘constexpr void std::__detail::__variant::_Variant_storage<false, _Types ...>::_M_reset() [with _Types = {std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >, memory_owner_t}]’ at /usr/include/c++/12/variant:470:23,
+    inlined from ‘constexpr std::__detail::__variant::_Variant_storage<false, _Types ...>::~_Variant_storage() [with _Types = {std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >, memory_owner_t}]’ at /usr/include/c++/12/variant:480:17,
+    inlined from ‘constexpr std::__detail::__variant::_Copy_ctor_base<false, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >, memory_owner_t>::~_Copy_ctor_base()’ at /usr/include/c++/12/variant:554:12,
+    inlined from ‘constexpr std::__detail::__variant::_Move_ctor_base<false, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >, memory_owner_t>::~_Move_ctor_base()’ at /usr/include/c++/12/variant:591:12,
+    inlined from ‘constexpr std::__detail::__variant::_Copy_assign_base<false, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >, memory_owner_t>::~_Copy_assign_base()’ at /usr/include/c++/12/variant:629:12,
+    inlined from ‘constexpr std::__detail::__variant::_Move_assign_base<false, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >, memory_owner_t>::~_Move_assign_base()’ at /usr/include/c++/12/variant:681:12,
+    inlined from ‘constexpr std::__detail::__variant::_Variant_base<std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >, memory_owner_t>::~_Variant_base()’ at /usr/include/c++/12/variant:735:12,
+    inlined from ‘constexpr std::variant<_Types>::~variant() [with _Types = {std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >, memory_owner_t}]’ at /usr/include/c++/12/variant:1407:28,
+    inlined from ‘constexpr coro_io::heterogeneous_buffer::~heterogeneous_buffer()’ at /home/d00883276/prefetch_916/920_pre_pr/vendor/yalantinglibs/include/ylt/coro_io/heterogeneous_buffer.hpp:29:7,
+    inlined from ‘constexpr coro_rpc::resp_body::~resp_body()’ at /home/d00883276/prefetch_916/920_pre_pr/vendor/yalantinglibs/include/ylt/coro_rpc/impl/coro_rpc_client.hpp:116:8,
+    inlined from ‘constexpr coro_rpc::coro_rpc_client::async_rpc_raw_result_value_type::~async_rpc_raw_result_value_type()’ at /home/d00883276/prefetch_916/920_pre_pr/vendor/yalantinglibs/include/ylt/coro_rpc/impl/coro_rpc_client.hpp:1393:10,
+    inlined from ‘constexpr void std::destroy_at(_Tp*) [with _Tp = coro_rpc::coro_rpc_client::async_rpc_raw_result_value_type]’ at /usr/include/c++/12/bits/stl_construct.h:88:18,
+    inlined from ‘constexpr void std::_Destroy(_Tp*) [with _Tp = coro_rpc::coro_rpc_client::async_rpc_raw_result_value_type]’ at /usr/include/c++/12/bits/stl_construct.h:149:22,
+    inlined from ‘std::__detail::__variant::_Variant_storage<false, coro_rpc::coro_rpc_client::async_rpc_raw_result_value_type, std::error_code>::_M_reset()::<lambda(auto:20&&)> mutable [with auto:20 = coro_rpc::coro_rpc_client::async_rpc_raw_result_value_type&]’ at /usr/include/c++/12/variant:472:19,
+    inlined from ‘constexpr _Res std::__invoke_impl(__invoke_other, _Fn&&, _Args&& ...) [with _Res = void; _Fn = __detail::__variant::_Variant_storage<false, coro_rpc::coro_rpc_client::async_rpc_raw_result_value_type, error_code>::_M_reset()::<lambda(auto:20&&)>; _Args = {coro_rpc::coro_rpc_client::async_rpc_raw_result_value_type&}]’ at /usr/include/c++/12/bits/invoke.h:61:36,
+    inlined from ‘constexpr std::enable_if_t<is_invocable_r_v<_Res, _Callable, _Args ...>, _Res> std::__invoke_r(_Callable&&, _Args&& ...) [with _Res = void; _Callable = __detail::__variant::_Variant_storage<false, coro_rpc::coro_rpc_client::async_rpc_raw_result_value_type, error_code>::_M_reset()::<lambda(auto:20&&)>; _Args = {coro_rpc::coro_rpc_client::async_rpc_raw_result_value_type&}]’ at /usr/include/c++/12/bits/invoke.h:111:28,
+    inlined from ‘static constexpr decltype(auto) std::__detail::__variant::__gen_vtable_impl<std::__detail::__variant::_Multi_array<_Result_type (*)(_Visitor, _Variants ...)>, std::integer_sequence<long unsigned int, __indices ...> >::__visit_invoke(_Visitor&&, _Variants ...) [with _Result_type = void; _Visitor = std::__detail::__variant::_Variant_storage<false, coro_rpc::coro_rpc_client::async_rpc_raw_result_value_type, std::error_code>::_M_reset()::<lambda(auto:20&&)>&&; _Variants = {std::variant<coro_rpc::coro_rpc_client::async_rpc_raw_result_value_type, std::error_code>&}; long unsigned int ...__indices = {0}]’ at /usr/include/c++/12/variant:1035:40,
+    inlined from ‘constexpr decltype(auto) std::__do_visit(_Visitor&&, _Variants&& ...) [with _Result_type = void; _Visitor = __detail::__variant::_Variant_storage<false, coro_rpc::coro_rpc_client::async_rpc_raw_result_value_type, error_code>::_M_reset()::<lambda(auto:20&&)>; _Variants = {variant<coro_rpc::coro_rpc_client::async_rpc_raw_result_value_type, error_code>&}]’ at /usr/include/c++/12/variant:1790:5,
+    inlined from ‘constexpr void std::__detail::__variant::_Variant_storage<false, _Types ...>::_M_reset() [with _Types = {coro_rpc::coro_rpc_client::async_rpc_raw_result_value_type, std::error_code}]’ at /usr/include/c++/12/variant:470:23,
+    inlined from ‘constexpr std::__detail::__variant::_Variant_storage<false, _Types ...>::~_Variant_storage() [with _Types = {coro_rpc::coro_rpc_client::async_rpc_raw_result_value_type, std::error_code}]’ at /usr/include/c++/12/variant:480:17,
+    inlined from ‘constexpr std::__detail::__variant::_Copy_ctor_base<false, coro_rpc::coro_rpc_client::async_rpc_raw_result_value_type, std::error_code>::~_Copy_ctor_base()’ at /usr/include/c++/12/variant:554:12,
+    inlined from ‘constexpr std::__detail::__variant::_Move_ctor_base<false, coro_rpc::coro_rpc_client::async_rpc_raw_result_value_type, std::error_code>::~_Move_ctor_base()’ at /usr/include/c++/12/variant:591:12,
+    inlined from ‘constexpr std::__detail::__variant::_Copy_assign_base<false, coro_rpc::coro_rpc_client::async_rpc_raw_result_value_type, std::error_code>::~_Copy_assign_base()’ at /usr/include/c++/12/variant:629:12,
+    inlined from ‘constexpr std::__detail::__variant::_Move_assign_base<false, coro_rpc::coro_rpc_client::async_rpc_raw_result_value_type, std::error_code>::~_Move_assign_base()’ at /usr/include/c++/12/variant:681:12,
+    inlined from ‘constexpr std::__detail::__variant::_Variant_base<coro_rpc::coro_rpc_client::async_rpc_raw_result_value_type, std::error_code>::~_Variant_base()’ at /usr/include/c++/12/variant:735:12,
+    inlined from ‘constexpr std::variant<_Types>::~variant() [with _Types = {coro_rpc::coro_rpc_client::async_rpc_raw_result_value_type, std::error_code}]’ at /usr/include/c++/12/variant:1407:28,
+    inlined from ‘void coro_rpc::coro_rpc_client::handler_t::local_error(std::error_code&)’ at /home/d00883276/prefetch_916/920_pre_pr/vendor/yalantinglibs/include/ylt/coro_rpc/impl/coro_rpc_client.hpp:1422:25,
+    inlined from ‘static void coro_rpc::coro_rpc_client::send_err_response(control_t*, std::error_code&)’ at /home/d00883276/prefetch_916/920_pre_pr/vendor/yalantinglibs/include/ylt/coro_rpc/impl/coro_rpc_client.hpp:1530:27:
+/usr/include/c++/12/bits/basic_string.h:234:28: warning: ‘((const std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >*)((char*)&<unnamed> + offsetof(std::async_rpc_raw_result, std::variant<coro_rpc::coro_rpc_client::async_rpc_raw_result_value_type, std::error_code>::<unnamed>.std::__detail::__variant::_Variant_base<coro_rpc::coro_rpc_client::async_rpc_raw_result_value_type, std::error_code>::<unnamed>.std::__detail::__variant::_Move_assign_base<false, coro_rpc::coro_rpc_client::async_rpc_raw_result_value_type, std::error_code>::<unnamed>.std::__detail::__variant::_Copy_assign_base<false, coro_rpc::coro_rpc_client::async_rpc_raw_result_value_type, std::error_code>::<unnamed>.std::__detail::__variant::_Move_ctor_base<false, coro_rpc::coro_rpc_client::async_rpc_raw_result_value_type, std::error_code>::<unnamed>.std::__detail::__variant::_Copy_ctor_base<false, coro_rpc::coro_rpc_client::async_rpc_raw_result_value_type, std::error_code>::<unnamed>.std::__detail::__variant::_Variant_storage<false, coro_rpc::coro_rpc_client::async_rpc_raw_result_value_type, std::error_code>::_M_u)))[1].std::__cxx11::basic_string<char>::_M_dataplus.std::__cxx11::basic_string<char>::_Alloc_hider::_M_p’ may be used uninitialized [-Wmaybe-uninitialized]
+  234 |       { return _M_dataplus._M_p; }
+      |                            ^~~~
+/home/d00883276/prefetch_916/920_pre_pr/vendor/yalantinglibs/include/ylt/coro_rpc/impl/coro_rpc_client.hpp: In static member function ‘static void coro_rpc::coro_rpc_client::send_err_response(control_t*, std::error_code&)’:
+/home/d00883276/prefetch_916/920_pre_pr/vendor/yalantinglibs/include/ylt/coro_rpc/impl/coro_rpc_client.hpp:1422:48: note: ‘<anonymous>’ declared here
+ 1422 |       promise_.setValue(async_rpc_raw_result{ec});
+      |                                                ^
+In member function ‘constexpr void std::__cxx11::basic_string<_CharT, _Traits, _Alloc>::_M_dispose() [with _CharT = char; _Traits = std::char_traits<char>; _Alloc = std::allocator<char>]’,
+    inlined from ‘constexpr std::__cxx11::basic_string<_CharT, _Traits, _Alloc>::~basic_string() [with _CharT = char; _Traits = std::char_traits<char>; _Alloc = std::allocator<char>]’ at /usr/include/c++/12/bits/basic_string.h:803:19,
+    inlined from ‘constexpr void std::destroy_at(_Tp*) [with _Tp = __cxx11::basic_string<char>]’ at /usr/include/c++/12/bits/stl_construct.h:88:18,
+    inlined from ‘constexpr void std::_Destroy(_Tp*) [with _Tp = __cxx11::basic_string<char>]’ at /usr/include/c++/12/bits/stl_construct.h:149:22,
+    inlined from ‘std::__detail::__variant::_Variant_storage<false, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >, memory_owner_t>::_M_reset()::<lambda(auto:20&&)> mutable [with auto:20 = std::__cxx11::basic_string<char>&]’ at /usr/include/c++/12/variant:472:19,
+    inlined from ‘constexpr _Res std::__invoke_impl(__invoke_other, _Fn&&, _Args&& ...) [with _Res = void; _Fn = __detail::__variant::_Variant_storage<false, __cxx11::basic_string<char, char_traits<char>, allocator<char> >, memory_owner_t>::_M_reset()::<lambda(auto:20&&)>; _Args = {__cxx11::basic_string<char, char_traits<char>, allocator<char> >&}]’ at /usr/include/c++/12/bits/invoke.h:61:36,
+    inlined from ‘constexpr std::enable_if_t<is_invocable_r_v<_Res, _Callable, _Args ...>, _Res> std::__invoke_r(_Callable&&, _Args&& ...) [with _Res = void; _Callable = __detail::__variant::_Variant_storage<false, __cxx11::basic_string<char, char_traits<char>, allocator<char> >, memory_owner_t>::_M_reset()::<lambda(auto:20&&)>; _Args = {__cxx11::basic_string<char, char_traits<char>, allocator<char> >&}]’ at /usr/include/c++/12/bits/invoke.h:111:28,
+    inlined from ‘static constexpr decltype(auto) std::__detail::__variant::__gen_vtable_impl<std::__detail::__variant::_Multi_array<_Result_type (*)(_Visitor, _Variants ...)>, std::integer_sequence<long unsigned int, __indices ...> >::__visit_invoke(_Visitor&&, _Variants ...) [with _Result_type = void; _Visitor = std::__detail::__variant::_Variant_storage<false, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >, memory_owner_t>::_M_reset()::<lambda(auto:20&&)>&&; _Variants = {std::variant<std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >, memory_owner_t>&}; long unsigned int ...__indices = {0}]’ at /usr/include/c++/12/variant:1035:40,
+    inlined from ‘constexpr decltype(auto) std::__do_visit(_Visitor&&, _Variants&& ...) [with _Result_type = void; _Visitor = __detail::__variant::_Variant_storage<false, __cxx11::basic_string<char, char_traits<char>, allocator<char> >, memory_owner_t>::_M_reset()::<lambda(auto:20&&)>; _Variants = {variant<__cxx11::basic_string<char, char_traits<char>, allocator<char> >, memory_owner_t>&}]’ at /usr/include/c++/12/variant:1790:5,
+    inlined from ‘constexpr void std::__detail::__variant::_Variant_storage<false, _Types ...>::_M_reset() [with _Types = {std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >, memory_owner_t}]’ at /usr/include/c++/12/variant:470:23,
+    inlined from ‘constexpr std::__detail::__variant::_Variant_storage<false, _Types ...>::~_Variant_storage() [with _Types = {std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >, memory_owner_t}]’ at /usr/include/c++/12/variant:480:17,
+    inlined from ‘constexpr std::__detail::__variant::_Copy_ctor_base<false, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >, memory_owner_t>::~_Copy_ctor_base()’ at /usr/include/c++/12/variant:554:12,
+    inlined from ‘constexpr std::__detail::__variant::_Move_ctor_base<false, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >, memory_owner_t>::~_Move_ctor_base()’ at /usr/include/c++/12/variant:591:12,
+    inlined from ‘constexpr std::__detail::__variant::_Copy_assign_base<false, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >, memory_owner_t>::~_Copy_assign_base()’ at /usr/include/c++/12/variant:629:12,
+    inlined from ‘constexpr std::__detail::__variant::_Move_assign_base<false, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >, memory_owner_t>::~_Move_assign_base()’ at /usr/include/c++/12/variant:681:12,
+    inlined from ‘constexpr std::__detail::__variant::_Variant_base<std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >, memory_owner_t>::~_Variant_base()’ at /usr/include/c++/12/variant:735:12,
+    inlined from ‘constexpr std::variant<_Types>::~variant() [with _Types = {std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >, memory_owner_t}]’ at /usr/include/c++/12/variant:1407:28,
+    inlined from ‘constexpr coro_io::heterogeneous_buffer::~heterogeneous_buffer()’ at /home/d00883276/prefetch_916/920_pre_pr/vendor/yalantinglibs/include/ylt/coro_io/heterogeneous_buffer.hpp:29:7,
+    inlined from ‘constexpr coro_rpc::resp_body::~resp_body()’ at /home/d00883276/prefetch_916/920_pre_pr/vendor/yalantinglibs/include/ylt/coro_rpc/impl/coro_rpc_client.hpp:116:8,
+    inlined from ‘constexpr coro_rpc::coro_rpc_client::async_rpc_raw_result_value_type::~async_rpc_raw_result_value_type()’ at /home/d00883276/prefetch_916/920_pre_pr/vendor/yalantinglibs/include/ylt/coro_rpc/impl/coro_rpc_client.hpp:1393:10,
+    inlined from ‘constexpr void std::destroy_at(_Tp*) [with _Tp = coro_rpc::coro_rpc_client::async_rpc_raw_result_value_type]’ at /usr/include/c++/12/bits/stl_construct.h:88:18,
+    inlined from ‘constexpr void std::_Destroy(_Tp*) [with _Tp = coro_rpc::coro_rpc_client::async_rpc_raw_result_value_type]’ at /usr/include/c++/12/bits/stl_construct.h:149:22,
+    inlined from ‘std::__detail::__variant::_Variant_storage<false, coro_rpc::coro_rpc_client::async_rpc_raw_result_value_type, std::error_code>::_M_reset()::<lambda(auto:20&&)> mutable [with auto:20 = coro_rpc::coro_rpc_client::async_rpc_raw_result_value_type&]’ at /usr/include/c++/12/variant:472:19,
+    inlined from ‘constexpr _Res std::__invoke_impl(__invoke_other, _Fn&&, _Args&& ...) [with _Res = void; _Fn = __detail::__variant::_Variant_storage<false, coro_rpc::coro_rpc_client::async_rpc_raw_result_value_type, error_code>::_M_reset()::<lambda(auto:20&&)>; _Args = {coro_rpc::coro_rpc_client::async_rpc_raw_result_value_type&}]’ at /usr/include/c++/12/bits/invoke.h:61:36,
+    inlined from ‘constexpr std::enable_if_t<is_invocable_r_v<_Res, _Callable, _Args ...>, _Res> std::__invoke_r(_Callable&&, _Args&& ...) [with _Res = void; _Callable = __detail::__variant::_Variant_storage<false, coro_rpc::coro_rpc_client::async_rpc_raw_result_value_type, error_code>::_M_reset()::<lambda(auto:20&&)>; _Args = {coro_rpc::coro_rpc_client::async_rpc_raw_result_value_type&}]’ at /usr/include/c++/12/bits/invoke.h:111:28,
+    inlined from ‘static constexpr decltype(auto) std::__detail::__variant::__gen_vtable_impl<std::__detail::__variant::_Multi_array<_Result_type (*)(_Visitor, _Variants ...)>, std::integer_sequence<long unsigned int, __indices ...> >::__visit_invoke(_Visitor&&, _Variants ...) [with _Result_type = void; _Visitor = std::__detail::__variant::_Variant_storage<false, coro_rpc::coro_rpc_client::async_rpc_raw_result_value_type, std::error_code>::_M_reset()::<lambda(auto:20&&)>&&; _Variants = {std::variant<coro_rpc::coro_rpc_client::async_rpc_raw_result_value_type, std::error_code>&}; long unsigned int ...__indices = {0}]’ at /usr/include/c++/12/variant:1035:40,
+    inlined from ‘constexpr decltype(auto) std::__do_visit(_Visitor&&, _Variants&& ...) [with _Result_type = void; _Visitor = __detail::__variant::_Variant_storage<false, coro_rpc::coro_rpc_client::async_rpc_raw_result_value_type, error_code>::_M_reset()::<lambda(auto:20&&)>; _Variants = {variant<coro_rpc::coro_rpc_client::async_rpc_raw_result_value_type, error_code>&}]’ at /usr/include/c++/12/variant:1790:5,
+    inlined from ‘constexpr void std::__detail::__variant::_Variant_storage<false, _Types ...>::_M_reset() [with _Types = {coro_rpc::coro_rpc_client::async_rpc_raw_result_value_type, std::error_code}]’ at /usr/include/c++/12/variant:470:23,
+    inlined from ‘constexpr std::__detail::__variant::_Variant_storage<false, _Types ...>::~_Variant_storage() [with _Types = {coro_rpc::coro_rpc_client::async_rpc_raw_result_value_type, std::error_code}]’ at /usr/include/c++/12/variant:480:17,
+    inlined from ‘constexpr std::__detail::__variant::_Copy_ctor_base<false, coro_rpc::coro_rpc_client::async_rpc_raw_result_value_type, std::error_code>::~_Copy_ctor_base()’ at /usr/include/c++/12/variant:554:12,
+    inlined from ‘constexpr std::__detail::__variant::_Move_ctor_base<false, coro_rpc::coro_rpc_client::async_rpc_raw_result_value_type, std::error_code>::~_Move_ctor_base()’ at /usr/include/c++/12/variant:591:12,
+    inlined from ‘constexpr std::__detail::__variant::_Copy_assign_base<false, coro_rpc::coro_rpc_client::async_rpc_raw_result_value_type, std::error_code>::~_Copy_assign_base()’ at /usr/include/c++/12/variant:629:12,
+    inlined from ‘constexpr std::__detail::__variant::_Move_assign_base<false, coro_rpc::coro_rpc_client::async_rpc_raw_result_value_type, std::error_code>::~_Move_assign_base()’ at /usr/include/c++/12/variant:681:12,
+    inlined from ‘constexpr std::__detail::__variant::_Variant_base<coro_rpc::coro_rpc_client::async_rpc_raw_result_value_type, std::error_code>::~_Variant_base()’ at /usr/include/c++/12/variant:735:12,
+    inlined from ‘constexpr std::variant<_Types>::~variant() [with _Types = {coro_rpc::coro_rpc_client::async_rpc_raw_result_value_type, std::error_code}]’ at /usr/include/c++/12/variant:1407:28,
+    inlined from ‘void coro_rpc::coro_rpc_client::handler_t::local_error(std::error_code&)’ at /home/d00883276/prefetch_916/920_pre_pr/vendor/yalantinglibs/include/ylt/coro_rpc/impl/coro_rpc_client.hpp:1422:25,
+    inlined from ‘static void coro_rpc::coro_rpc_client::send_err_response(control_t*, std::error_code&)’ at /home/d00883276/prefetch_916/920_pre_pr/vendor/yalantinglibs/include/ylt/coro_rpc/impl/coro_rpc_client.hpp:1530:27:
+/usr/include/c++/12/bits/basic_string.h:294:21: warning: ‘((std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >*)((char*)&<unnamed> + offsetof(std::async_rpc_raw_result, std::variant<coro_rpc::coro_rpc_client::async_rpc_raw_result_value_type, std::error_code>::<unnamed>.std::__detail::__variant::_Variant_base<coro_rpc::coro_rpc_client::async_rpc_raw_result_value_type, std::error_code>::<unnamed>.std::__detail::__variant::_Move_assign_base<false, coro_rpc::coro_rpc_client::async_rpc_raw_result_value_type, std::error_code>::<unnamed>.std::__detail::__variant::_Copy_assign_base<false, coro_rpc::coro_rpc_client::async_rpc_raw_result_value_type, std::error_code>::<unnamed>.std::__detail::__variant::_Move_ctor_base<false, coro_rpc::coro_rpc_client::async_rpc_raw_result_value_type, std::error_code>::<unnamed>.std::__detail::__variant::_Copy_ctor_base<false, coro_rpc::coro_rpc_client::async_rpc_raw_result_value_type, std::error_code>::<unnamed>.std::__detail::__variant::_Variant_storage<false, coro_rpc::coro_rpc_client::async_rpc_raw_result_value_type, std::error_code>::_M_u)))[1].std::__cxx11::basic_string<char>::<anonymous>.std::__cxx11::basic_string<char>::<unnamed union>::_M_allocated_capacity’ may be used uninitialized [-Wmaybe-uninitialized]
+  294 |           _M_destroy(_M_allocated_capacity);
+      |           ~~~~~~~~~~^~~~~~~~~~~~~~~~~~~~~~~
+/home/d00883276/prefetch_916/920_pre_pr/vendor/yalantinglibs/include/ylt/coro_rpc/impl/coro_rpc_client.hpp: In static member function ‘static void coro_rpc::coro_rpc_client::send_err_response(control_t*, std::error_code&)’:
+/home/d00883276/prefetch_916/920_pre_pr/vendor/yalantinglibs/include/ylt/coro_rpc/impl/coro_rpc_client.hpp:1422:48: note: ‘<anonymous>’ declared here
+ 1422 |       promise_.setValue(async_rpc_raw_result{ec});
+      |                                                ^
+In file included from /home/d00883276/prefetch_916/920_pre_pr/vendor/yalantinglibs/include/ylt/coro_io/heterogeneous_buffer.hpp:19,
+                 from /home/d00883276/prefetch_916/920_pre_pr/vendor/yalantinglibs/include/ylt/coro_rpc/impl/coro_connection.hpp:40:
+In destructor ‘memory_owner_t::~memory_owner_t()’,
+    inlined from ‘constexpr void std::destroy_at(_Tp*) [with _Tp = memory_owner_t]’ at /usr/include/c++/12/bits/stl_construct.h:88:18,
+    inlined from ‘constexpr void std::_Destroy(_Tp*) [with _Tp = memory_owner_t]’ at /usr/include/c++/12/bits/stl_construct.h:149:22,
+    inlined from ‘std::__detail::__variant::_Variant_storage<false, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >, memory_owner_t>::_M_reset()::<lambda(auto:20&&)> mutable [with auto:20 = memory_owner_t&]’ at /usr/include/c++/12/variant:472:19,
+    inlined from ‘constexpr _Res std::__invoke_impl(__invoke_other, _Fn&&, _Args&& ...) [with _Res = void; _Fn = __detail::__variant::_Variant_storage<false, __cxx11::basic_string<char, char_traits<char>, allocator<char> >, memory_owner_t>::_M_reset()::<lambda(auto:20&&)>; _Args = {memory_owner_t&}]’ at /usr/include/c++/12/bits/invoke.h:61:36,
+    inlined from ‘constexpr std::enable_if_t<is_invocable_r_v<_Res, _Callable, _Args ...>, _Res> std::__invoke_r(_Callable&&, _Args&& ...) [with _Res = void; _Callable = __detail::__variant::_Variant_storage<false, __cxx11::basic_string<char, char_traits<char>, allocator<char> >, memory_owner_t>::_M_reset()::<lambda(auto:20&&)>; _Args = {memory_owner_t&}]’ at /usr/include/c++/12/bits/invoke.h:111:28,
+    inlined from ‘static constexpr decltype(auto) std::__detail::__variant::__gen_vtable_impl<std::__detail::__variant::_Multi_array<_Result_type (*)(_Visitor, _Variants ...)>, std::integer_sequence<long unsigned int, __indices ...> >::__visit_invoke(_Visitor&&, _Variants ...) [with _Result_type = void; _Visitor = std::__detail::__variant::_Variant_storage<false, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >, memory_owner_t>::_M_reset()::<lambda(auto:20&&)>&&; _Variants = {std::variant<std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >, memory_owner_t>&}; long unsigned int ...__indices = {1}]’ at /usr/include/c++/12/variant:1035:40,
+    inlined from ‘constexpr decltype(auto) std::__do_visit(_Visitor&&, _Variants&& ...) [with _Result_type = void; _Visitor = __detail::__variant::_Variant_storage<false, __cxx11::basic_string<char, char_traits<char>, allocator<char> >, memory_owner_t>::_M_reset()::<lambda(auto:20&&)>; _Variants = {variant<__cxx11::basic_string<char, char_traits<char>, allocator<char> >, memory_owner_t>&}]’ at /usr/include/c++/12/variant:1791:5,
+    inlined from ‘constexpr void std::__detail::__variant::_Variant_storage<false, _Types ...>::_M_reset() [with _Types = {std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >, memory_owner_t}]’ at /usr/include/c++/12/variant:470:23,
+    inlined from ‘constexpr std::__detail::__variant::_Variant_storage<false, _Types ...>::~_Variant_storage() [with _Types = {std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >, memory_owner_t}]’ at /usr/include/c++/12/variant:480:17,
+    inlined from ‘constexpr std::__detail::__variant::_Copy_ctor_base<false, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >, memory_owner_t>::~_Copy_ctor_base()’ at /usr/include/c++/12/variant:554:12,
+    inlined from ‘constexpr std::__detail::__variant::_Move_ctor_base<false, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >, memory_owner_t>::~_Move_ctor_base()’ at /usr/include/c++/12/variant:591:12,
+    inlined from ‘constexpr std::__detail::__variant::_Copy_assign_base<false, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >, memory_owner_t>::~_Copy_assign_base()’ at /usr/include/c++/12/variant:629:12,
+    inlined from ‘constexpr std::__detail::__variant::_Move_assign_base<false, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >, memory_owner_t>::~_Move_assign_base()’ at /usr/include/c++/12/variant:681:12,
+    inlined from ‘constexpr std::__detail::__variant::_Variant_base<std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >, memory_owner_t>::~_Variant_base()’ at /usr/include/c++/12/variant:735:12,
+    inlined from ‘constexpr std::variant<_Types>::~variant() [with _Types = {std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >, memory_owner_t}]’ at /usr/include/c++/12/variant:1407:28,
+    inlined from ‘constexpr coro_io::heterogeneous_buffer::~heterogeneous_buffer()’ at /home/d00883276/prefetch_916/920_pre_pr/vendor/yalantinglibs/include/ylt/coro_io/heterogeneous_buffer.hpp:29:7,
+    inlined from ‘constexpr coro_rpc::resp_body::~resp_body()’ at /home/d00883276/prefetch_916/920_pre_pr/vendor/yalantinglibs/include/ylt/coro_rpc/impl/coro_rpc_client.hpp:116:8,
+    inlined from ‘constexpr coro_rpc::coro_rpc_client::async_rpc_raw_result_value_type::~async_rpc_raw_result_value_type()’ at /home/d00883276/prefetch_916/920_pre_pr/vendor/yalantinglibs/include/ylt/coro_rpc/impl/coro_rpc_client.hpp:1393:10,
+    inlined from ‘constexpr void std::destroy_at(_Tp*) [with _Tp = coro_rpc::coro_rpc_client::async_rpc_raw_result_value_type]’ at /usr/include/c++/12/bits/stl_construct.h:88:18,
+    inlined from ‘constexpr void std::_Destroy(_Tp*) [with _Tp = coro_rpc::coro_rpc_client::async_rpc_raw_result_value_type]’ at /usr/include/c++/12/bits/stl_construct.h:149:22,
+    inlined from ‘std::__detail::__variant::_Variant_storage<false, coro_rpc::coro_rpc_client::async_rpc_raw_result_value_type, std::error_code>::_M_reset()::<lambda(auto:20&&)> mutable [with auto:20 = coro_rpc::coro_rpc_client::async_rpc_raw_result_value_type&]’ at /usr/include/c++/12/variant:472:19,
+    inlined from ‘constexpr _Res std::__invoke_impl(__invoke_other, _Fn&&, _Args&& ...) [with _Res = void; _Fn = __detail::__variant::_Variant_storage<false, coro_rpc::coro_rpc_client::async_rpc_raw_result_value_type, error_code>::_M_reset()::<lambda(auto:20&&)>; _Args = {coro_rpc::coro_rpc_client::async_rpc_raw_result_value_type&}]’ at /usr/include/c++/12/bits/invoke.h:61:36,
+    inlined from ‘constexpr std::enable_if_t<is_invocable_r_v<_Res, _Callable, _Args ...>, _Res> std::__invoke_r(_Callable&&, _Args&& ...) [with _Res = void; _Callable = __detail::__variant::_Variant_storage<false, coro_rpc::coro_rpc_client::async_rpc_raw_result_value_type, error_code>::_M_reset()::<lambda(auto:20&&)>; _Args = {coro_rpc::coro_rpc_client::async_rpc_raw_result_value_type&}]’ at /usr/include/c++/12/bits/invoke.h:111:28,
+    inlined from ‘static constexpr decltype(auto) std::__detail::__variant::__gen_vtable_impl<std::__detail::__variant::_Multi_array<_Result_type (*)(_Visitor, _Variants ...)>, std::integer_sequence<long unsigned int, __indices ...> >::__visit_invoke(_Visitor&&, _Variants ...) [with _Result_type = void; _Visitor = std::__detail::__variant::_Variant_storage<false, coro_rpc::coro_rpc_client::async_rpc_raw_result_value_type, std::error_code>::_M_reset()::<lambda(auto:20&&)>&&; _Variants = {std::variant<coro_rpc::coro_rpc_client::async_rpc_raw_result_value_type, std::error_code>&}; long unsigned int ...__indices = {0}]’ at /usr/include/c++/12/variant:1035:40,
+    inlined from ‘constexpr decltype(auto) std::__do_visit(_Visitor&&, _Variants&& ...) [with _Result_type = void; _Visitor = __detail::__variant::_Variant_storage<false, coro_rpc::coro_rpc_client::async_rpc_raw_result_value_type, error_code>::_M_reset()::<lambda(auto:20&&)>; _Variants = {variant<coro_rpc::coro_rpc_client::async_rpc_raw_result_value_type, error_code>&}]’ at /usr/include/c++/12/variant:1790:5,
+    inlined from ‘constexpr void std::__detail::__variant::_Variant_storage<false, _Types ...>::_M_reset() [with _Types = {coro_rpc::coro_rpc_client::async_rpc_raw_result_value_type, std::error_code}]’ at /usr/include/c++/12/variant:470:23,
+    inlined from ‘constexpr std::__detail::__variant::_Variant_storage<false, _Types ...>::~_Variant_storage() [with _Types = {coro_rpc::coro_rpc_client::async_rpc_raw_result_value_type, std::error_code}]’ at /usr/include/c++/12/variant:480:17,
+    inlined from ‘constexpr std::__detail::__variant::_Copy_ctor_base<false, coro_rpc::coro_rpc_client::async_rpc_raw_result_value_type, std::error_code>::~_Copy_ctor_base()’ at /usr/include/c++/12/variant:554:12,
+    inlined from ‘constexpr std::__detail::__variant::_Move_ctor_base<false, coro_rpc::coro_rpc_client::async_rpc_raw_result_value_type, std::error_code>::~_Move_ctor_base()’ at /usr/include/c++/12/variant:591:12,
+    inlined from ‘constexpr std::__detail::__variant::_Copy_assign_base<false, coro_rpc::coro_rpc_client::async_rpc_raw_result_value_type, std::error_code>::~_Copy_assign_base()’ at /usr/include/c++/12/variant:629:12,
+    inlined from ‘constexpr std::__detail::__variant::_Move_assign_base<false, coro_rpc::coro_rpc_client::async_rpc_raw_result_value_type, std::error_code>::~_Move_assign_base()’ at /usr/include/c++/12/variant:681:12,
+    inlined from ‘constexpr std::__detail::__variant::_Variant_base<coro_rpc::coro_rpc_client::async_rpc_raw_result_value_type, std::error_code>::~_Variant_base()’ at /usr/include/c++/12/variant:735:12,
+    inlined from ‘constexpr std::variant<_Types>::~variant() [with _Types = {coro_rpc::coro_rpc_client::async_rpc_raw_result_value_type, std::error_code}]’ at /usr/include/c++/12/variant:1407:28,
+    inlined from ‘void coro_rpc::coro_rpc_client::handler_t::local_error(std::error_code&)’ at /home/d00883276/prefetch_916/920_pre_pr/vendor/yalantinglibs/include/ylt/coro_rpc/impl/coro_rpc_client.hpp:1422:25,
+    inlined from ‘static void coro_rpc::coro_rpc_client::send_err_response(control_t*, std::error_code&)’ at /home/d00883276/prefetch_916/920_pre_pr/vendor/yalantinglibs/include/ylt/coro_rpc/impl/coro_rpc_client.hpp:1530:27:
+/home/d00883276/prefetch_916/920_pre_pr/vendor/yalantinglibs/include/ylt/coro_io/memory_owner.hpp:92:9: warning: ‘((memory_owner_t*)((char*)&<unnamed> + offsetof(std::async_rpc_raw_result, std::variant<coro_rpc::coro_rpc_client::async_rpc_raw_result_value_type, std::error_code>::<unnamed>.std::__detail::__variant::_Variant_base<coro_rpc::coro_rpc_client::async_rpc_raw_result_value_type, std::error_code>::<unnamed>.std::__detail::__variant::_Move_assign_base<false, coro_rpc::coro_rpc_client::async_rpc_raw_result_value_type, std::error_code>::<unnamed>.std::__detail::__variant::_Copy_assign_base<false, coro_rpc::coro_rpc_client::async_rpc_raw_result_value_type, std::error_code>::<unnamed>.std::__detail::__variant::_Move_ctor_base<false, coro_rpc::coro_rpc_client::async_rpc_raw_result_value_type, std::error_code>::<unnamed>.std::__detail::__variant::_Copy_ctor_base<false, coro_rpc::coro_rpc_client::async_rpc_raw_result_value_type, std::error_code>::<unnamed>.std::__detail::__variant::_Variant_storage<false, coro_rpc::coro_rpc_client::async_rpc_raw_result_value_type, std::error_code>::_M_u)))[1].memory_owner_t::memory_’ may be used uninitialized [-Wmaybe-uninitialized]
+   92 |     if (memory_) {
+      |         ^~~~~~~
+/home/d00883276/prefetch_916/920_pre_pr/vendor/yalantinglibs/include/ylt/coro_rpc/impl/coro_rpc_client.hpp: In static member function ‘static void coro_rpc::coro_rpc_client::send_err_response(control_t*, std::error_code&)’:
+/home/d00883276/prefetch_916/920_pre_pr/vendor/yalantinglibs/include/ylt/coro_rpc/impl/coro_rpc_client.hpp:1422:48: note: ‘<anonymous>’ declared here
+ 1422 |       promise_.setValue(async_rpc_raw_result{ec});
+      |                                                ^
+In file included from /usr/include/c++/12/bits/shared_ptr.h:53,
+                 from /usr/include/c++/12/memory:76:
+In member function ‘std::__shared_ptr<_Tp, _Lp>::operator bool() const [with _Tp = void; __gnu_cxx::_Lock_policy _Lp = __gnu_cxx::_S_atomic]’,
+    inlined from ‘memory_owner_t::~memory_owner_t()’ at /home/d00883276/prefetch_916/920_pre_pr/vendor/yalantinglibs/include/ylt/coro_io/memory_owner.hpp:93:11,
+    inlined from ‘constexpr void std::destroy_at(_Tp*) [with _Tp = memory_owner_t]’ at /usr/include/c++/12/bits/stl_construct.h:88:18,
+    inlined from ‘constexpr void std::_Destroy(_Tp*) [with _Tp = memory_owner_t]’ at /usr/include/c++/12/bits/stl_construct.h:149:22,
+    inlined from ‘std::__detail::__variant::_Variant_storage<false, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >, memory_owner_t>::_M_reset()::<lambda(auto:20&&)> mutable [with auto:20 = memory_owner_t&]’ at /usr/include/c++/12/variant:472:19,
+    inlined from ‘constexpr _Res std::__invoke_impl(__invoke_other, _Fn&&, _Args&& ...) [with _Res = void; _Fn = __detail::__variant::_Variant_storage<false, __cxx11::basic_string<char, char_traits<char>, allocator<char> >, memory_owner_t>::_M_reset()::<lambda(auto:20&&)>; _Args = {memory_owner_t&}]’ at /usr/include/c++/12/bits/invoke.h:61:36,
+    inlined from ‘constexpr std::enable_if_t<is_invocable_r_v<_Res, _Callable, _Args ...>, _Res> std::__invoke_r(_Callable&&, _Args&& ...) [with _Res = void; _Callable = __detail::__variant::_Variant_storage<false, __cxx11::basic_string<char, char_traits<char>, allocator<char> >, memory_owner_t>::_M_reset()::<lambda(auto:20&&)>; _Args = {memory_owner_t&}]’ at /usr/include/c++/12/bits/invoke.h:111:28,
+    inlined from ‘static constexpr decltype(auto) std::__detail::__variant::__gen_vtable_impl<std::__detail::__variant::_Multi_array<_Result_type (*)(_Visitor, _Variants ...)>, std::integer_sequence<long unsigned int, __indices ...> >::__visit_invoke(_Visitor&&, _Variants ...) [with _Result_type = void; _Visitor = std::__detail::__variant::_Variant_storage<false, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >, memory_owner_t>::_M_reset()::<lambda(auto:20&&)>&&; _Variants = {std::variant<std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >, memory_owner_t>&}; long unsigned int ...__indices = {1}]’ at /usr/include/c++/12/variant:1035:40,
+    inlined from ‘constexpr decltype(auto) std::__do_visit(_Visitor&&, _Variants&& ...) [with _Result_type = void; _Visitor = __detail::__variant::_Variant_storage<false, __cxx11::basic_string<char, char_traits<char>, allocator<char> >, memory_owner_t>::_M_reset()::<lambda(auto:20&&)>; _Variants = {variant<__cxx11::basic_string<char, char_traits<char>, allocator<char> >, memory_owner_t>&}]’ at /usr/include/c++/12/variant:1791:5,
+    inlined from ‘constexpr void std::__detail::__variant::_Variant_storage<false, _Types ...>::_M_reset() [with _Types = {std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >, memory_owner_t}]’ at /usr/include/c++/12/variant:470:23,
+    inlined from ‘constexpr std::__detail::__variant::_Variant_storage<false, _Types ...>::~_Variant_storage() [with _Types = {std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >, memory_owner_t}]’ at /usr/include/c++/12/variant:480:17,
+    inlined from ‘constexpr std::__detail::__variant::_Copy_ctor_base<false, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >, memory_owner_t>::~_Copy_ctor_base()’ at /usr/include/c++/12/variant:554:12,
+    inlined from ‘constexpr std::__detail::__variant::_Move_ctor_base<false, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >, memory_owner_t>::~_Move_ctor_base()’ at /usr/include/c++/12/variant:591:12,
+    inlined from ‘constexpr std::__detail::__variant::_Copy_assign_base<false, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >, memory_owner_t>::~_Copy_assign_base()’ at /usr/include/c++/12/variant:629:12,
+    inlined from ‘constexpr std::__detail::__variant::_Move_assign_base<false, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >, memory_owner_t>::~_Move_assign_base()’ at /usr/include/c++/12/variant:681:12,
+    inlined from ‘constexpr std::__detail::__variant::_Variant_base<std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >, memory_owner_t>::~_Variant_base()’ at /usr/include/c++/12/variant:735:12,
+    inlined from ‘constexpr std::variant<_Types>::~variant() [with _Types = {std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >, memory_owner_t}]’ at /usr/include/c++/12/variant:1407:28,
+    inlined from ‘constexpr coro_io::heterogeneous_buffer::~heterogeneous_buffer()’ at /home/d00883276/prefetch_916/920_pre_pr/vendor/yalantinglibs/include/ylt/coro_io/heterogeneous_buffer.hpp:29:7,
+    inlined from ‘constexpr coro_rpc::resp_body::~resp_body()’ at /home/d00883276/prefetch_916/920_pre_pr/vendor/yalantinglibs/include/ylt/coro_rpc/impl/coro_rpc_client.hpp:116:8,
+    inlined from ‘constexpr coro_rpc::coro_rpc_client::async_rpc_raw_result_value_type::~async_rpc_raw_result_value_type()’ at /home/d00883276/prefetch_916/920_pre_pr/vendor/yalantinglibs/include/ylt/coro_rpc/impl/coro_rpc_client.hpp:1393:10,
+    inlined from ‘constexpr void std::destroy_at(_Tp*) [with _Tp = coro_rpc::coro_rpc_client::async_rpc_raw_result_value_type]’ at /usr/include/c++/12/bits/stl_construct.h:88:18,
+    inlined from ‘constexpr void std::_Destroy(_Tp*) [with _Tp = coro_rpc::coro_rpc_client::async_rpc_raw_result_value_type]’ at /usr/include/c++/12/bits/stl_construct.h:149:22,
+    inlined from ‘std::__detail::__variant::_Variant_storage<false, coro_rpc::coro_rpc_client::async_rpc_raw_result_value_type, std::error_code>::_M_reset()::<lambda(auto:20&&)> mutable [with auto:20 = coro_rpc::coro_rpc_client::async_rpc_raw_result_value_type&]’ at /usr/include/c++/12/variant:472:19,
+    inlined from ‘constexpr _Res std::__invoke_impl(__invoke_other, _Fn&&, _Args&& ...) [with _Res = void; _Fn = __detail::__variant::_Variant_storage<false, coro_rpc::coro_rpc_client::async_rpc_raw_result_value_type, error_code>::_M_reset()::<lambda(auto:20&&)>; _Args = {coro_rpc::coro_rpc_client::async_rpc_raw_result_value_type&}]’ at /usr/include/c++/12/bits/invoke.h:61:36,
+    inlined from ‘constexpr std::enable_if_t<is_invocable_r_v<_Res, _Callable, _Args ...>, _Res> std::__invoke_r(_Callable&&, _Args&& ...) [with _Res = void; _Callable = __detail::__variant::_Variant_storage<false, coro_rpc::coro_rpc_client::async_rpc_raw_result_value_type, error_code>::_M_reset()::<lambda(auto:20&&)>; _Args = {coro_rpc::coro_rpc_client::async_rpc_raw_result_value_type&}]’ at /usr/include/c++/12/bits/invoke.h:111:28,
+    inlined from ‘static constexpr decltype(auto) std::__detail::__variant::__gen_vtable_impl<std::__detail::__variant::_Multi_array<_Result_type (*)(_Visitor, _Variants ...)>, std::integer_sequence<long unsigned int, __indices ...> >::__visit_invoke(_Visitor&&, _Variants ...) [with _Result_type = void; _Visitor = std::__detail::__variant::_Variant_storage<false, coro_rpc::coro_rpc_client::async_rpc_raw_result_value_type, std::error_code>::_M_reset()::<lambda(auto:20&&)>&&; _Variants = {std::variant<coro_rpc::coro_rpc_client::async_rpc_raw_result_value_type, std::error_code>&}; long unsigned int ...__indices = {0}]’ at /usr/include/c++/12/variant:1035:40,
+    inlined from ‘constexpr decltype(auto) std::__do_visit(_Visitor&&, _Variants&& ...) [with _Result_type = void; _Visitor = __detail::__variant::_Variant_storage<false, coro_rpc::coro_rpc_client::async_rpc_raw_result_value_type, error_code>::_M_reset()::<lambda(auto:20&&)>; _Variants = {variant<coro_rpc::coro_rpc_client::async_rpc_raw_result_value_type, error_code>&}]’ at /usr/include/c++/12/variant:1790:5,
+    inlined from ‘constexpr void std::__detail::__variant::_Variant_storage<false, _Types ...>::_M_reset() [with _Types = {coro_rpc::coro_rpc_client::async_rpc_raw_result_value_type, std::error_code}]’ at /usr/include/c++/12/variant:470:23,
+    inlined from ‘constexpr std::__detail::__variant::_Variant_storage<false, _Types ...>::~_Variant_storage() [with _Types = {coro_rpc::coro_rpc_client::async_rpc_raw_result_value_type, std::error_code}]’ at /usr/include/c++/12/variant:480:17,
+    inlined from ‘constexpr std::__detail::__variant::_Copy_ctor_base<false, coro_rpc::coro_rpc_client::async_rpc_raw_result_value_type, std::error_code>::~_Copy_ctor_base()’ at /usr/include/c++/12/variant:554:12,
+    inlined from ‘constexpr std::__detail::__variant::_Move_ctor_base<false, coro_rpc::coro_rpc_client::async_rpc_raw_result_value_type, std::error_code>::~_Move_ctor_base()’ at /usr/include/c++/12/variant:591:12,
+    inlined from ‘constexpr std::__detail::__variant::_Copy_assign_base<false, coro_rpc::coro_rpc_client::async_rpc_raw_result_value_type, std::error_code>::~_Copy_assign_base()’ at /usr/include/c++/12/variant:629:12,
+    inlined from ‘constexpr std::__detail::__variant::_Move_assign_base<false, coro_rpc::coro_rpc_client::async_rpc_raw_result_value_type, std::error_code>::~_Move_assign_base()’ at /usr/include/c++/12/variant:681:12,
+    inlined from ‘constexpr std::__detail::__variant::_Variant_base<coro_rpc::coro_rpc_client::async_rpc_raw_result_value_type, std::error_code>::~_Variant_base()’ at /usr/include/c++/12/variant:735:12,
+    inlined from ‘constexpr std::variant<_Types>::~variant() [with _Types = {coro_rpc::coro_rpc_client::async_rpc_raw_result_value_type, std::error_code}]’ at /usr/include/c++/12/variant:1407:28,
+    inlined from ‘void coro_rpc::coro_rpc_client::handler_t::local_error(std::error_code&)’ at /home/d00883276/prefetch_916/920_pre_pr/vendor/yalantinglibs/include/ylt/coro_rpc/impl/coro_rpc_client.hpp:1422:25,
+    inlined from ‘static void coro_rpc::coro_rpc_client::send_err_response(control_t*, std::error_code&)’ at /home/d00883276/prefetch_916/920_pre_pr/vendor/yalantinglibs/include/ylt/coro_rpc/impl/coro_rpc_client.hpp:1530:27:
+/usr/include/c++/12/bits/shared_ptr_base.h:1670:16: warning: ‘((const std::__shared_ptr<void, __gnu_cxx::_S_atomic>*)((char*)&<unnamed> + offsetof(std::async_rpc_raw_result, std::variant<coro_rpc::coro_rpc_client::async_rpc_raw_result_value_type, std::error_code>::<unnamed>.std::__detail::__variant::_Variant_base<coro_rpc::coro_rpc_client::async_rpc_raw_result_value_type, std::error_code>::<unnamed>.std::__detail::__variant::_Move_assign_base<false, coro_rpc::coro_rpc_client::async_rpc_raw_result_value_type, std::error_code>::<unnamed>.std::__detail::__variant::_Copy_assign_base<false, coro_rpc::coro_rpc_client::async_rpc_raw_result_value_type, std::error_code>::<unnamed>.std::__detail::__variant::_Move_ctor_base<false, coro_rpc::coro_rpc_client::async_rpc_raw_result_value_type, std::error_code>::<unnamed>.std::__detail::__variant::_Copy_ctor_base<false, coro_rpc::coro_rpc_client::async_rpc_raw_result_value_type, std::error_code>::<unnamed>.std::__detail::__variant::_Variant_storage<false, coro_rpc::coro_rpc_client::async_rpc_raw_result_value_type, std::error_code>::_M_u)))[3].std::__shared_ptr<void, __gnu_cxx::_S_atomic>::_M_ptr’ may be used uninitialized [-Wmaybe-uninitialized]
+ 1670 |       { return _M_ptr != nullptr; }
+      |                ^~~~~~
+/home/d00883276/prefetch_916/920_pre_pr/vendor/yalantinglibs/include/ylt/coro_rpc/impl/coro_rpc_client.hpp: In static member function ‘static void coro_rpc::coro_rpc_client::send_err_response(control_t*, std::error_code&)’:
+/home/d00883276/prefetch_916/920_pre_pr/vendor/yalantinglibs/include/ylt/coro_rpc/impl/coro_rpc_client.hpp:1422:48: note: ‘<anonymous>’ declared here
+ 1422 |       promise_.setValue(async_rpc_raw_result{ec});
+      |                                                ^
+In destructor ‘std::__shared_count<_Lp>::~__shared_count() [with __gnu_cxx::_Lock_policy _Lp = __gnu_cxx::_S_atomic]’,
+    inlined from ‘std::__shared_ptr<_Tp, _Lp>::~__shared_ptr() [with _Tp = void; __gnu_cxx::_Lock_policy _Lp = __gnu_cxx::_S_atomic]’ at /usr/include/c++/12/bits/shared_ptr_base.h:1524:7,
+    inlined from ‘std::shared_ptr<void>::~shared_ptr()’ at /usr/include/c++/12/bits/shared_ptr.h:175:11,
+    inlined from ‘memory_owner_t::~memory_owner_t()’ at /home/d00883276/prefetch_916/920_pre_pr/vendor/yalantinglibs/include/ylt/coro_io/memory_owner.hpp:102:3,
+    inlined from ‘constexpr void std::destroy_at(_Tp*) [with _Tp = memory_owner_t]’ at /usr/include/c++/12/bits/stl_construct.h:88:18,
+    inlined from ‘constexpr void std::_Destroy(_Tp*) [with _Tp = memory_owner_t]’ at /usr/include/c++/12/bits/stl_construct.h:149:22,
+    inlined from ‘std::__detail::__variant::_Variant_storage<false, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >, memory_owner_t>::_M_reset()::<lambda(auto:20&&)> mutable [with auto:20 = memory_owner_t&]’ at /usr/include/c++/12/variant:472:19,
+    inlined from ‘constexpr _Res std::__invoke_impl(__invoke_other, _Fn&&, _Args&& ...) [with _Res = void; _Fn = __detail::__variant::_Variant_storage<false, __cxx11::basic_string<char, char_traits<char>, allocator<char> >, memory_owner_t>::_M_reset()::<lambda(auto:20&&)>; _Args = {memory_owner_t&}]’ at /usr/include/c++/12/bits/invoke.h:61:36,
+    inlined from ‘constexpr std::enable_if_t<is_invocable_r_v<_Res, _Callable, _Args ...>, _Res> std::__invoke_r(_Callable&&, _Args&& ...) [with _Res = void; _Callable = __detail::__variant::_Variant_storage<false, __cxx11::basic_string<char, char_traits<char>, allocator<char> >, memory_owner_t>::_M_reset()::<lambda(auto:20&&)>; _Args = {memory_owner_t&}]’ at /usr/include/c++/12/bits/invoke.h:111:28,
+    inlined from ‘static constexpr decltype(auto) std::__detail::__variant::__gen_vtable_impl<std::__detail::__variant::_Multi_array<_Result_type (*)(_Visitor, _Variants ...)>, std::integer_sequence<long unsigned int, __indices ...> >::__visit_invoke(_Visitor&&, _Variants ...) [with _Result_type = void; _Visitor = std::__detail::__variant::_Variant_storage<false, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >, memory_owner_t>::_M_reset()::<lambda(auto:20&&)>&&; _Variants = {std::variant<std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >, memory_owner_t>&}; long unsigned int ...__indices = {1}]’ at /usr/include/c++/12/variant:1035:40,
+    inlined from ‘constexpr decltype(auto) std::__do_visit(_Visitor&&, _Variants&& ...) [with _Result_type = void; _Visitor = __detail::__variant::_Variant_storage<false, __cxx11::basic_string<char, char_traits<char>, allocator<char> >, memory_owner_t>::_M_reset()::<lambda(auto:20&&)>; _Variants = {variant<__cxx11::basic_string<char, char_traits<char>, allocator<char> >, memory_owner_t>&}]’ at /usr/include/c++/12/variant:1791:5,
+    inlined from ‘constexpr void std::__detail::__variant::_Variant_storage<false, _Types ...>::_M_reset() [with _Types = {std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >, memory_owner_t}]’ at /usr/include/c++/12/variant:470:23,
+    inlined from ‘constexpr std::__detail::__variant::_Variant_storage<false, _Types ...>::~_Variant_storage() [with _Types = {std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >, memory_owner_t}]’ at /usr/include/c++/12/variant:480:17,
+    inlined from ‘constexpr std::__detail::__variant::_Copy_ctor_base<false, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >, memory_owner_t>::~_Copy_ctor_base()’ at /usr/include/c++/12/variant:554:12,
+    inlined from ‘constexpr std::__detail::__variant::_Move_ctor_base<false, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >, memory_owner_t>::~_Move_ctor_base()’ at /usr/include/c++/12/variant:591:12,
+    inlined from ‘constexpr std::__detail::__variant::_Copy_assign_base<false, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >, memory_owner_t>::~_Copy_assign_base()’ at /usr/include/c++/12/variant:629:12,
+    inlined from ‘constexpr std::__detail::__variant::_Move_assign_base<false, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >, memory_owner_t>::~_Move_assign_base()’ at /usr/include/c++/12/variant:681:12,
+    inlined from ‘constexpr std::__detail::__variant::_Variant_base<std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >, memory_owner_t>::~_Variant_base()’ at /usr/include/c++/12/variant:735:12,
+    inlined from ‘constexpr std::variant<_Types>::~variant() [with _Types = {std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >, memory_owner_t}]’ at /usr/include/c++/12/variant:1407:28,
+    inlined from ‘constexpr coro_io::heterogeneous_buffer::~heterogeneous_buffer()’ at /home/d00883276/prefetch_916/920_pre_pr/vendor/yalantinglibs/include/ylt/coro_io/heterogeneous_buffer.hpp:29:7,
+    inlined from ‘constexpr coro_rpc::resp_body::~resp_body()’ at /home/d00883276/prefetch_916/920_pre_pr/vendor/yalantinglibs/include/ylt/coro_rpc/impl/coro_rpc_client.hpp:116:8,
+    inlined from ‘constexpr coro_rpc::coro_rpc_client::async_rpc_raw_result_value_type::~async_rpc_raw_result_value_type()’ at /home/d00883276/prefetch_916/920_pre_pr/vendor/yalantinglibs/include/ylt/coro_rpc/impl/coro_rpc_client.hpp:1393:10,
+    inlined from ‘constexpr void std::destroy_at(_Tp*) [with _Tp = coro_rpc::coro_rpc_client::async_rpc_raw_result_value_type]’ at /usr/include/c++/12/bits/stl_construct.h:88:18,
+    inlined from ‘constexpr void std::_Destroy(_Tp*) [with _Tp = coro_rpc::coro_rpc_client::async_rpc_raw_result_value_type]’ at /usr/include/c++/12/bits/stl_construct.h:149:22,
+    inlined from ‘std::__detail::__variant::_Variant_storage<false, coro_rpc::coro_rpc_client::async_rpc_raw_result_value_type, std::error_code>::_M_reset()::<lambda(auto:20&&)> mutable [with auto:20 = coro_rpc::coro_rpc_client::async_rpc_raw_result_value_type&]’ at /usr/include/c++/12/variant:472:19,
+    inlined from ‘constexpr _Res std::__invoke_impl(__invoke_other, _Fn&&, _Args&& ...) [with _Res = void; _Fn = __detail::__variant::_Variant_storage<false, coro_rpc::coro_rpc_client::async_rpc_raw_result_value_type, error_code>::_M_reset()::<lambda(auto:20&&)>; _Args = {coro_rpc::coro_rpc_client::async_rpc_raw_result_value_type&}]’ at /usr/include/c++/12/bits/invoke.h:61:36,
+    inlined from ‘constexpr std::enable_if_t<is_invocable_r_v<_Res, _Callable, _Args ...>, _Res> std::__invoke_r(_Callable&&, _Args&& ...) [with _Res = void; _Callable = __detail::__variant::_Variant_storage<false, coro_rpc::coro_rpc_client::async_rpc_raw_result_value_type, error_code>::_M_reset()::<lambda(auto:20&&)>; _Args = {coro_rpc::coro_rpc_client::async_rpc_raw_result_value_type&}]’ at /usr/include/c++/12/bits/invoke.h:111:28,
+    inlined from ‘static constexpr decltype(auto) std::__detail::__variant::__gen_vtable_impl<std::__detail::__variant::_Multi_array<_Result_type (*)(_Visitor, _Variants ...)>, std::integer_sequence<long unsigned int, __indices ...> >::__visit_invoke(_Visitor&&, _Variants ...) [with _Result_type = void; _Visitor = std::__detail::__variant::_Variant_storage<false, coro_rpc::coro_rpc_client::async_rpc_raw_result_value_type, std::error_code>::_M_reset()::<lambda(auto:20&&)>&&; _Variants = {std::variant<coro_rpc::coro_rpc_client::async_rpc_raw_result_value_type, std::error_code>&}; long unsigned int ...__indices = {0}]’ at /usr/include/c++/12/variant:1035:40,
+    inlined from ‘constexpr decltype(auto) std::__do_visit(_Visitor&&, _Variants&& ...) [with _Result_type = void; _Visitor = __detail::__variant::_Variant_storage<false, coro_rpc::coro_rpc_client::async_rpc_raw_result_value_type, error_code>::_M_reset()::<lambda(auto:20&&)>; _Variants = {variant<coro_rpc::coro_rpc_client::async_rpc_raw_result_value_type, error_code>&}]’ at /usr/include/c++/12/variant:1790:5,
+    inlined from ‘constexpr void std::__detail::__variant::_Variant_storage<false, _Types ...>::_M_reset() [with _Types = {coro_rpc::coro_rpc_client::async_rpc_raw_result_value_type, std::error_code}]’ at /usr/include/c++/12/variant:470:23,
+    inlined from ‘constexpr std::__detail::__variant::_Variant_storage<false, _Types ...>::~_Variant_storage() [with _Types = {coro_rpc::coro_rpc_client::async_rpc_raw_result_value_type, std::error_code}]’ at /usr/include/c++/12/variant:480:17,
+    inlined from ‘constexpr std::__detail::__variant::_Copy_ctor_base<false, coro_rpc::coro_rpc_client::async_rpc_raw_result_value_type, std::error_code>::~_Copy_ctor_base()’ at /usr/include/c++/12/variant:554:12,
+    inlined from ‘constexpr std::__detail::__variant::_Move_ctor_base<false, coro_rpc::coro_rpc_client::async_rpc_raw_result_value_type, std::error_code>::~_Move_ctor_base()’ at /usr/include/c++/12/variant:591:12,
+    inlined from ‘constexpr std::__detail::__variant::_Copy_assign_base<false, coro_rpc::coro_rpc_client::async_rpc_raw_result_value_type, std::error_code>::~_Copy_assign_base()’ at /usr/include/c++/12/variant:629:12,
+    inlined from ‘constexpr std::__detail::__variant::_Move_assign_base<false, coro_rpc::coro_rpc_client::async_rpc_raw_result_value_type, std::error_code>::~_Move_assign_base()’ at /usr/include/c++/12/variant:681:12,
+    inlined from ‘constexpr std::__detail::__variant::_Variant_base<coro_rpc::coro_rpc_client::async_rpc_raw_result_value_type, std::error_code>::~_Variant_base()’ at /usr/include/c++/12/variant:735:12,
+    inlined from ‘constexpr std::variant<_Types>::~variant() [with _Types = {coro_rpc::coro_rpc_client::async_rpc_raw_result_value_type, std::error_code}]’ at /usr/include/c++/12/variant:1407:28,
+    inlined from ‘void coro_rpc::coro_rpc_client::handler_t::local_error(std::error_code&)’ at /home/d00883276/prefetch_916/920_pre_pr/vendor/yalantinglibs/include/ylt/coro_rpc/impl/coro_rpc_client.hpp:1422:25,
+    inlined from ‘static void coro_rpc::coro_rpc_client::send_err_response(control_t*, std::error_code&)’ at /home/d00883276/prefetch_916/920_pre_pr/vendor/yalantinglibs/include/ylt/coro_rpc/impl/coro_rpc_client.hpp:1530:27:
+/usr/include/c++/12/bits/shared_ptr_base.h:1070:13: warning: ‘((std::__shared_count<__gnu_cxx::_S_atomic>*)((char*)&<unnamed> + offsetof(std::async_rpc_raw_result, std::variant<coro_rpc::coro_rpc_client::async_rpc_raw_result_value_type, std::error_code>::<unnamed>.std::__detail::__variant::_Variant_base<coro_rpc::coro_rpc_client::async_rpc_raw_result_value_type, std::error_code>::<unnamed>.std::__detail::__variant::_Move_assign_base<false, coro_rpc::coro_rpc_client::async_rpc_raw_result_value_type, std::error_code>::<unnamed>.std::__detail::__variant::_Copy_assign_base<false, coro_rpc::coro_rpc_client::async_rpc_raw_result_value_type, std::error_code>::<unnamed>.std::__detail::__variant::_Move_ctor_base<false, coro_rpc::coro_rpc_client::async_rpc_raw_result_value_type, std::error_code>::<unnamed>.std::__detail::__variant::_Copy_ctor_base<false, coro_rpc::coro_rpc_client::async_rpc_raw_result_value_type, std::error_code>::<unnamed>.std::__detail::__variant::_Variant_storage<false, coro_rpc::coro_rpc_client::async_rpc_raw_result_value_type, std::error_code>::_M_u)))[7].std::__shared_count<>::_M_pi’ may be used uninitialized [-Wmaybe-uninitialized]
+ 1070 |         if (_M_pi != nullptr)
+      |             ^~~~~
+/home/d00883276/prefetch_916/920_pre_pr/vendor/yalantinglibs/include/ylt/coro_rpc/impl/coro_rpc_client.hpp: In static member function ‘static void coro_rpc::coro_rpc_client::send_err_response(control_t*, std::error_code&)’:
+/home/d00883276/prefetch_916/920_pre_pr/vendor/yalantinglibs/include/ylt/coro_rpc/impl/coro_rpc_client.hpp:1422:48: note: ‘<anonymous>’ declared here
+ 1422 |       promise_.setValue(async_rpc_raw_result{ec});
+      |                                                ^
+In member function ‘constexpr void std::__cxx11::basic_string<_CharT, _Traits, _Alloc>::_M_dispose() [with _CharT = char; _Traits = std::char_traits<char>; _Alloc = std::allocator<char>]’,
+    inlined from ‘constexpr std::__cxx11::basic_string<_CharT, _Traits, _Alloc>::~basic_string() [with _CharT = char; _Traits = std::char_traits<char>; _Alloc = std::allocator<char>]’ at /usr/include/c++/12/bits/basic_string.h:803:19,
+    inlined from ‘constexpr coro_rpc::resp_body::~resp_body()’ at /home/d00883276/prefetch_916/920_pre_pr/vendor/yalantinglibs/include/ylt/coro_rpc/impl/coro_rpc_client.hpp:116:8,
+    inlined from ‘constexpr coro_rpc::coro_rpc_client::async_rpc_raw_result_value_type::~async_rpc_raw_result_value_type()’ at /home/d00883276/prefetch_916/920_pre_pr/vendor/yalantinglibs/include/ylt/coro_rpc/impl/coro_rpc_client.hpp:1393:10,
+    inlined from ‘constexpr void std::destroy_at(_Tp*) [with _Tp = coro_rpc::coro_rpc_client::async_rpc_raw_result_value_type]’ at /usr/include/c++/12/bits/stl_construct.h:88:18,
+    inlined from ‘constexpr void std::_Destroy(_Tp*) [with _Tp = coro_rpc::coro_rpc_client::async_rpc_raw_result_value_type]’ at /usr/include/c++/12/bits/stl_construct.h:149:22,
+    inlined from ‘std::__detail::__variant::_Variant_storage<false, coro_rpc::coro_rpc_client::async_rpc_raw_result_value_type, std::error_code>::_M_reset()::<lambda(auto:20&&)> mutable [with auto:20 = coro_rpc::coro_rpc_client::async_rpc_raw_result_value_type&]’ at /usr/include/c++/12/variant:472:19,
+    inlined from ‘constexpr _Res std::__invoke_impl(__invoke_other, _Fn&&, _Args&& ...) [with _Res = void; _Fn = __detail::__variant::_Variant_storage<false, coro_rpc::coro_rpc_client::async_rpc_raw_result_value_type, error_code>::_M_reset()::<lambda(auto:20&&)>; _Args = {coro_rpc::coro_rpc_client::async_rpc_raw_result_value_type&}]’ at /usr/include/c++/12/bits/invoke.h:61:36,
+    inlined from ‘constexpr std::enable_if_t<is_invocable_r_v<_Res, _Callable, _Args ...>, _Res> std::__invoke_r(_Callable&&, _Args&& ...) [with _Res = void; _Callable = __detail::__variant::_Variant_storage<false, coro_rpc::coro_rpc_client::async_rpc_raw_result_value_type, error_code>::_M_reset()::<lambda(auto:20&&)>; _Args = {coro_rpc::coro_rpc_client::async_rpc_raw_result_value_type&}]’ at /usr/include/c++/12/bits/invoke.h:111:28,
+    inlined from ‘static constexpr decltype(auto) std::__detail::__variant::__gen_vtable_impl<std::__detail::__variant::_Multi_array<_Result_type (*)(_Visitor, _Variants ...)>, std::integer_sequence<long unsigned int, __indices ...> >::__visit_invoke(_Visitor&&, _Variants ...) [with _Result_type = void; _Visitor = std::__detail::__variant::_Variant_storage<false, coro_rpc::coro_rpc_client::async_rpc_raw_result_value_type, std::error_code>::_M_reset()::<lambda(auto:20&&)>&&; _Variants = {std::variant<coro_rpc::coro_rpc_client::async_rpc_raw_result_value_type, std::error_code>&}; long unsigned int ...__indices = {0}]’ at /usr/include/c++/12/variant:1035:40,
+    inlined from ‘constexpr decltype(auto) std::__do_visit(_Visitor&&, _Variants&& ...) [with _Result_type = void; _Visitor = __detail::__variant::_Variant_storage<false, coro_rpc::coro_rpc_client::async_rpc_raw_result_value_type, error_code>::_M_reset()::<lambda(auto:20&&)>; _Variants = {variant<coro_rpc::coro_rpc_client::async_rpc_raw_result_value_type, error_code>&}]’ at /usr/include/c++/12/variant:1790:5,
+    inlined from ‘constexpr void std::__detail::__variant::_Variant_storage<false, _Types ...>::_M_reset() [with _Types = {coro_rpc::coro_rpc_client::async_rpc_raw_result_value_type, std::error_code}]’ at /usr/include/c++/12/variant:470:23,
+    inlined from ‘constexpr std::__detail::__variant::_Variant_storage<false, _Types ...>::~_Variant_storage() [with _Types = {coro_rpc::coro_rpc_client::async_rpc_raw_result_value_type, std::error_code}]’ at /usr/include/c++/12/variant:480:17,
+    inlined from ‘constexpr std::__detail::__variant::_Copy_ctor_base<false, coro_rpc::coro_rpc_client::async_rpc_raw_result_value_type, std::error_code>::~_Copy_ctor_base()’ at /usr/include/c++/12/variant:554:12,
+    inlined from ‘constexpr std::__detail::__variant::_Move_ctor_base<false, coro_rpc::coro_rpc_client::async_rpc_raw_result_value_type, std::error_code>::~_Move_ctor_base()’ at /usr/include/c++/12/variant:591:12,
+    inlined from ‘constexpr std::__detail::__variant::_Copy_assign_base<false, coro_rpc::coro_rpc_client::async_rpc_raw_result_value_type, std::error_code>::~_Copy_assign_base()’ at /usr/include/c++/12/variant:629:12,
+    inlined from ‘constexpr std::__detail::__variant::_Move_assign_base<false, coro_rpc::coro_rpc_client::async_rpc_raw_result_value_type, std::error_code>::~_Move_assign_base()’ at /usr/include/c++/12/variant:681:12,
+    inlined from ‘constexpr std::__detail::__variant::_Variant_base<coro_rpc::coro_rpc_client::async_rpc_raw_result_value_type, std::error_code>::~_Variant_base()’ at /usr/include/c++/12/variant:735:12,
+    inlined from ‘constexpr std::variant<_Types>::~variant() [with _Types = {coro_rpc::coro_rpc_client::async_rpc_raw_result_value_type, std::error_code}]’ at /usr/include/c++/12/variant:1407:28,
+    inlined from ‘void coro_rpc::coro_rpc_client::handler_t::local_error(std::error_code&)’ at /home/d00883276/prefetch_916/920_pre_pr/vendor/yalantinglibs/include/ylt/coro_rpc/impl/coro_rpc_client.hpp:1422:25,
+    inlined from ‘static void coro_rpc::coro_rpc_client::send_err_response(control_t*, std::error_code&)’ at /home/d00883276/prefetch_916/920_pre_pr/vendor/yalantinglibs/include/ylt/coro_rpc/impl/coro_rpc_client.hpp:1530:27:
+/usr/include/c++/12/bits/basic_string.h:294:21: warning: ‘*(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >*)((char*)&<unnamed> + offsetof(std::async_rpc_raw_result, std::variant<coro_rpc::coro_rpc_client::async_rpc_raw_result_value_type, std::error_code>::<unnamed>.std::__detail::__variant::_Variant_base<coro_rpc::coro_rpc_client::async_rpc_raw_result_value_type, std::error_code>::<unnamed>.std::__detail::__variant::_Move_assign_base<false, coro_rpc::coro_rpc_client::async_rpc_raw_result_value_type, std::error_code>::<unnamed>.std::__detail::__variant::_Copy_assign_base<false, coro_rpc::coro_rpc_client::async_rpc_raw_result_value_type, std::error_code>::<unnamed>.std::__detail::__variant::_Move_ctor_base<false, coro_rpc::coro_rpc_client::async_rpc_raw_result_value_type, std::error_code>::<unnamed>.std::__detail::__variant::_Copy_ctor_base<false, coro_rpc::coro_rpc_client::async_rpc_raw_result_value_type, std::error_code>::<unnamed>.std::__detail::__variant::_Variant_storage<false, coro_rpc::coro_rpc_client::async_rpc_raw_result_value_type, std::error_code>::_M_u)).std::__cxx11::basic_string<char>::<anonymous>.std::__cxx11::basic_string<char>::<unnamed union>::_M_allocated_capacity’ may be used uninitialized [-Wmaybe-uninitialized]
+  294 |           _M_destroy(_M_allocated_capacity);
+      |           ~~~~~~~~~~^~~~~~~~~~~~~~~~~~~~~~~
+/home/d00883276/prefetch_916/920_pre_pr/vendor/yalantinglibs/include/ylt/coro_rpc/impl/coro_rpc_client.hpp: In static member function ‘static void coro_rpc::coro_rpc_client::send_err_response(control_t*, std::error_code&)’:
+/home/d00883276/prefetch_916/920_pre_pr/vendor/yalantinglibs/include/ylt/coro_rpc/impl/coro_rpc_client.hpp:1422:48: note: ‘<anonymous>’ declared here
+ 1422 |       promise_.setValue(async_rpc_raw_result{ec});
+      |                                                ^
+ninja: build stopped: subcommand failed.
+BUILD_RC=1

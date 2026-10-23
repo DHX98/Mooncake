@@ -1,0 +1,2 @@
+termination_cause=ROOT_STOP_OLD_BUILD_LINK_FAILURE
+[]

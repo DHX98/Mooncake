@@ -1,0 +1,38 @@
+{
+  "passed": 5,
+  "real_environment": true,
+  "tests": [
+    {
+      "test": "shutdown_graceful",
+      "passed": true,
+      "rc": 0
+    },
+    {
+      "test": "shutdown_workersegfault",
+      "passed": true,
+      "rc": 1
+    },
+    {
+      "test": "shutdown_internalterm",
+      "passed": true,
+      "rc": 1
+    },
+    {
+      "test": "shutdown_internalkill",
+      "passed": true,
+      "rc": 1
+    },
+    {
+      "test": "shutdown_internalmanager",
+      "passed": true,
+      "rc": 1
+    }
+  ],
+  "sources_sha256": {
+    "serve.sh": "22196a4c3268bdf1ebbe096d555201771d8c343100b48c821de1136f33f0e9b5",
+    "run_ab.sh": "4e224a60b77e57573dae313866569cfe6a27370159152ad11778afb0b5509761",
+    "env.sh": "b458d5493426a05580e19cf01d97f35ba7c6c468fa4859dd1b02995c61f9d2b9",
+    "mooncake.json.tmpl": "47ef324b15d78498d6828c347721e24330e4d17cfcab452441f9a3df3e2d1937",
+    "platforms/ascend.env": "18c1bc1bf3ab9d21d8dd538d02c5885c003f1cbe75ee9ef60c851edc24b103d4"
+  }
+}

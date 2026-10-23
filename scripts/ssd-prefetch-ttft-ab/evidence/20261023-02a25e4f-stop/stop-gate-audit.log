@@ -1,0 +1,15 @@
+
+Authorized users only. All activities may be monitored and reported.
+
+OLD_AIO_REMOVAL_SCOPE
+no package requires libaio-devel
+
+OLD_BUILD_FINAL
+PHASE=STOP_BUILD_FAILED
+CMAKE_RC=0
+BUILD_RC=1
+
+SOURCE_CLEAN
+
+OLD_ACTIVE_BUILD_PROCESS_COUNT
+0

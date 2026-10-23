@@ -1,0 +1,58 @@
+{
+  "kind": "CPU-only tokenizer preflight; no benchmark requests",
+  "model": "/data/DeepSeek-V4-Flash-w8a8-mtp",
+  "generator_sha256": "79e42db937162976c8a17e33e00dbc5e22ca5f02c01053bee7eb7f1264639964",
+  "max_model_len": 20480,
+  "output_len": 8,
+  "prefix_words": 16385,
+  "runs": [
+    {
+      "seed": 42,
+      "first_n": 12,
+      "counts": [
+        16394,
+        16394,
+        16395,
+        16395,
+        16395,
+        16394,
+        16395,
+        16394,
+        16394,
+        16395,
+        16394,
+        16394
+      ],
+      "min": 16394,
+      "max": 16395,
+      "total_input_tokens": 196733,
+      "max_plus_output": 16403,
+      "all_fit": true,
+      "auto_deepseek_v4_ids_identical": true
+    },
+    {
+      "seed": 1042,
+      "first_n": 12,
+      "counts": [
+        16395,
+        16394,
+        16394,
+        16394,
+        16394,
+        16394,
+        16394,
+        16394,
+        16394,
+        16395,
+        16394,
+        16395
+      ],
+      "min": 16394,
+      "max": 16395,
+      "total_input_tokens": 196731,
+      "max_plus_output": 16403,
+      "all_fit": true,
+      "auto_deepseek_v4_ids_identical": true
+    }
+  ]
+}

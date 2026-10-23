@@ -1,0 +1,163 @@
+
+Authorized users only. All activities may be monitored and reported.
+
+CMAKE_TARGET
+487-add_ha_test(hot_standby_service_test ha/standby/hot_standby_service_test.cpp)
+488-add_ha_test(standby_metadata_store_test
+489-            ha/standby/standby_metadata_store_test.cpp)
+490-add_ha_test(standby_controller_test ha/standby/standby_controller_test.cpp)
+491-add_ha_test(oplog_applier_test ha/oplog/oplog_applier_test.cpp)
+492-add_ha_test(oplog_types_test ha/oplog/oplog_types_test.cpp)
+493-add_ha_test(oplog_batch_codec_test ha/oplog/oplog_batch_codec_test.cpp)
+494-add_ha_test(oplog_batch_standby_reader_test
+495-            ha/oplog/oplog_batch_standby_reader_test.cpp)
+496:add_ha_test(ordered_oplog_writer_test ha/oplog/ordered_oplog_writer_test.cpp)
+497-if(MOONCAKE_ENABLE_OPLOG_PERF_METRICS)
+498-  target_compile_definitions(ha_metric_manager_test
+499-                             PRIVATE MOONCAKE_ENABLE_OPLOG_PERF_METRICS)
+500:  target_compile_definitions(ordered_oplog_writer_test
+501-                             PRIVATE MOONCAKE_ENABLE_OPLOG_PERF_METRICS)
+502-endif()
+503-add_executable(
+504-  oplog_test_failpoint_test ha/oplog/oplog_test_failpoint_test.cpp
+505-                            ../src/ha/oplog/oplog_test_failpoint.cpp)
+506-target_include_directories(oplog_test_failpoint_test
+507-                           PRIVATE ${MOONCAKE_STORE_INCLUDE_ROOT})
+508-target_compile_definitions(oplog_test_failpoint_test
+509-                           PRIVATE MOONCAKE_ENABLE_TEST_FAILPOINTS)
+--
+517-target_link_libraries(shutdown_request_test PRIVATE glog::glog gtest gtest_main
+518-                                                    pthread)
+519-add_test(NAME shutdown_request_test COMMAND shutdown_request_test)
+520-add_ha_test(master_service_ha_test ha/master_service_ha_test.cpp)
+521-
+522-foreach(
+523-  target
+524-  hot_standby_service_test oplog_applier_test oplog_batch_codec_test
+525-  oplog_batch_standby_reader_test oplog_batch_storage_test
+526:  ordered_oplog_writer_test)
+527-  target_link_libraries(${target} PRIVATE Mooncake::xxhash)
+528-endforeach()
+529-
+530-add_store_test(master_heartbeat_metric_test master_heartbeat_metric_test.cpp)
+
+AIO_CONFIGURATION
+
+AIO_HEADERS
+/*
+ * Copyright (c) 2022, Alibaba Group Holding Limited;
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+#ifndef FUTURE_SIMPLE_IO_EXECUTOR_H
+#define FUTURE_SIMPLE_IO_EXECUTOR_H
+
+#ifndef ASYNC_SIMPLE_USE_MODULES
+#include "async_simple/IOExecutor.h"
+
+#if !__has_include(<libaio.h>) && !defined(ASYNC_SIMPLE_HAS_NOT_AIO)
+#define ASYNC_SIMPLE_HAS_NOT_AIO
+#endif
+
+#ifndef ASYNC_SIMPLE_HAS_NOT_AIO
+#include <libaio.h>
+#endif
+#include <thread>
+
+#endif  // ASYNC_SIMPLE_USE_MODULES
+
+namespace async_simple {
+
+namespace executors {
+
+// This is a demo IOExecutor.
+//  submitIO and submitIOV should be implemented.
+class SimpleIOExecutor : public IOExecutor {
+public:
+    static constexpr int kMaxAio = 8;
+
+public:
+    SimpleIOExecutor() {}
+    virtual ~SimpleIOExecutor() {}
+
+    SimpleIOExecutor(const IOExecutor&) = delete;
+    SimpleIOExecutor& operator=(const IOExecutor&) = delete;
+
+public:
+    class Task {
+    public:
+        Task(AIOCallback& func) : _func(func) {}
+        ~Task() {}
+
+    public:
+#ifndef ASYNC_SIMPLE_HAS_NOT_AIO
+        void process(io_event_t& event) { _func(event); }
+#endif
+
+    private:
+        AIOCallback _func;
+    };
+
+public:
+    bool init() {
+#ifndef ASYNC_SIMPLE_HAS_NOT_AIO
+        auto r = io_setup(kMaxAio, &_ioContext);
+        if (r < 0) {
+            return false;
+        }
+        _loopThread = std::thread([this]() mutable { this->loop(); });
+        return true;
+#else
+        return false;
+#endif
+    }
+
+    void destroy() {
+#ifndef ASYNC_SIMPLE_HAS_NOT_AIO
+        _shutdown = true;
+        if (_loopThread.joinable()) {
+            _loopThread.join();
+        }
+        io_destroy(_ioContext);
+#endif
+    }
+
+    void loop() {
+#ifndef ASYNC_SIMPLE_HAS_NOT_AIO
+
+INSTALLED_AIO
+libaio-0.3.113-10.oe2403sp3.aarch64
+libaio-devel-0.3.113-10.oe2403sp3.aarch64
+0000000000000d60 T io_destroy@@LIBAIO_0.4
+0000000000000c00 T io_getevents@@LIBAIO_0.4
+0000000000000f80 T io_getevents@LIBAIO_0.1
+0000000000000d10 T io_setup@@LIBAIO_0.4
+0000000000000c50 T io_submit@@LIBAIO_0.1
+
+FINAL_STATE
+PHASE=STOP_BUILD_FAILED
+[785/785] Linking CXX shared module mooncake-integration/_store.cpython-312-aarch64-linux-gnu.so
+lto-wrapper: warning: using serial compilation of 18 LTRANS jobs
+lto-wrapper: note: see the ‘-flto’ option documentation for more information
+ninja: build stopped: subcommand failed.
+BUILD_RC=1
+
+HISTORICAL_TARGET_LINK
+17873:build mooncake-store/tests/ordered_oplog_writer_test: CXX_EXECUTABLE_LINKER__ordered_oplog_writer_test_Release mooncake-store/tests/CMakeFiles/ordered_oplog_writer_test.dir/ha/oplog/ordered_oplog_writer_test.cpp.o | mooncake-store/libmaster_service_test_peer.a mooncake-store/src/cachelib_memory_allocator/libcachelib_memory_allocator.a lib/libgtest_main.so.1.17.0 /usr/lib64/libxxhash.so mooncake-store/src/libmooncake_store.so mooncake-transfer-engine/src/libtransfer_engine.so mooncake-transfer-engine/src/common/base/libbase.a mooncake-transfer-engine/src/transport/ascend_transport/ascend_transport.so /usr/lib64/libglog.so.0.6.0 /usr/lib64/libgflags.so.2.2.2 /usr/lib64/libgflags.so.2.2.2 mooncake-store/src/local_ssd/libmooncake_local_ssd.a mooncake-store/src/cachelib_memory_allocator/libcachelib_memory_allocator.a /usr/lib64/libcurl.so /usr/lib64/libcurl.so /usr/lib64/libcrypto.so mooncake-common/src/libmooncake_common.so /usr/lib64/libjsoncpp.so /usr/lib64/libzstd.so mooncake-common/libasio.so /usr/lib64/liburing.so /usr/lib64/libyaml-cpp.so.0.7.0 lib/libgtest.so.1.17.0 || lib/libgtest.so lib/libgtest_main.so mooncake-common/libasio.so mooncake-common/src/libmooncake_common.so mooncake-store/libmaster_service_test_peer.a mooncake-store/src/cachelib_memory_allocator/libcachelib_memory_allocator.a mooncake-store/src/libmooncake_store.so mooncake-store/src/local_ssd/libmooncake_local_ssd.a mooncake-transfer-engine/src/common/base/libbase.a mooncake-transfer-engine/src/libtransfer_engine.so mooncake-transfer-engine/src/transport/ascend_transport/ascend_transport.so mooncake-transfer-engine/src/transport/rdma_transport/rdma_transport mooncake-transfer-engine/src/transport/rdma_twosided/rdma_twosided lib/libgtest_main.so lib/libgtest.so
+17874-  CONFIG = Release
+17875-  DEP_FILE = mooncake-store/tests/CMakeFiles/ordered_oplog_writer_test.dir/link.d
+17876-  FLAGS = -Wall -Wextra -Wno-unused-parameter -fPIC -g -fcoroutines -DOPEN_BUILD_PROJECT  -O3
+17877-  LINK_FLAGS = -Wl,--dependency-file=mooncake-store/tests/CMakeFiles/ordered_oplog_writer_test.dir/link.d
+17878-  LINK_LIBRARIES = -Wl,-rpath,/usr/local/Ascend/cann-9.0.1/aarch64-linux/lib64:/home/d00883276/prefetch_916/src/Mooncake-5f939149/build/lib:/home/d00883276/prefetch_916/src/Mooncake-5f939149/build/mooncake-store/src:/home/d00883276/prefetch_916/src/Mooncake-5f939149/build/mooncake-transfer-engine/src:/home/d00883276/prefetch_916/src/Mooncake-5f939149/build/mooncake-transfer-engine/src/transport/ascend_transport:/home/d00883276/prefetch_916/src/Mooncake-5f939149/build/mooncake-common/src:/home/d00883276/prefetch_916/src/Mooncake-5f939149/build/mooncake-common  mooncake-store/libmaster_service_test_peer.a  mooncake-store/src/cachelib_memory_allocator/libcachelib_memory_allocator.a  -libverbs  lib/libgtest_main.so.1.17.0  -lpthread  /usr/lib64/libxxhash.so  mooncake-store/src/libmooncake_store.so  mooncake-transfer-engine/src/libtransfer_engine.so  -libverbs  mooncake-transfer-engine/src/common/base/libbase.a  -lnuma  mooncake-transfer-engine/src/transport/ascend_transport/ascend_transport.so  /usr/lib64/libglog.so.0.6.0  /usr/lib64/libgflags.so.2.2.2  /usr/lib64/libgflags.so.2.2.2  mooncake-store/src/local_ssd/libmooncake_local_ssd.a  mooncake-store/src/cachelib_memory_allocator/libcachelib_memory_allocator.a  /usr/lib64/libcurl.so  /usr/lib64/libcurl.so  /usr/lib64/libcrypto.so  mooncake-common/src/libmooncake_common.so  /usr/lib64/libjsoncpp.so  /usr/lib64/libzstd.so  mooncake-common/libasio.so  -lpthread  -ldl  -libverbs  /usr/lib64/liburing.so  /usr/lib64/libyaml-cpp.so.0.7.0  lib/libgtest.so.1.17.0
+17879-  LINK_PATH = -L/usr/local/Ascend/cann-9.0.1/aarch64-linux/lib64
+17880-  OBJECT_DIR = mooncake-store/tests/CMakeFiles/ordered_oplog_writer_test.dir

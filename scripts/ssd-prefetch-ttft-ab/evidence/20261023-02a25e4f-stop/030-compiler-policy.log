@@ -1,0 +1,18 @@
+gcc-12:
+  Installed: (none)
+  Candidate: 12.3.0-1ubuntu1~22.04.3
+  Version table:
+     12.3.0-1ubuntu1~22.04.3 500
+        500 http://ports.ubuntu.com/ubuntu-ports jammy-updates/main arm64 Packages
+        500 http://ports.ubuntu.com/ubuntu-ports jammy-security/main arm64 Packages
+     12-20220319-1ubuntu1 500
+        500 http://ports.ubuntu.com/ubuntu-ports jammy/universe arm64 Packages
+g++-12:
+  Installed: (none)
+  Candidate: 12.3.0-1ubuntu1~22.04.3
+  Version table:
+     12.3.0-1ubuntu1~22.04.3 500
+        500 http://ports.ubuntu.com/ubuntu-ports jammy-updates/universe arm64 Packages
+        500 http://ports.ubuntu.com/ubuntu-ports jammy-security/universe arm64 Packages
+     12-20220319-1ubuntu1 500
+        500 http://ports.ubuntu.com/ubuntu-ports jammy/universe arm64 Packages

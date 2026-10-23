@@ -1,0 +1,151 @@
+{
+  "passed": 27,
+  "real_environment": true,
+  "tests": [
+    {
+      "test": "controller_success",
+      "passed": true,
+      "rc": 0
+    },
+    {
+      "test": "controller_fillzero",
+      "passed": true,
+      "rc": 72
+    },
+    {
+      "test": "controller_lease",
+      "passed": true,
+      "rc": 70
+    },
+    {
+      "test": "controller_generic",
+      "passed": true,
+      "rc": 74
+    },
+    {
+      "test": "controller_replica_once",
+      "passed": true,
+      "rc": 0
+    },
+    {
+      "test": "controller_replica_b",
+      "passed": true,
+      "rc": 0
+    },
+    {
+      "test": "controller_replica_twice",
+      "passed": true,
+      "rc": 71
+    },
+    {
+      "test": "controller_shutdown",
+      "passed": true,
+      "rc": 73
+    },
+    {
+      "test": "controller_latelease",
+      "passed": true,
+      "rc": 70
+    },
+    {
+      "test": "controller_controller_error",
+      "passed": true,
+      "rc": 42
+    },
+    {
+      "test": "controller_prefetch_query",
+      "passed": true,
+      "rc": 74
+    },
+    {
+      "test": "controller_prefetch_keys",
+      "passed": true,
+      "rc": 74
+    },
+    {
+      "test": "controller_adjacent_reg_success",
+      "passed": true,
+      "rc": 74
+    },
+    {
+      "test": "controller_split_registration",
+      "passed": true,
+      "rc": 74
+    },
+    {
+      "test": "controller_fillzero_replica",
+      "passed": true,
+      "rc": 72
+    },
+    {
+      "test": "controller_lease_replica",
+      "passed": true,
+      "rc": 70
+    },
+    {
+      "test": "controller_startfailure",
+      "passed": true,
+      "rc": 19
+    },
+    {
+      "test": "controller_benchfailure",
+      "passed": true,
+      "rc": 42
+    },
+    {
+      "test": "controller_mixed_generic_registration",
+      "passed": true,
+      "rc": 74
+    },
+    {
+      "test": "controller_lease_generic_registration",
+      "passed": true,
+      "rc": 70
+    },
+    {
+      "test": "controller_fillzero_generic_registration",
+      "passed": true,
+      "rc": 72
+    },
+    {
+      "test": "shutdown_graceful",
+      "passed": true,
+      "rc": 0
+    },
+    {
+      "test": "shutdown_hang",
+      "passed": true,
+      "rc": 1
+    },
+    {
+      "test": "shutdown_segfault",
+      "passed": true,
+      "rc": 1
+    },
+    {
+      "test": "shutdown_unregister",
+      "passed": true,
+      "rc": 1
+    },
+    {
+      "test": "stale_pid_False",
+      "passed": true,
+      "rc": 0
+    },
+    {
+      "test": "stale_pid_True",
+      "passed": true,
+      "rc": 1
+    }
+  ],
+  "original_sources_sha256": {
+    "env.sh": "b458d5493426a05580e19cf01d97f35ba7c6c468fa4859dd1b02995c61f9d2b9",
+    "mooncake.json.tmpl": "47ef324b15d78498d6828c347721e24330e4d17cfcab452441f9a3df3e2d1937",
+    "platforms/ascend.env": "18c1bc1bf3ab9d21d8dd538d02c5885c003f1cbe75ee9ef60c851edc24b103d4",
+    "gen_dataset.py": "79e42db937162976c8a17e33e00dbc5e22ca5f02c01053bee7eb7f1264639964"
+  },
+  "harness_sources_sha256": {
+    "serve.sh": "22196a4c3268bdf1ebbe096d555201771d8c343100b48c821de1136f33f0e9b5",
+    "run_ab.sh": "261e209ec6fedb16b12747e735cd25908ad1733e1122dcf6a3af6c9ebe26c772"
+  }
+}

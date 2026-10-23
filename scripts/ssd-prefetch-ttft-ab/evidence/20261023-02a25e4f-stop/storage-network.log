@@ -1,0 +1,24 @@
+
+Authorized users only. All activities may be monitored and reported.
+
+STORAGE
+TARGET SOURCE                     FSTYPE OPTIONS
+/home  /dev/mapper/openeuler-home ext4   rw,relatime
+NAME    ROTA MODEL             SIZE
+nvme2n1    0 HWE62P441T6M005N  1.5T
+nvme3n1    0 HWE62P441T6M005N  1.5T
+nvme0n1    0 HWE62P441T6M005N  1.5T
+nvme1n1    0 HWE62P441T6M005N  1.5T
+
+NETWORK
+2: enp189s0f0    inet 80.48.37.208/22 brd 80.48.39.255 scope global noprefixroute enp189s0f0\       valid_lft forever preferred_lft forever
+
+TARGET_MODEL_METADATA
+1710 /data/DeepSeek-V4-Flash-w8a8-mtp/config.json
+2979d84157f7335351fce8fe3397b18605c8f9196e63e330631eb29d502b1d16  /data/DeepSeek-V4-Flash-w8a8-mtp/config.json
+801 /data/DeepSeek-V4-Flash-w8a8-mtp/tokenizer_config.json
+6ac8c8dc065ed118161d02dd532749ae3f52c243deac27872134fae2f50d8547  /data/DeepSeek-V4-Flash-w8a8-mtp/tokenizer_config.json
+6367146 /data/DeepSeek-V4-Flash-w8a8-mtp/tokenizer.json
+8f9f37ca37fdc4f5fd36d5cf4d3b0e8392edb4e894fd10cc0d70b4957c8633cf  /data/DeepSeek-V4-Flash-w8a8-mtp/tokenizer.json
+6438346 /data/DeepSeek-V4-Flash-w8a8-mtp/quant_model_description.json
+612d87d0a9a7545fb19f8cbaff75af3cc467d16ada72d2b6d84d22149a511cf0  /data/DeepSeek-V4-Flash-w8a8-mtp/quant_model_description.json

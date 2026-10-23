@@ -1,0 +1,722 @@
+DATE=2026-10-23T02:40:41+00:00
+CONTAINER=mc-verify-030-20261023
+HEAD=02a25e4fb7adf1a5750bcee857e7b4f300ed7996
+BUILD_JOBS=32
+ldd (Ubuntu GLIBC 2.35-0ubuntu3.15) 2.35
+g++-12 (Ubuntu 12.3.0-1ubuntu1~22.04.3) 12.3.0
+Python 3.12.13
+-- glog version '0.4.0' (< 0.6.0 or unknown): IsGoogleLoggingInitialized() unavailable
+CMAKE_BUILD_TYPE: Release
+-- [limit_jobs] Available memory: 1199867 MB, CPU cores: 192
+-- [limit_jobs] Compile jobs: 192 (1500 MB/job), Link jobs: 192 (4000 MB/job)
+-- [limit_jobs] Ninja job pools: compile=192, link=192
+-- Event-driven completion is disabled
+-- Use env ASCEND_HOME_PATH
+-- Http as metadata server support is enabled
+-- metrics is enabled
+CMake Warning (author) at /usr/local/python3.12.13/lib/python3.12/site-packages/cmake/data/share/cmake-4.4/Modules/FetchContent.cmake:1968 (message):
+  Calling FetchContent_Populate(yalantinglibs) is deprecated, call
+  FetchContent_MakeAvailable(yalantinglibs) instead.  Policy CMP0169 can be
+  set to OLD to allow FetchContent_Populate(yalantinglibs) to be called
+  directly for now, but the ability to call it with declared details will be
+  removed completely in a future version.
+Call Stack (most recent call first):
+  mooncake-common/FindYLT.cmake:29 (FetchContent_Populate)
+  mooncake-common/common.cmake:758 (include)
+  CMakeLists.txt:13 (include)
+This warning is for project developers.  Use -Wno-author to suppress it.
+
+-- -------------YLT INSTALL SETTING------------
+-- INSTALL_THIRDPARTY: ON
+-- INSTALL_STANDALONE: ON
+-- INSTALL_INDEPENDENT_THIRDPARTY: ON
+-- INSTALL_INDEPENDENT_STANDALONE: ON
+-- --------------------------------------------
+YLT is imported by fetchContent or add_subdirectory
+-- -------------YLT CONFIG SETTING-------------
+-- YLT_ENABLE_DL: ON
+-- YLT_ENABLE_SSL: OFF
+-- YLT_ENABLE_NTLS: OFF
+-- Enable ibverbs support
+-- YLT_ENABLE_PMR: OFF
+-- YLT_ENABLE_IO_URING: OFF
+-- YLT_ENABLE_STRUCT_PACK_UNPORTABLE_TYPE: OFF
+-- YLT_ENABLE_STRUCT_PACK_OPTIMIZE: OFF
+-- --------------------------------------------
+CMake Warning (deprecated) at extern/pybind11/CMakeLists.txt:13 (cmake_minimum_required):
+  Compatibility with CMake < 3.10 will be removed from a future version of
+  CMake.
+
+  Update the VERSION argument <min> value.  Or, use the <min>...<max> syntax
+  to tell CMake that the project requires at least <min> but has been updated
+  to work with policies introduced by <max> or earlier.
+This warning is for project developers.  Use -Wno-author or -Wno-deprecated
+to suppress it.
+
+-- pybind11 v2.13.6 
+CMake Warning (deprecated) at extern/pybind11/tools/FindPythonLibsNew.cmake:110 (cmake_policy):
+  The OLD behavior for policy CMP0148 will be removed from a future version
+  of CMake.
+
+  The cmake-policies(7) manual explains that the OLD behaviors of all
+  policies are deprecated and that a policy should be set to OLD only under
+  specific short-term circumstances.  Projects should be ported to the NEW
+  behavior and not rely on setting a policy to OLD.
+Call Stack (most recent call first):
+  extern/pybind11/tools/pybind11Tools.cmake:50 (find_package)
+  extern/pybind11/tools/pybind11Common.cmake:228 (include)
+  extern/pybind11/CMakeLists.txt:251 (include)
+This warning is for project developers.  Use -Wno-author or -Wno-deprecated
+to suppress it.
+
+-- USE_NOF=OFF, NoF SSD pool support is disabled
+-- Ascend support fabric mem.
+-- Found library: /usr/local/Ascend/cann-9.2.0/aarch64-linux/lib64/libmetadef.so
+-- CUDA: Disabled
+-- ROCm/HIP: Disabled
+-- Sunrise/Tang: Disabled
+-- Mooncake Store will be built
+-- io_uring: Enabled for mooncake_store
+-- Store HA backends are disabled
+-- Alibaba Cloud OSS adapter: Enabled
+-- S3-compatible adapter: Enabled
+-- AWS SDK not found, S3 functionality will be disabled
+-- io_uring: NVMe uring command support unavailable, NVMe KV io_uring executor disabled
+-- Mooncake Python install directory: /usr/local/Ascend/ascend-toolkit/latest/python/site-packages/mooncake
+-- Configuring done (0.7s)
+-- Generating done (1.3s)
+-- Build files have been written to: /home/d00883276/prefetch_916/920_pre_pr/gate/twotier-208/verify-20261023-02a25e4f/build-030
+CMAKE_RC=0
+[1/795] Linking CXX shared library mooncake-common/libasio.so
+[2/795] Linking CXX shared library mooncake-transfer-engine/src/transport/ascend_transport/ascend_transport.so
+[3/795] Linking CXX static library mooncake-store/src/cachelib_memory_allocator/libcachelib_memory_allocator.a
+[4/795] Linking CXX shared library lib/libgtest.so.1.17.0
+[5/795] Linking CXX shared library mooncake-common/src/libmooncake_common.so
+[6/795] Linking CXX shared library mooncake-transfer-engine/src/libtransfer_engine.so
+[7/795] Building CXX object mooncake-store/src/CMakeFiles/mooncake_store_shared_objects.dir/config/rpc_protocol_config.cpp.o
+[8/795] Building CXX object mooncake-store/src/CMakeFiles/mooncake_store_shared_objects.dir/config/store_cluster_identity_config.cpp.o
+[9/795] Building CXX object mooncake-store/src/CMakeFiles/mooncake_store_master_objects.dir/config/dfs_enablement_config.cpp.o
+[10/795] Building CXX object mooncake-store/src/CMakeFiles/mooncake_store_master_objects.dir/config/local_file_snapshot_config.cpp.o
+[11/795] Building CXX object mooncake-store/src/CMakeFiles/mooncake_store_master_objects.dir/config/master_metadata_config.cpp.o
+[12/795] Building CXX object mooncake-store/src/CMakeFiles/mooncake_store_shared_objects.dir/thread_pool.cpp.o
+[13/795] Building CXX object mooncake-store/src/CMakeFiles/mooncake_store_master_objects.dir/config/s3_client_config.cpp.o
+[14/795] Building CXX object mooncake-store/src/CMakeFiles/mooncake_store_shared_objects.dir/uds_transport.cpp.o
+[15/795] Building CXX object mooncake-store/src/CMakeFiles/mooncake_store_shared_objects.dir/common/file_util.cpp.o
+[16/795] Building CXX object mooncake-store/src/CMakeFiles/mooncake_store_master_objects.dir/config/redis_connection_config.cpp.o
+[17/795] Building CXX object mooncake-store/src/CMakeFiles/mooncake_store_master_objects.dir/config/ha_cluster_namespace_config.cpp.o
+[18/795] Building CXX object mooncake-store/src/CMakeFiles/mooncake_store_shared_objects.dir/etcd_helper.cpp.o
+[19/795] Building CXX object mooncake-store/src/CMakeFiles/mooncake_store_master_objects.dir/config/metrics_bootstrap_config_loader.cpp.o
+[20/795] Building CXX object mooncake-store/src/CMakeFiles/mooncake_store_shared_objects.dir/storage/distributed/posix_fs_adapter.cpp.o
+[21/795] Building CXX object mooncake-store/src/CMakeFiles/mooncake_store_master_objects.dir/tenant_quota_ledger.cpp.o
+[22/795] Building CXX object mooncake-store/src/CMakeFiles/mooncake_store_shared_objects.dir/types.cpp.o
+[23/795] Building CXX object mooncake-store/src/CMakeFiles/mooncake_store_master_objects.dir/segment_allocator_registration.cpp.o
+[24/795] Building CXX object mooncake-store/src/CMakeFiles/mooncake_store_master_objects.dir/segment/catalog.cpp.o
+[25/795] Building CXX object mooncake-store/src/CMakeFiles/mooncake_store_shared_objects.dir/allocator_metric.cpp.o
+[26/795] Building CXX object mooncake-store/src/CMakeFiles/mooncake_store_master_objects.dir/tenant/quota.cpp.o
+[27/795] Building CXX object mooncake-store/src/local_ssd/CMakeFiles/mooncake_local_ssd.dir/manager.cpp.o
+[28/795] Building CXX object mooncake-store/src/CMakeFiles/mooncake_store_master_objects.dir/segment/region_driver.cpp.o
+[29/795] Building CXX object mooncake-store/src/CMakeFiles/mooncake_store_shared_objects.dir/config/distributed_storage_config.cpp.o
+[30/795] Building CXX object mooncake-store/src/CMakeFiles/mooncake_store_master_objects.dir/promotion_candidate_tracker.cpp.o
+[31/795] Building CXX object mooncake-store/src/CMakeFiles/mooncake_store_master_objects.dir/weight_store_manager.cpp.o
+[32/795] Building CXX object mooncake-store/src/CMakeFiles/mooncake_store_master_objects.dir/tenant/quota_manager.cpp.o
+[33/795] Building CXX object mooncake-store/src/CMakeFiles/mooncake_store_master_objects.dir/segment/pool.cpp.o
+[34/795] Building CXX object mooncake-store/src/CMakeFiles/mooncake_store_master_objects.dir/offset_allocator.cpp.o
+[35/795] Building CXX object mooncake-store/src/CMakeFiles/mooncake_store_master_objects.dir/segment/pool_mount.cpp.o
+[36/795] Building CXX object mooncake-store/src/CMakeFiles/mooncake_store_master_objects.dir/segment/pool_write_access.cpp.o
+[37/795] Building CXX object mooncake-store/src/CMakeFiles/mooncake_store_master_objects.dir/placement/replica_allocator.cpp.o
+[38/795] Building CXX object mooncake-store/src/CMakeFiles/mooncake_store_master_objects.dir/allocation_strategy.cpp.o
+[39/795] Building CXX object mooncake-store/src/CMakeFiles/mooncake_store_master_objects.dir/segment/pool_read_access.cpp.o
+[40/795] Building CXX object mooncake-store/src/CMakeFiles/mooncake_store_master_objects.dir/ha/snapshot/allocator_snapshot_codec.cpp.o
+[41/795] Building CXX object mooncake-store/src/CMakeFiles/mooncake_store_master_objects.dir/ha/leadership/leader_coordinator_factory.cpp.o
+[42/795] Building CXX object mooncake-store/src/CMakeFiles/mooncake_store_master_objects.dir/placement/index.cpp.o
+[43/795] Building CXX object mooncake-store/src/CMakeFiles/mooncake_store_master_objects.dir/shutdown_request.cpp.o
+[44/795] Building CXX object mooncake-store/src/CMakeFiles/mooncake_store_master_objects.dir/tenant/quota_policy_store.cpp.o
+[45/795] Building CXX object mooncake-store/src/CMakeFiles/mooncake_store_master_objects.dir/ha/snapshot/store_resource_snapshot_codec.cpp.o
+[46/795] Building CXX object mooncake-store/src/CMakeFiles/mooncake_store_master_objects.dir/ha/common/redis/redis_connection.cpp.o
+[47/795] Building CXX object mooncake-store/src/CMakeFiles/mooncake_store_shared_objects.dir/storage/distributed/distributed_storage_backend.cpp.o
+[48/795] Building CXX object mooncake-store/src/CMakeFiles/mooncake_store_master_objects.dir/allocator.cpp.o
+[49/795] Building CXX object mooncake-store/src/CMakeFiles/mooncake_store_master_objects.dir/weight_metadata_store.cpp.o
+[50/795] Building CXX object mooncake-store/src/CMakeFiles/mooncake_store_master_objects.dir/ha/leadership/backends/etcd/etcd_leader_coordinator.cpp.o
+[51/795] Building CXX object mooncake-store/src/CMakeFiles/mooncake_store_master_objects.dir/ha/leadership/backends/redis/redis_leader_coordinator.cpp.o
+[52/795] Building CXX object mooncake-store/src/CMakeFiles/mooncake_store_master_objects.dir/ha/kv/ha_kv_backend_factory.cpp.o
+[53/795] Building CXX object mooncake-store/src/CMakeFiles/mooncake_store_master_objects.dir/client_offboarding.cpp.o
+[54/795] Building CXX object mooncake-store/src/CMakeFiles/mooncake_store_master_objects.dir/segment/snapshot.cpp.o
+[55/795] Building CXX object mooncake-store/src/CMakeFiles/mooncake_store_master_objects.dir/ha/kv/etcd_ha_kv_backend.cpp.o
+[56/795] Building CXX object mooncake-store/src/CMakeFiles/mooncake_store_master_objects.dir/ha/snapshot/object/backends/s3/s3_snapshot_object_store.cpp.o
+[57/795] Building CXX object mooncake-store/src/CMakeFiles/mooncake_store_master_objects.dir/ha/snapshot/object/snapshot_object_store.cpp.o
+[58/795] Building CXX object mooncake-store/src/CMakeFiles/mooncake_store_master_objects.dir/master_store_backend.cpp.o
+[59/795] Building CXX object mooncake-store/src/CMakeFiles/mooncake_store_master_objects.dir/ha/kv/redis_ha_kv_backend.cpp.o
+[60/795] Building CXX object mooncake-store/src/CMakeFiles/mooncake_store_master_objects.dir/ha/snapshot/batch_oplog/batch_oplog_snapshot_publisher.cpp.o
+[61/795] Building CXX object mooncake-store/src/CMakeFiles/mooncake_store_master_objects.dir/ha/snapshot/snapshot_maintenance_lease.cpp.o
+[62/795] Building CXX object mooncake-store/src/CMakeFiles/mooncake_store_master_objects.dir/ha/oplog/oplog_test_failpoint.cpp.o
+[63/795] Building CXX object mooncake-store/src/CMakeFiles/mooncake_store_master_objects.dir/ha/snapshot/batch_oplog/metadata.cpp.o
+[64/795] Building CXX object mooncake-store/src/CMakeFiles/mooncake_store_master_objects.dir/dynamic_replication_controller.cpp.o
+[65/795] Building CXX object mooncake-store/src/CMakeFiles/mooncake_store_master_objects.dir/ha/snapshot/object/backends/local/local_file_snapshot_object_store.cpp.o
+[66/795] Building CXX object mooncake-store/src/CMakeFiles/mooncake_store_master_objects.dir/ha/oplog/oplog_types.cpp.o
+[67/795] Building CXX object mooncake-store/src/CMakeFiles/mooncake_store_master_objects.dir/ha/snapshot/batch_oplog/batch_oplog_snapshot_gc.cpp.o
+[68/795] Building CXX object mooncake-store/src/CMakeFiles/mooncake_store_master_objects.dir/storage/distributed/immutable_bucket_allocator.cpp.o
+[69/795] Building CXX object mooncake-store/src/CMakeFiles/mooncake_store_master_objects.dir/storage/distributed/shard_allocator.cpp.o
+[70/795] Building CXX object mooncake-store/src/CMakeFiles/mooncake_store_master_objects.dir/ha/snapshot/batch_oplog/batch_oplog_pruning_coordinator.cpp.o
+[71/795] Building CXX object mooncake-store/src/CMakeFiles/mooncake_store_client_objects.dir/common/client_buffer_allocation.cpp.o
+[72/795] Building CXX object mooncake-store/src/CMakeFiles/mooncake_store_master_objects.dir/standby_state_machine.cpp.o
+[73/795] Building CXX object mooncake-store/src/CMakeFiles/mooncake_store_master_objects.dir/ha/oplog/oplog_batch_types.cpp.o
+[74/795] Building CXX object mooncake-store/src/CMakeFiles/mooncake_store_master_objects.dir/ha/snapshot/local_ssd_codec.cpp.o
+[75/795] Building CXX object mooncake-store/src/CMakeFiles/mooncake_store_client_objects.dir/mmap_arena.cpp.o
+[76/795] Building CXX object mooncake-store/src/CMakeFiles/mooncake_store_master_objects.dir/ha/oplog/oplog_batch_codec.cpp.o
+[77/795] Building CXX object mooncake-store/src/CMakeFiles/mooncake_store_client_objects.dir/config/hugepage_config.cpp.o
+[78/795] Building CXX object mooncake-store/src/CMakeFiles/mooncake_store_master_objects.dir/ha/oplog/oplog_batch_storage.cpp.o
+[79/795] Building CXX object mooncake-store/src/CMakeFiles/mooncake_store_client_objects.dir/config/mmap_arena_config.cpp.o
+[80/795] Building CXX object mooncake-store/src/CMakeFiles/mooncake_store_master_objects.dir/k8s_lease_helper.cpp.o
+[81/795] Building CXX object mooncake-store/src/CMakeFiles/mooncake_store_client_objects.dir/common/mmap_buffer.cpp.o
+[82/795] Building CXX object mooncake-store/src/CMakeFiles/mooncake_store_master_objects.dir/ha/snapshot/batch_oplog/batch_oplog_snapshot_provider.cpp.o
+[83/795] Building CXX object mooncake-store/src/CMakeFiles/mooncake_store_master_objects.dir/ha/snapshot/batch_oplog/writer.cpp.o
+[84/795] Building CXX object mooncake-store/src/CMakeFiles/mooncake_store_client_objects.dir/nvme_kv/config/u32_parser.cpp.o
+[85/795] Building CXX object mooncake-store/src/CMakeFiles/mooncake_store_master_objects.dir/ha/snapshot/batch_oplog/batch_oplog_snapshot_coordinator.cpp.o
+[86/795] Building CXX object mooncake-store/src/CMakeFiles/mooncake_store_client_objects.dir/nvme_kv/config/io_concurrency_config.cpp.o
+[87/795] Building CXX object mooncake-store/src/CMakeFiles/mooncake_store_client_objects.dir/nvme_kv/config/executor_config.cpp.o
+[88/795] Building CXX object mooncake-store/src/CMakeFiles/mooncake_store_master_objects.dir/master_metric_manager.cpp.o
+[89/795] Building CXX object mooncake-store/src/CMakeFiles/mooncake_store_client_objects.dir/nvme_kv/key_codec.cpp.o
+[90/795] Building CXX object mooncake-store/src/CMakeFiles/mooncake_store_master_objects.dir/ha/oplog/oplog_batch_standby_reader.cpp.o
+[91/795] Building CXX object mooncake-store/src/CMakeFiles/mooncake_store_client_objects.dir/nvme_kv/object_layout.cpp.o
+[92/795] Building CXX object mooncake-store/src/CMakeFiles/mooncake_store_master_objects.dir/segment.cpp.o
+[93/795] Building CXX object mooncake-store/src/CMakeFiles/mooncake_store_master_objects.dir/ha_metric_manager.cpp.o
+[94/795] Building CXX object mooncake-store/src/CMakeFiles/mooncake_store_master_objects.dir/task_manager.cpp.o
+[95/795] Building CXX object mooncake-store/src/CMakeFiles/mooncake_store_master_objects.dir/ha/standby_metadata_store.cpp.o
+[96/795] Building CXX object mooncake-store/src/CMakeFiles/mooncake_store_client_objects.dir/nvme_kv/config/connector_config.cpp.o
+[97/795] Building CXX object mooncake-store/src/CMakeFiles/mooncake_store_master_objects.dir/ha/standby_controller.cpp.o
+[98/795] Building CXX object mooncake-store/src/CMakeFiles/mooncake_store_client_objects.dir/nvme_kv/executor_io_uring.cpp.o
+[99/795] Building CXX object mooncake-store/src/CMakeFiles/mooncake_store_client_objects.dir/config/fileread_worker_pool_config.cpp.o
+[100/795] Building CXX object mooncake-store/src/CMakeFiles/mooncake_store_client_objects.dir/config/nof_debug_config.cpp.o
+[101/795] Building CXX object mooncake-store/src/CMakeFiles/mooncake_store_client_objects.dir/config/nof_worker_pool_config.cpp.o
+[102/795] Building CXX object mooncake-store/src/CMakeFiles/mooncake_store_client_objects.dir/nvme_kv/executor_util.cpp.o
+[103/795] Building CXX object mooncake-store/src/CMakeFiles/mooncake_store_master_objects.dir/ha/oplog/ordered_oplog_writer.cpp.o
+[104/795] Building CXX object mooncake-store/src/CMakeFiles/mooncake_store_client_objects.dir/config/registered_pinned_memory_config.cpp.o
+[105/795] Building CXX object mooncake-store/src/CMakeFiles/mooncake_store_client_objects.dir/registered_pinned_memory.cpp.o
+[106/795] Building CXX object mooncake-store/src/CMakeFiles/mooncake_store_master_objects.dir/metadata_store.cpp.o
+[107/795] Building CXX object mooncake-store/src/CMakeFiles/mooncake_store_client_objects.dir/config/shm_spdk_registration_config.cpp.o
+[108/795] Building CXX object mooncake-store/src/CMakeFiles/mooncake_store_client_objects.dir/nvme_kv/executor_ioctl.cpp.o
+[109/795] Building CXX object mooncake-store/src/CMakeFiles/mooncake_store_client_objects.dir/nvme_kv/key_conflict_policy.cpp.o
+[110/795] Building CXX object mooncake-store/src/CMakeFiles/mooncake_store_client_objects.dir/nvme_kv/connector.cpp.o
+[111/795] Building CXX object mooncake-store/src/CMakeFiles/mooncake_store_client_objects.dir/shm_helper.cpp.o
+[112/795] Building CXX object mooncake-store/src/CMakeFiles/mooncake_store_client_objects.dir/config/client_object_checksum_config.cpp.o
+[113/795] Building CXX object mooncake-store/src/CMakeFiles/mooncake_store_master_objects.dir/ha/snapshot/batch_oplog/codec.cpp.o
+[114/795] Building CXX object mooncake-store/src/CMakeFiles/mooncake_store_client_objects.dir/posix_file.cpp.o
+[115/795] Building CXX object mooncake-store/src/CMakeFiles/mooncake_store_client_objects.dir/config/bucket_backend_config.cpp.o
+[116/795] Building CXX object mooncake-store/src/CMakeFiles/mooncake_store_client_objects.dir/config/file_per_key_config.cpp.o
+[117/795] Building CXX object mooncake-store/src/CMakeFiles/mooncake_store_client_objects.dir/config/client_host_identity_config.cpp.o
+[118/795] Building CXX object mooncake-store/src/CMakeFiles/mooncake_store_client_objects.dir/config/client_auto_port_config.cpp.o
+[119/795] Building CXX object mooncake-store/src/CMakeFiles/mooncake_store_client_objects.dir/config/cxl_segment_config.cpp.o
+[120/795] Building CXX object mooncake-store/src/CMakeFiles/mooncake_store_client_objects.dir/config/client_numa_config.cpp.o
+[121/795] Building CXX object mooncake-store/src/CMakeFiles/mooncake_store_client_objects.dir/config/nof_register_config.cpp.o
+[122/795] Building CXX object mooncake-store/src/CMakeFiles/mooncake_store_client_objects.dir/config/replica_selection_config.cpp.o
+[123/795] Building CXX object mooncake-store/src/CMakeFiles/mooncake_store_client_objects.dir/config/rpc_timeout_config.cpp.o
+[124/795] Building CXX object mooncake-store/src/CMakeFiles/mooncake_store_client_objects.dir/config/offset_allocator_backend_config.cpp.o
+[125/795] Building CXX object mooncake-store/src/CMakeFiles/mooncake_store_client_objects.dir/device/accelerator_device.cpp.o
+[126/795] Building CXX object mooncake-store/src/CMakeFiles/mooncake_store_shared_objects.dir/common/network.cpp.o
+[127/795] Building CXX object mooncake-store/src/CMakeFiles/mooncake_store_client_objects.dir/config/transfer_submitter_config.cpp.o
+[128/795] Building CXX object mooncake-store/src/CMakeFiles/mooncake_store_master_objects.dir/ha/oplog/oplog_applier.cpp.o
+[129/795] Building CXX object mooncake-store/src/CMakeFiles/mooncake_store_client_objects.dir/config/spdk_controller_config.cpp.o
+[130/795] Building CXX object mooncake-store/src/CMakeFiles/mooncake_store_master_objects.dir/serialize/serializer.cpp.o
+[131/795] Building CXX object mooncake-store/src/CMakeFiles/mooncake_store_client_objects.dir/config/client_auto_discovery_config.cpp.o
+[132/795] Building CXX object mooncake-store/src/CMakeFiles/mooncake_store_client_objects.dir/device/runtime_accelerator.cpp.o
+[133/795] Building CXX object mooncake-store/src/CMakeFiles/mooncake_store_client_objects.dir/device/cuda_like_accelerator_device.cpp.o
+[134/795] Building CXX object mooncake-store/src/CMakeFiles/mooncake_store_client_objects.dir/memory_alloc.cpp.o
+[135/795] Building CXX object mooncake-store/src/CMakeFiles/mooncake_store_client_objects.dir/device/hip_accelerator_device.cpp.o
+[136/795] Building CXX object mooncake-store/src/CMakeFiles/mooncake_store_client_objects.dir/device/xpu_accelerator_device.cpp.o
+[137/795] Building CXX object mooncake-store/src/CMakeFiles/mooncake_store_client_objects.dir/device/accelerator_registry.cpp.o
+[138/795] Building CXX object mooncake-store/src/CMakeFiles/mooncake_store_client_objects.dir/device/ascend_accelerator_device.cpp.o
+[139/795] Building CXX object mooncake-store/src/CMakeFiles/mooncake_store_client_objects.dir/device/sunrise_accelerator_device.cpp.o
+[140/795] Building CXX object mooncake-store/src/CMakeFiles/mooncake_store_master_objects.dir/hot_standby_service.cpp.o
+In file included from /usr/include/c++/12/bits/shared_ptr.h:53,
+                 from /usr/include/c++/12/condition_variable:42,
+                 from /home/d00883276/prefetch_916/src/Mooncake-02a25e4f/mooncake-store/include/hot_standby_service.h:5,
+                 from /home/d00883276/prefetch_916/src/Mooncake-02a25e4f/mooncake-store/src/hot_standby_service.cpp:1:
+In constructor ‘std::__shared_ptr<_Tp, _Lp>::__shared_ptr(std::__shared_ptr<_Tp, _Lp>&&) [with _Tp = mooncake::BatchOpLogSnapshotCapture::LeaseState; __gnu_cxx::_Lock_policy _Lp = __gnu_cxx::_S_atomic]’,
+    inlined from ‘std::shared_ptr<_Tp>::shared_ptr(std::shared_ptr<_Tp>&&) [with _Tp = mooncake::BatchOpLogSnapshotCapture::LeaseState]’ at /usr/include/c++/12/bits/shared_ptr.h:360:41,
+    inlined from ‘void mooncake::BatchOpLogSnapshotCapture::Release()’ at /home/d00883276/prefetch_916/src/Mooncake-02a25e4f/mooncake-store/include/ha/snapshot/batch_oplog/capture.h:81:50,
+    inlined from ‘mooncake::BatchOpLogSnapshotCapture::~BatchOpLogSnapshotCapture()’ at /home/d00883276/prefetch_916/src/Mooncake-02a25e4f/mooncake-store/include/ha/snapshot/batch_oplog/capture.h:45:43,
+    inlined from ‘constexpr void std::_Optional_payload_base<_Tp>::_M_destroy() [with _Tp = mooncake::BatchOpLogSnapshotCapture]’ at /usr/include/c++/12/optional:287:35,
+    inlined from ‘constexpr void std::_Optional_payload_base<_Tp>::_M_reset() [with _Tp = mooncake::BatchOpLogSnapshotCapture]’ at /usr/include/c++/12/optional:318:14,
+    inlined from ‘constexpr std::_Optional_payload<_Tp, false, _Copy, _Move>::~_Optional_payload() [with _Tp = mooncake::BatchOpLogSnapshotCapture; bool _Copy = false; bool _Move = false]’ at /usr/include/c++/12/optional:439:65,
+    inlined from ‘constexpr std::_Optional_base<mooncake::BatchOpLogSnapshotCapture, false, false>::~_Optional_base()’ at /usr/include/c++/12/optional:510:12,
+    inlined from ‘constexpr std::optional<mooncake::BatchOpLogSnapshotCapture>::~optional()’ at /usr/include/c++/12/optional:705:11,
+    inlined from ‘void mooncake::HotStandbyService::CancelSnapshotCapture()’ at /home/d00883276/prefetch_916/src/Mooncake-02a25e4f/mooncake-store/src/hot_standby_service.cpp:1051:1:
+/usr/include/c++/12/bits/shared_ptr_base.h:1532:20: warning: ‘((std::__shared_ptr<mooncake::BatchOpLogSnapshotCapture::LeaseState, __gnu_cxx::_S_atomic>*)((char*)&ready_capture + offsetof(std::optional<mooncake::BatchOpLogSnapshotCapture>,std::optional<mooncake::BatchOpLogSnapshotCapture>::<unnamed>.std::_Optional_base<mooncake::BatchOpLogSnapshotCapture, false, false>::_M_payload.std::_Optional_payload<mooncake::BatchOpLogSnapshotCapture, false, false, false>::<unnamed>.std::_Optional_payload<mooncake::BatchOpLogSnapshotCapture, true, false, false>::<unnamed>.std::_Optional_payload_base<mooncake::BatchOpLogSnapshotCapture>::_M_payload)))[12].std::__shared_ptr<mooncake::BatchOpLogSnapshotCapture::LeaseState, __gnu_cxx::_S_atomic>::_M_ptr’ may be used uninitialized [-Wmaybe-uninitialized]
+ 1532 |       : _M_ptr(__r._M_ptr), _M_refcount()
+      |                ~~~~^~~~~~
+/home/d00883276/prefetch_916/src/Mooncake-02a25e4f/mooncake-store/src/hot_standby_service.cpp: In member function ‘void mooncake::HotStandbyService::CancelSnapshotCapture()’:
+/home/d00883276/prefetch_916/src/Mooncake-02a25e4f/mooncake-store/src/hot_standby_service.cpp:1041:46: note: ‘ready_capture’ declared here
+ 1041 |     std::optional<BatchOpLogSnapshotCapture> ready_capture;
+      |                                              ^~~~~~~~~~~~~
+In member function ‘void std::__shared_count<_Lp>::_M_swap(std::__shared_count<_Lp>&) [with __gnu_cxx::_Lock_policy _Lp = __gnu_cxx::_S_atomic]’,
+    inlined from ‘std::__shared_ptr<_Tp, _Lp>::__shared_ptr(std::__shared_ptr<_Tp, _Lp>&&) [with _Tp = mooncake::BatchOpLogSnapshotCapture::LeaseState; __gnu_cxx::_Lock_policy _Lp = __gnu_cxx::_S_atomic]’ at /usr/include/c++/12/bits/shared_ptr_base.h:1534:21,
+    inlined from ‘std::shared_ptr<_Tp>::shared_ptr(std::shared_ptr<_Tp>&&) [with _Tp = mooncake::BatchOpLogSnapshotCapture::LeaseState]’ at /usr/include/c++/12/bits/shared_ptr.h:360:41,
+    inlined from ‘void mooncake::BatchOpLogSnapshotCapture::Release()’ at /home/d00883276/prefetch_916/src/Mooncake-02a25e4f/mooncake-store/include/ha/snapshot/batch_oplog/capture.h:81:50,
+    inlined from ‘mooncake::BatchOpLogSnapshotCapture::~BatchOpLogSnapshotCapture()’ at /home/d00883276/prefetch_916/src/Mooncake-02a25e4f/mooncake-store/include/ha/snapshot/batch_oplog/capture.h:45:43,
+    inlined from ‘constexpr void std::_Optional_payload_base<_Tp>::_M_destroy() [with _Tp = mooncake::BatchOpLogSnapshotCapture]’ at /usr/include/c++/12/optional:287:35,
+    inlined from ‘constexpr void std::_Optional_payload_base<_Tp>::_M_reset() [with _Tp = mooncake::BatchOpLogSnapshotCapture]’ at /usr/include/c++/12/optional:318:14,
+    inlined from ‘constexpr std::_Optional_payload<_Tp, false, _Copy, _Move>::~_Optional_payload() [with _Tp = mooncake::BatchOpLogSnapshotCapture; bool _Copy = false; bool _Move = false]’ at /usr/include/c++/12/optional:439:65,
+    inlined from ‘constexpr std::_Optional_base<mooncake::BatchOpLogSnapshotCapture, false, false>::~_Optional_base()’ at /usr/include/c++/12/optional:510:12,
+    inlined from ‘constexpr std::optional<mooncake::BatchOpLogSnapshotCapture>::~optional()’ at /usr/include/c++/12/optional:705:11,
+    inlined from ‘void mooncake::HotStandbyService::CancelSnapshotCapture()’ at /home/d00883276/prefetch_916/src/Mooncake-02a25e4f/mooncake-store/src/hot_standby_service.cpp:1051:1:
+/usr/include/c++/12/bits/shared_ptr_base.h:1099:32: warning: ‘((std::__shared_count<__gnu_cxx::_S_atomic>*)((char*)&ready_capture + offsetof(std::optional<mooncake::BatchOpLogSnapshotCapture>,std::optional<mooncake::BatchOpLogSnapshotCapture>::<unnamed>.std::_Optional_base<mooncake::BatchOpLogSnapshotCapture, false, false>::_M_payload.std::_Optional_payload<mooncake::BatchOpLogSnapshotCapture, false, false, false>::<unnamed>.std::_Optional_payload<mooncake::BatchOpLogSnapshotCapture, true, false, false>::<unnamed>.std::_Optional_payload_base<mooncake::BatchOpLogSnapshotCapture>::_M_payload)))[25].std::__shared_count<>::_M_pi’ may be used uninitialized [-Wmaybe-uninitialized]
+ 1099 |         _Sp_counted_base<_Lp>* __tmp = __r._M_pi;
+      |                                ^~~~~
+/home/d00883276/prefetch_916/src/Mooncake-02a25e4f/mooncake-store/src/hot_standby_service.cpp: In member function ‘void mooncake::HotStandbyService::CancelSnapshotCapture()’:
+/home/d00883276/prefetch_916/src/Mooncake-02a25e4f/mooncake-store/src/hot_standby_service.cpp:1041:46: note: ‘ready_capture’ declared here
+ 1041 |     std::optional<BatchOpLogSnapshotCapture> ready_capture;
+      |                                              ^~~~~~~~~~~~~
+In file included from /home/d00883276/prefetch_916/src/Mooncake-02a25e4f/mooncake-store/include/hot_standby_service.h:20:
+In member function ‘void mooncake::BatchOpLogSnapshotCapture::Release()’,
+    inlined from ‘mooncake::BatchOpLogSnapshotCapture::~BatchOpLogSnapshotCapture()’ at /home/d00883276/prefetch_916/src/Mooncake-02a25e4f/mooncake-store/include/ha/snapshot/batch_oplog/capture.h:45:43,
+    inlined from ‘constexpr void std::_Optional_payload_base<_Tp>::_M_destroy() [with _Tp = mooncake::BatchOpLogSnapshotCapture]’ at /usr/include/c++/12/optional:287:35,
+    inlined from ‘constexpr void std::_Optional_payload_base<_Tp>::_M_reset() [with _Tp = mooncake::BatchOpLogSnapshotCapture]’ at /usr/include/c++/12/optional:318:14,
+    inlined from ‘constexpr std::_Optional_payload<_Tp, false, _Copy, _Move>::~_Optional_payload() [with _Tp = mooncake::BatchOpLogSnapshotCapture; bool _Copy = false; bool _Move = false]’ at /usr/include/c++/12/optional:439:65,
+    inlined from ‘constexpr std::_Optional_base<mooncake::BatchOpLogSnapshotCapture, false, false>::~_Optional_base()’ at /usr/include/c++/12/optional:510:12,
+    inlined from ‘constexpr std::optional<mooncake::BatchOpLogSnapshotCapture>::~optional()’ at /usr/include/c++/12/optional:705:11,
+    inlined from ‘void mooncake::HotStandbyService::CancelSnapshotCapture()’ at /home/d00883276/prefetch_916/src/Mooncake-02a25e4f/mooncake-store/src/hot_standby_service.cpp:1051:1:
+/home/d00883276/prefetch_916/src/Mooncake-02a25e4f/mooncake-store/include/ha/snapshot/batch_oplog/capture.h:86:36: warning: ‘*(mooncake::BatchOpLogSnapshotCapture*)((char*)&ready_capture + offsetof(std::optional<mooncake::BatchOpLogSnapshotCapture>,std::optional<mooncake::BatchOpLogSnapshotCapture>::<unnamed>.std::_Optional_base<mooncake::BatchOpLogSnapshotCapture, false, false>::<unnamed>)).mooncake::BatchOpLogSnapshotCapture::generation_’ may be used uninitialized [-Wmaybe-uninitialized]
+   86 |         if (lease_state->active && generation_ == lease_state->generation) {
+      |                                    ^~~~~~~~~~~
+/home/d00883276/prefetch_916/src/Mooncake-02a25e4f/mooncake-store/src/hot_standby_service.cpp: In member function ‘void mooncake::HotStandbyService::CancelSnapshotCapture()’:
+/home/d00883276/prefetch_916/src/Mooncake-02a25e4f/mooncake-store/src/hot_standby_service.cpp:1041:46: note: ‘ready_capture’ declared here
+ 1041 |     std::optional<BatchOpLogSnapshotCapture> ready_capture;
+      |                                              ^~~~~~~~~~~~~
+[141/795] Building CXX object mooncake-store/src/CMakeFiles/mooncake_store_client_objects.dir/config/local_hot_cache_config.cpp.o
+[142/795] Building CXX object mooncake-store/src/CMakeFiles/mooncake_store_client_objects.dir/config/client_metric_config.cpp.o
+[143/795] Building CXX object mooncake-store/src/CMakeFiles/mooncake_store_client_objects.dir/aligned_client_buffer.cpp.o
+[144/795] Building CXX object mooncake-store/src/CMakeFiles/mooncake_store_client_objects.dir/client_buffer.cpp.o
+[145/795] Building CXX object mooncake-store/src/CMakeFiles/mooncake_store_client_objects.dir/config/file_storage_config.cpp.o
+[146/795] Building CXX object mooncake-store/src/CMakeFiles/mooncake_store_client_objects.dir/config/egm_store_pool_config.cpp.o
+[147/795] Creating library symlink lib/libgtest.so
+[148/795] Linking CXX static library mooncake-store/src/local_ssd/libmooncake_local_ssd.a
+[149/795] Building CXX object mooncake-store/src/CMakeFiles/mooncake_store_client_objects.dir/device/cuda_ipc_buffer.cpp.o
+[150/795] Building CXX object mooncake-store/src/CMakeFiles/mooncake_store_client_objects.dir/client_metric.cpp.o
+[151/795] Building CXX object _deps/googletest-build/googletest/CMakeFiles/gtest_main.dir/src/gtest_main.cc.o
+[152/795] Linking CXX shared library lib/libgtest_main.so.1.17.0
+[153/795] Creating library symlink lib/libgtest_main.so
+[154/795] Building CXX object mooncake-store/src/CMakeFiles/mooncake_store_client_objects.dir/nvme_kv/executor_stub.cpp.o
+[155/795] Building CXX object mooncake-store/src/CMakeFiles/mooncake_store_client_objects.dir/config/oss_adapter_config.cpp.o
+[156/795] Building CXX object mooncake-store/src/CMakeFiles/mooncake_store_client_objects.dir/nvme_kv/backend.cpp.o
+[157/795] Building CXX object mooncake-store/src/CMakeFiles/mooncake_store_client_objects.dir/transfer_task.cpp.o
+[158/795] Building CXX object mooncake-store/src/CMakeFiles/mooncake_store_client_objects.dir/config/s3_adapter_config.cpp.o
+[159/795] Building CXX object mooncake-common/tests/CMakeFiles/crc_checksum_test.dir/crc_checksum_test.cpp.o
+[160/795] Building CXX object mooncake-store/src/CMakeFiles/mooncake_store_client_objects.dir/uring_file.cpp.o
+[161/795] Building CXX object mooncake-store/src/CMakeFiles/mooncake_store_client_objects.dir/storage/distributed/object_storage_xml.cpp.o
+[162/795] Building CXX object mooncake-common/tests/CMakeFiles/ascii_string_test.dir/ascii_string_test.cpp.o
+[163/795] Building CXX object mooncake-store/src/CMakeFiles/mooncake_store_client_objects.dir/storage/distributed/s3_adapter.cpp.o
+In file included from /usr/include/c++/12/string:40,
+                 from /home/d00883276/prefetch_916/src/Mooncake-02a25e4f/mooncake-store/include/storage/distributed/s3_adapter.h:4,
+                 from /home/d00883276/prefetch_916/src/Mooncake-02a25e4f/mooncake-store/src/storage/distributed/s3_adapter.cpp:1:
+In static member function ‘static constexpr std::char_traits<char>::char_type* std::char_traits<char>::copy(char_type*, const char_type*, std::size_t)’,
+    inlined from ‘static constexpr void std::__cxx11::basic_string<_CharT, _Traits, _Alloc>::_S_copy(_CharT*, const _CharT*, size_type) [with _CharT = char; _Traits = std::char_traits<char>; _Alloc = std::allocator<char>]’ at /usr/include/c++/12/bits/basic_string.h:431:21,
+    inlined from ‘constexpr std::__cxx11::basic_string<_CharT, _Traits, _Allocator>& std::__cxx11::basic_string<_CharT, _Traits, _Alloc>::_M_replace(size_type, size_type, const _CharT*, size_type) [with _CharT = char; _Traits = std::char_traits<char>; _Alloc = std::allocator<char>]’ at /usr/include/c++/12/bits/basic_string.tcc:532:22,
+    inlined from ‘constexpr std::__cxx11::basic_string<_CharT, _Traits, _Alloc>& std::__cxx11::basic_string<_CharT, _Traits, _Alloc>::replace(size_type, size_type, const _CharT*, size_type) [with _CharT = char; _Traits = std::char_traits<char>; _Alloc = std::allocator<char>]’ at /usr/include/c++/12/bits/basic_string.h:2179:19,
+    inlined from ‘constexpr std::__cxx11::basic_string<_CharT, _Traits, _Alloc>& std::__cxx11::basic_string<_CharT, _Traits, _Alloc>::insert(size_type, const _CharT*) [with _CharT = char; _Traits = std::char_traits<char>; _Alloc = std::allocator<char>]’ at /usr/include/c++/12/bits/basic_string.h:1936:22,
+    inlined from ‘constexpr std::__cxx11::basic_string<_CharT, _Traits, _Allocator> std::operator+(const _CharT*, __cxx11::basic_string<_CharT, _Traits, _Allocator>&&) [with _CharT = char; _Traits = char_traits<char>; _Alloc = allocator<char>]’ at /usr/include/c++/12/bits/basic_string.h:3549:36,
+    inlined from ‘std::string mooncake::S3ObjectStorageAdapter::CanonicalUri(const std::string&) const’ at /home/d00883276/prefetch_916/src/Mooncake-02a25e4f/mooncake-store/src/storage/distributed/s3_adapter.cpp:74:30:
+/usr/include/c++/12/bits/char_traits.h:435:56: warning: ‘void* __builtin_memcpy(void*, const void*, long unsigned int)’ accessing 9223372036854775810 or more bytes at offsets [2, 9223372036854775807] and 1 may overlap up to 9223372036854775813 bytes at offset -3 [-Wrestrict]
+  435 |         return static_cast<char_type*>(__builtin_memcpy(__s1, __s2, __n));
+      |                                        ~~~~~~~~~~~~~~~~^~~~~~~~~~~~~~~~~
+[164/795] Building CXX object mooncake-common/tests/CMakeFiles/bool_parser_test.dir/bool_parser_test.cpp.o
+[165/795] Building CXX object mooncake-common/tests/CMakeFiles/default_config_test.dir/default_config_test.cpp.o
+[166/795] Building CXX object mooncake-common/tests/CMakeFiles/environ_test.dir/environ_test.cpp.o
+[167/795] Building CXX object mooncake-store/src/CMakeFiles/mooncake_store_client_objects.dir/storage/distributed/oss_adapter.cpp.o
+[168/795] Building CXX object mooncake-common/tests/CMakeFiles/integer_parser_test.dir/integer_parser_test.cpp.o
+[169/795] Building CXX object mooncake-store/src/CMakeFiles/mooncake_store_client_objects.dir/storage/distributed/rest_object_storage_adapter.cpp.o
+In file included from /usr/include/c++/12/string:40,
+                 from /home/d00883276/prefetch_916/src/Mooncake-02a25e4f/mooncake-store/include/storage/distributed/rest_object_storage_adapter.h:5,
+                 from /home/d00883276/prefetch_916/src/Mooncake-02a25e4f/mooncake-store/src/storage/distributed/rest_object_storage_adapter.cpp:1:
+In static member function ‘static constexpr std::char_traits<char>::char_type* std::char_traits<char>::copy(char_type*, const char_type*, std::size_t)’,
+    inlined from ‘static constexpr void std::__cxx11::basic_string<_CharT, _Traits, _Alloc>::_S_copy(_CharT*, const _CharT*, size_type) [with _CharT = char; _Traits = std::char_traits<char>; _Alloc = std::allocator<char>]’ at /usr/include/c++/12/bits/basic_string.h:431:21,
+    inlined from ‘constexpr std::__cxx11::basic_string<_CharT, _Traits, _Allocator>& std::__cxx11::basic_string<_CharT, _Traits, _Alloc>::_M_replace(size_type, size_type, const _CharT*, size_type) [with _CharT = char; _Traits = std::char_traits<char>; _Alloc = std::allocator<char>]’ at /usr/include/c++/12/bits/basic_string.tcc:532:22,
+    inlined from ‘constexpr std::__cxx11::basic_string<_CharT, _Traits, _Alloc>& std::__cxx11::basic_string<_CharT, _Traits, _Alloc>::replace(size_type, size_type, const _CharT*, size_type) [with _CharT = char; _Traits = std::char_traits<char>; _Alloc = std::allocator<char>]’ at /usr/include/c++/12/bits/basic_string.h:2179:19,
+    inlined from ‘constexpr std::__cxx11::basic_string<_CharT, _Traits, _Alloc>& std::__cxx11::basic_string<_CharT, _Traits, _Alloc>::insert(size_type, const _CharT*) [with _CharT = char; _Traits = std::char_traits<char>; _Alloc = std::allocator<char>]’ at /usr/include/c++/12/bits/basic_string.h:1936:22,
+    inlined from ‘constexpr std::__cxx11::basic_string<_CharT, _Traits, _Allocator> std::operator+(const _CharT*, __cxx11::basic_string<_CharT, _Traits, _Allocator>&&) [with _CharT = char; _Traits = char_traits<char>; _Alloc = allocator<char>]’ at /usr/include/c++/12/bits/basic_string.h:3549:36,
+    inlined from ‘std::string mooncake::RestObjectStorageAdapter::BuildUrl(const std::string&, const std::map<std::__cxx11::basic_string<char>, std::__cxx11::basic_string<char> >&) const’ at /home/d00883276/prefetch_916/src/Mooncake-02a25e4f/mooncake-store/src/storage/distributed/rest_object_storage_adapter.cpp:355:21:
+/usr/include/c++/12/bits/char_traits.h:435:56: warning: ‘void* __builtin_memcpy(void*, const void*, long unsigned int)’ accessing 9223372036854775810 or more bytes at offsets [2, 9223372036854775807] and 1 may overlap up to 9223372036854775813 bytes at offset -3 [-Wrestrict]
+  435 |         return static_cast<char_type*>(__builtin_memcpy(__s1, __s2, __n));
+      |                                        ~~~~~~~~~~~~~~~~^~~~~~~~~~~~~~~~~
+In static member function ‘static constexpr std::char_traits<char>::char_type* std::char_traits<char>::copy(char_type*, const char_type*, std::size_t)’,
+    inlined from ‘static constexpr void std::__cxx11::basic_string<_CharT, _Traits, _Alloc>::_S_copy(_CharT*, const _CharT*, size_type) [with _CharT = char; _Traits = std::char_traits<char>; _Alloc = std::allocator<char>]’ at /usr/include/c++/12/bits/basic_string.h:431:21,
+    inlined from ‘constexpr std::__cxx11::basic_string<_CharT, _Traits, _Allocator>& std::__cxx11::basic_string<_CharT, _Traits, _Alloc>::_M_replace(size_type, size_type, const _CharT*, size_type) [with _CharT = char; _Traits = std::char_traits<char>; _Alloc = std::allocator<char>]’ at /usr/include/c++/12/bits/basic_string.tcc:532:22,
+    inlined from ‘constexpr std::__cxx11::basic_string<_CharT, _Traits, _Alloc>& std::__cxx11::basic_string<_CharT, _Traits, _Alloc>::replace(size_type, size_type, const _CharT*, size_type) [with _CharT = char; _Traits = std::char_traits<char>; _Alloc = std::allocator<char>]’ at /usr/include/c++/12/bits/basic_string.h:2179:19,
+    inlined from ‘constexpr std::__cxx11::basic_string<_CharT, _Traits, _Alloc>& std::__cxx11::basic_string<_CharT, _Traits, _Alloc>::insert(size_type, const _CharT*) [with _CharT = char; _Traits = std::char_traits<char>; _Alloc = std::allocator<char>]’ at /usr/include/c++/12/bits/basic_string.h:1936:22,
+    inlined from ‘constexpr std::__cxx11::basic_string<_CharT, _Traits, _Allocator> std::operator+(const _CharT*, __cxx11::basic_string<_CharT, _Traits, _Allocator>&&) [with _CharT = char; _Traits = char_traits<char>; _Alloc = allocator<char>]’ at /usr/include/c++/12/bits/basic_string.h:3549:36,
+    inlined from ‘std::string mooncake::RestObjectStorageAdapter::BuildUrl(const std::string&, const std::map<std::__cxx11::basic_string<char>, std::__cxx11::basic_string<char> >&) const’ at /home/d00883276/prefetch_916/src/Mooncake-02a25e4f/mooncake-store/src/storage/distributed/rest_object_storage_adapter.cpp:364:17:
+/usr/include/c++/12/bits/char_traits.h:435:56: warning: ‘void* __builtin_memcpy(void*, const void*, long unsigned int)’ accessing 9223372036854775810 or more bytes at offsets [2, 9223372036854775807] and 1 may overlap up to 9223372036854775813 bytes at offset -3 [-Wrestrict]
+  435 |         return static_cast<char_type*>(__builtin_memcpy(__s1, __s2, __n));
+      |                                        ~~~~~~~~~~~~~~~~^~~~~~~~~~~~~~~~~
+[170/795] Building CXX object mooncake-common/tests/CMakeFiles/ib_link_speed_test.dir/ib_link_speed_test.cpp.o
+[171/795] Building CXX object mooncake-common/tests/CMakeFiles/environment_value_parser_test.dir/environment_value_parser_test.cpp.o
+[172/795] Building CXX object mooncake-transfer-engine/tests/CMakeFiles/flagcx_transport_internal_test.dir/flagcx_transport_internal_test.cpp.o
+[173/795] Building CXX object mooncake-store/src/CMakeFiles/mooncake_store_client_objects.dir/local_hot_cache.cpp.o
+[174/795] Building CXX object mooncake-transfer-engine/tests/CMakeFiles/rdma_atomic_cap_test.dir/rdma_atomic_cap_test.cpp.o
+[175/795] Building CXX object mooncake-transfer-engine/tests/CMakeFiles/rdma_transport_test.dir/rdma_transport_test.cpp.o
+[176/795] Building CXX object mooncake-transfer-engine/tests/CMakeFiles/rdma_posted_fifo_test.dir/rdma_posted_fifo_test.cpp.o
+[177/795] Building CXX object mooncake-transfer-engine/tests/CMakeFiles/endpoint_store_integration_test.dir/endpoint_store_integration_test.cpp.o
+[178/795] Building CXX object mooncake-transfer-engine/tests/CMakeFiles/endpoint_store_test.dir/endpoint_store_test.cpp.o
+[179/795] Building CXX object mooncake-transfer-engine/tests/CMakeFiles/shared_segment_test.dir/shared_segment_test.cpp.o
+[180/795] Building CXX object mooncake-transfer-engine/tests/CMakeFiles/rdma_loopback_test.dir/rdma_loopback_test.cpp.o
+[181/795] Building CXX object mooncake-transfer-engine/tests/CMakeFiles/rdma_transport_test2.dir/rdma_transport_test2.cpp.o
+[182/795] Building CXX object mooncake-transfer-engine/tests/CMakeFiles/worker_pool_rail_state_test.dir/worker_pool_rail_state_test.cpp.o
+[183/795] Building CXX object mooncake-store/CMakeFiles/master_service_test_peer.dir/tests/master_service/master_service_test_peer.cpp.o
+[184/795] Building CXX object mooncake-transfer-engine/tests/CMakeFiles/rdma_large_mr_test.dir/rdma_large_mr_test.cpp.o
+[185/795] Building CXX object mooncake-transfer-engine/tests/CMakeFiles/ctrl_frame_test.dir/ctrl_frame_test.cpp.o
+[186/795] Building CXX object mooncake-transfer-engine/tests/CMakeFiles/sender_credit_test.dir/sender_credit_test.cpp.o
+[187/795] Building CXX object mooncake-transfer-engine/tests/CMakeFiles/rdma_endpoint_state_test.dir/rdma_endpoint_state_test.cpp.o
+[188/795] Building CXX object mooncake-transfer-engine/tests/CMakeFiles/rdma_async_event_drain_test.dir/rdma_async_event_drain_test.cpp.o
+[189/795] Building CXX object mooncake-transfer-engine/tests/CMakeFiles/rdma_notify_test.dir/rdma_notify_test.cpp.o
+In file included from /usr/include/c++/12/string:40,
+                 from /usr/include/gflags/gflags.h:81,
+                 from /home/d00883276/prefetch_916/src/Mooncake-02a25e4f/mooncake-transfer-engine/tests/rdma_notify_test.cpp:26:
+In static member function ‘static constexpr std::char_traits<char>::char_type* std::char_traits<char>::copy(char_type*, const char_type*, std::size_t)’,
+    inlined from ‘static constexpr void std::__cxx11::basic_string<_CharT, _Traits, _Alloc>::_S_copy(_CharT*, const _CharT*, size_type) [with _CharT = char; _Traits = std::char_traits<char>; _Alloc = std::allocator<char>]’ at /usr/include/c++/12/bits/basic_string.h:431:21,
+    inlined from ‘constexpr std::__cxx11::basic_string<_CharT, _Traits, _Allocator>& std::__cxx11::basic_string<_CharT, _Traits, _Alloc>::_M_replace(size_type, size_type, const _CharT*, size_type) [with _CharT = char; _Traits = std::char_traits<char>; _Alloc = std::allocator<char>]’ at /usr/include/c++/12/bits/basic_string.tcc:532:22,
+    inlined from ‘constexpr std::__cxx11::basic_string<_CharT, _Traits, _Alloc>& std::__cxx11::basic_string<_CharT, _Traits, _Alloc>::replace(size_type, size_type, const _CharT*, size_type) [with _CharT = char; _Traits = std::char_traits<char>; _Alloc = std::allocator<char>]’ at /usr/include/c++/12/bits/basic_string.h:2179:19,
+    inlined from ‘constexpr std::__cxx11::basic_string<_CharT, _Traits, _Alloc>& std::__cxx11::basic_string<_CharT, _Traits, _Alloc>::insert(size_type, const _CharT*) [with _CharT = char; _Traits = std::char_traits<char>; _Alloc = std::allocator<char>]’ at /usr/include/c++/12/bits/basic_string.h:1936:22,
+    inlined from ‘constexpr std::__cxx11::basic_string<_CharT, _Traits, _Allocator> std::operator+(const _CharT*, __cxx11::basic_string<_CharT, _Traits, _Allocator>&&) [with _CharT = char; _Traits = char_traits<char>; _Alloc = allocator<char>]’ at /usr/include/c++/12/bits/basic_string.h:3549:36,
+    inlined from ‘virtual void RdmaNotifyTest_BurstNotifyCorrectness_Test::TestBody()’ at /home/d00883276/prefetch_916/src/Mooncake-02a25e4f/mooncake-transfer-engine/tests/rdma_notify_test.cpp:217:24:
+/usr/include/c++/12/bits/char_traits.h:435:56: warning: ‘void* __builtin_memcpy(void*, const void*, long unsigned int)’ accessing 9223372036854775810 or more bytes at offsets [2, 9223372036854775807] and 1 may overlap up to 9223372036854775813 bytes at offset -3 [-Wrestrict]
+  435 |         return static_cast<char_type*>(__builtin_memcpy(__s1, __s2, __n));
+      |                                        ~~~~~~~~~~~~~~~~^~~~~~~~~~~~~~~~~
+In static member function ‘static constexpr std::char_traits<char>::char_type* std::char_traits<char>::copy(char_type*, const char_type*, std::size_t)’,
+    inlined from ‘static constexpr void std::__cxx11::basic_string<_CharT, _Traits, _Alloc>::_S_copy(_CharT*, const _CharT*, size_type) [with _CharT = char; _Traits = std::char_traits<char>; _Alloc = std::allocator<char>]’ at /usr/include/c++/12/bits/basic_string.h:431:21,
+    inlined from ‘constexpr std::__cxx11::basic_string<_CharT, _Traits, _Allocator>& std::__cxx11::basic_string<_CharT, _Traits, _Alloc>::_M_replace(size_type, size_type, const _CharT*, size_type) [with _CharT = char; _Traits = std::char_traits<char>; _Alloc = std::allocator<char>]’ at /usr/include/c++/12/bits/basic_string.tcc:532:22,
+    inlined from ‘constexpr std::__cxx11::basic_string<_CharT, _Traits, _Alloc>& std::__cxx11::basic_string<_CharT, _Traits, _Alloc>::replace(size_type, size_type, const _CharT*, size_type) [with _CharT = char; _Traits = std::char_traits<char>; _Alloc = std::allocator<char>]’ at /usr/include/c++/12/bits/basic_string.h:2179:19,
+    inlined from ‘constexpr std::__cxx11::basic_string<_CharT, _Traits, _Alloc>& std::__cxx11::basic_string<_CharT, _Traits, _Alloc>::insert(size_type, const _CharT*) [with _CharT = char; _Traits = std::char_traits<char>; _Alloc = std::allocator<char>]’ at /usr/include/c++/12/bits/basic_string.h:1936:22,
+    inlined from ‘constexpr std::__cxx11::basic_string<_CharT, _Traits, _Allocator> std::operator+(const _CharT*, __cxx11::basic_string<_CharT, _Traits, _Allocator>&&) [with _CharT = char; _Traits = char_traits<char>; _Alloc = allocator<char>]’ at /usr/include/c++/12/bits/basic_string.h:3549:36,
+    inlined from ‘virtual void RdmaNotifyTest_BurstNotifyCorrectness_Test::TestBody()’ at /home/d00883276/prefetch_916/src/Mooncake-02a25e4f/mooncake-transfer-engine/tests/rdma_notify_test.cpp:227:9:
+/usr/include/c++/12/bits/char_traits.h:435:56: warning: ‘void* __builtin_memcpy(void*, const void*, long unsigned int)’ accessing 9223372036854775810 or more bytes at offsets [2, 9223372036854775807] and 1 may overlap up to 9223372036854775813 bytes at offset -3 [-Wrestrict]
+  435 |         return static_cast<char_type*>(__builtin_memcpy(__s1, __s2, __n));
+      |                                        ~~~~~~~~~~~~~~~~^~~~~~~~~~~~~~~~~
+[190/795] Building CXX object mooncake-transfer-engine/tests/CMakeFiles/tcp_address_validation_test.dir/tcp_address_validation_test.cpp.o
+[191/795] Building CXX object mooncake-transfer-engine/tests/CMakeFiles/rdma_endpoint_reestablish_test.dir/rdma_endpoint_reestablish_test.cpp.o
+[192/795] Building CXX object mooncake-common/tests/CMakeFiles/rpc_client_io_threads_test.dir/rpc_client_io_threads_test.cpp.o
+[193/795] Building CXX object mooncake-transfer-engine/tests/CMakeFiles/connect_pause_tracker_test.dir/connect_pause_tracker_test.cpp.o
+[194/795] Building CXX object mooncake-transfer-engine/tests/CMakeFiles/tcp_transport_test.dir/tcp_transport_test.cpp.o
+[195/795] Building CXX object mooncake-common/tests/CMakeFiles/rpc_drain_guard_test.dir/rpc_drain_guard_test.cpp.o
+[196/795] Building CXX object mooncake-transfer-engine/tests/CMakeFiles/glog_preinitialized_test.dir/glog_preinitialized_test.cpp.o
+[197/795] Building CXX object mooncake-transfer-engine/tests/CMakeFiles/dmabuf_export_test.dir/dmabuf_export_test.cpp.o
+[198/795] Building CXX object mooncake-transfer-engine/tests/CMakeFiles/multi_transport_locality_test.dir/multi_transport_locality_test.cpp.o
+[199/795] Building CXX object mooncake-store/src/CMakeFiles/mooncake_store_client_objects.dir/ssd_prefetcher.cpp.o
+[200/795] Building CXX object mooncake-store/src/CMakeFiles/mooncake_store_client_objects.dir/ssd_register_client.cpp.o
+[201/795] Building CXX object mooncake-transfer-engine/tests/CMakeFiles/shm_transport_e2e_test.dir/shm_transport_e2e_test.cpp.o
+[202/795] Building CXX object mooncake-store/src/CMakeFiles/mooncake_store_client_objects.dir/engram/engram_store.cpp.o
+[203/795] Building CXX object mooncake-store/src/CMakeFiles/mooncake_store_master_objects.dir/http_metadata_server.cpp.o
+In file included from /usr/include/c++/12/bits/stl_construct.h:60,
+                 from /usr/include/c++/12/bits/char_traits.h:46,
+                 from /usr/include/c++/12/string:40,
+                 from /home/d00883276/prefetch_916/src/Mooncake-02a25e4f/mooncake-store/include/http_metadata_server.h:5,
+                 from /home/d00883276/prefetch_916/src/Mooncake-02a25e4f/mooncake-store/src/http_metadata_server.cpp:1:
+In function ‘constexpr std::_Require<std::__not_<std::__is_tuple_like<_Tp> >, std::is_move_constructible<_Tp>, std::is_move_assignable<_Tp> > std::swap(_Tp&, _Tp&) [with _Tp = async_simple::util::detail::_any_data]’,
+    inlined from ‘void async_simple::util::move_only_function<RetType(ArgTypes ...)>::swap(async_simple::util::move_only_function<RetType(ArgTypes ...)>&) [with RetType = void; ArgTypes = {std::pair<std::error_code, long unsigned int>}]’ at /home/d00883276/prefetch_916/920_pre_pr/vendor/yalantinglibs/include/ylt/thirdparty/async_simple/util/move_only_function.h:347:18,
+    inlined from ‘async_simple::util::move_only_function<RetType(ArgTypes ...)>::move_only_function(async_simple::util::move_only_function<RetType(ArgTypes ...)>&&) [with RetType = void; ArgTypes = {std::pair<std::error_code, long unsigned int>}]’ at /home/d00883276/prefetch_916/920_pre_pr/vendor/yalantinglibs/include/ylt/thirdparty/async_simple/util/move_only_function.h:286:19,
+    inlined from ‘static void coro_io::detail::ib_socket_shared_state_t::resume(std::pair<std::error_code, long unsigned int>&&, callback_t&&)’ at /home/d00883276/prefetch_916/920_pre_pr/vendor/yalantinglibs/include/ylt/coro_io/ibverbs/ib_socket.hpp:107:41,
+    inlined from ‘void coro_io::detail::ib_socket_shared_state_t::post_send_impl(ibv_sge, callback_t&&, bool)’ at /home/d00883276/prefetch_916/920_pre_pr/vendor/yalantinglibs/include/ylt/coro_io/ibverbs/ib_socket.hpp:315:41:
+/usr/include/c++/12/bits/move.h:205:7: warning: ‘handle_tmp.async_simple::util::move_only_function<void(std::pair<std::error_code, long unsigned int>)>::<unnamed>.async_simple::util::detail::_function_base::_m_functor’ may be used uninitialized [-Wmaybe-uninitialized]
+  205 |       __a = _GLIBCXX_MOVE(__b);
+      |       ^~~
+In file included from /home/d00883276/prefetch_916/920_pre_pr/vendor/yalantinglibs/include/ylt/coro_io/ibverbs/ib_io.hpp:43,
+                 from /home/d00883276/prefetch_916/920_pre_pr/vendor/yalantinglibs/include/ylt/coro_io/socket_wrapper.hpp:20,
+                 from /home/d00883276/prefetch_916/920_pre_pr/vendor/yalantinglibs/include/ylt/standalone/cinatra/coro_http_connection.hpp:33,
+                 from /home/d00883276/prefetch_916/920_pre_pr/vendor/yalantinglibs/include/ylt/standalone/cinatra/coro_http_server.hpp:12,
+                 from /home/d00883276/prefetch_916/920_pre_pr/vendor/yalantinglibs/include/ylt/coro_http/coro_http_server.hpp:39,
+                 from /home/d00883276/prefetch_916/src/Mooncake-02a25e4f/mooncake-store/include/http_metadata_server.h:10:
+/home/d00883276/prefetch_916/920_pre_pr/vendor/yalantinglibs/include/ylt/coro_io/ibverbs/ib_socket.hpp: In member function ‘void coro_io::detail::ib_socket_shared_state_t::post_send_impl(ibv_sge, callback_t&&, bool)’:
+/home/d00883276/prefetch_916/920_pre_pr/vendor/yalantinglibs/include/ylt/coro_io/ibverbs/ib_socket.hpp:107:12: note: ‘handle_tmp’ declared here
+  107 |       auto handle_tmp = std::move(handle);
+      |            ^~~~~~~~~~
+In function ‘constexpr std::_Require<std::__not_<std::__is_tuple_like<_Tp> >, std::is_move_constructible<_Tp>, std::is_move_assignable<_Tp> > std::swap(_Tp&, _Tp&) [with _Tp = void (*)(const async_simple::util::detail::_any_data&, pair<error_code, long unsigned int>&&)]’,
+    inlined from ‘void async_simple::util::move_only_function<RetType(ArgTypes ...)>::swap(async_simple::util::move_only_function<RetType(ArgTypes ...)>&) [with RetType = void; ArgTypes = {std::pair<std::error_code, long unsigned int>}]’ at /home/d00883276/prefetch_916/920_pre_pr/vendor/yalantinglibs/include/ylt/thirdparty/async_simple/util/move_only_function.h:349:18,
+    inlined from ‘async_simple::util::move_only_function<RetType(ArgTypes ...)>::move_only_function(async_simple::util::move_only_function<RetType(ArgTypes ...)>&&) [with RetType = void; ArgTypes = {std::pair<std::error_code, long unsigned int>}]’ at /home/d00883276/prefetch_916/920_pre_pr/vendor/yalantinglibs/include/ylt/thirdparty/async_simple/util/move_only_function.h:286:19,
+    inlined from ‘static void coro_io::detail::ib_socket_shared_state_t::resume(std::pair<std::error_code, long unsigned int>&&, callback_t&&)’ at /home/d00883276/prefetch_916/920_pre_pr/vendor/yalantinglibs/include/ylt/coro_io/ibverbs/ib_socket.hpp:107:41,
+    inlined from ‘void coro_io::detail::ib_socket_shared_state_t::post_send_impl(ibv_sge, callback_t&&, bool)’ at /home/d00883276/prefetch_916/920_pre_pr/vendor/yalantinglibs/include/ylt/coro_io/ibverbs/ib_socket.hpp:315:41:
+/usr/include/c++/12/bits/move.h:205:11: warning: ‘handle_tmp.async_simple::util::move_only_function<void(std::pair<std::error_code, long unsigned int>)>::_m_invoker’ may be used uninitialized [-Wmaybe-uninitialized]
+  205 |       __a = _GLIBCXX_MOVE(__b);
+      |           ^
+/home/d00883276/prefetch_916/920_pre_pr/vendor/yalantinglibs/include/ylt/coro_io/ibverbs/ib_socket.hpp: In member function ‘void coro_io::detail::ib_socket_shared_state_t::post_send_impl(ibv_sge, callback_t&&, bool)’:
+/home/d00883276/prefetch_916/920_pre_pr/vendor/yalantinglibs/include/ylt/coro_io/ibverbs/ib_socket.hpp:107:12: note: ‘handle_tmp’ declared here
+  107 |       auto handle_tmp = std::move(handle);
+      |            ^~~~~~~~~~
+In function ‘constexpr std::_Require<std::__not_<std::__is_tuple_like<_Tp> >, std::is_move_constructible<_Tp>, std::is_move_assignable<_Tp> > std::swap(_Tp&, _Tp&) [with _Tp = async_simple::util::detail::_any_data]’,
+    inlined from ‘void async_simple::util::move_only_function<RetType(ArgTypes ...)>::swap(async_simple::util::move_only_function<RetType(ArgTypes ...)>&) [with RetType = void; ArgTypes = {std::pair<std::error_code, long unsigned int>}]’ at /home/d00883276/prefetch_916/920_pre_pr/vendor/yalantinglibs/include/ylt/thirdparty/async_simple/util/move_only_function.h:347:18,
+    inlined from ‘async_simple::util::move_only_function<RetType(ArgTypes ...)>::move_only_function(async_simple::util::move_only_function<RetType(ArgTypes ...)>&&) [with RetType = void; ArgTypes = {std::pair<std::error_code, long unsigned int>}]’ at /home/d00883276/prefetch_916/920_pre_pr/vendor/yalantinglibs/include/ylt/thirdparty/async_simple/util/move_only_function.h:286:19,
+    inlined from ‘async_simple::util::move_only_function<RetType(ArgTypes ...)>& async_simple::util::move_only_function<RetType(ArgTypes ...)>::operator=(async_simple::util::move_only_function<RetType(ArgTypes ...)>&&) [with RetType = void; ArgTypes = {std::pair<std::error_code, long unsigned int>}]’ at /home/d00883276/prefetch_916/920_pre_pr/vendor/yalantinglibs/include/ylt/thirdparty/async_simple/util/move_only_function.h:324:9,
+    inlined from ‘void coro_io::detail::circle_buffer<T>::push(T&&) [with T = async_simple::util::move_only_function<void(std::pair<std::error_code, long unsigned int>)>]’ at /home/d00883276/prefetch_916/920_pre_pr/vendor/yalantinglibs/include/ylt/coro_io/ibverbs/ib_socket.hpp:69:17,
+    inlined from ‘void coro_io::detail::ib_socket_shared_state_t::post_send_impl(ibv_sge, callback_t&&, bool)’ at /home/d00883276/prefetch_916/920_pre_pr/vendor/yalantinglibs/include/ylt/coro_io/ibverbs/ib_socket.hpp:319:22:
+/usr/include/c++/12/bits/move.h:205:7: warning: ‘<unnamed>.async_simple::util::move_only_function<void(std::pair<std::error_code, long unsigned int>)>::<unnamed>.async_simple::util::detail::_function_base::_m_functor’ may be used uninitialized [-Wmaybe-uninitialized]
+  205 |       __a = _GLIBCXX_MOVE(__b);
+      |       ^~~
+In file included from /home/d00883276/prefetch_916/920_pre_pr/vendor/yalantinglibs/include/ylt/thirdparty/async_simple/Signal.h:34,
+                 from /home/d00883276/prefetch_916/920_pre_pr/vendor/yalantinglibs/include/ylt/thirdparty/async_simple/Executor.h:29,
+                 from /home/d00883276/prefetch_916/920_pre_pr/vendor/yalantinglibs/include/ylt/thirdparty/async_simple/Future.h:24,
+                 from /home/d00883276/prefetch_916/920_pre_pr/vendor/yalantinglibs/include/ylt/standalone/cinatra/coro_http_client.hpp:26,
+                 from /home/d00883276/prefetch_916/920_pre_pr/vendor/yalantinglibs/include/ylt/standalone/cinatra/coro_http_server.hpp:6:
+/home/d00883276/prefetch_916/920_pre_pr/vendor/yalantinglibs/include/ylt/thirdparty/async_simple/util/move_only_function.h: In member function ‘void coro_io::detail::ib_socket_shared_state_t::post_send_impl(ibv_sge, callback_t&&, bool)’:
+/home/d00883276/prefetch_916/920_pre_pr/vendor/yalantinglibs/include/ylt/thirdparty/async_simple/util/move_only_function.h:324:9: note: ‘<anonymous>’ declared here
+  324 |         move_only_function(std::move(other)).swap(*this);
+      |         ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+In function ‘constexpr std::_Require<std::__not_<std::__is_tuple_like<_Tp> >, std::is_move_constructible<_Tp>, std::is_move_assignable<_Tp> > std::swap(_Tp&, _Tp&) [with _Tp = void (*)(const async_simple::util::detail::_any_data&, pair<error_code, long unsigned int>&&)]’,
+    inlined from ‘void async_simple::util::move_only_function<RetType(ArgTypes ...)>::swap(async_simple::util::move_only_function<RetType(ArgTypes ...)>&) [with RetType = void; ArgTypes = {std::pair<std::error_code, long unsigned int>}]’ at /home/d00883276/prefetch_916/920_pre_pr/vendor/yalantinglibs/include/ylt/thirdparty/async_simple/util/move_only_function.h:349:18,
+    inlined from ‘async_simple::util::move_only_function<RetType(ArgTypes ...)>::move_only_function(async_simple::util::move_only_function<RetType(ArgTypes ...)>&&) [with RetType = void; ArgTypes = {std::pair<std::error_code, long unsigned int>}]’ at /home/d00883276/prefetch_916/920_pre_pr/vendor/yalantinglibs/include/ylt/thirdparty/async_simple/util/move_only_function.h:286:19,
+    inlined from ‘async_simple::util::move_only_function<RetType(ArgTypes ...)>& async_simple::util::move_only_function<RetType(ArgTypes ...)>::operator=(async_simple::util::move_only_function<RetType(ArgTypes ...)>&&) [with RetType = void; ArgTypes = {std::pair<std::error_code, long unsigned int>}]’ at /home/d00883276/prefetch_916/920_pre_pr/vendor/yalantinglibs/include/ylt/thirdparty/async_simple/util/move_only_function.h:324:9,
+    inlined from ‘void coro_io::detail::circle_buffer<T>::push(T&&) [with T = async_simple::util::move_only_function<void(std::pair<std::error_code, long unsigned int>)>]’ at /home/d00883276/prefetch_916/920_pre_pr/vendor/yalantinglibs/include/ylt/coro_io/ibverbs/ib_socket.hpp:69:17,
+    inlined from ‘void coro_io::detail::ib_socket_shared_state_t::post_send_impl(ibv_sge, callback_t&&, bool)’ at /home/d00883276/prefetch_916/920_pre_pr/vendor/yalantinglibs/include/ylt/coro_io/ibverbs/ib_socket.hpp:319:22:
+/usr/include/c++/12/bits/move.h:205:11: warning: ‘<unnamed>.async_simple::util::move_only_function<void(std::pair<std::error_code, long unsigned int>)>::_m_invoker’ may be used uninitialized [-Wmaybe-uninitialized]
+  205 |       __a = _GLIBCXX_MOVE(__b);
+      |           ^
+/home/d00883276/prefetch_916/920_pre_pr/vendor/yalantinglibs/include/ylt/thirdparty/async_simple/util/move_only_function.h: In member function ‘void coro_io::detail::ib_socket_shared_state_t::post_send_impl(ibv_sge, callback_t&&, bool)’:
+/home/d00883276/prefetch_916/920_pre_pr/vendor/yalantinglibs/include/ylt/thirdparty/async_simple/util/move_only_function.h:324:9: note: ‘<anonymous>’ declared here
+  324 |         move_only_function(std::move(other)).swap(*this);
+      |         ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+[204/795] Building CXX object mooncake-transfer-engine/tests/CMakeFiles/rdma_native_notify_test.dir/rdma_native_notify_test.cpp.o
+[205/795] Building CXX object mooncake-transfer-engine/tests/CMakeFiles/rdma_gid_probe_test.dir/rdma_gid_probe_test.cpp.o
+[206/795] Building CXX object mooncake-transfer-engine/tests/CMakeFiles/rdma_memory_location_test.dir/rdma_memory_location_test.cpp.o
+[207/795] Building CXX object mooncake-transfer-engine/tests/CMakeFiles/rdma_context_reprobe_test.dir/rdma_context_reprobe_test.cpp.o
+[208/795] Building CXX object mooncake-store/src/CMakeFiles/mooncake_store_client_objects.dir/file_storage.cpp.o
+[209/795] Building CXX object mooncake-transfer-engine/tests/CMakeFiles/rdma_transport_submit_task_test.dir/rdma_transport_submit_task_test.cpp.o
+[210/795] Building CXX object mooncake-transfer-engine/tests/CMakeFiles/multi_transport_batch_test.dir/multi_transport_batch_test.cpp.o
+[211/795] Building CXX object mooncake-transfer-engine/tests/CMakeFiles/rdma_buffer_range_index_test.dir/rdma_buffer_range_index_test.cpp.o
+[212/795] Building CXX object mooncake-transfer-engine/tests/CMakeFiles/memory_location_test.dir/memory_location_test.cpp.o
+[213/795] Building CXX object mooncake-transfer-engine/tests/CMakeFiles/rdma_batch_reuse_test.dir/rdma_batch_reuse_test.cpp.o
+[214/795] Building CXX object mooncake-transfer-engine/tests/CMakeFiles/shm_transport_test.dir/shm_transport_test.cpp.o
+[215/795] Building CXX object mooncake-transfer-engine/tests/CMakeFiles/transport_uint_test.dir/transport_uint_test.cpp.o
+[216/795] Building CXX object mooncake-transfer-engine/tests/CMakeFiles/graceful_shutdown_test.dir/graceful_shutdown_test.cpp.o
+[217/795] Building CXX object mooncake-store/src/CMakeFiles/mooncake_store_client_objects.dir/storage_backend.cpp.o
+[218/795] Building CXX object mooncake-transfer-engine/example/CMakeFiles/memory_pool.dir/memory_pool.cpp.o
+[219/795] Building CXX object mooncake-transfer-engine/benchmark/CMakeFiles/tebench.dir/split_output.cpp.o
+[220/795] Building CXX object mooncake-store/tests/master_service/dsl/CMakeFiles/master_service_test_dsl.dir/scenario.cpp.o
+/home/d00883276/prefetch_916/src/Mooncake-02a25e4f/mooncake-store/tests/master_service/dsl/scenario.cpp: In function ‘mooncake::test::RacePutStartAction mooncake::test::RacePutStart(std::string, uint64_t)’:
+/home/d00883276/prefetch_916/src/Mooncake-02a25e4f/mooncake-store/tests/master_service/dsl/scenario.cpp:296:48: warning: missing initializer for member ‘mooncake::test::RacePutStartAction::group_ids’ [-Wmissing-field-initializers]
+  296 |     return {.key = std::move(key), .size = size};
+      |                                                ^
+[221/795] Building CXX object mooncake-transfer-engine/benchmark/CMakeFiles/tebench.dir/qos_metrics_adapter.cpp.o
+[222/795] Building CXX object mooncake-transfer-engine/tests/CMakeFiles/topology_test.dir/topology_test.cpp.o
+[223/795] Building CXX object mooncake-transfer-engine/example/CMakeFiles/show_link.dir/show_link.cpp.o
+[224/795] Building CXX object mooncake-transfer-engine/tests/CMakeFiles/common_test.dir/common_test.cpp.o
+[225/795] Building CXX object mooncake-transfer-engine/tests/CMakeFiles/show_links_test.dir/show_links_test.cpp.o
+[226/795] Building CXX object mooncake-transfer-engine/tests/CMakeFiles/transfer_metadata_test.dir/transfer_metadata_test.cpp.o
+[227/795] Building CXX object mooncake-transfer-engine/tests/CMakeFiles/config_test.dir/config_test.cpp.o
+[228/795] Building CXX object mooncake-transfer-engine/example/CMakeFiles/transfer_engine_bench.dir/transfer_engine_bench.cpp.o
+[229/795] Building CXX object mooncake-transfer-engine/tests/CMakeFiles/batch_counter_wait_test.dir/batch_counter_wait_test.cpp.o
+[230/795] Building CXX object mooncake-transfer-engine/benchmark/CMakeFiles/tebench.dir/utils.cpp.o
+[231/795] Building CXX object mooncake-transfer-engine/benchmark/CMakeFiles/tebench_qos_metrics_test.dir/qos_metrics_adapter.cpp.o
+[232/795] Building CXX object mooncake-transfer-engine/example/CMakeFiles/transfer_engine_validator.dir/transfer_engine_validator.cpp.o
+[233/795] Building CXX object mooncake-transfer-engine/example/CMakeFiles/transfer_engine_bench_with_notify.dir/transfer_engine_bench_with_notify.cpp.o
+[234/795] Building CXX object mooncake-transfer-engine/benchmark/CMakeFiles/tebench_split_output_test.dir/split_output.cpp.o
+[235/795] Building CXX object mooncake-transfer-engine/example/CMakeFiles/transfer_engine_ascend_direct_perf.dir/transfer_engine_ascend_direct_perf.cpp.o
+[236/795] Building CXX object mooncake-transfer-engine/benchmark/CMakeFiles/tebench_qos_metrics_test.dir/utils.cpp.o
+[237/795] Building CXX object mooncake-transfer-engine/benchmark/CMakeFiles/tebench.dir/main.cpp.o
+[238/795] Building CXX object mooncake-transfer-engine/benchmark/CMakeFiles/tebench_target_metrics_test.dir/utils.cpp.o
+[239/795] Building CXX object mooncake-transfer-engine/benchmark/CMakeFiles/tebench_split_output_test.dir/tests/split_output_test.cpp.o
+[240/795] Building CXX object mooncake-store/src/CMakeFiles/mooncake_store_client_objects.dir/store_c.cpp.o
+[241/795] Building CXX object mooncake-transfer-engine/benchmark/CMakeFiles/tebench.dir/target_metrics.cpp.o
+[242/795] Building CXX object mooncake-transfer-engine/benchmark/CMakeFiles/tebench.dir/te_backend.cpp.o
+[243/795] Building CXX object mooncake-transfer-engine/benchmark/CMakeFiles/tebench.dir/workload_config.cpp.o
+[244/795] Building CXX object mooncake-transfer-engine/benchmark/CMakeFiles/tebench_qos_metrics_test.dir/workload_config.cpp.o
+[245/795] Building CXX object mooncake-transfer-engine/benchmark/CMakeFiles/tebench_target_metrics_test.dir/target_metrics.cpp.o
+[246/795] Building CXX object mooncake-store/tests/CMakeFiles/runtime_accelerator_test.dir/runtime_accelerator_test.cpp.o
+[247/795] Building CXX object mooncake-store/tests/CMakeFiles/weight_management_contract_test.dir/weight_management_contract_test.cpp.o
+[248/795] Building CXX object mooncake-store/src/CMakeFiles/mooncake_store_client_objects.dir/client_service.cpp.o
+[249/795] Building CXX object mooncake-store/tests/CMakeFiles/weight_revision_lease_test.dir/weight_revision_lease_test.cpp.o
+[250/795] Building CXX object mooncake-transfer-engine/benchmark/CMakeFiles/tebench_qos_metrics_test.dir/__/tent/src/common/qos_metrics.cpp.o
+[251/795] Building CXX object mooncake-store/tests/CMakeFiles/client_liveness_test.dir/client_liveness_test.cpp.o
+[252/795] Building CXX object mooncake-transfer-engine/benchmark/CMakeFiles/tebench.dir/__/tent/src/common/qos_metrics.cpp.o
+[253/795] Building CXX object mooncake-store/tests/CMakeFiles/registered_pinned_memory_test.dir/registered_pinned_memory_test.cpp.o
+[254/795] Building CXX object mooncake-store/tests/CMakeFiles/replica_selection_config_test.dir/replica_selection_config_test.cpp.o
+[255/795] Building CXX object mooncake-transfer-engine/benchmark/CMakeFiles/tebench_target_metrics_test.dir/tests/target_metrics_test.cpp.o
+[256/795] Building CXX object mooncake-store/tests/CMakeFiles/batch_read_fanout_test.dir/batch_read_fanout_test.cpp.o
+[257/795] Building CXX object mooncake-store/tests/CMakeFiles/region_driver_test.dir/region_driver_test.cpp.o
+[258/795] Building CXX object mooncake-transfer-engine/benchmark/CMakeFiles/tebench_qos_metrics_test.dir/tests/qos_metrics_test.cpp.o
+[259/795] Building CXX object mooncake-store/tests/CMakeFiles/background_worker_test.dir/background_worker_test.cpp.o
+[260/795] Building CXX object mooncake-store/tests/CMakeFiles/buffer_allocator_test.dir/buffer_allocator_test.cpp.o
+[261/795] Building CXX object mooncake-store/tests/CMakeFiles/kv_event_publisher_test.dir/kv_event_publisher_test.cpp.o
+[262/795] Building CXX object mooncake-store/tests/CMakeFiles/weight_metadata_store_test.dir/weight_metadata_store_test.cpp.o
+[263/795] Building CXX object mooncake-store/tests/CMakeFiles/egm_store_pool_test.dir/egm_store_pool_test.cpp.o
+[264/795] Building CXX object mooncake-transfer-engine/tests/CMakeFiles/ascend_direct_transport_test.dir/ascend_direct_transport_test.cpp.o
+/home/d00883276/prefetch_916/src/Mooncake-02a25e4f/mooncake-transfer-engine/tests/ascend_direct_transport_test.cpp:297:10: warning: conflicting C language linkage declaration ‘aclError {anonymous}::aclrtMallocPhysical(void**, size_t, aclrtPhysicalMemProp*, uint32_t)’
+  297 | aclError aclrtMallocPhysical(aclrtDrvMemHandle* handle, size_t size,
+      |          ^~~~~~~~~~~~~~~~~~~
+In file included from /usr/local/Ascend/cann-9.2.0/aarch64-linux/include/acl/acl.h:14,
+                 from /home/d00883276/prefetch_916/src/Mooncake-02a25e4f/mooncake-transfer-engine/tests/ascend_direct_transport_test.cpp:18:
+/usr/local/Ascend/cann-9.2.0/aarch64-linux/include/acl/acl_rt.h:2627:30: note: previous declaration ‘aclError aclrtMallocPhysical(void**, size_t, const aclrtPhysicalMemProp*, uint64_t)’
+ 2627 | ACL_FUNC_VISIBILITY aclError aclrtMallocPhysical(
+      |                              ^~~~~~~~~~~~~~~~~~~
+/home/d00883276/prefetch_916/src/Mooncake-02a25e4f/mooncake-transfer-engine/tests/ascend_direct_transport_test.cpp:311:10: warning: conflicting C language linkage declaration ‘aclError {anonymous}::aclrtReserveMemAddress(void**, size_t, size_t, void*, uint32_t)’
+  311 | aclError aclrtReserveMemAddress(void** va, size_t size, size_t alignment,
+      |          ^~~~~~~~~~~~~~~~~~~~~~
+/usr/local/Ascend/cann-9.2.0/aarch64-linux/include/acl/acl_rt.h:2595:30: note: previous declaration ‘aclError aclrtReserveMemAddress(void**, size_t, size_t, void*, uint64_t)’
+ 2595 | ACL_FUNC_VISIBILITY aclError aclrtReserveMemAddress(
+      |                              ^~~~~~~~~~~~~~~~~~~~~~
+[265/795] Building CXX object mooncake-store/tests/CMakeFiles/master_config_test.dir/master_config_test.cpp.o
+[266/795] Building CXX object mooncake-store/tests/CMakeFiles/master_metadata_config_test.dir/master_metadata_config_test.cpp.o
+[267/795] Building CXX object mooncake-store/tests/CMakeFiles/dfs_enablement_config_test.dir/dfs_enablement_config_test.cpp.o
+[268/795] Building CXX object mooncake-store/tests/CMakeFiles/eviction_strategy_test.dir/eviction_strategy_test.cpp.o
+[269/795] Building CXX object mooncake-store/tests/CMakeFiles/deadline_scheduler_test.dir/deadline_scheduler_test.cpp.o
+[270/795] Building CXX object mooncake-store/tests/CMakeFiles/replica_allocator_test.dir/replica_allocator_test.cpp.o
+[271/795] Building CXX object mooncake-transfer-engine/tests/CMakeFiles/tcp_write_visibility_test.dir/tcp_write_visibility_test.cpp.o
+[272/795] Building CXX object mooncake-store/src/CMakeFiles/mooncake_store_master_objects.dir/embedded_master.cpp.o
+In file included from /usr/include/c++/12/bits/new_allocator.h:36,
+                 from /usr/include/aarch64-linux-gnu/c++/12/bits/c++allocator.h:33,
+                 from /usr/include/c++/12/bits/allocator.h:46,
+                 from /usr/include/c++/12/memory:63,
+                 from /home/d00883276/prefetch_916/src/Mooncake-02a25e4f/mooncake-store/include/embedded_master.h:3,
+                 from /home/d00883276/prefetch_916/src/Mooncake-02a25e4f/mooncake-store/src/embedded_master.cpp:1:
+In function ‘constexpr std::_Require<std::__not_<std::__is_tuple_like<_Tp> >, std::is_move_constructible<_Tp>, std::is_move_assignable<_Tp> > std::swap(_Tp&, _Tp&) [with _Tp = async_simple::util::detail::_any_data]’,
+    inlined from ‘void async_simple::util::move_only_function<RetType(ArgTypes ...)>::swap(async_simple::util::move_only_function<RetType(ArgTypes ...)>&) [with RetType = void; ArgTypes = {std::pair<std::error_code, long unsigned int>}]’ at /home/d00883276/prefetch_916/920_pre_pr/vendor/yalantinglibs/include/ylt/thirdparty/async_simple/util/move_only_function.h:347:18,
+    inlined from ‘async_simple::util::move_only_function<RetType(ArgTypes ...)>::move_only_function(async_simple::util::move_only_function<RetType(ArgTypes ...)>&&) [with RetType = void; ArgTypes = {std::pair<std::error_code, long unsigned int>}]’ at /home/d00883276/prefetch_916/920_pre_pr/vendor/yalantinglibs/include/ylt/thirdparty/async_simple/util/move_only_function.h:286:19,
+    inlined from ‘static void coro_io::detail::ib_socket_shared_state_t::resume(std::pair<std::error_code, long unsigned int>&&, callback_t&&)’ at /home/d00883276/prefetch_916/920_pre_pr/vendor/yalantinglibs/include/ylt/coro_io/ibverbs/ib_socket.hpp:107:41:
+/usr/include/c++/12/bits/move.h:205:7: warning: ‘handle_tmp.async_simple::util::move_only_function<void(std::pair<std::error_code, long unsigned int>)>::<unnamed>.async_simple::util::detail::_function_base::_m_functor’ may be used uninitialized [-Wmaybe-uninitialized]
+  205 |       __a = _GLIBCXX_MOVE(__b);
+      |       ^~~
+In file included from /home/d00883276/prefetch_916/920_pre_pr/vendor/yalantinglibs/include/ylt/coro_io/ibverbs/ib_io.hpp:43,
+                 from /home/d00883276/prefetch_916/920_pre_pr/vendor/yalantinglibs/include/ylt/coro_io/socket_wrapper.hpp:20,
+                 from /home/d00883276/prefetch_916/920_pre_pr/vendor/yalantinglibs/include/ylt/coro_rpc/impl/coro_connection.hpp:41,
+                 from /home/d00883276/prefetch_916/920_pre_pr/vendor/yalantinglibs/include/ylt/coro_rpc/impl/coro_rpc_server.hpp:44,
+                 from /home/d00883276/prefetch_916/920_pre_pr/vendor/yalantinglibs/include/ylt/coro_rpc/coro_rpc_server.hpp:17,
+                 from /home/d00883276/prefetch_916/src/Mooncake-02a25e4f/mooncake-store/include/embedded_master.h:6:
+/home/d00883276/prefetch_916/920_pre_pr/vendor/yalantinglibs/include/ylt/coro_io/ibverbs/ib_socket.hpp: In static member function ‘static void coro_io::detail::ib_socket_shared_state_t::resume(std::pair<std::error_code, long unsigned int>&&, callback_t&&)’:
+/home/d00883276/prefetch_916/920_pre_pr/vendor/yalantinglibs/include/ylt/coro_io/ibverbs/ib_socket.hpp:107:12: note: ‘handle_tmp’ declared here
+  107 |       auto handle_tmp = std::move(handle);
+      |            ^~~~~~~~~~
+In function ‘constexpr std::_Require<std::__not_<std::__is_tuple_like<_Tp> >, std::is_move_constructible<_Tp>, std::is_move_assignable<_Tp> > std::swap(_Tp&, _Tp&) [with _Tp = void (*)(const async_simple::util::detail::_any_data&, pair<error_code, long unsigned int>&&)]’,
+    inlined from ‘void async_simple::util::move_only_function<RetType(ArgTypes ...)>::swap(async_simple::util::move_only_function<RetType(ArgTypes ...)>&) [with RetType = void; ArgTypes = {std::pair<std::error_code, long unsigned int>}]’ at /home/d00883276/prefetch_916/920_pre_pr/vendor/yalantinglibs/include/ylt/thirdparty/async_simple/util/move_only_function.h:349:18,
+    inlined from ‘async_simple::util::move_only_function<RetType(ArgTypes ...)>::move_only_function(async_simple::util::move_only_function<RetType(ArgTypes ...)>&&) [with RetType = void; ArgTypes = {std::pair<std::error_code, long unsigned int>}]’ at /home/d00883276/prefetch_916/920_pre_pr/vendor/yalantinglibs/include/ylt/thirdparty/async_simple/util/move_only_function.h:286:19,
+    inlined from ‘static void coro_io::detail::ib_socket_shared_state_t::resume(std::pair<std::error_code, long unsigned int>&&, callback_t&&)’ at /home/d00883276/prefetch_916/920_pre_pr/vendor/yalantinglibs/include/ylt/coro_io/ibverbs/ib_socket.hpp:107:41:
+/usr/include/c++/12/bits/move.h:205:11: warning: ‘handle_tmp.async_simple::util::move_only_function<void(std::pair<std::error_code, long unsigned int>)>::_m_invoker’ may be used uninitialized [-Wmaybe-uninitialized]
+  205 |       __a = _GLIBCXX_MOVE(__b);
+      |           ^
+/home/d00883276/prefetch_916/920_pre_pr/vendor/yalantinglibs/include/ylt/coro_io/ibverbs/ib_socket.hpp: In static member function ‘static void coro_io::detail::ib_socket_shared_state_t::resume(std::pair<std::error_code, long unsigned int>&&, callback_t&&)’:
+/home/d00883276/prefetch_916/920_pre_pr/vendor/yalantinglibs/include/ylt/coro_io/ibverbs/ib_socket.hpp:107:12: note: ‘handle_tmp’ declared here
+  107 |       auto handle_tmp = std::move(handle);
+      |            ^~~~~~~~~~
+In function ‘constexpr std::_Require<std::__not_<std::__is_tuple_like<_Tp> >, std::is_move_constructible<_Tp>, std::is_move_assignable<_Tp> > std::swap(_Tp&, _Tp&) [with _Tp = async_simple::util::detail::_any_data]’,
+    inlined from ‘void async_simple::util::move_only_function<RetType(ArgTypes ...)>::swap(async_simple::util::move_only_function<RetType(ArgTypes ...)>&) [with RetType = void; ArgTypes = {std::pair<std::error_code, long unsigned int>}]’ at /home/d00883276/prefetch_916/920_pre_pr/vendor/yalantinglibs/include/ylt/thirdparty/async_simple/util/move_only_function.h:347:18,
+    inlined from ‘async_simple::util::move_only_function<RetType(ArgTypes ...)>::move_only_function(async_simple::util::move_only_function<RetType(ArgTypes ...)>&&) [with RetType = void; ArgTypes = {std::pair<std::error_code, long unsigned int>}]’ at /home/d00883276/prefetch_916/920_pre_pr/vendor/yalantinglibs/include/ylt/thirdparty/async_simple/util/move_only_function.h:286:19,
+    inlined from ‘async_simple::util::move_only_function<RetType(ArgTypes ...)>& async_simple::util::move_only_function<RetType(ArgTypes ...)>::operator=(async_simple::util::move_only_function<RetType(ArgTypes ...)>&&) [with RetType = void; ArgTypes = {std::pair<std::error_code, long unsigned int>}]’ at /home/d00883276/prefetch_916/920_pre_pr/vendor/yalantinglibs/include/ylt/thirdparty/async_simple/util/move_only_function.h:324:9,
+    inlined from ‘void coro_io::detail::circle_buffer<T>::push(T&&) [with T = async_simple::util::move_only_function<void(std::pair<std::error_code, long unsigned int>)>]’ at /home/d00883276/prefetch_916/920_pre_pr/vendor/yalantinglibs/include/ylt/coro_io/ibverbs/ib_socket.hpp:69:17,
+    inlined from ‘void coro_io::detail::ib_socket_shared_state_t::post_send_impl(ibv_sge, callback_t&&, bool)’ at /home/d00883276/prefetch_916/920_pre_pr/vendor/yalantinglibs/include/ylt/coro_io/ibverbs/ib_socket.hpp:319:22:
+/usr/include/c++/12/bits/move.h:205:7: warning: ‘<unnamed>.async_simple::util::move_only_function<void(std::pair<std::error_code, long unsigned int>)>::<unnamed>.async_simple::util::detail::_function_base::_m_functor’ may be used uninitialized [-Wmaybe-uninitialized]
+  205 |       __a = _GLIBCXX_MOVE(__b);
+      |       ^~~
+In file included from /home/d00883276/prefetch_916/920_pre_pr/vendor/yalantinglibs/include/ylt/thirdparty/async_simple/Signal.h:34,
+                 from /home/d00883276/prefetch_916/920_pre_pr/vendor/yalantinglibs/include/ylt/thirdparty/async_simple/Executor.h:29,
+                 from /home/d00883276/prefetch_916/920_pre_pr/vendor/yalantinglibs/include/ylt/thirdparty/async_simple/coro/Lazy.h:31,
+                 from /home/d00883276/prefetch_916/920_pre_pr/vendor/yalantinglibs/include/ylt/coro_rpc/impl/coro_rpc_server.hpp:17:
+/home/d00883276/prefetch_916/920_pre_pr/vendor/yalantinglibs/include/ylt/thirdparty/async_simple/util/move_only_function.h: In member function ‘void coro_io::detail::ib_socket_shared_state_t::post_send_impl(ibv_sge, callback_t&&, bool)’:
+/home/d00883276/prefetch_916/920_pre_pr/vendor/yalantinglibs/include/ylt/thirdparty/async_simple/util/move_only_function.h:324:9: note: ‘<anonymous>’ declared here
+  324 |         move_only_function(std::move(other)).swap(*this);
+      |         ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+In function ‘constexpr std::_Require<std::__not_<std::__is_tuple_like<_Tp> >, std::is_move_constructible<_Tp>, std::is_move_assignable<_Tp> > std::swap(_Tp&, _Tp&) [with _Tp = void (*)(const async_simple::util::detail::_any_data&, pair<error_code, long unsigned int>&&)]’,
+    inlined from ‘void async_simple::util::move_only_function<RetType(ArgTypes ...)>::swap(async_simple::util::move_only_function<RetType(ArgTypes ...)>&) [with RetType = void; ArgTypes = {std::pair<std::error_code, long unsigned int>}]’ at /home/d00883276/prefetch_916/920_pre_pr/vendor/yalantinglibs/include/ylt/thirdparty/async_simple/util/move_only_function.h:349:18,
+    inlined from ‘async_simple::util::move_only_function<RetType(ArgTypes ...)>::move_only_function(async_simple::util::move_only_function<RetType(ArgTypes ...)>&&) [with RetType = void; ArgTypes = {std::pair<std::error_code, long unsigned int>}]’ at /home/d00883276/prefetch_916/920_pre_pr/vendor/yalantinglibs/include/ylt/thirdparty/async_simple/util/move_only_function.h:286:19,
+    inlined from ‘async_simple::util::move_only_function<RetType(ArgTypes ...)>& async_simple::util::move_only_function<RetType(ArgTypes ...)>::operator=(async_simple::util::move_only_function<RetType(ArgTypes ...)>&&) [with RetType = void; ArgTypes = {std::pair<std::error_code, long unsigned int>}]’ at /home/d00883276/prefetch_916/920_pre_pr/vendor/yalantinglibs/include/ylt/thirdparty/async_simple/util/move_only_function.h:324:9,
+    inlined from ‘void coro_io::detail::circle_buffer<T>::push(T&&) [with T = async_simple::util::move_only_function<void(std::pair<std::error_code, long unsigned int>)>]’ at /home/d00883276/prefetch_916/920_pre_pr/vendor/yalantinglibs/include/ylt/coro_io/ibverbs/ib_socket.hpp:69:17,
+    inlined from ‘void coro_io::detail::ib_socket_shared_state_t::post_send_impl(ibv_sge, callback_t&&, bool)’ at /home/d00883276/prefetch_916/920_pre_pr/vendor/yalantinglibs/include/ylt/coro_io/ibverbs/ib_socket.hpp:319:22:
+/usr/include/c++/12/bits/move.h:205:11: warning: ‘<unnamed>.async_simple::util::move_only_function<void(std::pair<std::error_code, long unsigned int>)>::_m_invoker’ may be used uninitialized [-Wmaybe-uninitialized]
+  205 |       __a = _GLIBCXX_MOVE(__b);
+      |           ^
+/home/d00883276/prefetch_916/920_pre_pr/vendor/yalantinglibs/include/ylt/thirdparty/async_simple/util/move_only_function.h: In member function ‘void coro_io::detail::ib_socket_shared_state_t::post_send_impl(ibv_sge, callback_t&&, bool)’:
+/home/d00883276/prefetch_916/920_pre_pr/vendor/yalantinglibs/include/ylt/thirdparty/async_simple/util/move_only_function.h:324:9: note: ‘<anonymous>’ declared here
+  324 |         move_only_function(std::move(other)).swap(*this);
+      |         ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+In function ‘constexpr std::_Require<std::__not_<std::__is_tuple_like<_Tp> >, std::is_move_constructible<_Tp>, std::is_move_assignable<_Tp> > std::swap(_Tp&, _Tp&) [with _Tp = async_simple::util::detail::_any_data]’,
+    inlined from ‘void async_simple::util::move_only_function<RetType(ArgTypes ...)>::swap(async_simple::util::move_only_function<RetType(ArgTypes ...)>&) [with RetType = void; ArgTypes = {std::pair<std::error_code, long unsigned int>}]’ at /home/d00883276/prefetch_916/920_pre_pr/vendor/yalantinglibs/include/ylt/thirdparty/async_simple/util/move_only_function.h:347:18,
+    inlined from ‘async_simple::util::move_only_function<RetType(ArgTypes ...)>::move_only_function(async_simple::util::move_only_function<RetType(ArgTypes ...)>&&) [with RetType = void; ArgTypes = {std::pair<std::error_code, long unsigned int>}]’ at /home/d00883276/prefetch_916/920_pre_pr/vendor/yalantinglibs/include/ylt/thirdparty/async_simple/util/move_only_function.h:286:19,
+    inlined from ‘async_simple::util::move_only_function<RetType(ArgTypes ...)>& async_simple::util::move_only_function<RetType(ArgTypes ...)>::operator=(async_simple::util::move_only_function<RetType(ArgTypes ...)>&&) [with RetType = void; ArgTypes = {std::pair<std::error_code, long unsigned int>}]’ at /home/d00883276/prefetch_916/920_pre_pr/vendor/yalantinglibs/include/ylt/thirdparty/async_simple/util/move_only_function.h:324:9,
+    inlined from ‘std::error_code coro_io::detail::ib_socket_shared_state_t::poll_completion()’ at /home/d00883276/prefetch_916/920_pre_pr/vendor/yalantinglibs/include/ylt/coro_io/ibverbs/ib_socket.hpp:399:51:
+/usr/include/c++/12/bits/move.h:205:7: warning: ‘<unnamed>.async_simple::util::move_only_function<void(std::pair<std::error_code, long unsigned int>)>::<unnamed>.async_simple::util::detail::_function_base::_m_functor’ may be used uninitialized [-Wmaybe-uninitialized]
+  205 |       __a = _GLIBCXX_MOVE(__b);
+      |       ^~~
+/home/d00883276/prefetch_916/920_pre_pr/vendor/yalantinglibs/include/ylt/thirdparty/async_simple/util/move_only_function.h: In member function ‘std::error_code coro_io::detail::ib_socket_shared_state_t::poll_completion()’:
+/home/d00883276/prefetch_916/920_pre_pr/vendor/yalantinglibs/include/ylt/thirdparty/async_simple/util/move_only_function.h:324:9: note: ‘<anonymous>’ declared here
+  324 |         move_only_function(std::move(other)).swap(*this);
+      |         ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+In function ‘constexpr std::_Require<std::__not_<std::__is_tuple_like<_Tp> >, std::is_move_constructible<_Tp>, std::is_move_assignable<_Tp> > std::swap(_Tp&, _Tp&) [with _Tp = void (*)(const async_simple::util::detail::_any_data&, pair<error_code, long unsigned int>&&)]’,
+    inlined from ‘void async_simple::util::move_only_function<RetType(ArgTypes ...)>::swap(async_simple::util::move_only_function<RetType(ArgTypes ...)>&) [with RetType = void; ArgTypes = {std::pair<std::error_code, long unsigned int>}]’ at /home/d00883276/prefetch_916/920_pre_pr/vendor/yalantinglibs/include/ylt/thirdparty/async_simple/util/move_only_function.h:349:18,
+    inlined from ‘async_simple::util::move_only_function<RetType(ArgTypes ...)>::move_only_function(async_simple::util::move_only_function<RetType(ArgTypes ...)>&&) [with RetType = void; ArgTypes = {std::pair<std::error_code, long unsigned int>}]’ at /home/d00883276/prefetch_916/920_pre_pr/vendor/yalantinglibs/include/ylt/thirdparty/async_simple/util/move_only_function.h:286:19,
+    inlined from ‘async_simple::util::move_only_function<RetType(ArgTypes ...)>& async_simple::util::move_only_function<RetType(ArgTypes ...)>::operator=(async_simple::util::move_only_function<RetType(ArgTypes ...)>&&) [with RetType = void; ArgTypes = {std::pair<std::error_code, long unsigned int>}]’ at /home/d00883276/prefetch_916/920_pre_pr/vendor/yalantinglibs/include/ylt/thirdparty/async_simple/util/move_only_function.h:324:9,
+    inlined from ‘std::error_code coro_io::detail::ib_socket_shared_state_t::poll_completion()’ at /home/d00883276/prefetch_916/920_pre_pr/vendor/yalantinglibs/include/ylt/coro_io/ibverbs/ib_socket.hpp:399:51:
+/usr/include/c++/12/bits/move.h:205:11: warning: ‘<unnamed>.async_simple::util::move_only_function<void(std::pair<std::error_code, long unsigned int>)>::_m_invoker’ may be used uninitialized [-Wmaybe-uninitialized]
+  205 |       __a = _GLIBCXX_MOVE(__b);
+      |           ^
+/home/d00883276/prefetch_916/920_pre_pr/vendor/yalantinglibs/include/ylt/thirdparty/async_simple/util/move_only_function.h: In member function ‘std::error_code coro_io::detail::ib_socket_shared_state_t::poll_completion()’:
+/home/d00883276/prefetch_916/920_pre_pr/vendor/yalantinglibs/include/ylt/thirdparty/async_simple/util/move_only_function.h:324:9: note: ‘<anonymous>’ declared here
+  324 |         move_only_function(std::move(other)).swap(*this);
+      |         ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+In function ‘constexpr std::_Require<std::__not_<std::__is_tuple_like<_Tp> >, std::is_move_constructible<_Tp>, std::is_move_assignable<_Tp> > std::swap(_Tp&, _Tp&) [with _Tp = async_simple::util::detail::_any_data]’,
+    inlined from ‘void async_simple::util::move_only_function<RetType(ArgTypes ...)>::swap(async_simple::util::move_only_function<RetType(ArgTypes ...)>&) [with RetType = void; ArgTypes = {std::pair<std::error_code, long unsigned int>}]’ at /home/d00883276/prefetch_916/920_pre_pr/vendor/yalantinglibs/include/ylt/thirdparty/async_simple/util/move_only_function.h:347:18,
+    inlined from ‘async_simple::util::move_only_function<RetType(ArgTypes ...)>::move_only_function(async_simple::util::move_only_function<RetType(ArgTypes ...)>&&) [with RetType = void; ArgTypes = {std::pair<std::error_code, long unsigned int>}]’ at /home/d00883276/prefetch_916/920_pre_pr/vendor/yalantinglibs/include/ylt/thirdparty/async_simple/util/move_only_function.h:286:19,
+    inlined from ‘static void coro_io::detail::ib_socket_shared_state_t::resume(std::pair<std::error_code, long unsigned int>&&, callback_t&&)’ at /home/d00883276/prefetch_916/920_pre_pr/vendor/yalantinglibs/include/ylt/coro_io/ibverbs/ib_socket.hpp:107:41,
+    inlined from ‘void coro_io::detail::ib_socket_shared_state_t::post_recv_impl(callback_t&&)’ at /home/d00883276/prefetch_916/920_pre_pr/vendor/yalantinglibs/include/ylt/coro_io/ibverbs/ib_socket.hpp:330:39:
+/usr/include/c++/12/bits/move.h:205:7: warning: ‘handle_tmp.async_simple::util::move_only_function<void(std::pair<std::error_code, long unsigned int>)>::<unnamed>.async_simple::util::detail::_function_base::_m_functor’ may be used uninitialized [-Wmaybe-uninitialized]
+  205 |       __a = _GLIBCXX_MOVE(__b);
+      |       ^~~
+/home/d00883276/prefetch_916/920_pre_pr/vendor/yalantinglibs/include/ylt/coro_io/ibverbs/ib_socket.hpp: In member function ‘void coro_io::detail::ib_socket_shared_state_t::post_recv_impl(callback_t&&)’:
+/home/d00883276/prefetch_916/920_pre_pr/vendor/yalantinglibs/include/ylt/coro_io/ibverbs/ib_socket.hpp:107:12: note: ‘handle_tmp’ declared here
+  107 |       auto handle_tmp = std::move(handle);
+      |            ^~~~~~~~~~
+In function ‘constexpr std::_Require<std::__not_<std::__is_tuple_like<_Tp> >, std::is_move_constructible<_Tp>, std::is_move_assignable<_Tp> > std::swap(_Tp&, _Tp&) [with _Tp = void (*)(const async_simple::util::detail::_any_data&, pair<error_code, long unsigned int>&&)]’,
+    inlined from ‘void async_simple::util::move_only_function<RetType(ArgTypes ...)>::swap(async_simple::util::move_only_function<RetType(ArgTypes ...)>&) [with RetType = void; ArgTypes = {std::pair<std::error_code, long unsigned int>}]’ at /home/d00883276/prefetch_916/920_pre_pr/vendor/yalantinglibs/include/ylt/thirdparty/async_simple/util/move_only_function.h:349:18,
+    inlined from ‘async_simple::util::move_only_function<RetType(ArgTypes ...)>::move_only_function(async_simple::util::move_only_function<RetType(ArgTypes ...)>&&) [with RetType = void; ArgTypes = {std::pair<std::error_code, long unsigned int>}]’ at /home/d00883276/prefetch_916/920_pre_pr/vendor/yalantinglibs/include/ylt/thirdparty/async_simple/util/move_only_function.h:286:19,
+    inlined from ‘static void coro_io::detail::ib_socket_shared_state_t::resume(std::pair<std::error_code, long unsigned int>&&, callback_t&&)’ at /home/d00883276/prefetch_916/920_pre_pr/vendor/yalantinglibs/include/ylt/coro_io/ibverbs/ib_socket.hpp:107:41,
+    inlined from ‘void coro_io::detail::ib_socket_shared_state_t::post_recv_impl(callback_t&&)’ at /home/d00883276/prefetch_916/920_pre_pr/vendor/yalantinglibs/include/ylt/coro_io/ibverbs/ib_socket.hpp:330:39:
+/usr/include/c++/12/bits/move.h:205:11: warning: ‘handle_tmp.async_simple::util::move_only_function<void(std::pair<std::error_code, long unsigned int>)>::_m_invoker’ may be used uninitialized [-Wmaybe-uninitialized]
+  205 |       __a = _GLIBCXX_MOVE(__b);
+      |           ^
+/home/d00883276/prefetch_916/920_pre_pr/vendor/yalantinglibs/include/ylt/coro_io/ibverbs/ib_socket.hpp: In member function ‘void coro_io::detail::ib_socket_shared_state_t::post_recv_impl(callback_t&&)’:
+/home/d00883276/prefetch_916/920_pre_pr/vendor/yalantinglibs/include/ylt/coro_io/ibverbs/ib_socket.hpp:107:12: note: ‘handle_tmp’ declared here
+  107 |       auto handle_tmp = std::move(handle);
+      |            ^~~~~~~~~~
+In function ‘constexpr std::_Require<std::__not_<std::__is_tuple_like<_Tp> >, std::is_move_constructible<_Tp>, std::is_move_assignable<_Tp> > std::swap(_Tp&, _Tp&) [with _Tp = async_simple::util::detail::_any_data]’,
+    inlined from ‘void async_simple::util::move_only_function<RetType(ArgTypes ...)>::swap(async_simple::util::move_only_function<RetType(ArgTypes ...)>&) [with RetType = void; ArgTypes = {std::pair<std::error_code, long unsigned int>}]’ at /home/d00883276/prefetch_916/920_pre_pr/vendor/yalantinglibs/include/ylt/thirdparty/async_simple/util/move_only_function.h:347:18,
+    inlined from ‘async_simple::util::move_only_function<RetType(ArgTypes ...)>::move_only_function(async_simple::util::move_only_function<RetType(ArgTypes ...)>&&) [with RetType = void; ArgTypes = {std::pair<std::error_code, long unsigned int>}]’ at /home/d00883276/prefetch_916/920_pre_pr/vendor/yalantinglibs/include/ylt/thirdparty/async_simple/util/move_only_function.h:286:19,
+    inlined from ‘async_simple::util::move_only_function<RetType(ArgTypes ...)>& async_simple::util::move_only_function<RetType(ArgTypes ...)>::operator=(async_simple::util::move_only_function<RetType(ArgTypes ...)>&&) [with RetType = void; ArgTypes = {std::pair<std::error_code, long unsigned int>}]’ at /home/d00883276/prefetch_916/920_pre_pr/vendor/yalantinglibs/include/ylt/thirdparty/async_simple/util/move_only_function.h:324:9,
+    inlined from ‘void coro_io::detail::ib_socket_shared_state_t::post_recv_impl(callback_t&&)’ at /home/d00883276/prefetch_916/920_pre_pr/vendor/yalantinglibs/include/ylt/coro_io/ibverbs/ib_socket.hpp:339:33:
+/usr/include/c++/12/bits/move.h:205:7: warning: ‘<unnamed>.async_simple::util::move_only_function<void(std::pair<std::error_code, long unsigned int>)>::<unnamed>.async_simple::util::detail::_function_base::_m_functor’ may be used uninitialized [-Wmaybe-uninitialized]
+  205 |       __a = _GLIBCXX_MOVE(__b);
+      |       ^~~
+/home/d00883276/prefetch_916/920_pre_pr/vendor/yalantinglibs/include/ylt/thirdparty/async_simple/util/move_only_function.h: In member function ‘void coro_io::detail::ib_socket_shared_state_t::post_recv_impl(callback_t&&)’:
+/home/d00883276/prefetch_916/920_pre_pr/vendor/yalantinglibs/include/ylt/thirdparty/async_simple/util/move_only_function.h:324:9: note: ‘<anonymous>’ declared here
+  324 |         move_only_function(std::move(other)).swap(*this);
+      |         ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+In function ‘constexpr std::_Require<std::__not_<std::__is_tuple_like<_Tp> >, std::is_move_constructible<_Tp>, std::is_move_assignable<_Tp> > std::swap(_Tp&, _Tp&) [with _Tp = void (*)(const async_simple::util::detail::_any_data&, pair<error_code, long unsigned int>&&)]’,
+    inlined from ‘void async_simple::util::move_only_function<RetType(ArgTypes ...)>::swap(async_simple::util::move_only_function<RetType(ArgTypes ...)>&) [with RetType = void; ArgTypes = {std::pair<std::error_code, long unsigned int>}]’ at /home/d00883276/prefetch_916/920_pre_pr/vendor/yalantinglibs/include/ylt/thirdparty/async_simple/util/move_only_function.h:349:18,
+    inlined from ‘async_simple::util::move_only_function<RetType(ArgTypes ...)>::move_only_function(async_simple::util::move_only_function<RetType(ArgTypes ...)>&&) [with RetType = void; ArgTypes = {std::pair<std::error_code, long unsigned int>}]’ at /home/d00883276/prefetch_916/920_pre_pr/vendor/yalantinglibs/include/ylt/thirdparty/async_simple/util/move_only_function.h:286:19,
+    inlined from ‘async_simple::util::move_only_function<RetType(ArgTypes ...)>& async_simple::util::move_only_function<RetType(ArgTypes ...)>::operator=(async_simple::util::move_only_function<RetType(ArgTypes ...)>&&) [with RetType = void; ArgTypes = {std::pair<std::error_code, long unsigned int>}]’ at /home/d00883276/prefetch_916/920_pre_pr/vendor/yalantinglibs/include/ylt/thirdparty/async_simple/util/move_only_function.h:324:9,
+    inlined from ‘void coro_io::detail::ib_socket_shared_state_t::post_recv_impl(callback_t&&)’ at /home/d00883276/prefetch_916/920_pre_pr/vendor/yalantinglibs/include/ylt/coro_io/ibverbs/ib_socket.hpp:339:33:
+/usr/include/c++/12/bits/move.h:205:11: warning: ‘<unnamed>.async_simple::util::move_only_function<void(std::pair<std::error_code, long unsigned int>)>::_m_invoker’ may be used uninitialized [-Wmaybe-uninitialized]
+  205 |       __a = _GLIBCXX_MOVE(__b);
+      |           ^
+/home/d00883276/prefetch_916/920_pre_pr/vendor/yalantinglibs/include/ylt/thirdparty/async_simple/util/move_only_function.h: In member function ‘void coro_io::detail::ib_socket_shared_state_t::post_recv_impl(callback_t&&)’:
+/home/d00883276/prefetch_916/920_pre_pr/vendor/yalantinglibs/include/ylt/thirdparty/async_simple/util/move_only_function.h:324:9: note: ‘<anonymous>’ declared here
+  324 |         move_only_function(std::move(other)).swap(*this);
+      |         ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+In function ‘constexpr std::_Require<std::__not_<std::__is_tuple_like<_Tp> >, std::is_move_constructible<_Tp>, std::is_move_assignable<_Tp> > std::swap(_Tp&, _Tp&) [with _Tp = async_simple::util::detail::_any_data]’,
+    inlined from ‘void async_simple::util::move_only_function<RetType(ArgTypes ...)>::swap(async_simple::util::move_only_function<RetType(ArgTypes ...)>&) [with RetType = void; ArgTypes = {std::pair<std::error_code, long unsigned int>}]’ at /home/d00883276/prefetch_916/920_pre_pr/vendor/yalantinglibs/include/ylt/thirdparty/async_simple/util/move_only_function.h:347:18,
+    inlined from ‘async_simple::util::move_only_function<RetType(ArgTypes ...)>::move_only_function(async_simple::util::move_only_function<RetType(ArgTypes ...)>&&) [with RetType = void; ArgTypes = {std::pair<std::error_code, long unsigned int>}]’ at /home/d00883276/prefetch_916/920_pre_pr/vendor/yalantinglibs/include/ylt/thirdparty/async_simple/util/move_only_function.h:286:19,
+    inlined from ‘static void coro_io::detail::ib_socket_shared_state_t::resume(std::pair<std::error_code, long unsigned int>&&, callback_t&&)’ at /home/d00883276/prefetch_916/920_pre_pr/vendor/yalantinglibs/include/ylt/coro_io/ibverbs/ib_socket.hpp:107:41,
+    inlined from ‘void coro_io::ib_socket_t::init_fd()::<lambda(std::shared_ptr<coro_io::detail::ib_socket_shared_state_t>)>::operator()(coro_io::ib_socket_t::init_fd()::<lambda(std::shared_ptr<coro_io::detail::ib_socket_shared_state_t>)>::_ZZN7coro_io11ib_socket_t7init_fdEvENKUlSt10shared_ptrINS_6detail24ib_socket_shared_state_tEEE0_clES4_.Frame*)’ at /home/d00883276/prefetch_916/920_pre_pr/vendor/yalantinglibs/include/ylt/coro_io/ibverbs/ib_socket.hpp:1098:53:
+/usr/include/c++/12/bits/move.h:205:7: warning: ‘handle_tmp.async_simple::util::move_only_function<void(std::pair<std::error_code, long unsigned int>)>::<unnamed>.async_simple::util::detail::_function_base::_m_functor’ may be used uninitialized [-Wmaybe-uninitialized]
+  205 |       __a = _GLIBCXX_MOVE(__b);
+      |       ^~~
+/home/d00883276/prefetch_916/920_pre_pr/vendor/yalantinglibs/include/ylt/coro_io/ibverbs/ib_socket.hpp: In function ‘void coro_io::ib_socket_t::init_fd()::<lambda(std::shared_ptr<coro_io::detail::ib_socket_shared_state_t>)>::operator()(coro_io::ib_socket_t::init_fd()::<lambda(std::shared_ptr<coro_io::detail::ib_socket_shared_state_t>)>::_ZZN7coro_io11ib_socket_t7init_fdEvENKUlSt10shared_ptrINS_6detail24ib_socket_shared_state_tEEE0_clES4_.Frame*)’:
+/home/d00883276/prefetch_916/920_pre_pr/vendor/yalantinglibs/include/ylt/coro_io/ibverbs/ib_socket.hpp:107:12: note: ‘handle_tmp’ declared here
+  107 |       auto handle_tmp = std::move(handle);
+      |            ^~~~~~~~~~
+In function ‘constexpr std::_Require<std::__not_<std::__is_tuple_like<_Tp> >, std::is_move_constructible<_Tp>, std::is_move_assignable<_Tp> > std::swap(_Tp&, _Tp&) [with _Tp = void (*)(const async_simple::util::detail::_any_data&, pair<error_code, long unsigned int>&&)]’,
+    inlined from ‘void async_simple::util::move_only_function<RetType(ArgTypes ...)>::swap(async_simple::util::move_only_function<RetType(ArgTypes ...)>&) [with RetType = void; ArgTypes = {std::pair<std::error_code, long unsigned int>}]’ at /home/d00883276/prefetch_916/920_pre_pr/vendor/yalantinglibs/include/ylt/thirdparty/async_simple/util/move_only_function.h:349:18,
+    inlined from ‘async_simple::util::move_only_function<RetType(ArgTypes ...)>::move_only_function(async_simple::util::move_only_function<RetType(ArgTypes ...)>&&) [with RetType = void; ArgTypes = {std::pair<std::error_code, long unsigned int>}]’ at /home/d00883276/prefetch_916/920_pre_pr/vendor/yalantinglibs/include/ylt/thirdparty/async_simple/util/move_only_function.h:286:19,
+    inlined from ‘static void coro_io::detail::ib_socket_shared_state_t::resume(std::pair<std::error_code, long unsigned int>&&, callback_t&&)’ at /home/d00883276/prefetch_916/920_pre_pr/vendor/yalantinglibs/include/ylt/coro_io/ibverbs/ib_socket.hpp:107:41,
+    inlined from ‘void coro_io::ib_socket_t::init_fd()::<lambda(std::shared_ptr<coro_io::detail::ib_socket_shared_state_t>)>::operator()(coro_io::ib_socket_t::init_fd()::<lambda(std::shared_ptr<coro_io::detail::ib_socket_shared_state_t>)>::_ZZN7coro_io11ib_socket_t7init_fdEvENKUlSt10shared_ptrINS_6detail24ib_socket_shared_state_tEEE0_clES4_.Frame*)’ at /home/d00883276/prefetch_916/920_pre_pr/vendor/yalantinglibs/include/ylt/coro_io/ibverbs/ib_socket.hpp:1098:53:
+/usr/include/c++/12/bits/move.h:205:11: warning: ‘handle_tmp.async_simple::util::move_only_function<void(std::pair<std::error_code, long unsigned int>)>::_m_invoker’ may be used uninitialized [-Wmaybe-uninitialized]
+  205 |       __a = _GLIBCXX_MOVE(__b);
+      |           ^
+/home/d00883276/prefetch_916/920_pre_pr/vendor/yalantinglibs/include/ylt/coro_io/ibverbs/ib_socket.hpp: In function ‘void coro_io::ib_socket_t::init_fd()::<lambda(std::shared_ptr<coro_io::detail::ib_socket_shared_state_t>)>::operator()(coro_io::ib_socket_t::init_fd()::<lambda(std::shared_ptr<coro_io::detail::ib_socket_shared_state_t>)>::_ZZN7coro_io11ib_socket_t7init_fdEvENKUlSt10shared_ptrINS_6detail24ib_socket_shared_state_tEEE0_clES4_.Frame*)’:
+/home/d00883276/prefetch_916/920_pre_pr/vendor/yalantinglibs/include/ylt/coro_io/ibverbs/ib_socket.hpp:107:12: note: ‘handle_tmp’ declared here
+  107 |       auto handle_tmp = std::move(handle);
+      |            ^~~~~~~~~~
+[273/795] Building CXX object mooncake-store/tests/CMakeFiles/replica_selection_test.dir/replica_selection_test.cpp.o
+ninja: build stopped: interrupted by user.
+BUILD_RC=130

@@ -1,0 +1,40 @@
+状态：已执行编译失败停止门槛，尚未运行 ctest、SSD smoke 或 DSV4 A/B。
+
+原始结果
+  mc-ab-208：CMAKE_RC=0，BUILD_RC=1。
+  唯一失败目标：mooncake-store/tests/ordered_oplog_writer_test。
+  错误位置：build.log 的 5746–5761 行；本地原始摘录 link-error-context.log。
+  链接器错误：undefined reference to io_setup / io_destroy / io_submit / io_getevents。
+  libaio 和 libaio-devel 均已安装，libaio.so 中确实导出了这些符号，但目标链接命令没有 -laio。
+
+原因与限制
+  我补齐旧容器开发依赖时一并安装了 libaio-devel。第三方 async_simple/executors/SimpleIOExecutor.h 通过 __has_include(<libaio.h>) 自动启用可选 AIO 路径，暴露了上述目标没有链接 libaio 的问题。
+  历史构建的该目标链接命令同样没有 -laio；当前所见错误不足以归因于预取逻辑，也不能当作完整构建通过。
+  产品源码保持固定提交且 git status 干净，尚未改 CMake、编译宏或链接参数。
+
+已停止的并行工作
+  新容器的 CMake 已通过；初次缺 Boost 头文件已按环境问题处理。
+  补齐后新容器编译未出现新的源码错误，但因旧容器触发停止门槛，由我要求中断。其 BUILD_RC=130 表示主动 SIGINT，不能报告为源码编译失败或通过。
+  原始停止原因 ROOT_STOP_OLD_BUILD_LINK_FAILURE，所属构建进程已退出。
+
+方案 A：恢复原有可选依赖选择（推荐，保持源码提交不变）
+  在 mc-ab-208 撤销我额外安装的 libaio-devel，仅保留运行库，让第三方恢复原先的“无 libaio.h”分支；不改产品代码、CMake 或编译宏。
+  新容器检查是否有 libaio.h；没有则继续原构建，不额外引入此可选开发头文件。
+  重新完整编译，再执行全部 ctest、指定单测与 teardown 连续 20 次、SSD smoke 三组，之后运行 DSV4 mini A/B。
+  环境软件包与头文件状态会写入证据，不声称验证了可选 AIO 后端。
+
+方案 B：在验证分支显式修复构建链接
+  文件：mooncake-store/tests/CMakeLists.txt。
+  位置：ordered_oplog_writer_test 的目标注册与链接依赖区域。
+  拟改动：查找 libaio，并在可选 AIO 路径启用时给该测试目标添加对应链接依赖。
+  原因：保留当前开发包环境并补上实际调用 io_* 符号所需的链接库。
+  必须只在验证分支操作；测试结果将明确区分原始固定提交与附加验证补丁，不能再称原始提交无改动构建成功。
+
+其他已确认的验收失败
+  指定 Mooncake 提交相对固定上游 main e764353f4e05b5a8670915b79e26b38c85e86146 有 258 个文件差异，其中 217 个路径不在预取特性的文件集合内，diff 范围门槛为 FAIL。
+  两个 from_prefetch 字段及注释属于允许例外。
+  此项只记录证据，尚未进行任何清理修复。
+
+公开协作限制
+  只读公开信息；不评论、不修改公开协作信息，不触发 mention。
+  已批准的验证脚本改动与证据最终仅进入既有 ssd-prefetch/v3-verify 分支。

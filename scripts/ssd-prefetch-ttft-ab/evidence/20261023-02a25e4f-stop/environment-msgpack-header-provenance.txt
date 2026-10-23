@@ -1,0 +1,9 @@
+ENVIRONMENT_ONLY=msgpack C++ headers
+SOURCE_CONTAINER=mc-r3-208
+SOURCE=/usr/include/msgpack.hpp,/usr/include/msgpack
+DEST_CONTAINER=mc-ab-208
+DEST=/usr/local/include
+1f19581cb5a012e98705377be9cb8b632385f3fd7d394598a661edf5da3cd87f  /home/d00883276/prefetch_916/920_pre_pr/gate/twotier-208/verify-20261023-02a25e4f/environment/msgpack-headers/include/msgpack.hpp
+#define MSGPACK_VERSION_MAJOR    3
+#define MSGPACK_VERSION_MINOR    3
+#define MSGPACK_VERSION_REVISION 0

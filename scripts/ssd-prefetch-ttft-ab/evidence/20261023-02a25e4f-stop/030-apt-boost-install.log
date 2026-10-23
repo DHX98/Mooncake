@@ -1,0 +1,40 @@
+Reading package lists...
+Building dependency tree...
+Reading state information...
+The following additional packages will be installed:
+  libboost1.74-dev
+Suggested packages:
+  libboost-doc libboost1.74-doc libboost-atomic1.74-dev
+  libboost-chrono1.74-dev libboost-container1.74-dev libboost-context1.74-dev
+  libboost-contract1.74-dev libboost-coroutine1.74-dev
+  libboost-date-time1.74-dev libboost-exception1.74-dev libboost-fiber1.74-dev
+  libboost-filesystem1.74-dev libboost-graph1.74-dev
+  libboost-graph-parallel1.74-dev libboost-iostreams1.74-dev
+  libboost-locale1.74-dev libboost-log1.74-dev libboost-math1.74-dev
+  libboost-mpi1.74-dev libboost-mpi-python1.74-dev libboost-numpy1.74-dev
+  libboost-program-options1.74-dev libboost-python1.74-dev
+  libboost-random1.74-dev libboost-regex1.74-dev
+  libboost-serialization1.74-dev libboost-stacktrace1.74-dev
+  libboost-system1.74-dev libboost-test1.74-dev libboost-thread1.74-dev
+  libboost-timer1.74-dev libboost-type-erasure1.74-dev libboost-wave1.74-dev
+  libboost1.74-tools-dev libmpfrc++-dev libntl-dev libboost-nowide1.74-dev
+The following NEW packages will be installed:
+  libboost-dev libboost1.74-dev
+0 upgraded, 2 newly installed, 0 to remove and 8 not upgraded.
+Need to get 9612 kB of archives.
+After this operation, 142 MB of additional disk space will be used.
+Get:1 http://ports.ubuntu.com/ubuntu-ports jammy/main arm64 libboost1.74-dev arm64 1.74.0-14ubuntu3 [9609 kB]
+Ign:1 http://ports.ubuntu.com/ubuntu-ports jammy/main arm64 libboost1.74-dev arm64 1.74.0-14ubuntu3
+Get:2 http://ports.ubuntu.com/ubuntu-ports jammy/main arm64 libboost-dev arm64 1.74.0.3ubuntu7 [3490 B]
+Get:1 http://ports.ubuntu.com/ubuntu-ports jammy/main arm64 libboost1.74-dev arm64 1.74.0-14ubuntu3 [9609 kB]
+debconf: delaying package configuration, since apt-utils is not installed
+Fetched 9223 kB in 3min 25s (45.1 kB/s)
+Selecting previously unselected package libboost1.74-dev:arm64.
+(Reading database ... (Reading database ... 5%(Reading database ... 10%(Reading database ... 15%(Reading database ... 20%(Reading database ... 25%(Reading database ... 30%(Reading database ... 35%(Reading database ... 40%(Reading database ... 45%(Reading database ... 50%(Reading database ... 55%(Reading database ... 60%(Reading database ... 65%(Reading database ... 70%(Reading database ... 75%(Reading database ... 80%(Reading database ... 85%(Reading database ... 90%(Reading database ... 95%(Reading database ... 100%(Reading database ... 24213 files and directories currently installed.)
+Preparing to unpack .../libboost1.74-dev_1.74.0-14ubuntu3_arm64.deb ...
+Unpacking libboost1.74-dev:arm64 (1.74.0-14ubuntu3) ...
+Selecting previously unselected package libboost-dev:arm64.
+Preparing to unpack .../libboost-dev_1.74.0.3ubuntu7_arm64.deb ...
+Unpacking libboost-dev:arm64 (1.74.0.3ubuntu7) ...
+Setting up libboost1.74-dev:arm64 (1.74.0-14ubuntu3) ...
+Setting up libboost-dev:arm64 (1.74.0.3ubuntu7) ...
