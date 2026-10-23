@@ -1,0 +1,50 @@
+一句话总结见同目录《一句话总结》。本文件记录 2026-10-23 这次忽略日志门禁、把 B 臂四段跑完的过程。大日志留在远端，没有放进本提交。
+
+验证对象
+  Mooncake：ssd-prefetch/cleanup-stranded
+    02a25e4fb7adf1a5750bcee857e7b4f300ed7996
+  vllm-ascend：feat/ssd-prefetch-on-exist-v2
+    24d03c21769ed513c2e31976afe5812908497fa3
+  形状：12 个前缀，12 个 overflow，测量并发 4，MAX_NUM_SEQS=4，TP 8，settle 700 秒。
+  TTFT 取 bench.log 屏幕文本。主结果是 r1。提升率 = (A - B) / A * 100。
+
+A 臂来源
+  目录 run-20261023T095355-LDftXY，arm-a attempt-1。
+  fill、overflow、r1、r2 都是 12 个成功、0 个失败，bench 返回码 0。
+  测量之后关闭超时，harness 记了 shutdown_failed。屏幕数字仍取自该次 bench.log。
+
+B 臂来源
+  目录 run-b-full-20261023T110538-V3tDEk，arm-b attempt-1。
+  这次单独跑 B，prefetch 确认为打开。日志门禁只计数，不中断后续阶段。
+  11:05:41 启动返回 0。11:11:18 就绪返回 0。
+  11:12:43 fill 返回 0。11:14:11 overflow 返回 0。
+  11:14:14 开始 settle，11:25:54 结束。
+  11:26:52 r1 返回 0。11:27:36 r2 返回 0。
+  11:33:54 关闭返回 1。11:34:00 四段已经结束。
+  四段都是 12 个成功、0 个失败。
+
+屏幕 TTFT，单位毫秒
+
+  阶段        A median    A mean      A p99       B median    B mean      B p99
+  fill        2037.05     2482.37     6244.34     2048.52     2518.32     6533.30
+  overflow    2040.30     3138.76     13780.17    2063.76     3157.48     13747.71
+  r1          1637.60     6949.00     18079.42    1275.00     6419.97     17002.91
+  r2          1586.91     6590.99     17021.25    1299.70     1245.54     1395.81
+
+r1 提升率
+  median 22.14%
+  mean 7.61%
+  p99 5.95%
+
+r2 是污染检查，不是主结果
+  median 18.10%
+  mean 81.10%
+  p99 91.80%
+
+同次日志计数
+  fill、overflow、settle：LEASE_EXPIRED 0，REPLICA_IS_NOT_READY 0。
+  r1 结束时 LEASE_EXPIRED 32。r2 和最终扫描仍是 32，没有新增。
+  REPLICA_IS_NOT_READY 全程 0。segfault、SIGSEGV 全程 0。
+  关闭返回码 1。这轮没有因为上述计数停止。
+
+产品源码没有在这轮修改。完整 bench 与服务日志留在远端上述两个目录。
