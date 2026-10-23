@@ -1,0 +1,101 @@
+一句话总结见同目录《一句话总结》。本文件只记录 2026-10-23 续跑和注册失败排查。完整大日志留在远端，没有放进本提交。
+
+验证对象
+  Mooncake：ssd-prefetch/cleanup-stranded
+    02a25e4fb7adf1a5750bcee857e7b4f300ed7996
+    远端 /home/d00883276/prefetch_916/src/Mooncake-02a25e4f
+    续跑前工作区 clean。
+  vllm-ascend：feat/ssd-prefetch-on-exist-v2
+    24d03c21769ed513c2e31976afe5812908497fa3
+    远端 /home/d00883276/prefetch_916/src/vllm-ascend-24d03c2176
+    续跑前工作区 clean。
+  容器：mc-verify-030-20261023
+  证据根：/home/d00883276/prefetch_916/920_pre_pr/gate/twotier-208/verify-20261023-02a25e4f
+  协议：NUM_PREFIXES=12 OVERFLOW_PREFIXES=12 MEASURE_CONCURRENCY=4 MAX_NUM_SEQS=4
+        TP_SIZE=8 SETTLE_SEC=90 SEGMENT_SIZE=256MB SSD_GET_WAIT_MS=2000
+        KV_LEASE_TTL_MS=2000 enable_ssd_offload=true
+  模型：/data/DeepSeek-V4-Flash-w8a8-mtp，served name dsv4-flash，vLLM 0.30.0，Python 3.12。
+
+第一部分（沿用已有远端证据，本次没有重跑）
+  编译：CMAKE_RC=0，BUILD_RC=0。
+  全量 ctest：258 项。原始失败 19 项，其中 default_config_test 是夹具路径缺失。
+  只在证据目录补了指向固定源码 mooncake-common 的软链接后，定向复测通过。
+  有效失败集与历史 18 项的名称和状态一致。不能写成全量 ctest 通过。
+  重点用例：prefetch_task_master_test 7，prefetch_teardown_test 2 且连续 20 次通过，
+  prefetch_throttle_test 11，file_storage_promotion_test 13。
+  smoke：retry2 三组各 3 项通过、无 skip，SMOKE_RETRY_RC=0。首次和 retry1 不是完整证据。
+  diff：相对 main 引用 e764353f4e05b5a8670915b79e26b38c85e86146，
+  258 个文件，41 个特性文件，217 个特性集合之外。结论 FAIL_DIFF_SCOPE。
+  object_runtime_state.h 的 from_prefetch 按任务允许保留。
+  功能前提通过不等于总验收通过。
+
+本次实际做了什么
+  1. 核对 8 张 NPU 空闲、固定提交 clean、ACL 修复仍在。
+     030-ab.env.sh 的 PYTHONPATH 含 CANN Python 与 TBE 路径。
+     文件 SHA256=b73cc487319c6507043aa5082c8795552cffeb3551f297fd9a2e5f125c337d90。
+     没有用本地旧环境文件覆盖它。guard 源文件
+     SHA256=f080454ce083fd1020e07eac593618269327a9ec76daef2508d69448612ee05e。
+  2. 保留失败轮 run-20261023T045029-T1N0WR 及其状态文件，没有删历史状态来绕过启动门。
+     副本目录：030-ab-preserved/rc73-20261023T045029-T1N0WR。
+  3. 新跑 mini 全协议 run-20261023T071225-1onFSv。预检通过。A 臂 attempt-1 的
+     fill、overflow、r1、r2 都是 12 个成功请求，HTTP body guard blocked_count=0。
+     关闭时 vLLM exit 143，120 秒后仍有 13 个进程，脚本自己发了 13 次 SIGKILL。
+     停止错误只有 vllm:GRACEFUL_SHUTDOWN_TIMEOUT。最终 AB_RC=73，B 臂没有创建。
+  4. 按要求只补 B，不改 harness 哈希文件，不清 A 的证据。
+     新目录 run-b-20261023T082914-JjJZ7n。配置确认 enable_ssd_prefetch=true。
+     B attempt-1：fill 与 overflow 成功 12；r1 bench 返回 0 且成功 12；
+     随后 master 出现 RegisterPrefetchTask 失败。protocol_rc=71。
+     关闭再次 GRACEFUL_SHUTDOWN_TIMEOUT，最终码被改成 73，所以 700 秒重跑没有启动。
+     r2 没有产生 bench 日志。
+  5. 读了固定提交里的 RegisterPrefetchTask、SsdPrefetcher、PutStart、PutEnd、
+     offload 完成路径和 DiscardExpiredProcessingReplicas。没有改产品源码。
+
+屏幕 TTFT（毫秒，来自 bench.log 屏幕文本，不是 JSON）
+  这些数字所在的臂都已作废，不能算提升率。
+  A run-20261023T071225-1onFSv attempt-1，成功请求均为 12，guard blocked_count=0：
+    r1 median 1620.79  mean 7589.77  p99 20961.95
+    r2 median 1556.26  mean 6678.26  p99 17359.27
+  B run-b-20261023T082914-JjJZ7n attempt-1：
+    fill     median 2046.93  mean 2405.21  p99 5324.98   成功 12
+    overflow median 2052.31  mean 3144.07  p99 13722.76  成功 12
+    r1       median 1613.69  mean 6623.40  p99 17089.58  成功 12
+    r2       未运行
+
+注册未就绪的证据
+  B 的 master 上 RegisterPrefetchTask 响应 480 条，全部是
+  status=failed, error=REPLICA_IS_NOT_READY，时延约 21 到 33 微秒。
+  时间集中在 2026-10-23 08:39:32 UTC。
+  客户端 ssd_prefetcher.cpp 同样 480 条失败，示例 key 属于
+  DeepSeek-V4-Flash-w8a8-mtp 的 kv cache。
+  同一批计数：PROMOTION_ALREADY_EXISTS=0，prefetch_task_registered=0，
+  get-side kick=96。整份 master 日志没有 upsert_start_case_b_inplace。
+  预取代码只在 BatchQueryReadOnly 看到 COMPLETE 本地盘副本、且没有内存副本、
+  并且本地文件尺寸大于 0 之后才调用注册。
+
+结论：产品代码，不是环境等待不够
+  只读查询不看 state.is_processing，只返回已完成副本。
+  RegisterPrefetchTask 先看 state.is_processing，为真就返回 REPLICA_IS_NOT_READY；
+  另一条同码路径是找不到 COMPLETE 本地盘副本。
+  PutStart 把 is_processing 设为真。PutEnd 仅当全部副本都 COMPLETE 才清除。
+  offload 挂上 COMPLETE 盘副本时不清除该标志。
+  若仍有未完成副本，回收线程要等到 put_start_time 加 600 秒
+  （put_start_release_timeout 默认值）才丢弃并清标志。
+  本次失败距写入约 4 分钟，短于 600 秒，长于 90 秒 settle。
+  因此 90 秒 settle 不会让这道门打开。700 秒 settle 可能等到回收，
+  但那是绕过，不是把查询条件和注册条件改成一致。
+
+关闭失败是另一件事
+  两臂都是 serve.sh stop 先 SIGTERM，120 秒内 worker 不退出，再 SIGKILL。
+  没有记录到 segfault 或 unregister 失败。NPU 随后为空闲。
+  harness 把非 0 的 stop 改写成 rc=73，于是 B 的 71 不能再触发 700 秒重跑。
+  这次没有修改该规则。
+
+没有放入本提交的远端文件
+  A/B 的 vLLM 日志达到约 1 到 1.8 GB，master 日志数 MB。
+  它们留在上面的 run 目录。本提交只有这份摘要。
+
+尚未完成
+  没有有效的 A/B 对，没有提升率。
+  diff 仍是 FAIL_DIFF_SCOPE。
+  没有改产品注册逻辑，也没有用 700 秒 settle 再跑。
+  公开仓库没有评论、mention 或新 issue。
