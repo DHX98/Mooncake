@@ -1,0 +1,6 @@
+These parts are one zip cut into pieces.
+Join on Windows:
+copy /b record.zip.001+record.zip.002+record.zip.003 record.zip
+Continue the same way through the last part.
+Join on Linux:
+cat record.zip.* > record.zip
